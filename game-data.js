@@ -1277,6 +1277,8 @@ var LIVESTOCK_QTY = {
 };
 
 function randomSex() { return Math.random() < 0.75 ? "F" : "M"; }
+var _lsIdCtr = 1;
+function lsId() { return "ls_" + (_lsIdCtr++) + "_" + Math.floor(Math.random()*9999); }
 
 function generateLivestockStock() {
   var stock = {};
@@ -1288,7 +1290,7 @@ function generateLivestockStock() {
         var type = Math.random()<0.5?"light":"draft";
         var breeds = HORSE_BREEDS[type];
         var breed = breeds[Math.floor(Math.random()*breeds.length)];
-        var ha = { id:Date.now()+Math.random(), type:type, breed:breed.name,
+        var ha = { id:lsId(), type:type, breed:breed.name,
           aptitudes:breed.aptitudes, sex:randomSex(), price:0 };
         ha.price = calcHorsePrice(ha);
         stock[sp.key].push(ha);
@@ -1298,13 +1300,13 @@ function generateLivestockStock() {
         var cowType = Math.random()<0.5?"beef":"dairy";
         var breeds = cowType==="beef"?BEEF_BREEDS:DAIRY_BREEDS;
         var breed = breeds[Math.floor(Math.random()*breeds.length)];
-        var ca = { id:Date.now()+Math.random(), type:cowType, breed:breed, sex:randomSex(), price:0 };
+        var ca = { id:lsId(), type:cowType, breed:breed, sex:randomSex(), price:0 };
         ca.price = ca.type==="dairy" ? 600 : 500;
         stock[sp.key].push(ca);
       }
     } else {
       for (var i=0; i<qty; i++) {
-        var a = { id:Date.now()+Math.random(), sex:randomSex(), price:0 };
+        var a = { id:lsId(), sex:randomSex(), price:0 };
         a.price = getListingPrice(sp.key, a);
         stock[sp.key].push(a);
       }
