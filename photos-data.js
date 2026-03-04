@@ -76,7 +76,7 @@ var BREED_PHOTOS = {
   "Catalan Sheepdog": "https://cdn-fastly.petguide.com/media/2022/02/16/8219765/catalan-sheepdog.jpg?size=1200x628",
   "Caucasian Ovcharka": "https://cdn4.thedogapi.com/optimized/N9DEB8FyHi.jpg",
   "Cavalier King Charles Spaniel": "https://cdn4.thedogapi.com/optimized/fM3yF6cLB1.jpg",
-  "Central Asian Shepherd": "https://cdn4.thedogapi.com/optimized/sQrQ6sVszv.jpg",
+  "Central Asian Shepherd": "https://www.akc.org/wp-content/uploads/2017/11/Central-Asian-Shepherd-Dog-on-White-02.jpg",
   "Cesky Terrier": "https://www.akc.org/wp-content/uploads/2017/11/Cesky-Terrier-on-White-011.jpg",
   "Chesapeake Bay Retriever": "https://cdn4.thedogapi.com/optimized/MLiMZc2OS4.jpg",
   "Chihuahua": "https://www.akc.org/wp-content/uploads/2017/11/Chihuahua-standing-in-three-quarter-view.jpg",
@@ -270,4 +270,4 @@ var BREED_PHOTOS = {
   "Wirehaired Vizsla": "https://cdn4.thedogapi.com/optimized/kjHLge9m58.jpg",
   "Xoloitzcuintli": "https://cdn4.thedogapi.com/optimized/owYeoJuOc7.jpg",
   "Yorkshire Terrier": "https://cdn4.thedogapi.com/optimized/EBxFXxL6xN.jpg",
-}
+};
