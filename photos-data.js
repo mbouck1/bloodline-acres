@@ -270,4 +270,4 @@ var BREED_PHOTOS = {
   "Wirehaired Vizsla": "https://cdn4.thedogapi.com/optimized/kjHLge9m58.jpg",
   "Xoloitzcuintli": "https://cdn4.thedogapi.com/optimized/owYeoJuOc7.jpg",
   "Yorkshire Terrier": "https://cdn4.thedogapi.com/optimized/EBxFXxL6xN.jpg",
-};
+}
