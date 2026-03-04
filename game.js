@@ -13080,32 +13080,69 @@ function DogSilhouette(_ref_sil) {
 // ─────────────────────────────────────────────────────────────────────────────
 // ── BREED PHOTOS ─────────────────────────────────────────────────────────────
 
+function BreedPhotoModal(_ref_bpm) {
+  var photoUrl = _ref_bpm.photoUrl, breedName = _ref_bpm.breedName, onClose = _ref_bpm.onClose;
+  return /*#__PURE__*/React.createElement("div", {
+    onClick: onClose,
+    style: { position:"fixed", top:0, left:0, right:0, bottom:0, zIndex:9999,
+      background:"rgba(0,0,0,0.92)", display:"flex", flexDirection:"column",
+      alignItems:"center", justifyContent:"center" }
+  },
+    /*#__PURE__*/React.createElement("div", {
+      onClick: function(e){ e.stopPropagation(); },
+      style: { position:"relative", maxWidth:"90vw", maxHeight:"85vh" }
+    },
+      /*#__PURE__*/React.createElement("img", {
+        src: photoUrl, alt: breedName,
+        style: { maxWidth:"90vw", maxHeight:"80vh", objectFit:"contain",
+          borderRadius:12, display:"block", boxShadow:"0 0 60px rgba(0,0,0,0.8)" }
+      }),
+      /*#__PURE__*/React.createElement("div", {
+        style: { textAlign:"center", color:"#94a3b8", marginTop:10, fontSize:"0.9rem",
+          fontStyle:"italic" }
+      }, breedName)
+    ),
+    /*#__PURE__*/React.createElement("button", {
+      onClick: onClose,
+      style: { position:"fixed", top:16, right:16, background:"#1e293b",
+        border:"1px solid #334155", color:"#e2e8f0", borderRadius:"50%",
+        width:36, height:36, fontSize:"1.1rem", cursor:"pointer",
+        display:"flex", alignItems:"center", justifyContent:"center" }
+    }, "✕")
+  );
+}
+
 function BreedPhoto(_ref_bp) {
   var animal = _ref_bp.animal;
   var _useState_bp = _slicedToArray(useState(false), 2),
     imgErr = _useState_bp[0], setImgErr = _useState_bp[1];
+  var _useState_bp2 = _slicedToArray(useState(false), 2),
+    showModal = _useState_bp2[0], setShowModal = _useState_bp2[1];
   var breedName = animal.breed || "";
   var photoUrl = BREED_PHOTOS[breedName] || null;
-  var silhouette = (typeof SILHOUETTES !== "undefined" && SILHOUETTES[breedName]) || "🐕";
   if (!photoUrl || imgErr) {
     return /*#__PURE__*/React.createElement("div", {
-      style: { width:"100%", height:220, borderRadius:7, marginBottom:12,
-        background:"#0a0f1a", border:"1px solid #1e293b",
-        display:"flex", alignItems:"center", justifyContent:"center",
-        fontSize:"3rem" }
-    }, silhouette);
+      style: { display:"flex", justifyContent:"flex-end", marginBottom:6 }
+    }, /*#__PURE__*/React.createElement("span", {
+      style: { fontSize:"1.4rem", opacity:0.25 }
+    }, "🐕"));
   }
-  return /*#__PURE__*/React.createElement("div", {
-    style: { width:"100%", height:220, borderRadius:7, marginBottom:12,
-      overflow:"hidden", background:"#0a0f1a", border:"1px solid #1e293b",
-      position:"relative" }
-  }, /*#__PURE__*/React.createElement("img", {
-    src: photoUrl,
-    alt: breedName,
-    onError: function() { setImgErr(true); },
-    style: { width:"100%", height:"100%", objectFit:"cover",
-      objectPosition:"center center", display:"block" }
-  }));
+  return /*#__PURE__*/React.createElement(React.Fragment, null,
+    showModal && /*#__PURE__*/React.createElement(BreedPhotoModal, {
+      photoUrl: photoUrl, breedName: breedName,
+      onClose: function(){ setShowModal(false); }
+    }),
+    /*#__PURE__*/React.createElement("div", {
+      style: { display:"flex", justifyContent:"flex-end", marginBottom:6 }
+    }, /*#__PURE__*/React.createElement("button", {
+      onClick: function(e){ e.stopPropagation(); setShowModal(true); },
+      title: "View " + breedName + " photo",
+      style: { background:"#0f172a", border:"1px solid #334155",
+        borderRadius:6, padding:"3px 8px", cursor:"pointer",
+        color:"#94a3b8", fontSize:"0.75rem", display:"flex",
+        alignItems:"center", gap:4 }
+    }, "📷 Photo"))
+  );
 }
 // ─────────────────────────────────────────────────────────────────────────────
 // ── ANIMAL CARD ───────────────────────────────────────────────
