@@ -13089,14 +13089,14 @@ function BreedPhoto(_ref_bp) {
   var silhouette = (typeof SILHOUETTES !== "undefined" && SILHOUETTES[breedName]) || "🐕";
   if (!photoUrl || imgErr) {
     return /*#__PURE__*/React.createElement("div", {
-      style: { width:"100%", height:160, borderRadius:7, marginBottom:12,
+      style: { width:"100%", height:220, borderRadius:7, marginBottom:12,
         background:"#0a0f1a", border:"1px solid #1e293b",
         display:"flex", alignItems:"center", justifyContent:"center",
         fontSize:"3rem" }
     }, silhouette);
   }
   return /*#__PURE__*/React.createElement("div", {
-    style: { width:"100%", height:160, borderRadius:7, marginBottom:12,
+    style: { width:"100%", height:220, borderRadius:7, marginBottom:12,
       overflow:"hidden", background:"#0a0f1a", border:"1px solid #1e293b",
       position:"relative" }
   }, /*#__PURE__*/React.createElement("img", {
@@ -13104,7 +13104,7 @@ function BreedPhoto(_ref_bp) {
     alt: breedName,
     onError: function() { setImgErr(true); },
     style: { width:"100%", height:"100%", objectFit:"cover",
-      objectPosition:"center top", display:"block" }
+      objectPosition:"center center", display:"block" }
   }));
 }
 // ─────────────────────────────────────────────────────────────────────────────
