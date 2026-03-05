@@ -13942,9 +13942,8 @@ function FarmView(_ref) {
       React.createElement(Tile, { col:2, row:2, bg:"#1a1408", border:"#b45309", svgInner:SVG.shearing, label:"Shearing Shed", color:"#fde68a",
         badge:"C3", count: hasFac("shearing_shed") ? lsCount("sheep")+"/"+FACILITIES.shearing_shed.tiers[facTier("shearing_shed")].capacity : null,
         tip:"Shearing Shed · "+(hasFac("shearing_shed") ? FACILITIES.shearing_shed.tiers[facTier("shearing_shed")].name : "Not built") }),
-      // C4 Grazing
-      hasFac("grazing_land")
-        hasFac("goat_pen")
+      // C4 Goat Pen
+      hasFac("goat_pen")
         ? React.createElement(Tile, { col:3, row:2, bg:"#1a1808", border:"#78350f", svgInner:SVG.pigPen, label:"Goat Pen", color:"#fdba74",
             badge:"C4", count: lsCount("goat")+"/"+FACILITIES.goat_pen.tiers[facTier("goat_pen")].capacity, tip:"Goat Pen · "+FACILITIES.goat_pen.tiers[facTier("goat_pen")].name })
         : React.createElement(EmptyPlot, { col:3, row:2, tip:"C4 · Goat Pen · Not built" }),
@@ -13963,9 +13962,8 @@ function FarmView(_ref) {
       React.createElement(Tile, { col:2, row:3, bg:"#180f06", border:"#d97706", svgInner:SVG.stable, label:"Stable", color:"#fcd34d",
         badge:"D3", count: hasFac("stable") ? lsCount("horse")+"/"+FACILITIES.stable.tiers[facTier("stable")].capacity : null,
         tip:"Stable · "+(hasFac("stable") ? FACILITIES.stable.tiers[facTier("stable")].name : "Not built") }),
-      // D4 Main Grazing
-      hasFac("grazing_land")
-        React.createElement(Tile, { col:3, row:3, bg:"#0e1008", border:"#4a5a1a", svgInner:SVG.storageBarn, label:"Storage Barn", color:"#bef264",
+      // D4 Storage Barn
+      React.createElement(Tile, { col:3, row:3, bg:"#0e1008", border:"#4a5a1a", svgInner:SVG.storageBarn, label:"Storage Barn", color:"#bef264",
             badge:"D4", tip:"Storage Barn · "+(hasFac("storage_barn") ? FACILITIES.storage_barn.tiers[facTier("storage_barn")].name : "Not built") }),
 
       // Entrance
