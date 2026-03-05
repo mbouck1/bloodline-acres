@@ -74,7 +74,7 @@ var BREED_PHOTOS = {
   "Cardigan Welsh Corgi": "https://storage.googleapis.com/dog-api-uploads-prod/originals/3c664674-c538-4c15-bab4-6ae3096dbcfb.png",
   "Carpathian Shepherd Dog": "https://cdn-fastly.petguide.com/media/2022/02/16/8239567/carpathian-shepherd-dog.jpg?size=1200x628",
   "Catalan Sheepdog": "https://cdn-fastly.petguide.com/media/2022/02/16/8219765/catalan-sheepdog.jpg?size=1200x628",
-  "Caucasian Ovcharka": "https://www.akc.org/wp-content/uploads/2017/11/Caucasian-Shepherd-Dog-Breed.jpg",
+  "Caucasian Ovcharka": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b5/Kavkazskaya_Ovcharka.jpg/320px-Kavkazskaya_Ovcharka.jpg",
   "Cavalier King Charles Spaniel": "https://cdn4.thedogapi.com/optimized/fM3yF6cLB1.jpg",
   "Central Asian Shepherd": "https://www.akc.org/wp-content/uploads/2017/11/Central-Asian-Shepherd-Dog-on-White-02.jpg",
   "Cesky Terrier": "https://www.akc.org/wp-content/uploads/2017/11/Cesky-Terrier-on-White-011.jpg",
