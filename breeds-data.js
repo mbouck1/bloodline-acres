@@ -6,7 +6,6 @@ var BREED_LIFESPANS = {
   "Australian Stumpy Tail Cattle Dog": 14,
   "Bearded Collie": 13,
   "Belgian Malinois": 13,
-  "Belgian Sheepdog": 13,
   "Belgian Tervuren": 13,
   "Bergamasco Sheepdog": 14,
   "Berger Picard": 12,
@@ -15,10 +14,8 @@ var BREED_LIFESPANS = {
   "Briard": 11,
   "Canaan Dog": 14,
   "Cardigan Welsh Corgi": 14,
-  "Collie": 13,
   "Entlebucher Mountain Dog": 12,
   "Finnish Lapphund": 13,
-  "German Shepherd Dog": 11,
   "Icelandic Sheepdog": 13,
   "Miniature American Shepherd": 12,
   "Norwegian Buhund": 14,
@@ -29,11 +26,8 @@ var BREED_LIFESPANS = {
   "Pumi": 12,
   "Pyrenean Shepherd": 16,
   "Shetland Sheepdog": 13,
-  "Spanish Water Dog": 13,
   "Swedish Vallhund": 14,
-  "Akita": 12,
   "Alaskan Malamute": 12,
-  "Anatolian Shepherd Dog": 12,
   "Bernese Mountain Dog": 8,
   "Black Russian Terrier": 11,
   "Boerboel": 10,
@@ -44,7 +38,6 @@ var BREED_LIFESPANS = {
   "Doberman Pinscher": 12,
   "Dogo Argentino": 12,
   "Dogue de Bordeaux": 6,
-  "German Pinscher": 13,
   "Giant Schnauzer": 14,
   "Great Dane": 8,
   "Great Pyrenees": 11,
@@ -52,21 +45,16 @@ var BREED_LIFESPANS = {
   "Komondor": 11,
   "Kuvasz": 11,
   "Leonberger": 8,
-  "Mastiff": 8,
   "Neapolitan Mastiff": 8,
   "Newfoundland": 9,
-  "Portuguese Water Dog": 12,
   "Rottweiler": 10,
   "Saint Bernard": 9,
   "Samoyed": 13,
   "Siberian Husky": 13,
   "Standard Schnauzer": 14,
   "Tibetan Mastiff": 11,
-  "Kangal Shepherd Dog": 14,
-  "Brittany": 13,
   "Chesapeake Bay Retriever": 12,
   "Clumber Spaniel": 11,
-  "Cocker Spaniel": 12,
   "Curly-Coated Retriever": 11,
   "English Cocker Spaniel": 13,
   "English Setter": 13,
@@ -77,12 +65,10 @@ var BREED_LIFESPANS = {
   "German Wirehaired Pointer": 13,
   "Golden Retriever": 11,
   "Gordon Setter": 11,
-  "Irish Red and White Setter": 13,
   "Irish Setter": 13,
   "Irish Water Spaniel": 11,
   "Labrador Retriever": 11,
   "Nova Scotia Duck Tolling Retriever": 13,
-  "Pointer": 14,
   "Spinone Italiano": 11,
   "Sussex Spaniel": 12,
   "Vizsla": 13,
@@ -95,23 +81,18 @@ var BREED_LIFESPANS = {
   "Basenji": 14,
   "Basset Hound": 11,
   "Beagle": 12,
-  "Black and Tan Coonhound": 11,
   "Bloodhound": 8,
   "Bluetick Coonhound": 12,
   "Borzoi": 12,
-  "Cirneco dell Etna": 13,
   "Dachshund": 14,
-  "English Foxhound": 12,
   "Greyhound": 12,
   "Harrier": 14,
   "Ibizan Hound": 12,
   "Irish Wolfhound": 7,
   "Norwegian Elkhound": 14,
   "Otterhound": 12,
-  "Petit Basset Griffon Vendeen": 15,
   "Pharaoh Hound": 12,
   "Plott Hound": 13,
-  "Portuguese Podengo": 14,
   "Redbone Coonhound": 12,
   "Rhodesian Ridgeback": 11,
   "Saluki": 13,
@@ -141,23 +122,19 @@ var BREED_LIFESPANS = {
   "Norwich Terrier": 14,
   "Parson Russell Terrier": 14,
   "Rat Terrier": 15,
-  "Russell Terrier": 13,
   "Scottish Terrier": 12,
   "Sealyham Terrier": 13,
   "Skye Terrier": 13,
-  "Smooth Fox Terrier": 14,
   "Soft Coated Wheaten Terrier": 13,
   "Staffordshire Bull Terrier": 13,
   "Welsh Terrier": 14,
   "West Highland White Terrier": 14,
-  "Wire Fox Terrier": 14,
   "Affenpinscher": 14,
   "Biewer Terrier": 16,
   "Brussels Griffon": 14,
   "Cavalier King Charles Spaniel": 12,
   "Chihuahua": 15,
   "Chinese Crested": 16,
-  "English Toy Spaniel": 11,
   "Havanese": 15,
   "Italian Greyhound": 14,
   "Japanese Chin": 11,
@@ -170,13 +147,10 @@ var BREED_LIFESPANS = {
   "Shih Tzu": 14,
   "Silky Terrier": 14,
   "Toy Fox Terrier": 14,
-  "Toy Manchester Terrier": 15,
   "Yorkshire Terrier": 13,
   "American Eskimo Dog": 14,
-  "Bichon Frise": 14,
   "Boston Terrier": 12,
   "Bulldog": 9,
-  "Chinese Shar-Pei": 10,
   "Chow Chow": 10,
   "Coton de Tulear": 17,
   "Dalmatian": 12,
@@ -184,9 +158,6 @@ var BREED_LIFESPANS = {
   "French Bulldog": 11,
   "Keeshond": 14,
   "Lhasa Apso": 14,
-  "L\xF6wchen": 14,
-  "Norwegian Lundehund": 13,
-  "Poodle": 14,
   "Schipperke": 14,
   "Shiba Inu": 14,
   "Tibetan Spaniel": 14,
@@ -195,20 +166,13 @@ var BREED_LIFESPANS = {
   "Azawakh": 14,
   "Barbet": 13,
   "Belgian Laekenois": 11,
-  "Bergamasco": 14,
   "Bracco Italiano": 12,
-  "Catahoula Leopard Dog": 12,
   "Czechoslovakian Vlcak": 14,
   "Lagotto Romagnolo": 16,
   "Mudi": 13,
-  "Nederlandse Kooikerhondje": 14,
   "Perro de Presa Canario": 10,
   "Peruvian Inca Orchid": 13,
-  "Porcelaine": 12,
-  "Slovensky Cuvac": 12,
-  "Slovensky Kopov": 12,
   "Thai Ridgeback": 12,
-  "Transylvanian Hound": 11
 };
 var SIZE_LIFESPAN = {
   XS: 15,
@@ -274,7 +238,7 @@ function mixedLifespanBonus(sire, dam) {
 }
 
 // ── DEMO BREEDS ───────────────────────────────────────────────
-var DEMO_BREEDS = [{
+var DEMO_BREEDS = [{{
   "name": "Border Collie",
   "group": "Herding",
   "size": "M",
@@ -303,7 +267,7 @@ var DEMO_BREEDS = [{
     "joints": 82
   },
   "aptitudes": ["Agility", "Herding", "Flyball", "Obedience"]
-}, {
+},{
   "name": "Rough Collie",
   "group": "Herding",
   "size": "L",
@@ -332,7 +296,7 @@ var DEMO_BREEDS = [{
     "joints": 80
   },
   "aptitudes": ["Herding", "Conformation", "Obedience"]
-}, {
+},{
   "name": "Smooth Collie",
   "group": "Herding",
   "size": "L",
@@ -361,7 +325,7 @@ var DEMO_BREEDS = [{
     "joints": 82
   },
   "aptitudes": ["Herding", "Obedience", "Agility"]
-}, {
+},{
   "name": "Shetland Sheepdog",
   "group": "Herding",
   "size": "S",
@@ -390,7 +354,7 @@ var DEMO_BREEDS = [{
     "joints": 82
   },
   "aptitudes": ["Agility", "Obedience", "Rally-O"]
-}, {
+},{
   "name": "Pembroke Welsh Corgi",
   "group": "Herding",
   "size": "S",
@@ -419,7 +383,7 @@ var DEMO_BREEDS = [{
     "joints": 80
   },
   "aptitudes": ["Herding", "Agility", "Conformation"]
-}, {
+},{
   "name": "Cardigan Welsh Corgi",
   "group": "Herding",
   "size": "S",
@@ -448,7 +412,7 @@ var DEMO_BREEDS = [{
     "joints": 78
   },
   "aptitudes": ["Herding", "Agility", "Rally-O"]
-}, {
+},{
   "name": "Bearded Collie",
   "group": "Herding",
   "size": "M",
@@ -477,7 +441,7 @@ var DEMO_BREEDS = [{
     "joints": 78
   },
   "aptitudes": ["Herding", "Agility", "Conformation"]
-}, {
+},{
   "name": "Old English Sheepdog",
   "group": "Herding",
   "size": "L",
@@ -506,7 +470,7 @@ var DEMO_BREEDS = [{
     "joints": 72
   },
   "aptitudes": ["Herding", "Conformation", "Agility"]
-}, {
+},{
   "name": "German Shepherd",
   "group": "Herding",
   "size": "L",
@@ -535,7 +499,7 @@ var DEMO_BREEDS = [{
     "joints": 70
   },
   "aptitudes": ["Schutzhund", "Obedience", "Tracking"]
-}, {
+},{
   "name": "Dutch Shepherd",
   "group": "Herding",
   "size": "L",
@@ -564,36 +528,7 @@ var DEMO_BREEDS = [{
     "joints": 80
   },
   "aptitudes": ["Schutzhund", "Agility", "Obedience"]
-}, {
-  "name": "Schapendoes",
-  "group": "Herding",
-  "size": "M",
-  "coat": "long",
-  "colors": ["black", "gray", "brown", "fawn", "blue"],
-  "species": "dog",
-  "sizeAvg": 40,
-  "sizeRange": [28, 55],
-  "litterSize": "M",
-  "traits": {
-    "intelligence": 8,
-    "energy": 8,
-    "trainability": 7,
-    "loyalty": 8,
-    "playfulness": 8,
-    "aggression": 2,
-    "preyDrive": 5,
-    "barkTendency": 6,
-    "sociability": 8,
-    "adaptability": 7
-  },
-  "health": {
-    "hips": 80,
-    "eyes": 82,
-    "heart": 85,
-    "joints": 80
-  },
-  "aptitudes": ["Herding", "Agility", "Conformation"]
-}, {
+},{
   "name": "Belgian Malinois",
   "group": "Herding",
   "size": "L",
@@ -622,7 +557,7 @@ var DEMO_BREEDS = [{
     "joints": 82
   },
   "aptitudes": ["Schutzhund", "Agility", "Tracking"]
-}, {
+},{
   "name": "Belgian Tervuren",
   "group": "Herding",
   "size": "L",
@@ -651,7 +586,7 @@ var DEMO_BREEDS = [{
     "joints": 82
   },
   "aptitudes": ["Schutzhund", "Agility", "Obedience"]
-}, {
+},{
   "name": "Belgian Groenendael",
   "group": "Herding",
   "size": "L",
@@ -680,7 +615,7 @@ var DEMO_BREEDS = [{
     "joints": 82
   },
   "aptitudes": ["Schutzhund", "Obedience", "Tracking"]
-}, {
+},{
   "name": "Belgian Laekenois",
   "group": "Herding",
   "size": "L",
@@ -709,7 +644,7 @@ var DEMO_BREEDS = [{
     "joints": 82
   },
   "aptitudes": ["Schutzhund", "Obedience", "Conformation"]
-}, {
+},{
   "name": "Berger Picard",
   "group": "Herding",
   "size": "M",
@@ -738,7 +673,7 @@ var DEMO_BREEDS = [{
     "joints": 80
   },
   "aptitudes": ["Herding", "Agility", "Conformation"]
-}, {
+},{
   "name": "Pyrenean Shepherd",
   "group": "Herding",
   "size": "S",
@@ -767,7 +702,7 @@ var DEMO_BREEDS = [{
     "joints": 82
   },
   "aptitudes": ["Herding", "Agility", "Flyball"]
-}, {
+},{
   "name": "Beauceron",
   "group": "Herding",
   "size": "L",
@@ -796,7 +731,7 @@ var DEMO_BREEDS = [{
     "joints": 78
   },
   "aptitudes": ["Schutzhund", "Herding", "Obedience"]
-}, {
+},{
   "name": "Briard",
   "group": "Herding",
   "size": "L",
@@ -825,7 +760,7 @@ var DEMO_BREEDS = [{
     "joints": 75
   },
   "aptitudes": ["Herding", "Schutzhund", "Conformation"]
-}, {
+},{
   "name": "Bouvier des Flandres",
   "group": "Herding",
   "size": "L",
@@ -854,7 +789,7 @@ var DEMO_BREEDS = [{
     "joints": 75
   },
   "aptitudes": ["Schutzhund", "Herding", "Obedience"]
-}, {
+},{
   "name": "Australian Shepherd",
   "group": "Herding",
   "size": "M",
@@ -883,7 +818,7 @@ var DEMO_BREEDS = [{
     "joints": 80
   },
   "aptitudes": ["Agility", "Herding", "Obedience"]
-}, {
+},{
   "name": "Miniature American Shepherd",
   "group": "Herding",
   "size": "S",
@@ -912,7 +847,7 @@ var DEMO_BREEDS = [{
     "joints": 82
   },
   "aptitudes": ["Agility", "Herding", "Rally-O"]
-}, {
+},{
   "name": "Australian Cattle Dog",
   "group": "Herding",
   "size": "M",
@@ -941,7 +876,7 @@ var DEMO_BREEDS = [{
     "joints": 85
   },
   "aptitudes": ["Herding", "Agility", "Flyball"]
-}, {
+},{
   "name": "Australian Kelpie",
   "group": "Herding",
   "size": "M",
@@ -970,7 +905,7 @@ var DEMO_BREEDS = [{
     "joints": 85
   },
   "aptitudes": ["Herding", "Agility", "Obedience"]
-}, {
+},{
   "name": "Australian Stumpy Tail Cattle Dog",
   "group": "Herding",
   "size": "M",
@@ -999,7 +934,7 @@ var DEMO_BREEDS = [{
     "joints": 85
   },
   "aptitudes": ["Herding", "Agility"]
-}, {
+},{
   "name": "Puli",
   "group": "Herding",
   "size": "M",
@@ -1028,7 +963,7 @@ var DEMO_BREEDS = [{
     "joints": 82
   },
   "aptitudes": ["Herding", "Agility", "Conformation"]
-}, {
+},{
   "name": "Pumi",
   "group": "Herding",
   "size": "S",
@@ -1057,7 +992,7 @@ var DEMO_BREEDS = [{
     "joints": 82
   },
   "aptitudes": ["Herding", "Agility", "Obedience"]
-}, {
+},{
   "name": "Mudi",
   "group": "Herding",
   "size": "M",
@@ -1086,7 +1021,7 @@ var DEMO_BREEDS = [{
     "joints": 82
   },
   "aptitudes": ["Agility", "Herding", "Flyball"]
-}, {
+},{
   "name": "Komondor",
   "group": "Herding",
   "size": "XL",
@@ -1115,7 +1050,7 @@ var DEMO_BREEDS = [{
     "joints": 72
   },
   "aptitudes": ["Herding", "Conformation", "LGD"]
-}, {
+},{
   "name": "Bergamasco Sheepdog",
   "group": "Herding",
   "size": "L",
@@ -1144,7 +1079,7 @@ var DEMO_BREEDS = [{
     "joints": 78
   },
   "aptitudes": ["Herding", "Conformation"]
-}, {
+},{
   "name": "Catalan Sheepdog",
   "group": "Herding",
   "size": "M",
@@ -1173,7 +1108,7 @@ var DEMO_BREEDS = [{
     "joints": 80
   },
   "aptitudes": ["Herding", "Agility", "Conformation"]
-}, {
+},{
   "name": "Portuguese Sheepdog",
   "group": "Herding",
   "size": "M",
@@ -1202,7 +1137,7 @@ var DEMO_BREEDS = [{
     "joints": 80
   },
   "aptitudes": ["Herding", "Conformation", "LGD"]
-}, {
+},{
   "name": "Croatian Sheepdog",
   "group": "Herding",
   "size": "M",
@@ -1231,7 +1166,7 @@ var DEMO_BREEDS = [{
     "joints": 82
   },
   "aptitudes": ["Herding", "Agility", "Obedience"]
-}, {
+},{
   "name": "Swedish Vallhund",
   "group": "Herding",
   "size": "S",
@@ -1260,7 +1195,7 @@ var DEMO_BREEDS = [{
     "joints": 82
   },
   "aptitudes": ["Herding", "Agility", "Rally-O"]
-}, {
+},{
   "name": "Norwegian Buhund",
   "group": "Herding",
   "size": "M",
@@ -1289,7 +1224,7 @@ var DEMO_BREEDS = [{
     "joints": 82
   },
   "aptitudes": ["Herding", "Agility", "Obedience"]
-}, {
+},{
   "name": "Icelandic Sheepdog",
   "group": "Herding",
   "size": "M",
@@ -1318,7 +1253,7 @@ var DEMO_BREEDS = [{
     "joints": 82
   },
   "aptitudes": ["Herding", "Agility", "Conformation"]
-}, {
+},{
   "name": "Finnish Lapphund",
   "group": "Herding",
   "size": "M",
@@ -1347,65 +1282,7 @@ var DEMO_BREEDS = [{
     "joints": 82
   },
   "aptitudes": ["Herding", "Agility", "Rally-O"]
-}, {
-  "name": "Swedish Lapphund",
-  "group": "Herding",
-  "size": "M",
-  "coat": "long",
-  "colors": ["black", "brown", "bear brown"],
-  "species": "dog",
-  "sizeAvg": 40,
-  "sizeRange": [28, 55],
-  "litterSize": "M",
-  "traits": {
-    "intelligence": 8,
-    "energy": 7,
-    "trainability": 7,
-    "loyalty": 9,
-    "playfulness": 8,
-    "aggression": 2,
-    "preyDrive": 5,
-    "barkTendency": 8,
-    "sociability": 8,
-    "adaptability": 6
-  },
-  "health": {
-    "hips": 82,
-    "eyes": 82,
-    "heart": 88,
-    "joints": 82
-  },
-  "aptitudes": ["Herding", "Conformation"]
-}, {
-  "name": "Lapponian Herder",
-  "group": "Herding",
-  "size": "M",
-  "coat": "medium",
-  "colors": ["black", "brown", "gray"],
-  "species": "dog",
-  "sizeAvg": 40,
-  "sizeRange": [28, 55],
-  "litterSize": "M",
-  "traits": {
-    "intelligence": 8,
-    "energy": 8,
-    "trainability": 7,
-    "loyalty": 9,
-    "playfulness": 7,
-    "aggression": 2,
-    "preyDrive": 5,
-    "barkTendency": 6,
-    "sociability": 8,
-    "adaptability": 7
-  },
-  "health": {
-    "hips": 82,
-    "eyes": 82,
-    "heart": 88,
-    "joints": 82
-  },
-  "aptitudes": ["Herding", "Agility"]
-}, {
+},{
   "name": "Polish Lowland Sheepdog",
   "group": "Herding",
   "size": "M",
@@ -1434,65 +1311,7 @@ var DEMO_BREEDS = [{
     "joints": 78
   },
   "aptitudes": ["Herding", "Conformation", "Agility"]
-}, {
-  "name": "Polish Tatra Sheepdog",
-  "group": "Herding",
-  "size": "XL",
-  "coat": "long",
-  "colors": ["white"],
-  "species": "dog",
-  "sizeAvg": 100,
-  "sizeRange": [80, 130],
-  "litterSize": "L",
-  "traits": {
-    "intelligence": 7,
-    "energy": 5,
-    "trainability": 5,
-    "loyalty": 9,
-    "playfulness": 5,
-    "aggression": 4,
-    "preyDrive": 4,
-    "barkTendency": 7,
-    "sociability": 6,
-    "adaptability": 5
-  },
-  "health": {
-    "hips": 72,
-    "eyes": 78,
-    "heart": 78,
-    "joints": 72
-  },
-  "aptitudes": ["Herding", "Conformation", "LGD"]
-}, {
-  "name": "Karst Shepherd",
-  "group": "Herding",
-  "size": "L",
-  "coat": "long",
-  "colors": ["iron gray"],
-  "species": "dog",
-  "sizeAvg": 65,
-  "sizeRange": [55, 85],
-  "litterSize": "L",
-  "traits": {
-    "intelligence": 7,
-    "energy": 6,
-    "trainability": 5,
-    "loyalty": 9,
-    "playfulness": 5,
-    "aggression": 5,
-    "preyDrive": 5,
-    "barkTendency": 7,
-    "sociability": 5,
-    "adaptability": 5
-  },
-  "health": {
-    "hips": 72,
-    "eyes": 78,
-    "heart": 78,
-    "joints": 72
-  },
-  "aptitudes": ["Herding", "Conformation"]
-}, {
+},{
   "name": "Greyhound",
   "group": "Hound",
   "size": "L",
@@ -1521,7 +1340,7 @@ var DEMO_BREEDS = [{
     "joints": 82
   },
   "aptitudes": ["Lure Coursing", "Racing", "Conformation"]
-}, {
+},{
   "name": "Whippet",
   "group": "Hound",
   "size": "M",
@@ -1550,7 +1369,7 @@ var DEMO_BREEDS = [{
     "joints": 88
   },
   "aptitudes": ["Lure Coursing", "Agility", "Conformation"]
-}, {
+},{
   "name": "Italian Greyhound",
   "group": "Hound",
   "size": "XS",
@@ -1579,7 +1398,7 @@ var DEMO_BREEDS = [{
     "joints": 82
   },
   "aptitudes": ["Lure Coursing", "Agility", "Conformation"]
-}, {
+},{
   "name": "Afghan Hound",
   "group": "Hound",
   "size": "L",
@@ -1608,7 +1427,7 @@ var DEMO_BREEDS = [{
     "joints": 82
   },
   "aptitudes": ["Lure Coursing", "Conformation"]
-}, {
+},{
   "name": "Borzoi",
   "group": "Hound",
   "size": "L",
@@ -1637,7 +1456,7 @@ var DEMO_BREEDS = [{
     "joints": 80
   },
   "aptitudes": ["Lure Coursing", "Conformation"]
-}, {
+},{
   "name": "Irish Wolfhound",
   "group": "Hound",
   "size": "XL",
@@ -1666,7 +1485,7 @@ var DEMO_BREEDS = [{
     "joints": 65
   },
   "aptitudes": ["Lure Coursing", "Conformation"]
-}, {
+},{
   "name": "Scottish Deerhound",
   "group": "Hound",
   "size": "XL",
@@ -1695,7 +1514,7 @@ var DEMO_BREEDS = [{
     "joints": 72
   },
   "aptitudes": ["Lure Coursing", "Conformation"]
-}, {
+},{
   "name": "Saluki",
   "group": "Hound",
   "size": "L",
@@ -1724,7 +1543,7 @@ var DEMO_BREEDS = [{
     "joints": 82
   },
   "aptitudes": ["Lure Coursing", "Racing", "Conformation"]
-}, {
+},{
   "name": "Sloughi",
   "group": "Hound",
   "size": "L",
@@ -1753,7 +1572,7 @@ var DEMO_BREEDS = [{
     "joints": 82
   },
   "aptitudes": ["Lure Coursing", "Racing", "Conformation"]
-}, {
+},{
   "name": "Azawakh",
   "group": "Hound",
   "size": "L",
@@ -1782,65 +1601,7 @@ var DEMO_BREEDS = [{
     "joints": 85
   },
   "aptitudes": ["Lure Coursing", "Conformation"]
-}, {
-  "name": "Tazy",
-  "group": "Hound",
-  "size": "L",
-  "coat": "short",
-  "colors": ["fawn", "cream", "white", "gray", "black"],
-  "species": "dog",
-  "sizeAvg": 65,
-  "sizeRange": [55, 85],
-  "litterSize": "L",
-  "traits": {
-    "intelligence": 6,
-    "energy": 8,
-    "trainability": 4,
-    "loyalty": 8,
-    "playfulness": 5,
-    "aggression": 2,
-    "preyDrive": 9,
-    "barkTendency": 2,
-    "sociability": 6,
-    "adaptability": 5
-  },
-  "health": {
-    "hips": 85,
-    "eyes": 88,
-    "heart": 90,
-    "joints": 85
-  },
-  "aptitudes": ["Lure Coursing", "Conformation"]
-}, {
-  "name": "Taigan",
-  "group": "Hound",
-  "size": "L",
-  "coat": "silky",
-  "colors": ["black", "gray", "red", "cream", "white"],
-  "species": "dog",
-  "sizeAvg": 65,
-  "sizeRange": [55, 85],
-  "litterSize": "L",
-  "traits": {
-    "intelligence": 6,
-    "energy": 8,
-    "trainability": 4,
-    "loyalty": 8,
-    "playfulness": 5,
-    "aggression": 2,
-    "preyDrive": 9,
-    "barkTendency": 2,
-    "sociability": 6,
-    "adaptability": 5
-  },
-  "health": {
-    "hips": 82,
-    "eyes": 85,
-    "heart": 88,
-    "joints": 82
-  },
-  "aptitudes": ["Lure Coursing", "Conformation"]
-}, {
+},{
   "name": "Hungarian Greyhound",
   "group": "Hound",
   "size": "L",
@@ -1869,7 +1630,7 @@ var DEMO_BREEDS = [{
     "joints": 85
   },
   "aptitudes": ["Lure Coursing", "Racing", "Conformation"]
-}, {
+},{
   "name": "Spanish Greyhound",
   "group": "Hound",
   "size": "L",
@@ -1898,7 +1659,7 @@ var DEMO_BREEDS = [{
     "joints": 85
   },
   "aptitudes": ["Lure Coursing", "Racing", "Conformation"]
-}, {
+},{
   "name": "Basenji",
   "group": "Hound",
   "size": "M",
@@ -1927,7 +1688,7 @@ var DEMO_BREEDS = [{
     "joints": 88
   },
   "aptitudes": ["Lure Coursing", "Agility", "Conformation"]
-}, {
+},{
   "name": "Pharaoh Hound",
   "group": "Hound",
   "size": "L",
@@ -1956,7 +1717,7 @@ var DEMO_BREEDS = [{
     "joints": 85
   },
   "aptitudes": ["Lure Coursing", "Agility", "Conformation"]
-}, {
+},{
   "name": "Ibizan Hound",
   "group": "Hound",
   "size": "L",
@@ -1985,7 +1746,7 @@ var DEMO_BREEDS = [{
     "joints": 85
   },
   "aptitudes": ["Lure Coursing", "Agility", "Conformation"]
-}, {
+},{
   "name": "Cirneco dell'Etna",
   "group": "Hound",
   "size": "M",
@@ -2014,65 +1775,7 @@ var DEMO_BREEDS = [{
     "joints": 85
   },
   "aptitudes": ["Lure Coursing", "Agility", "Conformation"]
-}, {
-  "name": "Podengo Portugu\xEAs",
-  "group": "Hound",
-  "size": "M",
-  "coat": "short",
-  "colors": ["yellow", "fawn", "black", "white"],
-  "species": "dog",
-  "sizeAvg": 40,
-  "sizeRange": [28, 55],
-  "litterSize": "M",
-  "traits": {
-    "intelligence": 7,
-    "energy": 8,
-    "trainability": 6,
-    "loyalty": 8,
-    "playfulness": 7,
-    "aggression": 3,
-    "preyDrive": 8,
-    "barkTendency": 5,
-    "sociability": 7,
-    "adaptability": 7
-  },
-  "health": {
-    "hips": 85,
-    "eyes": 88,
-    "heart": 90,
-    "joints": 85
-  },
-  "aptitudes": ["Lure Coursing", "Agility", "Conformation"]
-}, {
-  "name": "Podenco Canario",
-  "group": "Hound",
-  "size": "L",
-  "coat": "short",
-  "colors": ["red", "fawn", "white & red"],
-  "species": "dog",
-  "sizeAvg": 65,
-  "sizeRange": [55, 85],
-  "litterSize": "L",
-  "traits": {
-    "intelligence": 7,
-    "energy": 8,
-    "trainability": 5,
-    "loyalty": 8,
-    "playfulness": 7,
-    "aggression": 3,
-    "preyDrive": 9,
-    "barkTendency": 4,
-    "sociability": 6,
-    "adaptability": 6
-  },
-  "health": {
-    "hips": 85,
-    "eyes": 88,
-    "heart": 90,
-    "joints": 85
-  },
-  "aptitudes": ["Lure Coursing", "Conformation"]
-}, {
+},{
   "name": "Thai Ridgeback",
   "group": "Hound",
   "size": "L",
@@ -2101,7 +1804,7 @@ var DEMO_BREEDS = [{
     "joints": 82
   },
   "aptitudes": ["Lure Coursing", "Conformation"]
-}, {
+},{
   "name": "Rhodesian Ridgeback",
   "group": "Hound",
   "size": "L",
@@ -2130,7 +1833,7 @@ var DEMO_BREEDS = [{
     "joints": 78
   },
   "aptitudes": ["Tracking", "Lure Coursing", "Conformation"]
-}, {
+},{
   "name": "Peruvian Inca Orchid",
   "group": "Hound",
   "size": "M",
@@ -2159,7 +1862,7 @@ var DEMO_BREEDS = [{
     "joints": 82
   },
   "aptitudes": ["Lure Coursing", "Agility", "Conformation"]
-}, {
+},{
   "name": "Bloodhound",
   "group": "Hound",
   "size": "L",
@@ -2188,7 +1891,7 @@ var DEMO_BREEDS = [{
     "joints": 65
   },
   "aptitudes": ["Tracking", "Field Trials", "Conformation"]
-}, {
+},{
   "name": "Beagle",
   "group": "Hound",
   "size": "S",
@@ -2217,7 +1920,7 @@ var DEMO_BREEDS = [{
     "joints": 80
   },
   "aptitudes": ["Field Trials", "Tracking", "Conformation"]
-}, {
+},{
   "name": "Coonhound (Black & Tan)",
   "group": "Hound",
   "size": "L",
@@ -2246,7 +1949,7 @@ var DEMO_BREEDS = [{
     "joints": 78
   },
   "aptitudes": ["Field Trials", "Tracking"]
-}, {
+},{
   "name": "Redbone Coonhound",
   "group": "Hound",
   "size": "L",
@@ -2275,7 +1978,7 @@ var DEMO_BREEDS = [{
     "joints": 78
   },
   "aptitudes": ["Field Trials", "Tracking"]
-}, {
+},{
   "name": "Treeing Walker Coonhound",
   "group": "Hound",
   "size": "L",
@@ -2304,7 +2007,7 @@ var DEMO_BREEDS = [{
     "joints": 78
   },
   "aptitudes": ["Field Trials", "Tracking"]
-}, {
+},{
   "name": "Plott Hound",
   "group": "Hound",
   "size": "M",
@@ -2333,7 +2036,7 @@ var DEMO_BREEDS = [{
     "joints": 82
   },
   "aptitudes": ["Field Trials", "Tracking", "Conformation"]
-}, {
+},{
   "name": "American Foxhound",
   "group": "Hound",
   "size": "L",
@@ -2362,7 +2065,7 @@ var DEMO_BREEDS = [{
     "joints": 80
   },
   "aptitudes": ["Field Trials", "Tracking"]
-}, {
+},{
   "name": "Harrier",
   "group": "Hound",
   "size": "M",
@@ -2391,7 +2094,7 @@ var DEMO_BREEDS = [{
     "joints": 80
   },
   "aptitudes": ["Field Trials", "Conformation"]
-}, {
+},{
   "name": "Foxhound",
   "group": "Hound",
   "size": "L",
@@ -2420,7 +2123,7 @@ var DEMO_BREEDS = [{
     "joints": 80
   },
   "aptitudes": ["Field Trials", "Conformation"]
-}, {
+},{
   "name": "Otterhound",
   "group": "Hound",
   "size": "L",
@@ -2449,7 +2152,7 @@ var DEMO_BREEDS = [{
     "joints": 72
   },
   "aptitudes": ["Field Trials", "Conformation"]
-}, {
+},{
   "name": "Basset Hound",
   "group": "Hound",
   "size": "M",
@@ -2478,7 +2181,7 @@ var DEMO_BREEDS = [{
     "joints": 68
   },
   "aptitudes": ["Field Trials", "Tracking", "Conformation"]
-}, {
+},{
   "name": "Dachshund",
   "group": "Hound",
   "size": "XS",
@@ -2507,7 +2210,7 @@ var DEMO_BREEDS = [{
     "joints": 50
   },
   "aptitudes": ["Earthdog", "Conformation", "Field Trials"]
-}, {
+},{
   "name": "Bavarian Mountain Hound",
   "group": "Hound",
   "size": "M",
@@ -2536,210 +2239,7 @@ var DEMO_BREEDS = [{
     "joints": 78
   },
   "aptitudes": ["Tracking", "Field Trials"]
-}, {
-  "name": "Hanover Hound",
-  "group": "Hound",
-  "size": "L",
-  "coat": "short",
-  "colors": ["red", "tan", "brindle"],
-  "species": "dog",
-  "sizeAvg": 65,
-  "sizeRange": [55, 85],
-  "litterSize": "L",
-  "traits": {
-    "intelligence": 7,
-    "energy": 7,
-    "trainability": 6,
-    "loyalty": 9,
-    "playfulness": 6,
-    "aggression": 3,
-    "preyDrive": 9,
-    "barkTendency": 6,
-    "sociability": 6,
-    "adaptability": 5
-  },
-  "health": {
-    "hips": 78,
-    "eyes": 80,
-    "heart": 82,
-    "joints": 78
-  },
-  "aptitudes": ["Tracking", "Field Trials"]
-}, {
-  "name": "Hamiltonst\xF6vare",
-  "group": "Hound",
-  "size": "L",
-  "coat": "short",
-  "colors": ["tricolor"],
-  "species": "dog",
-  "sizeAvg": 65,
-  "sizeRange": [55, 85],
-  "litterSize": "L",
-  "traits": {
-    "intelligence": 7,
-    "energy": 8,
-    "trainability": 6,
-    "loyalty": 8,
-    "playfulness": 7,
-    "aggression": 2,
-    "preyDrive": 8,
-    "barkTendency": 7,
-    "sociability": 7,
-    "adaptability": 6
-  },
-  "health": {
-    "hips": 80,
-    "eyes": 82,
-    "heart": 85,
-    "joints": 80
-  },
-  "aptitudes": ["Field Trials", "Conformation"]
-}, {
-  "name": "Hygenhund",
-  "group": "Hound",
-  "size": "M",
-  "coat": "short",
-  "colors": ["red", "red & white", "black & white"],
-  "species": "dog",
-  "sizeAvg": 40,
-  "sizeRange": [28, 55],
-  "litterSize": "M",
-  "traits": {
-    "intelligence": 7,
-    "energy": 8,
-    "trainability": 6,
-    "loyalty": 8,
-    "playfulness": 7,
-    "aggression": 2,
-    "preyDrive": 8,
-    "barkTendency": 7,
-    "sociability": 7,
-    "adaptability": 6
-  },
-  "health": {
-    "hips": 80,
-    "eyes": 82,
-    "heart": 85,
-    "joints": 80
-  },
-  "aptitudes": ["Field Trials", "Conformation"]
-}, {
-  "name": "Dunker",
-  "group": "Hound",
-  "size": "M",
-  "coat": "short",
-  "colors": ["black & white", "merle"],
-  "species": "dog",
-  "sizeAvg": 40,
-  "sizeRange": [28, 55],
-  "litterSize": "M",
-  "traits": {
-    "intelligence": 7,
-    "energy": 8,
-    "trainability": 6,
-    "loyalty": 8,
-    "playfulness": 7,
-    "aggression": 2,
-    "preyDrive": 8,
-    "barkTendency": 7,
-    "sociability": 7,
-    "adaptability": 6
-  },
-  "health": {
-    "hips": 80,
-    "eyes": 82,
-    "heart": 85,
-    "joints": 80
-  },
-  "aptitudes": ["Field Trials", "Conformation"]
-}, {
-  "name": "Segugio Italiano",
-  "group": "Hound",
-  "size": "M",
-  "coat": "short",
-  "colors": ["fawn", "black & tan", "red"],
-  "species": "dog",
-  "sizeAvg": 40,
-  "sizeRange": [28, 55],
-  "litterSize": "M",
-  "traits": {
-    "intelligence": 7,
-    "energy": 8,
-    "trainability": 6,
-    "loyalty": 8,
-    "playfulness": 7,
-    "aggression": 3,
-    "preyDrive": 9,
-    "barkTendency": 7,
-    "sociability": 7,
-    "adaptability": 6
-  },
-  "health": {
-    "hips": 80,
-    "eyes": 82,
-    "heart": 85,
-    "joints": 80
-  },
-  "aptitudes": ["Field Trials", "Tracking", "Conformation"]
-}, {
-  "name": "Posavac Hound",
-  "group": "Hound",
-  "size": "M",
-  "coat": "short",
-  "colors": ["reddish wheaten & white"],
-  "species": "dog",
-  "sizeAvg": 40,
-  "sizeRange": [28, 55],
-  "litterSize": "M",
-  "traits": {
-    "intelligence": 7,
-    "energy": 8,
-    "trainability": 6,
-    "loyalty": 8,
-    "playfulness": 7,
-    "aggression": 2,
-    "preyDrive": 8,
-    "barkTendency": 7,
-    "sociability": 7,
-    "adaptability": 6
-  },
-  "health": {
-    "hips": 80,
-    "eyes": 82,
-    "heart": 85,
-    "joints": 80
-  },
-  "aptitudes": ["Field Trials", "Conformation"]
-}, {
-  "name": "Hellenic Hound",
-  "group": "Hound",
-  "size": "M",
-  "coat": "short",
-  "colors": ["black & tan"],
-  "species": "dog",
-  "sizeAvg": 40,
-  "sizeRange": [28, 55],
-  "litterSize": "M",
-  "traits": {
-    "intelligence": 7,
-    "energy": 8,
-    "trainability": 6,
-    "loyalty": 8,
-    "playfulness": 6,
-    "aggression": 3,
-    "preyDrive": 9,
-    "barkTendency": 7,
-    "sociability": 6,
-    "adaptability": 6
-  },
-  "health": {
-    "hips": 82,
-    "eyes": 84,
-    "heart": 86,
-    "joints": 82
-  },
-  "aptitudes": ["Field Trials", "Tracking"]
-}, {
+},{
   "name": "Airedale Terrier",
   "group": "Terrier",
   "size": "L",
@@ -2768,7 +2268,7 @@ var DEMO_BREEDS = [{
     "joints": 82
   },
   "aptitudes": ["Earthdog", "Agility", "Obedience"]
-}, {
+},{
   "name": "Border Terrier",
   "group": "Terrier",
   "size": "S",
@@ -2797,7 +2297,7 @@ var DEMO_BREEDS = [{
     "joints": 82
   },
   "aptitudes": ["Earthdog", "Agility", "Conformation"]
-}, {
+},{
   "name": "Bull Terrier",
   "group": "Terrier",
   "size": "M",
@@ -2826,7 +2326,7 @@ var DEMO_BREEDS = [{
     "joints": 78
   },
   "aptitudes": ["Conformation", "Obedience"]
-}, {
+},{
   "name": "Miniature Bull Terrier",
   "group": "Terrier",
   "size": "S",
@@ -2855,7 +2355,7 @@ var DEMO_BREEDS = [{
     "joints": 78
   },
   "aptitudes": ["Conformation", "Obedience"]
-}, {
+},{
   "name": "Cairn Terrier",
   "group": "Terrier",
   "size": "XS",
@@ -2884,7 +2384,7 @@ var DEMO_BREEDS = [{
     "joints": 82
   },
   "aptitudes": ["Earthdog", "Agility", "Conformation"]
-}, {
+},{
   "name": "Scottish Terrier",
   "group": "Terrier",
   "size": "XS",
@@ -2913,7 +2413,7 @@ var DEMO_BREEDS = [{
     "joints": 80
   },
   "aptitudes": ["Earthdog", "Conformation", "Agility"]
-}, {
+},{
   "name": "West Highland White Terrier",
   "group": "Terrier",
   "size": "XS",
@@ -2942,7 +2442,7 @@ var DEMO_BREEDS = [{
     "joints": 78
   },
   "aptitudes": ["Earthdog", "Agility", "Conformation"]
-}, {
+},{
   "name": "Skye Terrier",
   "group": "Terrier",
   "size": "S",
@@ -2971,7 +2471,7 @@ var DEMO_BREEDS = [{
     "joints": 78
   },
   "aptitudes": ["Earthdog", "Conformation"]
-}, {
+},{
   "name": "Dandie Dinmont Terrier",
   "group": "Terrier",
   "size": "S",
@@ -3000,7 +2500,7 @@ var DEMO_BREEDS = [{
     "joints": 72
   },
   "aptitudes": ["Earthdog", "Conformation"]
-}, {
+},{
   "name": "Norfolk Terrier",
   "group": "Terrier",
   "size": "XS",
@@ -3029,7 +2529,7 @@ var DEMO_BREEDS = [{
     "joints": 82
   },
   "aptitudes": ["Earthdog", "Agility", "Conformation"]
-}, {
+},{
   "name": "Norwich Terrier",
   "group": "Terrier",
   "size": "XS",
@@ -3058,7 +2558,7 @@ var DEMO_BREEDS = [{
     "joints": 82
   },
   "aptitudes": ["Earthdog", "Agility", "Conformation"]
-}, {
+},{
   "name": "Sealyham Terrier",
   "group": "Terrier",
   "size": "S",
@@ -3087,7 +2587,7 @@ var DEMO_BREEDS = [{
     "joints": 80
   },
   "aptitudes": ["Earthdog", "Conformation", "Agility"]
-}, {
+},{
   "name": "Lakeland Terrier",
   "group": "Terrier",
   "size": "S",
@@ -3116,7 +2616,7 @@ var DEMO_BREEDS = [{
     "joints": 82
   },
   "aptitudes": ["Earthdog", "Agility", "Conformation"]
-}, {
+},{
   "name": "Manchester Terrier",
   "group": "Terrier",
   "size": "S",
@@ -3145,7 +2645,7 @@ var DEMO_BREEDS = [{
     "joints": 82
   },
   "aptitudes": ["Earthdog", "Agility", "Conformation"]
-}, {
+},{
   "name": "Bedlington Terrier",
   "group": "Terrier",
   "size": "S",
@@ -3174,7 +2674,7 @@ var DEMO_BREEDS = [{
     "joints": 82
   },
   "aptitudes": ["Earthdog", "Agility", "Conformation"]
-}, {
+},{
   "name": "Welsh Terrier",
   "group": "Terrier",
   "size": "M",
@@ -3203,7 +2703,7 @@ var DEMO_BREEDS = [{
     "joints": 82
   },
   "aptitudes": ["Earthdog", "Agility", "Conformation"]
-}, {
+},{
   "name": "Kerry Blue Terrier",
   "group": "Terrier",
   "size": "M",
@@ -3232,7 +2732,7 @@ var DEMO_BREEDS = [{
     "joints": 80
   },
   "aptitudes": ["Earthdog", "Agility", "Herding"]
-}, {
+},{
   "name": "Irish Terrier",
   "group": "Terrier",
   "size": "M",
@@ -3261,7 +2761,7 @@ var DEMO_BREEDS = [{
     "joints": 82
   },
   "aptitudes": ["Earthdog", "Agility", "Conformation"]
-}, {
+},{
   "name": "Glen of Imaal Terrier",
   "group": "Terrier",
   "size": "S",
@@ -3290,7 +2790,7 @@ var DEMO_BREEDS = [{
     "joints": 80
   },
   "aptitudes": ["Earthdog", "Conformation"]
-}, {
+},{
   "name": "Soft Coated Wheaten Terrier",
   "group": "Terrier",
   "size": "M",
@@ -3319,7 +2819,7 @@ var DEMO_BREEDS = [{
     "joints": 78
   },
   "aptitudes": ["Agility", "Obedience", "Conformation"]
-}, {
+},{
   "name": "Jack Russell Terrier",
   "group": "Terrier",
   "size": "XS",
@@ -3348,7 +2848,7 @@ var DEMO_BREEDS = [{
     "joints": 88
   },
   "aptitudes": ["Earthdog", "Agility", "Flyball"]
-}, {
+},{
   "name": "Parson Russell Terrier",
   "group": "Terrier",
   "size": "S",
@@ -3377,7 +2877,7 @@ var DEMO_BREEDS = [{
     "joints": 88
   },
   "aptitudes": ["Earthdog", "Agility", "Conformation"]
-}, {
+},{
   "name": "Patterdale Terrier",
   "group": "Terrier",
   "size": "XS",
@@ -3406,7 +2906,7 @@ var DEMO_BREEDS = [{
     "joints": 85
   },
   "aptitudes": ["Earthdog", "Field Trials"]
-}, {
+},{
   "name": "Miniature Schnauzer",
   "group": "Terrier",
   "size": "S",
@@ -3435,7 +2935,7 @@ var DEMO_BREEDS = [{
     "joints": 84
   },
   "aptitudes": ["Earthdog", "Obedience", "Agility"]
-}, {
+},{
   "name": "Staffordshire Bull Terrier",
   "group": "Terrier",
   "size": "M",
@@ -3464,7 +2964,7 @@ var DEMO_BREEDS = [{
     "joints": 80
   },
   "aptitudes": ["Agility", "Conformation", "Obedience"]
-}, {
+},{
   "name": "American Pit Bull Terrier",
   "group": "Terrier",
   "size": "M",
@@ -3493,7 +2993,7 @@ var DEMO_BREEDS = [{
     "joints": 78
   },
   "aptitudes": ["Agility", "Obedience", "Conformation"]
-}, {
+},{
   "name": "American Staffordshire Terrier",
   "group": "Terrier",
   "size": "M",
@@ -3522,7 +3022,7 @@ var DEMO_BREEDS = [{
     "joints": 78
   },
   "aptitudes": ["Agility", "Obedience", "Conformation"]
-}, {
+},{
   "name": "Rat Terrier",
   "group": "Terrier",
   "size": "S",
@@ -3551,7 +3051,7 @@ var DEMO_BREEDS = [{
     "joints": 85
   },
   "aptitudes": ["Earthdog", "Agility", "Flyball"]
-}, {
+},{
   "name": "Fox Terrier (Smooth)",
   "group": "Terrier",
   "size": "S",
@@ -3580,7 +3080,7 @@ var DEMO_BREEDS = [{
     "joints": 82
   },
   "aptitudes": ["Earthdog", "Agility", "Conformation"]
-}, {
+},{
   "name": "Fox Terrier (Wire)",
   "group": "Terrier",
   "size": "S",
@@ -3609,7 +3109,7 @@ var DEMO_BREEDS = [{
     "joints": 82
   },
   "aptitudes": ["Earthdog", "Agility", "Conformation"]
-}, {
+},{
   "name": "Cesky Terrier",
   "group": "Terrier",
   "size": "S",
@@ -3638,7 +3138,7 @@ var DEMO_BREEDS = [{
     "joints": 82
   },
   "aptitudes": ["Earthdog", "Conformation", "Agility"]
-}, {
+},{
   "name": "Jagdterrier",
   "group": "Terrier",
   "size": "S",
@@ -3667,7 +3167,7 @@ var DEMO_BREEDS = [{
     "joints": 84
   },
   "aptitudes": ["Earthdog", "Field Trials", "Tracking"]
-}, {
+},{
   "name": "Australian Terrier",
   "group": "Terrier",
   "size": "XS",
@@ -3696,7 +3196,7 @@ var DEMO_BREEDS = [{
     "joints": 82
   },
   "aptitudes": ["Earthdog", "Agility", "Conformation"]
-}, {
+},{
   "name": "Boxer",
   "group": "Working",
   "size": "L",
@@ -3725,7 +3225,7 @@ var DEMO_BREEDS = [{
     "joints": 72
   },
   "aptitudes": ["Schutzhund", "Agility", "Conformation"]
-}, {
+},{
   "name": "Doberman Pinscher",
   "group": "Working",
   "size": "L",
@@ -3754,7 +3254,7 @@ var DEMO_BREEDS = [{
     "joints": 75
   },
   "aptitudes": ["Schutzhund", "Obedience", "Agility"]
-}, {
+},{
   "name": "Rottweiler",
   "group": "Working",
   "size": "L",
@@ -3783,7 +3283,7 @@ var DEMO_BREEDS = [{
     "joints": 72
   },
   "aptitudes": ["Schutzhund", "Obedience", "Tracking"]
-}, {
+},{
   "name": "Giant Schnauzer",
   "group": "Working",
   "size": "L",
@@ -3812,7 +3312,7 @@ var DEMO_BREEDS = [{
     "joints": 72
   },
   "aptitudes": ["Schutzhund", "Obedience", "Agility"]
-}, {
+},{
   "name": "Standard Schnauzer",
   "group": "Working",
   "size": "M",
@@ -3841,7 +3341,7 @@ var DEMO_BREEDS = [{
     "joints": 78
   },
   "aptitudes": ["Schutzhund", "Obedience", "Agility"]
-}, {
+},{
   "name": "Akita Inu",
   "group": "Working",
   "size": "L",
@@ -3870,7 +3370,7 @@ var DEMO_BREEDS = [{
     "joints": 75
   },
   "aptitudes": ["Conformation", "Obedience"]
-}, {
+},{
   "name": "American Akita",
   "group": "Working",
   "size": "XL",
@@ -3899,7 +3399,7 @@ var DEMO_BREEDS = [{
     "joints": 75
   },
   "aptitudes": ["Conformation", "Obedience"]
-}, {
+},{
   "name": "Siberian Husky",
   "group": "Working",
   "size": "L",
@@ -3928,7 +3428,7 @@ var DEMO_BREEDS = [{
     "joints": 82
   },
   "aptitudes": ["Sled Racing", "Agility", "Conformation"]
-}, {
+},{
   "name": "Alaskan Malamute",
   "group": "Working",
   "size": "XL",
@@ -3957,7 +3457,7 @@ var DEMO_BREEDS = [{
     "joints": 75
   },
   "aptitudes": ["Sled Racing", "Draft", "Conformation"]
-}, {
+},{
   "name": "Greenland Dog",
   "group": "Working",
   "size": "L",
@@ -3986,7 +3486,7 @@ var DEMO_BREEDS = [{
     "joints": 78
   },
   "aptitudes": ["Sled Racing", "Conformation"]
-}, {
+},{
   "name": "Canadian Eskimo Dog",
   "group": "Working",
   "size": "L",
@@ -4015,7 +3515,7 @@ var DEMO_BREEDS = [{
     "joints": 78
   },
   "aptitudes": ["Sled Racing", "Conformation"]
-}, {
+},{
   "name": "Bernese Mountain Dog",
   "group": "Working",
   "size": "L",
@@ -4044,7 +3544,7 @@ var DEMO_BREEDS = [{
     "joints": 62
   },
   "aptitudes": ["Draft", "Conformation", "Obedience"]
-}, {
+},{
   "name": "Greater Swiss Mountain Dog",
   "group": "Working",
   "size": "XL",
@@ -4073,7 +3573,7 @@ var DEMO_BREEDS = [{
     "joints": 68
   },
   "aptitudes": ["Draft", "Conformation", "Obedience"]
-}, {
+},{
   "name": "Appenzeller Sennenhund",
   "group": "Working",
   "size": "M",
@@ -4102,7 +3602,7 @@ var DEMO_BREEDS = [{
     "joints": 75
   },
   "aptitudes": ["Draft", "Agility", "Conformation"]
-}, {
+},{
   "name": "Entlebucher Mountain Dog",
   "group": "Working",
   "size": "M",
@@ -4131,7 +3631,7 @@ var DEMO_BREEDS = [{
     "joints": 75
   },
   "aptitudes": ["Draft", "Agility", "Conformation"]
-}, {
+},{
   "name": "Saint Bernard",
   "group": "Working",
   "size": "XL",
@@ -4160,7 +3660,7 @@ var DEMO_BREEDS = [{
     "joints": 62
   },
   "aptitudes": ["Draft", "Conformation", "Obedience"]
-}, {
+},{
   "name": "Newfoundland",
   "group": "Working",
   "size": "XL",
@@ -4189,7 +3689,7 @@ var DEMO_BREEDS = [{
     "joints": 68
   },
   "aptitudes": ["Draft", "Dock Diving", "Conformation"]
-}, {
+},{
   "name": "Leonberger",
   "group": "Working",
   "size": "XL",
@@ -4218,7 +3718,7 @@ var DEMO_BREEDS = [{
     "joints": 65
   },
   "aptitudes": ["Draft", "Conformation", "Obedience"]
-}, {
+},{
   "name": "Hovawart",
   "group": "Working",
   "size": "L",
@@ -4247,7 +3747,7 @@ var DEMO_BREEDS = [{
     "joints": 72
   },
   "aptitudes": ["Schutzhund", "Tracking", "Conformation"]
-}, {
+},{
   "name": "English Mastiff",
   "group": "Working",
   "size": "XL",
@@ -4276,7 +3776,7 @@ var DEMO_BREEDS = [{
     "joints": 62
   },
   "aptitudes": ["Conformation", "Obedience"]
-}, {
+},{
   "name": "Bullmastiff",
   "group": "Working",
   "size": "XL",
@@ -4305,7 +3805,7 @@ var DEMO_BREEDS = [{
     "joints": 65
   },
   "aptitudes": ["Schutzhund", "Conformation", "Obedience"]
-}, {
+},{
   "name": "Neapolitan Mastiff",
   "group": "Working",
   "size": "XL",
@@ -4334,7 +3834,7 @@ var DEMO_BREEDS = [{
     "joints": 62
   },
   "aptitudes": ["Conformation", "Obedience"]
-}, {
+},{
   "name": "Dogue de Bordeaux",
   "group": "Working",
   "size": "XL",
@@ -4363,7 +3863,7 @@ var DEMO_BREEDS = [{
     "joints": 65
   },
   "aptitudes": ["Schutzhund", "Conformation", "Obedience"]
-}, {
+},{
   "name": "Cane Corso",
   "group": "Working",
   "size": "XL",
@@ -4392,7 +3892,7 @@ var DEMO_BREEDS = [{
     "joints": 70
   },
   "aptitudes": ["Schutzhund", "Conformation", "Obedience"]
-}, {
+},{
   "name": "Broholmer",
   "group": "Working",
   "size": "XL",
@@ -4421,7 +3921,7 @@ var DEMO_BREEDS = [{
     "joints": 65
   },
   "aptitudes": ["Conformation", "Obedience"]
-}, {
+},{
   "name": "Boerboel",
   "group": "Working",
   "size": "XL",
@@ -4450,7 +3950,7 @@ var DEMO_BREEDS = [{
     "joints": 68
   },
   "aptitudes": ["Schutzhund", "Conformation", "Obedience"]
-}, {
+},{
   "name": "Rhodesian Ridgeback",
   "group": "Working",
   "size": "L",
@@ -4479,36 +3979,7 @@ var DEMO_BREEDS = [{
     "joints": 78
   },
   "aptitudes": ["Tracking", "Lure Coursing", "Conformation"]
-}, {
-  "name": "Cimarron Uruguayo",
-  "group": "Working",
-  "size": "L",
-  "coat": "short",
-  "colors": ["brindle", "fawn"],
-  "species": "dog",
-  "sizeAvg": 65,
-  "sizeRange": [55, 85],
-  "litterSize": "L",
-  "traits": {
-    "intelligence": 7,
-    "energy": 7,
-    "trainability": 6,
-    "loyalty": 9,
-    "playfulness": 6,
-    "aggression": 5,
-    "preyDrive": 6,
-    "barkTendency": 5,
-    "sociability": 6,
-    "adaptability": 6
-  },
-  "health": {
-    "hips": 72,
-    "eyes": 78,
-    "heart": 78,
-    "joints": 72
-  },
-  "aptitudes": ["Schutzhund", "Conformation"]
-}, {
+},{
   "name": "Spanish Mastiff",
   "group": "Working",
   "size": "XL",
@@ -4537,7 +4008,7 @@ var DEMO_BREEDS = [{
     "joints": 65
   },
   "aptitudes": ["Conformation", "Obedience", "LGD"]
-}, {
+},{
   "name": "Pyrenean Mastiff",
   "group": "Working",
   "size": "XL",
@@ -4566,7 +4037,7 @@ var DEMO_BREEDS = [{
     "joints": 65
   },
   "aptitudes": ["Conformation", "Obedience"]
-}, {
+},{
   "name": "Great Pyrenees",
   "group": "Working",
   "size": "XL",
@@ -4595,7 +4066,7 @@ var DEMO_BREEDS = [{
     "joints": 70
   },
   "aptitudes": ["Conformation", "Obedience", "LGD"]
-}, {
+},{
   "name": "Dogo Argentino",
   "group": "Working",
   "size": "L",
@@ -4624,7 +4095,7 @@ var DEMO_BREEDS = [{
     "joints": 72
   },
   "aptitudes": ["Schutzhund", "Tracking", "Conformation"]
-}, {
+},{
   "name": "Fila Brasileiro",
   "group": "Working",
   "size": "XL",
@@ -4653,7 +4124,7 @@ var DEMO_BREEDS = [{
     "joints": 65
   },
   "aptitudes": ["Tracking", "Conformation"]
-}, {
+},{
   "name": "Perro de Presa Canario",
   "group": "Working",
   "size": "XL",
@@ -4682,7 +4153,7 @@ var DEMO_BREEDS = [{
     "joints": 68
   },
   "aptitudes": ["Schutzhund", "Conformation", "Obedience"]
-}, {
+},{
   "name": "Caucasian Ovcharka",
   "group": "Working",
   "size": "XL",
@@ -4711,65 +4182,7 @@ var DEMO_BREEDS = [{
     "joints": 68
   },
   "aptitudes": ["Schutzhund", "Conformation", "LGD"]
-}, {
-  "name": "Central Asian Ovcharka",
-  "group": "Working",
-  "size": "XL",
-  "coat": "medium",
-  "colors": ["white", "gray", "fawn", "black", "brindle"],
-  "species": "dog",
-  "sizeAvg": 100,
-  "sizeRange": [80, 130],
-  "litterSize": "L",
-  "traits": {
-    "intelligence": 7,
-    "energy": 5,
-    "trainability": 4,
-    "loyalty": 9,
-    "playfulness": 4,
-    "aggression": 6,
-    "preyDrive": 6,
-    "barkTendency": 7,
-    "sociability": 4,
-    "adaptability": 6
-  },
-  "health": {
-    "hips": 70,
-    "eyes": 75,
-    "heart": 75,
-    "joints": 70
-  },
-  "aptitudes": ["Schutzhund", "Conformation", "LGD"]
-}, {
-  "name": "South Russian Ovcharka",
-  "group": "Working",
-  "size": "L",
-  "coat": "long",
-  "colors": ["white", "gray", "white & gray"],
-  "species": "dog",
-  "sizeAvg": 65,
-  "sizeRange": [55, 85],
-  "litterSize": "L",
-  "traits": {
-    "intelligence": 6,
-    "energy": 6,
-    "trainability": 4,
-    "loyalty": 9,
-    "playfulness": 4,
-    "aggression": 6,
-    "preyDrive": 5,
-    "barkTendency": 7,
-    "sociability": 4,
-    "adaptability": 5
-  },
-  "health": {
-    "hips": 70,
-    "eyes": 75,
-    "heart": 78,
-    "joints": 70
-  },
-  "aptitudes": ["Conformation"]
-}, {
+},{
   "name": "Black Russian Terrier",
   "group": "Working",
   "size": "L",
@@ -4798,36 +4211,7 @@ var DEMO_BREEDS = [{
     "joints": 72
   },
   "aptitudes": ["Schutzhund", "Obedience", "Conformation"]
-}, {
-  "name": "Moscow Watchdog",
-  "group": "Working",
-  "size": "XL",
-  "coat": "long",
-  "colors": ["red & white", "piebald"],
-  "species": "dog",
-  "sizeAvg": 100,
-  "sizeRange": [80, 130],
-  "litterSize": "L",
-  "traits": {
-    "intelligence": 6,
-    "energy": 5,
-    "trainability": 6,
-    "loyalty": 9,
-    "playfulness": 5,
-    "aggression": 4,
-    "preyDrive": 4,
-    "barkTendency": 6,
-    "sociability": 6,
-    "adaptability": 5
-  },
-  "health": {
-    "hips": 68,
-    "eyes": 72,
-    "heart": 70,
-    "joints": 68
-  },
-  "aptitudes": ["Conformation", "Obedience"]
-}, {
+},{
   "name": "Kangal",
   "group": "Working",
   "size": "XL",
@@ -4856,7 +4240,7 @@ var DEMO_BREEDS = [{
     "joints": 75
   },
   "aptitudes": ["Conformation", "Obedience", "LGD"]
-}, {
+},{
   "name": "Anatolian Shepherd",
   "group": "Working",
   "size": "XL",
@@ -4885,7 +4269,7 @@ var DEMO_BREEDS = [{
     "joints": 75
   },
   "aptitudes": ["Conformation", "LGD"]
-}, {
+},{
   "name": "Akbash",
   "group": "Working",
   "size": "XL",
@@ -4914,36 +4298,7 @@ var DEMO_BREEDS = [{
     "joints": 72
   },
   "aptitudes": ["Conformation", "LGD"]
-}, {
-  "name": "Bully Kutta",
-  "group": "Working",
-  "size": "XL",
-  "coat": "short",
-  "colors": ["white", "fawn", "black", "brindle", "harlequin"],
-  "species": "dog",
-  "sizeAvg": 100,
-  "sizeRange": [80, 130],
-  "litterSize": "L",
-  "traits": {
-    "intelligence": 7,
-    "energy": 7,
-    "trainability": 5,
-    "loyalty": 9,
-    "playfulness": 5,
-    "aggression": 7,
-    "preyDrive": 6,
-    "barkTendency": 5,
-    "sociability": 5,
-    "adaptability": 5
-  },
-  "health": {
-    "hips": 68,
-    "eyes": 72,
-    "heart": 72,
-    "joints": 68
-  },
-  "aptitudes": ["Schutzhund", "Conformation"]
-}, {
+},{
   "name": "Rajapalayam",
   "group": "Working",
   "size": "L",
@@ -4972,7 +4327,7 @@ var DEMO_BREEDS = [{
     "joints": 75
   },
   "aptitudes": ["Conformation"]
-}, {
+},{
   "name": "Tosa Inu",
   "group": "Working",
   "size": "XL",
@@ -5001,7 +4356,7 @@ var DEMO_BREEDS = [{
     "joints": 68
   },
   "aptitudes": ["Schutzhund", "Conformation"]
-}, {
+},{
   "name": "Tibetan Mastiff",
   "group": "Working",
   "size": "XL",
@@ -5030,7 +4385,7 @@ var DEMO_BREEDS = [{
     "joints": 68
   },
   "aptitudes": ["Conformation", "LGD"]
-}, {
+},{
   "name": "Great Dane",
   "group": "Working",
   "size": "XL",
@@ -5059,7 +4414,7 @@ var DEMO_BREEDS = [{
     "joints": 58
   },
   "aptitudes": ["Conformation", "Obedience"]
-}, {
+},{
   "name": "Labrador Retriever",
   "group": "Sporting",
   "size": "L",
@@ -5088,7 +4443,7 @@ var DEMO_BREEDS = [{
     "joints": 72
   },
   "aptitudes": ["Field Trials", "Dock Diving", "Obedience"]
-}, {
+},{
   "name": "Golden Retriever",
   "group": "Sporting",
   "size": "L",
@@ -5117,7 +4472,7 @@ var DEMO_BREEDS = [{
     "joints": 70
   },
   "aptitudes": ["Field Trials", "Dock Diving", "Obedience"]
-}, {
+},{
   "name": "Flat-Coated Retriever",
   "group": "Sporting",
   "size": "L",
@@ -5146,7 +4501,7 @@ var DEMO_BREEDS = [{
     "joints": 72
   },
   "aptitudes": ["Field Trials", "Dock Diving", "Conformation"]
-}, {
+},{
   "name": "Curly-Coated Retriever",
   "group": "Sporting",
   "size": "L",
@@ -5175,7 +4530,7 @@ var DEMO_BREEDS = [{
     "joints": 72
   },
   "aptitudes": ["Field Trials", "Dock Diving", "Conformation"]
-}, {
+},{
   "name": "Chesapeake Bay Retriever",
   "group": "Sporting",
   "size": "L",
@@ -5204,7 +4559,7 @@ var DEMO_BREEDS = [{
     "joints": 72
   },
   "aptitudes": ["Field Trials", "Dock Diving", "Conformation"]
-}, {
+},{
   "name": "Nova Scotia Duck Tolling Retriever",
   "group": "Sporting",
   "size": "M",
@@ -5233,7 +4588,7 @@ var DEMO_BREEDS = [{
     "joints": 78
   },
   "aptitudes": ["Field Trials", "Agility", "Dock Diving"]
-}, {
+},{
   "name": "German Shorthaired Pointer",
   "group": "Sporting",
   "size": "L",
@@ -5262,7 +4617,7 @@ var DEMO_BREEDS = [{
     "joints": 78
   },
   "aptitudes": ["Field Trials", "Agility", "Dock Diving"]
-}, {
+},{
   "name": "German Wirehaired Pointer",
   "group": "Sporting",
   "size": "L",
@@ -5291,7 +4646,7 @@ var DEMO_BREEDS = [{
     "joints": 78
   },
   "aptitudes": ["Field Trials", "Tracking", "Conformation"]
-}, {
+},{
   "name": "German Longhaired Pointer",
   "group": "Sporting",
   "size": "L",
@@ -5320,7 +4675,7 @@ var DEMO_BREEDS = [{
     "joints": 78
   },
   "aptitudes": ["Field Trials", "Conformation"]
-}, {
+},{
   "name": "Weimaraner",
   "group": "Sporting",
   "size": "L",
@@ -5349,7 +4704,7 @@ var DEMO_BREEDS = [{
     "joints": 75
   },
   "aptitudes": ["Field Trials", "Tracking", "Agility"]
-}, {
+},{
   "name": "Vizsla",
   "group": "Sporting",
   "size": "L",
@@ -5378,7 +4733,7 @@ var DEMO_BREEDS = [{
     "joints": 78
   },
   "aptitudes": ["Field Trials", "Agility", "Conformation"]
-}, {
+},{
   "name": "Wirehaired Vizsla",
   "group": "Sporting",
   "size": "L",
@@ -5407,36 +4762,7 @@ var DEMO_BREEDS = [{
     "joints": 78
   },
   "aptitudes": ["Field Trials", "Tracking", "Conformation"]
-}, {
-  "name": "Pudelpointer",
-  "group": "Sporting",
-  "size": "L",
-  "coat": "wire",
-  "colors": ["liver", "brown", "chestnut"],
-  "species": "dog",
-  "sizeAvg": 65,
-  "sizeRange": [55, 85],
-  "litterSize": "L",
-  "traits": {
-    "intelligence": 8,
-    "energy": 8,
-    "trainability": 8,
-    "loyalty": 8,
-    "playfulness": 7,
-    "aggression": 2,
-    "preyDrive": 9,
-    "barkTendency": 4,
-    "sociability": 7,
-    "adaptability": 7
-  },
-  "health": {
-    "hips": 78,
-    "eyes": 82,
-    "heart": 85,
-    "joints": 78
-  },
-  "aptitudes": ["Field Trials", "Tracking"]
-}, {
+},{
   "name": "Bracco Italiano",
   "group": "Sporting",
   "size": "L",
@@ -5465,7 +4791,7 @@ var DEMO_BREEDS = [{
     "joints": 75
   },
   "aptitudes": ["Field Trials", "Conformation"]
-}, {
+},{
   "name": "Spinone Italiano",
   "group": "Sporting",
   "size": "L",
@@ -5494,7 +4820,7 @@ var DEMO_BREEDS = [{
     "joints": 72
   },
   "aptitudes": ["Field Trials", "Conformation"]
-}, {
+},{
   "name": "Lagotto Romagnolo",
   "group": "Sporting",
   "size": "M",
@@ -5523,7 +4849,7 @@ var DEMO_BREEDS = [{
     "joints": 80
   },
   "aptitudes": ["Field Trials", "Agility", "Tracking"]
-}, {
+},{
   "name": "Brittany Spaniel",
   "group": "Sporting",
   "size": "M",
@@ -5552,7 +4878,7 @@ var DEMO_BREEDS = [{
     "joints": 80
   },
   "aptitudes": ["Field Trials", "Agility", "Conformation"]
-}, {
+},{
   "name": "Wirehaired Pointing Griffon",
   "group": "Sporting",
   "size": "L",
@@ -5581,7 +4907,7 @@ var DEMO_BREEDS = [{
     "joints": 78
   },
   "aptitudes": ["Field Trials", "Tracking", "Conformation"]
-}, {
+},{
   "name": "Barbet",
   "group": "Sporting",
   "size": "M",
@@ -5610,36 +4936,7 @@ var DEMO_BREEDS = [{
     "joints": 80
   },
   "aptitudes": ["Field Trials", "Dock Diving", "Agility"]
-}, {
-  "name": "Drentsche Patrijshond",
-  "group": "Sporting",
-  "size": "L",
-  "coat": "medium",
-  "colors": ["white & brown", "white & orange"],
-  "species": "dog",
-  "sizeAvg": 65,
-  "sizeRange": [55, 85],
-  "litterSize": "L",
-  "traits": {
-    "intelligence": 8,
-    "energy": 7,
-    "trainability": 8,
-    "loyalty": 9,
-    "playfulness": 7,
-    "aggression": 1,
-    "preyDrive": 8,
-    "barkTendency": 4,
-    "sociability": 8,
-    "adaptability": 7
-  },
-  "health": {
-    "hips": 78,
-    "eyes": 80,
-    "heart": 85,
-    "joints": 78
-  },
-  "aptitudes": ["Field Trials", "Conformation"]
-}, {
+},{
   "name": "Kooikerhondje",
   "group": "Sporting",
   "size": "S",
@@ -5668,7 +4965,7 @@ var DEMO_BREEDS = [{
     "joints": 80
   },
   "aptitudes": ["Field Trials", "Agility", "Conformation"]
-}, {
+},{
   "name": "English Setter",
   "group": "Sporting",
   "size": "L",
@@ -5697,7 +4994,7 @@ var DEMO_BREEDS = [{
     "joints": 72
   },
   "aptitudes": ["Field Trials", "Conformation"]
-}, {
+},{
   "name": "Irish Setter",
   "group": "Sporting",
   "size": "L",
@@ -5726,7 +5023,7 @@ var DEMO_BREEDS = [{
     "joints": 72
   },
   "aptitudes": ["Field Trials", "Agility", "Conformation"]
-}, {
+},{
   "name": "Irish Red & White Setter",
   "group": "Sporting",
   "size": "L",
@@ -5755,7 +5052,7 @@ var DEMO_BREEDS = [{
     "joints": 72
   },
   "aptitudes": ["Field Trials", "Conformation"]
-}, {
+},{
   "name": "Gordon Setter",
   "group": "Sporting",
   "size": "L",
@@ -5784,7 +5081,7 @@ var DEMO_BREEDS = [{
     "joints": 72
   },
   "aptitudes": ["Field Trials", "Conformation"]
-}, {
+},{
   "name": "English Pointer",
   "group": "Sporting",
   "size": "L",
@@ -5813,7 +5110,7 @@ var DEMO_BREEDS = [{
     "joints": 78
   },
   "aptitudes": ["Field Trials", "Conformation"]
-}, {
+},{
   "name": "English Springer Spaniel",
   "group": "Sporting",
   "size": "M",
@@ -5842,7 +5139,7 @@ var DEMO_BREEDS = [{
     "joints": 75
   },
   "aptitudes": ["Field Trials", "Agility", "Conformation"]
-}, {
+},{
   "name": "English Cocker Spaniel",
   "group": "Sporting",
   "size": "M",
@@ -5871,7 +5168,7 @@ var DEMO_BREEDS = [{
     "joints": 75
   },
   "aptitudes": ["Field Trials", "Agility", "Conformation"]
-}, {
+},{
   "name": "American Cocker Spaniel",
   "group": "Sporting",
   "size": "S",
@@ -5900,7 +5197,7 @@ var DEMO_BREEDS = [{
     "joints": 72
   },
   "aptitudes": ["Field Trials", "Agility", "Conformation"]
-}, {
+},{
   "name": "Welsh Springer Spaniel",
   "group": "Sporting",
   "size": "M",
@@ -5929,7 +5226,7 @@ var DEMO_BREEDS = [{
     "joints": 75
   },
   "aptitudes": ["Field Trials", "Conformation", "Agility"]
-}, {
+},{
   "name": "Sussex Spaniel",
   "group": "Sporting",
   "size": "M",
@@ -5958,7 +5255,7 @@ var DEMO_BREEDS = [{
     "joints": 70
   },
   "aptitudes": ["Field Trials", "Conformation"]
-}, {
+},{
   "name": "Clumber Spaniel",
   "group": "Sporting",
   "size": "L",
@@ -5987,7 +5284,7 @@ var DEMO_BREEDS = [{
     "joints": 68
   },
   "aptitudes": ["Field Trials", "Conformation"]
-}, {
+},{
   "name": "Boykin Spaniel",
   "group": "Sporting",
   "size": "M",
@@ -6016,7 +5313,7 @@ var DEMO_BREEDS = [{
     "joints": 75
   },
   "aptitudes": ["Field Trials", "Dock Diving", "Conformation"]
-}, {
+},{
   "name": "American Water Spaniel",
   "group": "Sporting",
   "size": "M",
@@ -6045,7 +5342,7 @@ var DEMO_BREEDS = [{
     "joints": 75
   },
   "aptitudes": ["Field Trials", "Dock Diving", "Conformation"]
-}, {
+},{
   "name": "Chihuahua",
   "group": "Toy",
   "size": "XS",
@@ -6074,7 +5371,7 @@ var DEMO_BREEDS = [{
     "joints": 84
   },
   "aptitudes": ["Conformation", "Agility", "Rally-O"]
-}, {
+},{
   "name": "Pomeranian",
   "group": "Toy",
   "size": "XS",
@@ -6103,7 +5400,7 @@ var DEMO_BREEDS = [{
     "joints": 82
   },
   "aptitudes": ["Agility", "Conformation", "Rally-O"]
-}, {
+},{
   "name": "Shih Tzu",
   "group": "Toy",
   "size": "XS",
@@ -6132,7 +5429,7 @@ var DEMO_BREEDS = [{
     "joints": 80
   },
   "aptitudes": ["Conformation", "Agility"]
-}, {
+},{
   "name": "Yorkshire Terrier",
   "group": "Toy",
   "size": "XS",
@@ -6161,7 +5458,7 @@ var DEMO_BREEDS = [{
     "joints": 80
   },
   "aptitudes": ["Conformation", "Agility", "Earthdog"]
-}, {
+},{
   "name": "Pug",
   "group": "Toy",
   "size": "XS",
@@ -6190,7 +5487,7 @@ var DEMO_BREEDS = [{
     "joints": 72
   },
   "aptitudes": ["Conformation", "Obedience"]
-}, {
+},{
   "name": "Cavalier King Charles Spaniel",
   "group": "Toy",
   "size": "S",
@@ -6219,7 +5516,7 @@ var DEMO_BREEDS = [{
     "joints": 72
   },
   "aptitudes": ["Conformation", "Agility", "Rally-O"]
-}, {
+},{
   "name": "Papillon",
   "group": "Toy",
   "size": "XS",
@@ -6248,36 +5545,7 @@ var DEMO_BREEDS = [{
     "joints": 86
   },
   "aptitudes": ["Agility", "Obedience", "Rally-O"]
-}, {
-  "name": "Phal\xE8ne",
-  "group": "Toy",
-  "size": "XS",
-  "coat": "long",
-  "colors": ["white & sable", "white & black", "white & red"],
-  "species": "dog",
-  "sizeAvg": 8,
-  "sizeRange": [4, 12],
-  "litterSize": "S",
-  "traits": {
-    "intelligence": 9,
-    "energy": 6,
-    "trainability": 8,
-    "loyalty": 8,
-    "playfulness": 7,
-    "aggression": 2,
-    "preyDrive": 4,
-    "barkTendency": 5,
-    "sociability": 8,
-    "adaptability": 8
-  },
-  "health": {
-    "hips": 86,
-    "eyes": 85,
-    "heart": 88,
-    "joints": 86
-  },
-  "aptitudes": ["Agility", "Obedience", "Conformation"]
-}, {
+},{
   "name": "Havanese",
   "group": "Toy",
   "size": "XS",
@@ -6306,7 +5574,7 @@ var DEMO_BREEDS = [{
     "joints": 84
   },
   "aptitudes": ["Agility", "Conformation", "Rally-O"]
-}, {
+},{
   "name": "Chinese Crested",
   "group": "Toy",
   "size": "XS",
@@ -6335,7 +5603,7 @@ var DEMO_BREEDS = [{
     "joints": 82
   },
   "aptitudes": ["Agility", "Conformation", "Rally-O"]
-}, {
+},{
   "name": "Maltese",
   "group": "Toy",
   "size": "XS",
@@ -6364,7 +5632,7 @@ var DEMO_BREEDS = [{
     "joints": 82
   },
   "aptitudes": ["Agility", "Conformation", "Obedience"]
-}, {
+},{
   "name": "Japanese Chin",
   "group": "Toy",
   "size": "XS",
@@ -6393,7 +5661,7 @@ var DEMO_BREEDS = [{
     "joints": 82
   },
   "aptitudes": ["Conformation", "Agility"]
-}, {
+},{
   "name": "Pekingese",
   "group": "Toy",
   "size": "XS",
@@ -6422,7 +5690,7 @@ var DEMO_BREEDS = [{
     "joints": 78
   },
   "aptitudes": ["Conformation"]
-}, {
+},{
   "name": "Brussels Griffon",
   "group": "Toy",
   "size": "XS",
@@ -6451,7 +5719,7 @@ var DEMO_BREEDS = [{
     "joints": 80
   },
   "aptitudes": ["Agility", "Conformation", "Obedience"]
-}, {
+},{
   "name": "Miniature Pinscher",
   "group": "Toy",
   "size": "XS",
@@ -6480,7 +5748,7 @@ var DEMO_BREEDS = [{
     "joints": 82
   },
   "aptitudes": ["Agility", "Conformation", "Rally-O"]
-}, {
+},{
   "name": "Affenpinscher",
   "group": "Toy",
   "size": "XS",
@@ -6509,7 +5777,7 @@ var DEMO_BREEDS = [{
     "joints": 82
   },
   "aptitudes": ["Agility", "Conformation"]
-}, {
+},{
   "name": "Italian Greyhound",
   "group": "Toy",
   "size": "XS",
@@ -6538,36 +5806,7 @@ var DEMO_BREEDS = [{
     "joints": 82
   },
   "aptitudes": ["Lure Coursing", "Agility", "Conformation"]
-}, {
-  "name": "L\xF6wchen",
-  "group": "Toy",
-  "size": "XS",
-  "coat": "long",
-  "colors": ["black", "white", "cream", "brown", "blue"],
-  "species": "dog",
-  "sizeAvg": 8,
-  "sizeRange": [4, 12],
-  "litterSize": "S",
-  "traits": {
-    "intelligence": 8,
-    "energy": 6,
-    "trainability": 7,
-    "loyalty": 8,
-    "playfulness": 8,
-    "aggression": 1,
-    "preyDrive": 3,
-    "barkTendency": 4,
-    "sociability": 9,
-    "adaptability": 9
-  },
-  "health": {
-    "hips": 84,
-    "eyes": 82,
-    "heart": 85,
-    "joints": 84
-  },
-  "aptitudes": ["Agility", "Conformation", "Obedience"]
-}, {
+},{
   "name": "Bolognese",
   "group": "Toy",
   "size": "XS",
@@ -6596,7 +5835,7 @@ var DEMO_BREEDS = [{
     "joints": 84
   },
   "aptitudes": ["Conformation", "Agility"]
-}, {
+},{
   "name": "Coton de Tulear",
   "group": "Toy",
   "size": "XS",
@@ -6625,7 +5864,7 @@ var DEMO_BREEDS = [{
     "joints": 84
   },
   "aptitudes": ["Agility", "Conformation", "Rally-O"]
-}, {
+},{
   "name": "Russkiy Toy",
   "group": "Toy",
   "size": "XS",
@@ -6654,7 +5893,7 @@ var DEMO_BREEDS = [{
     "joints": 82
   },
   "aptitudes": ["Agility", "Conformation"]
-}, {
+},{
   "name": "Biewer Terrier",
   "group": "Toy",
   "size": "XS",
@@ -6683,7 +5922,7 @@ var DEMO_BREEDS = [{
     "joints": 82
   },
   "aptitudes": ["Agility", "Conformation"]
-}, {
+},{
   "name": "Silky Terrier",
   "group": "Toy",
   "size": "XS",
@@ -6712,7 +5951,7 @@ var DEMO_BREEDS = [{
     "joints": 82
   },
   "aptitudes": ["Agility", "Conformation", "Earthdog"]
-}, {
+},{
   "name": "Toy Fox Terrier",
   "group": "Toy",
   "size": "XS",
@@ -6741,7 +5980,7 @@ var DEMO_BREEDS = [{
     "joints": 84
   },
   "aptitudes": ["Agility", "Conformation", "Earthdog"]
-}, {
+},{
   "name": "King Charles Spaniel",
   "group": "Toy",
   "size": "XS",
@@ -6770,7 +6009,7 @@ var DEMO_BREEDS = [{
     "joints": 72
   },
   "aptitudes": ["Conformation"]
-}, {
+},{
   "name": "Tibetan Spaniel",
   "group": "Toy",
   "size": "XS",
@@ -6799,7 +6038,7 @@ var DEMO_BREEDS = [{
     "joints": 82
   },
   "aptitudes": ["Conformation", "Agility"]
-}, {
+},{
   "name": "Lhasa Apso",
   "group": "Toy",
   "size": "XS",
@@ -6828,7 +6067,7 @@ var DEMO_BREEDS = [{
     "joints": 80
   },
   "aptitudes": ["Conformation"]
-}, {
+},{
   "name": "Bulldog",
   "group": "Non-Sporting",
   "size": "M",
@@ -6857,7 +6096,7 @@ var DEMO_BREEDS = [{
     "joints": 65
   },
   "aptitudes": ["Conformation", "Obedience"]
-}, {
+},{
   "name": "French Bulldog",
   "group": "Non-Sporting",
   "size": "S",
@@ -6886,7 +6125,7 @@ var DEMO_BREEDS = [{
     "joints": 68
   },
   "aptitudes": ["Conformation", "Agility"]
-}, {
+},{
   "name": "American Bulldog",
   "group": "Non-Sporting",
   "size": "L",
@@ -6915,7 +6154,7 @@ var DEMO_BREEDS = [{
     "joints": 68
   },
   "aptitudes": ["Schutzhund", "Conformation", "Agility"]
-}, {
+},{
   "name": "Standard Poodle",
   "group": "Non-Sporting",
   "size": "L",
@@ -6944,7 +6183,7 @@ var DEMO_BREEDS = [{
     "joints": 82
   },
   "aptitudes": ["Agility", "Obedience", "Rally-O", "Dock Diving"]
-}, {
+},{
   "name": "Miniature Poodle",
   "group": "Non-Sporting",
   "size": "S",
@@ -6973,7 +6212,7 @@ var DEMO_BREEDS = [{
     "joints": 82
   },
   "aptitudes": ["Agility", "Obedience", "Rally-O"]
-}, {
+},{
   "name": "Dalmatian",
   "group": "Non-Sporting",
   "size": "L",
@@ -7002,7 +6241,7 @@ var DEMO_BREEDS = [{
     "joints": 78
   },
   "aptitudes": ["Agility", "Conformation", "Obedience"]
-}, {
+},{
   "name": "Chow Chow",
   "group": "Non-Sporting",
   "size": "L",
@@ -7031,7 +6270,7 @@ var DEMO_BREEDS = [{
     "joints": 75
   },
   "aptitudes": ["Conformation"]
-}, {
+},{
   "name": "Boston Terrier",
   "group": "Non-Sporting",
   "size": "S",
@@ -7060,7 +6299,7 @@ var DEMO_BREEDS = [{
     "joints": 78
   },
   "aptitudes": ["Agility", "Flyball", "Conformation"]
-}, {
+},{
   "name": "Shiba Inu",
   "group": "Non-Sporting",
   "size": "M",
@@ -7089,36 +6328,7 @@ var DEMO_BREEDS = [{
     "joints": 85
   },
   "aptitudes": ["Conformation", "Agility"]
-}, {
-  "name": "Bichon Fris\xE9",
-  "group": "Non-Sporting",
-  "size": "XS",
-  "coat": "curly",
-  "colors": ["white"],
-  "species": "dog",
-  "sizeAvg": 8,
-  "sizeRange": [4, 12],
-  "litterSize": "S",
-  "traits": {
-    "intelligence": 7,
-    "energy": 6,
-    "trainability": 7,
-    "loyalty": 8,
-    "playfulness": 8,
-    "aggression": 1,
-    "preyDrive": 2,
-    "barkTendency": 5,
-    "sociability": 9,
-    "adaptability": 9
-  },
-  "health": {
-    "hips": 84,
-    "eyes": 82,
-    "heart": 85,
-    "joints": 84
-  },
-  "aptitudes": ["Agility", "Obedience", "Conformation"]
-}, {
+},{
   "name": "Xoloitzcuintli",
   "group": "Non-Sporting",
   "size": "M",
@@ -7147,7 +6357,7 @@ var DEMO_BREEDS = [{
     "joints": 82
   },
   "aptitudes": ["Conformation", "Agility"]
-}, {
+},{
   "name": "Finnish Spitz",
   "group": "Non-Sporting",
   "size": "M",
@@ -7176,7 +6386,7 @@ var DEMO_BREEDS = [{
     "joints": 82
   },
   "aptitudes": ["Field Trials", "Conformation", "Agility"]
-}, {
+},{
   "name": "Norwegian Elkhound",
   "group": "Non-Sporting",
   "size": "M",
@@ -7205,7 +6415,7 @@ var DEMO_BREEDS = [{
     "joints": 78
   },
   "aptitudes": ["Field Trials", "Tracking", "Conformation"]
-}, {
+},{
   "name": "Keeshond",
   "group": "Non-Sporting",
   "size": "M",
@@ -7234,7 +6444,7 @@ var DEMO_BREEDS = [{
     "joints": 80
   },
   "aptitudes": ["Agility", "Obedience", "Conformation"]
-}, {
+},{
   "name": "American Eskimo Dog",
   "group": "Non-Sporting",
   "size": "M",
@@ -7263,7 +6473,7 @@ var DEMO_BREEDS = [{
     "joints": 82
   },
   "aptitudes": ["Agility", "Obedience", "Conformation"]
-}, {
+},{
   "name": "Schipperke",
   "group": "Non-Sporting",
   "size": "XS",
@@ -7292,7 +6502,7 @@ var DEMO_BREEDS = [{
     "joints": 82
   },
   "aptitudes": ["Agility", "Obedience", "Conformation"]
-}, {
+},{
   "name": "Tibetan Terrier",
   "group": "Non-Sporting",
   "size": "M",
@@ -7321,7 +6531,7 @@ var DEMO_BREEDS = [{
     "joints": 80
   },
   "aptitudes": ["Agility", "Conformation", "Rally-O"]
-}, {
+},{
   "name": "Chow Chow (Smooth)",
   "group": "Non-Sporting",
   "size": "L",
@@ -7350,7 +6560,7 @@ var DEMO_BREEDS = [{
     "joints": 75
   },
   "aptitudes": ["Conformation"]
-}, {
+},{
   "name": "Eurasier",
   "group": "Non-Sporting",
   "size": "M",
@@ -7379,7 +6589,7 @@ var DEMO_BREEDS = [{
     "joints": 80
   },
   "aptitudes": ["Conformation", "Agility"]
-}, {
+},{
   "name": "Basenji",
   "group": "Non-Sporting",
   "size": "M",
@@ -7408,7 +6618,7 @@ var DEMO_BREEDS = [{
     "joints": 88
   },
   "aptitudes": ["Lure Coursing", "Agility", "Conformation"]
-}, {
+},{
   "name": "Canaan Dog",
   "group": "Non-Sporting",
   "size": "M",
@@ -7437,7 +6647,7 @@ var DEMO_BREEDS = [{
     "joints": 82
   },
   "aptitudes": ["Conformation", "Agility", "Obedience"]
-}, {
+},{
   "name": "Akita Inu (American)",
   "group": "Non-Sporting",
   "size": "XL",
@@ -7466,7 +6676,7 @@ var DEMO_BREEDS = [{
     "joints": 75
   },
   "aptitudes": ["Conformation", "Obedience"]
-}, {
+},{
   "name": "Central Asian Shepherd",
   "group": "Working",
   "size": "XL",
@@ -7495,239 +6705,7 @@ var DEMO_BREEDS = [{
     "joints": 72
   },
   "aptitudes": ["Schutzhund", "Conformation"]
-}, {
-  "name": "Kazakh Tobet",
-  "group": "Working",
-  "size": "XL",
-  "coat": "medium",
-  "colors": ["white", "fawn", "gray", "black", "piebald"],
-  "species": "dog",
-  "sizeAvg": 100,
-  "sizeRange": [80, 130],
-  "litterSize": "L",
-  "traits": {
-    "intelligence": 7,
-    "energy": 5,
-    "trainability": 4,
-    "loyalty": 9,
-    "playfulness": 4,
-    "aggression": 6,
-    "preyDrive": 6,
-    "barkTendency": 7,
-    "sociability": 4,
-    "adaptability": 6
-  },
-  "health": {
-    "hips": 72,
-    "eyes": 78,
-    "heart": 78,
-    "joints": 72
-  },
-  "aptitudes": ["Schutzhund", "Conformation"]
-}, {
-  "name": "Sage Koochee Mountain",
-  "group": "Working",
-  "size": "XL",
-  "coat": "long",
-  "colors": ["fawn", "gray", "white", "brindle", "black"],
-  "species": "dog",
-  "sizeAvg": 100,
-  "sizeRange": [80, 130],
-  "litterSize": "L",
-  "traits": {
-    "intelligence": 7,
-    "energy": 5,
-    "trainability": 3,
-    "loyalty": 9,
-    "playfulness": 3,
-    "aggression": 7,
-    "preyDrive": 7,
-    "barkTendency": 7,
-    "sociability": 3,
-    "adaptability": 4
-  },
-  "health": {
-    "hips": 75,
-    "eyes": 80,
-    "heart": 80,
-    "joints": 75
-  },
-  "aptitudes": ["Schutzhund"]
-}, {
-  "name": "Sage Koochee Steppe",
-  "group": "Working",
-  "size": "XL",
-  "coat": "medium",
-  "colors": ["fawn", "gray", "white", "brindle", "black"],
-  "species": "dog",
-  "sizeAvg": 100,
-  "sizeRange": [80, 130],
-  "litterSize": "L",
-  "traits": {
-    "intelligence": 7,
-    "energy": 6,
-    "trainability": 3,
-    "loyalty": 9,
-    "playfulness": 3,
-    "aggression": 7,
-    "preyDrive": 7,
-    "barkTendency": 7,
-    "sociability": 3,
-    "adaptability": 6
-  },
-  "health": {
-    "hips": 75,
-    "eyes": 80,
-    "heart": 80,
-    "joints": 75
-  },
-  "aptitudes": ["Schutzhund"]
-}, {
-  "name": "Sage Koochee Desert",
-  "group": "Working",
-  "size": "L",
-  "coat": "short",
-  "colors": ["fawn", "sand", "white", "brindle"],
-  "species": "dog",
-  "sizeAvg": 65,
-  "sizeRange": [55, 85],
-  "litterSize": "L",
-  "traits": {
-    "intelligence": 7,
-    "energy": 7,
-    "trainability": 3,
-    "loyalty": 9,
-    "playfulness": 3,
-    "aggression": 6,
-    "preyDrive": 7,
-    "barkTendency": 6,
-    "sociability": 3,
-    "adaptability": 7
-  },
-  "health": {
-    "hips": 78,
-    "eyes": 82,
-    "heart": 82,
-    "joints": 78
-  },
-  "aptitudes": ["Schutzhund"]
-}, {
-  "name": "Afghan Tiger Dog",
-  "group": "Working",
-  "size": "XL",
-  "coat": "medium",
-  "colors": ["brindle", "fawn", "black & tan", "gray"],
-  "species": "dog",
-  "sizeAvg": 100,
-  "sizeRange": [80, 130],
-  "litterSize": "L",
-  "traits": {
-    "intelligence": 7,
-    "energy": 6,
-    "trainability": 3,
-    "loyalty": 9,
-    "playfulness": 3,
-    "aggression": 8,
-    "preyDrive": 8,
-    "barkTendency": 7,
-    "sociability": 2,
-    "adaptability": 5
-  },
-  "health": {
-    "hips": 75,
-    "eyes": 80,
-    "heart": 80,
-    "joints": 75
-  },
-  "aptitudes": ["Schutzhund"]
-}, {
-  "name": "Uzbek Sarkangik",
-  "group": "Working",
-  "size": "XL",
-  "coat": "medium",
-  "colors": ["fawn", "white", "gray", "piebald"],
-  "species": "dog",
-  "sizeAvg": 100,
-  "sizeRange": [80, 130],
-  "litterSize": "L",
-  "traits": {
-    "intelligence": 7,
-    "energy": 5,
-    "trainability": 4,
-    "loyalty": 9,
-    "playfulness": 3,
-    "aggression": 6,
-    "preyDrive": 6,
-    "barkTendency": 6,
-    "sociability": 4,
-    "adaptability": 6
-  },
-  "health": {
-    "hips": 72,
-    "eyes": 78,
-    "heart": 78,
-    "joints": 72
-  },
-  "aptitudes": ["Schutzhund", "Conformation"]
-}, {
-  "name": "Tajik Dahmarda",
-  "group": "Working",
-  "size": "XL",
-  "coat": "long",
-  "colors": ["gray", "white", "fawn", "black"],
-  "species": "dog",
-  "sizeAvg": 100,
-  "sizeRange": [80, 130],
-  "litterSize": "L",
-  "traits": {
-    "intelligence": 7,
-    "energy": 5,
-    "trainability": 4,
-    "loyalty": 9,
-    "playfulness": 3,
-    "aggression": 7,
-    "preyDrive": 6,
-    "barkTendency": 7,
-    "sociability": 3,
-    "adaptability": 4
-  },
-  "health": {
-    "hips": 70,
-    "eyes": 75,
-    "heart": 75,
-    "joints": 70
-  },
-  "aptitudes": ["Schutzhund"]
-}, {
-  "name": "Kyrgyz Volkodav",
-  "group": "Working",
-  "size": "XL",
-  "coat": "medium",
-  "colors": ["white", "gray", "fawn", "brindle"],
-  "species": "dog",
-  "sizeAvg": 100,
-  "sizeRange": [80, 130],
-  "litterSize": "L",
-  "traits": {
-    "intelligence": 7,
-    "energy": 5,
-    "trainability": 4,
-    "loyalty": 9,
-    "playfulness": 3,
-    "aggression": 7,
-    "preyDrive": 7,
-    "barkTendency": 6,
-    "sociability": 3,
-    "adaptability": 5
-  },
-  "health": {
-    "hips": 72,
-    "eyes": 78,
-    "heart": 78,
-    "joints": 72
-  },
-  "aptitudes": ["Schutzhund"]
-}, {
+},{
   "name": "Sarmatian Mastiff",
   "group": "Working",
   "size": "XL",
@@ -7756,7 +6734,7 @@ var DEMO_BREEDS = [{
     "joints": 68
   },
   "aptitudes": ["Schutzhund", "Conformation"]
-}, {
+},{
   "name": "GSD West German Working",
   "group": "Herding",
   "size": "L",
@@ -7785,7 +6763,7 @@ var DEMO_BREEDS = [{
     "joints": 72
   },
   "aptitudes": ["Schutzhund", "IPO", "Tracking", "Obedience", "Search & Rescue"]
-}, {
+},{
   "name": "GSD DDR East German",
   "group": "Herding",
   "size": "L",
@@ -7814,7 +6792,7 @@ var DEMO_BREEDS = [{
     "joints": 82
   },
   "aptitudes": ["Schutzhund", "IPO", "Tracking", "Police Work"]
-}, {
+},{
   "name": "GSD Czech Working",
   "group": "Herding",
   "size": "L",
@@ -7843,7 +6821,7 @@ var DEMO_BREEDS = [{
     "joints": 80
   },
   "aptitudes": ["Schutzhund", "IPO", "Police Work", "Military", "Tracking"]
-}, {
+},{
   "name": "GSD West German Show",
   "group": "Herding",
   "size": "L",
@@ -7872,7 +6850,7 @@ var DEMO_BREEDS = [{
     "joints": 68
   },
   "aptitudes": ["Conformation", "Obedience", "Therapy"]
-}, {
+},{
   "name": "GSD American Show",
   "group": "Herding",
   "size": "L",
@@ -7901,36 +6879,7 @@ var DEMO_BREEDS = [{
     "joints": 62
   },
   "aptitudes": ["Conformation", "Obedience", "Therapy"]
-}, {
-  "name": "East European Shepherd",
-  "group": "Herding",
-  "size": "XL",
-  "coat": "medium",
-  "colors": ["sable", "black & tan", "gray", "black"],
-  "species": "dog",
-  "sizeAvg": 100,
-  "sizeRange": [80, 130],
-  "litterSize": "L",
-  "traits": {
-    "intelligence": 9,
-    "energy": 7,
-    "trainability": 8,
-    "loyalty": 9,
-    "playfulness": 6,
-    "aggression": 4,
-    "preyDrive": 7,
-    "barkTendency": 6,
-    "sociability": 6,
-    "adaptability": 9
-  },
-  "health": {
-    "hips": 75,
-    "eyes": 88,
-    "heart": 85,
-    "joints": 75
-  },
-  "aptitudes": ["Schutzhund", "Police Work", "Military", "Obedience"]
-}, {
+},{
   "name": "White Swiss Shepherd",
   "group": "Herding",
   "size": "L",
@@ -7959,7 +6908,7 @@ var DEMO_BREEDS = [{
     "joints": 75
   },
   "aptitudes": ["Obedience", "Agility", "Therapy", "Conformation"]
-}, {
+},{
   "name": "King Shepherd",
   "group": "Herding",
   "size": "XL",
@@ -7988,7 +6937,7 @@ var DEMO_BREEDS = [{
     "joints": 78
   },
   "aptitudes": ["Obedience", "Therapy", "Conformation", "Search & Rescue"]
-}, {
+},{
   "name": "Shiloh Shepherd",
   "group": "Herding",
   "size": "XL",
@@ -8017,94 +6966,7 @@ var DEMO_BREEDS = [{
     "joints": 78
   },
   "aptitudes": ["Obedience", "Therapy", "Search & Rescue", "Conformation"]
-}, {
-  "name": "Panda Shepherd",
-  "group": "Herding",
-  "size": "L",
-  "coat": "medium",
-  "colors": ["black & white & tan"],
-  "species": "dog",
-  "sizeAvg": 65,
-  "sizeRange": [55, 85],
-  "litterSize": "L",
-  "traits": {
-    "intelligence": 9,
-    "energy": 8,
-    "trainability": 9,
-    "loyalty": 9,
-    "playfulness": 7,
-    "aggression": 4,
-    "preyDrive": 6,
-    "barkTendency": 6,
-    "sociability": 7,
-    "adaptability": 8
-  },
-  "health": {
-    "hips": 70,
-    "eyes": 88,
-    "heart": 85,
-    "joints": 70
-  },
-  "aptitudes": ["Schutzhund", "Obedience", "Conformation"]
-}, {
-  "name": "Bohemian Shepherd",
-  "group": "Herding",
-  "size": "M",
-  "coat": "long",
-  "colors": ["black & tan"],
-  "species": "dog",
-  "sizeAvg": 40,
-  "sizeRange": [28, 55],
-  "litterSize": "M",
-  "traits": {
-    "intelligence": 9,
-    "energy": 8,
-    "trainability": 9,
-    "loyalty": 9,
-    "playfulness": 8,
-    "aggression": 3,
-    "preyDrive": 5,
-    "barkTendency": 7,
-    "sociability": 8,
-    "adaptability": 8
-  },
-  "health": {
-    "hips": 80,
-    "eyes": 88,
-    "heart": 86,
-    "joints": 80
-  },
-  "aptitudes": ["Herding", "Obedience", "Agility", "Conformation"]
-}, {
-  "name": "Kunming Dog",
-  "group": "Herding",
-  "size": "L",
-  "coat": "short",
-  "colors": ["sable", "black & tan", "tan"],
-  "species": "dog",
-  "sizeAvg": 65,
-  "sizeRange": [55, 85],
-  "litterSize": "L",
-  "traits": {
-    "intelligence": 8,
-    "energy": 8,
-    "trainability": 8,
-    "loyalty": 9,
-    "playfulness": 6,
-    "aggression": 4,
-    "preyDrive": 7,
-    "barkTendency": 6,
-    "sociability": 6,
-    "adaptability": 8
-  },
-  "health": {
-    "hips": 72,
-    "eyes": 85,
-    "heart": 84,
-    "joints": 72
-  },
-  "aptitudes": ["Police Work", "Military", "Tracking", "Obedience"]
-}, {
+},{
   "name": "Kuvasz",
   "group": "Working",
   "size": "XL",
@@ -8133,7 +6995,7 @@ var DEMO_BREEDS = [{
     "joints": 70
   },
   "aptitudes": ["Conformation", "Obedience", "LGD"]
-}, {
+},{
   "name": "Maremma Sheepdog",
   "group": "Working",
   "size": "XL",
@@ -8162,65 +7024,7 @@ var DEMO_BREEDS = [{
     "joints": 72
   },
   "aptitudes": ["Conformation", "Obedience", "LGD"]
-}, {
-  "name": "Sarplaninac",
-  "group": "Working",
-  "size": "XL",
-  "coat": "long",
-  "colors": ["iron gray", "fawn", "white", "tan", "black"],
-  "species": "dog",
-  "sizeAvg": 100,
-  "sizeRange": [80, 130],
-  "litterSize": "L",
-  "traits": {
-    "intelligence": 7,
-    "energy": 5,
-    "trainability": 5,
-    "loyalty": 9,
-    "playfulness": 4,
-    "aggression": 5,
-    "preyDrive": 5,
-    "barkTendency": 7,
-    "sociability": 5,
-    "adaptability": 5
-  },
-  "health": {
-    "hips": 72,
-    "eyes": 78,
-    "heart": 78,
-    "joints": 72
-  },
-  "aptitudes": ["Conformation", "Obedience", "LGD"]
-}, {
-  "name": "Tornjak",
-  "group": "Working",
-  "size": "XL",
-  "coat": "long",
-  "colors": ["white & black", "white & brown", "tricolor", "multicolor"],
-  "species": "dog",
-  "sizeAvg": 100,
-  "sizeRange": [80, 130],
-  "litterSize": "L",
-  "traits": {
-    "intelligence": 7,
-    "energy": 5,
-    "trainability": 6,
-    "loyalty": 9,
-    "playfulness": 5,
-    "aggression": 4,
-    "preyDrive": 4,
-    "barkTendency": 7,
-    "sociability": 7,
-    "adaptability": 6
-  },
-  "health": {
-    "hips": 75,
-    "eyes": 80,
-    "heart": 80,
-    "joints": 75
-  },
-  "aptitudes": ["Conformation", "Obedience", "LGD"]
-}, {
+},{
   "name": "Estrela Mountain Dog",
   "group": "Working",
   "size": "XL",
@@ -8249,65 +7053,7 @@ var DEMO_BREEDS = [{
     "joints": 72
   },
   "aptitudes": ["Conformation", "Obedience", "LGD"]
-}, {
-  "name": "Rafeiro do Alentejo",
-  "group": "Working",
-  "size": "XL",
-  "coat": "medium",
-  "colors": ["black", "fawn", "yellow", "brindle", "white marked"],
-  "species": "dog",
-  "sizeAvg": 100,
-  "sizeRange": [80, 130],
-  "litterSize": "L",
-  "traits": {
-    "intelligence": 6,
-    "energy": 4,
-    "trainability": 4,
-    "loyalty": 9,
-    "playfulness": 3,
-    "aggression": 5,
-    "preyDrive": 5,
-    "barkTendency": 8,
-    "sociability": 5,
-    "adaptability": 4
-  },
-  "health": {
-    "hips": 70,
-    "eyes": 75,
-    "heart": 75,
-    "joints": 70
-  },
-  "aptitudes": ["Conformation"]
-}, {
-  "name": "Cao de Gado Transmontano",
-  "group": "Working",
-  "size": "XL",
-  "coat": "long",
-  "colors": ["white", "white & yellow", "white & black"],
-  "species": "dog",
-  "sizeAvg": 100,
-  "sizeRange": [80, 130],
-  "litterSize": "L",
-  "traits": {
-    "intelligence": 7,
-    "energy": 5,
-    "trainability": 4,
-    "loyalty": 9,
-    "playfulness": 4,
-    "aggression": 5,
-    "preyDrive": 5,
-    "barkTendency": 7,
-    "sociability": 5,
-    "adaptability": 4
-  },
-  "health": {
-    "hips": 68,
-    "eyes": 75,
-    "heart": 75,
-    "joints": 68
-  },
-  "aptitudes": ["Conformation"]
-}, {
+},{
   "name": "Slovak Cuvac",
   "group": "Working",
   "size": "XL",
@@ -8336,7 +7082,7 @@ var DEMO_BREEDS = [{
     "joints": 72
   },
   "aptitudes": ["Conformation", "Obedience"]
-}, {
+},{
   "name": "Carpathian Shepherd Dog",
   "group": "Working",
   "size": "XL",
@@ -8365,152 +7111,7 @@ var DEMO_BREEDS = [{
     "joints": 72
   },
   "aptitudes": ["Conformation", "Obedience"]
-}, {
-  "name": "Romanian Mioritic Shepherd",
-  "group": "Working",
-  "size": "XL",
-  "coat": "long",
-  "colors": ["white", "gray", "white & gray", "white & black"],
-  "species": "dog",
-  "sizeAvg": 100,
-  "sizeRange": [80, 130],
-  "litterSize": "L",
-  "traits": {
-    "intelligence": 7,
-    "energy": 5,
-    "trainability": 5,
-    "loyalty": 9,
-    "playfulness": 5,
-    "aggression": 4,
-    "preyDrive": 4,
-    "barkTendency": 7,
-    "sociability": 7,
-    "adaptability": 5
-  },
-  "health": {
-    "hips": 72,
-    "eyes": 78,
-    "heart": 78,
-    "joints": 72
-  },
-  "aptitudes": ["Conformation", "Obedience"]
-}, {
-  "name": "Romanian Raven Shepherd",
-  "group": "Working",
-  "size": "XL",
-  "coat": "long",
-  "colors": ["black", "black & tan"],
-  "species": "dog",
-  "sizeAvg": 100,
-  "sizeRange": [80, 130],
-  "litterSize": "L",
-  "traits": {
-    "intelligence": 7,
-    "energy": 6,
-    "trainability": 5,
-    "loyalty": 9,
-    "playfulness": 4,
-    "aggression": 5,
-    "preyDrive": 5,
-    "barkTendency": 7,
-    "sociability": 6,
-    "adaptability": 5
-  },
-  "health": {
-    "hips": 70,
-    "eyes": 78,
-    "heart": 78,
-    "joints": 70
-  },
-  "aptitudes": ["Conformation", "Obedience"]
-}, {
-  "name": "Karakachan",
-  "group": "Working",
-  "size": "XL",
-  "coat": "long",
-  "colors": ["white & black", "tricolor", "white"],
-  "species": "dog",
-  "sizeAvg": 100,
-  "sizeRange": [80, 130],
-  "litterSize": "L",
-  "traits": {
-    "intelligence": 7,
-    "energy": 5,
-    "trainability": 5,
-    "loyalty": 9,
-    "playfulness": 4,
-    "aggression": 6,
-    "preyDrive": 6,
-    "barkTendency": 8,
-    "sociability": 5,
-    "adaptability": 5
-  },
-  "health": {
-    "hips": 70,
-    "eyes": 75,
-    "heart": 78,
-    "joints": 70
-  },
-  "aptitudes": ["Conformation", "LGD"]
-}, {
-  "name": "Greek Shepherd",
-  "group": "Working",
-  "size": "XL",
-  "coat": "long",
-  "colors": ["white", "fawn", "gray", "black & tan"],
-  "species": "dog",
-  "sizeAvg": 100,
-  "sizeRange": [80, 130],
-  "litterSize": "L",
-  "traits": {
-    "intelligence": 7,
-    "energy": 6,
-    "trainability": 5,
-    "loyalty": 9,
-    "playfulness": 4,
-    "aggression": 5,
-    "preyDrive": 5,
-    "barkTendency": 7,
-    "sociability": 6,
-    "adaptability": 6
-  },
-  "health": {
-    "hips": 72,
-    "eyes": 78,
-    "heart": 78,
-    "joints": 72
-  },
-  "aptitudes": ["Conformation"]
-}, {
-  "name": "Himalayan Sheepdog",
-  "group": "Working",
-  "size": "XL",
-  "coat": "long",
-  "colors": ["black & tan", "fawn", "tawny"],
-  "species": "dog",
-  "sizeAvg": 100,
-  "sizeRange": [80, 130],
-  "litterSize": "L",
-  "traits": {
-    "intelligence": 7,
-    "energy": 6,
-    "trainability": 4,
-    "loyalty": 9,
-    "playfulness": 4,
-    "aggression": 6,
-    "preyDrive": 6,
-    "barkTendency": 8,
-    "sociability": 4,
-    "adaptability": 4
-  },
-  "health": {
-    "hips": 68,
-    "eyes": 75,
-    "heart": 75,
-    "joints": 68
-  },
-  "aptitudes": ["Conformation"]
-}, {
+},{
   "name": "Armenian Gampr",
   "group": "Working",
   "size": "XL",
@@ -8539,65 +7140,7 @@ var DEMO_BREEDS = [{
     "joints": 72
   },
   "aptitudes": ["Schutzhund", "Conformation"]
-}, {
-  "name": "Georgian Shepherd Nagazi",
-  "group": "Working",
-  "size": "XL",
-  "coat": "long",
-  "colors": ["gray", "fawn", "white", "brindle", "black"],
-  "species": "dog",
-  "sizeAvg": 100,
-  "sizeRange": [80, 130],
-  "litterSize": "L",
-  "traits": {
-    "intelligence": 7,
-    "energy": 5,
-    "trainability": 4,
-    "loyalty": 9,
-    "playfulness": 4,
-    "aggression": 7,
-    "preyDrive": 6,
-    "barkTendency": 7,
-    "sociability": 4,
-    "adaptability": 5
-  },
-  "health": {
-    "hips": 70,
-    "eyes": 75,
-    "heart": 75,
-    "joints": 70
-  },
-  "aptitudes": ["Schutzhund", "Conformation"]
-}, {
-  "name": "Gurdbasar",
-  "group": "Working",
-  "size": "XL",
-  "coat": "long",
-  "colors": ["gray", "fawn", "white", "brindle"],
-  "species": "dog",
-  "sizeAvg": 100,
-  "sizeRange": [80, 130],
-  "litterSize": "L",
-  "traits": {
-    "intelligence": 7,
-    "energy": 5,
-    "trainability": 4,
-    "loyalty": 9,
-    "playfulness": 4,
-    "aggression": 7,
-    "preyDrive": 6,
-    "barkTendency": 7,
-    "sociability": 4,
-    "adaptability": 5
-  },
-  "health": {
-    "hips": 70,
-    "eyes": 75,
-    "heart": 75,
-    "joints": 70
-  },
-  "aptitudes": ["Schutzhund"]
-}, {
+},{
   "name": "Sarabi Persian Mastiff",
   "group": "Working",
   "size": "XL",
@@ -8626,7 +7169,7 @@ var DEMO_BREEDS = [{
     "joints": 70
   },
   "aptitudes": ["Conformation", "Obedience"]
-}, {
+},{
   "name": "Kurdish Mastiff Pshdar",
   "group": "Working",
   "size": "XL",
@@ -8655,36 +7198,7 @@ var DEMO_BREEDS = [{
     "joints": 70
   },
   "aptitudes": ["Schutzhund"]
-}, {
-  "name": "Kars Dog",
-  "group": "Working",
-  "size": "XL",
-  "coat": "long",
-  "colors": ["gray", "fawn", "black", "piebald"],
-  "species": "dog",
-  "sizeAvg": 100,
-  "sizeRange": [80, 130],
-  "litterSize": "L",
-  "traits": {
-    "intelligence": 7,
-    "energy": 5,
-    "trainability": 5,
-    "loyalty": 9,
-    "playfulness": 4,
-    "aggression": 6,
-    "preyDrive": 6,
-    "barkTendency": 7,
-    "sociability": 5,
-    "adaptability": 5
-  },
-  "health": {
-    "hips": 72,
-    "eyes": 78,
-    "heart": 78,
-    "joints": 72
-  },
-  "aptitudes": ["Conformation"]
-}, {
+},{
   "name": "Saarloos Wolfdog",
   "group": "Herding",
   "size": "L",
@@ -8713,65 +7227,7 @@ var DEMO_BREEDS = [{
     "joints": 78
   },
   "aptitudes": ["Conformation"]
-}, {
-  "name": "Czechoslovakian Wolfdog",
-  "group": "Herding",
-  "size": "L",
-  "coat": "medium",
-  "colors": ["yellow gray", "silver gray"],
-  "species": "dog",
-  "sizeAvg": 65,
-  "sizeRange": [55, 85],
-  "litterSize": "L",
-  "traits": {
-    "intelligence": 8,
-    "energy": 9,
-    "trainability": 6,
-    "loyalty": 8,
-    "playfulness": 6,
-    "aggression": 5,
-    "preyDrive": 8,
-    "barkTendency": 5,
-    "sociability": 5,
-    "adaptability": 6
-  },
-  "health": {
-    "hips": 80,
-    "eyes": 82,
-    "heart": 85,
-    "joints": 80
-  },
-  "aptitudes": ["Schutzhund", "Tracking", "Conformation"]
-}, {
-  "name": "McNab",
-  "group": "Herding",
-  "size": "M",
-  "coat": "short",
-  "colors": ["black & white", "red & white"],
-  "species": "dog",
-  "sizeAvg": 40,
-  "sizeRange": [28, 55],
-  "litterSize": "M",
-  "traits": {
-    "intelligence": 9,
-    "energy": 10,
-    "trainability": 8,
-    "loyalty": 8,
-    "playfulness": 8,
-    "aggression": 2,
-    "preyDrive": 7,
-    "barkTendency": 5,
-    "sociability": 7,
-    "adaptability": 8
-  },
-  "health": {
-    "hips": 85,
-    "eyes": 88,
-    "heart": 90,
-    "joints": 85
-  },
-  "aptitudes": ["Herding", "Agility", "Flyball"]
-}, {
+},{
   "name": "English Shepherd",
   "group": "Herding",
   "size": "M",
@@ -8800,7 +7256,7 @@ var DEMO_BREEDS = [{
     "joints": 82
   },
   "aptitudes": ["Herding", "Agility", "Obedience"]
-}, {
+},{
   "name": "Blue Lacy",
   "group": "Herding",
   "size": "M",
@@ -8829,7 +7285,7 @@ var DEMO_BREEDS = [{
     "joints": 85
   },
   "aptitudes": ["Herding", "Tracking", "Field Trials"]
-}, {
+},{
   "name": "Louisiana Catahoula Leopard",
   "group": "Herding",
   "size": "L",
@@ -8858,210 +7314,7 @@ var DEMO_BREEDS = [{
     "joints": 78
   },
   "aptitudes": ["Herding", "Tracking", "Field Trials"]
-}, {
-  "name": "C\xE3o da Serra de Aires",
-  "group": "Herding",
-  "size": "M",
-  "coat": "long",
-  "colors": ["fawn", "gray", "yellow", "brown"],
-  "species": "dog",
-  "sizeAvg": 40,
-  "sizeRange": [28, 55],
-  "litterSize": "M",
-  "traits": {
-    "intelligence": 8,
-    "energy": 7,
-    "trainability": 7,
-    "loyalty": 9,
-    "playfulness": 7,
-    "aggression": 2,
-    "preyDrive": 5,
-    "barkTendency": 5,
-    "sociability": 8,
-    "adaptability": 7
-  },
-  "health": {
-    "hips": 80,
-    "eyes": 82,
-    "heart": 85,
-    "joints": 80
-  },
-  "aptitudes": ["Herding", "Agility", "Conformation"]
-}, {
-  "name": "Basque Shepherd",
-  "group": "Herding",
-  "size": "M",
-  "coat": "medium",
-  "colors": ["fawn", "black", "red"],
-  "species": "dog",
-  "sizeAvg": 40,
-  "sizeRange": [28, 55],
-  "litterSize": "M",
-  "traits": {
-    "intelligence": 8,
-    "energy": 8,
-    "trainability": 7,
-    "loyalty": 9,
-    "playfulness": 7,
-    "aggression": 2,
-    "preyDrive": 5,
-    "barkTendency": 6,
-    "sociability": 7,
-    "adaptability": 7
-  },
-  "health": {
-    "hips": 80,
-    "eyes": 82,
-    "heart": 85,
-    "joints": 80
-  },
-  "aptitudes": ["Herding", "Conformation"]
-}, {
-  "name": "Majorca Shepherd",
-  "group": "Herding",
-  "size": "L",
-  "coat": "short",
-  "colors": ["black", "black & tan"],
-  "species": "dog",
-  "sizeAvg": 65,
-  "sizeRange": [55, 85],
-  "litterSize": "L",
-  "traits": {
-    "intelligence": 8,
-    "energy": 7,
-    "trainability": 6,
-    "loyalty": 9,
-    "playfulness": 6,
-    "aggression": 3,
-    "preyDrive": 6,
-    "barkTendency": 5,
-    "sociability": 6,
-    "adaptability": 6
-  },
-  "health": {
-    "hips": 78,
-    "eyes": 80,
-    "heart": 82,
-    "joints": 78
-  },
-  "aptitudes": ["Herding", "Conformation"]
-}, {
-  "name": "Carea Leon\xE9s",
-  "group": "Herding",
-  "size": "M",
-  "coat": "medium",
-  "colors": ["black", "black & tan", "merle"],
-  "species": "dog",
-  "sizeAvg": 40,
-  "sizeRange": [28, 55],
-  "litterSize": "M",
-  "traits": {
-    "intelligence": 8,
-    "energy": 8,
-    "trainability": 7,
-    "loyalty": 8,
-    "playfulness": 7,
-    "aggression": 3,
-    "preyDrive": 6,
-    "barkTendency": 6,
-    "sociability": 7,
-    "adaptability": 7
-  },
-  "health": {
-    "hips": 80,
-    "eyes": 82,
-    "heart": 85,
-    "joints": 80
-  },
-  "aptitudes": ["Herding", "Agility"]
-}, {
-  "name": "Romanian Corb",
-  "group": "Herding",
-  "size": "L",
-  "coat": "medium",
-  "colors": ["black", "black & tan"],
-  "species": "dog",
-  "sizeAvg": 65,
-  "sizeRange": [55, 85],
-  "litterSize": "L",
-  "traits": {
-    "intelligence": 7,
-    "energy": 7,
-    "trainability": 6,
-    "loyalty": 8,
-    "playfulness": 6,
-    "aggression": 4,
-    "preyDrive": 6,
-    "barkTendency": 6,
-    "sociability": 6,
-    "adaptability": 6
-  },
-  "health": {
-    "hips": 78,
-    "eyes": 80,
-    "heart": 82,
-    "joints": 78
-  },
-  "aptitudes": ["Herding", "Conformation"]
-}, {
-  "name": "Lupino del Gigante",
-  "group": "Herding",
-  "size": "L",
-  "coat": "long",
-  "colors": ["gray", "wolf sable"],
-  "species": "dog",
-  "sizeAvg": 65,
-  "sizeRange": [55, 85],
-  "litterSize": "L",
-  "traits": {
-    "intelligence": 7,
-    "energy": 7,
-    "trainability": 6,
-    "loyalty": 8,
-    "playfulness": 6,
-    "aggression": 4,
-    "preyDrive": 7,
-    "barkTendency": 5,
-    "sociability": 6,
-    "adaptability": 6
-  },
-  "health": {
-    "hips": 78,
-    "eyes": 80,
-    "heart": 82,
-    "joints": 78
-  },
-  "aptitudes": ["Herding", "Conformation"]
-}, {
-  "name": "Pastore della Lessinia",
-  "group": "Herding",
-  "size": "L",
-  "coat": "long",
-  "colors": ["white", "fawn", "gray"],
-  "species": "dog",
-  "sizeAvg": 65,
-  "sizeRange": [55, 85],
-  "litterSize": "L",
-  "traits": {
-    "intelligence": 7,
-    "energy": 6,
-    "trainability": 6,
-    "loyalty": 9,
-    "playfulness": 5,
-    "aggression": 4,
-    "preyDrive": 5,
-    "barkTendency": 6,
-    "sociability": 7,
-    "adaptability": 6
-  },
-  "health": {
-    "hips": 78,
-    "eyes": 80,
-    "heart": 82,
-    "joints": 78
-  },
-  "aptitudes": ["Herding", "Conformation"]
-}, {
+},{
   "name": "South African Boerboel Herder",
   "group": "Herding",
   "size": "L",
@@ -9090,36 +7343,7 @@ var DEMO_BREEDS = [{
     "joints": 75
   },
   "aptitudes": ["Herding", "Obedience"]
-}, {
-  "name": "Maremma-Abruzzese mix",
-  "group": "Herding",
-  "size": "XL",
-  "coat": "long",
-  "colors": ["white"],
-  "species": "dog",
-  "sizeAvg": 100,
-  "sizeRange": [80, 130],
-  "litterSize": "L",
-  "traits": {
-    "intelligence": 7,
-    "energy": 6,
-    "trainability": 5,
-    "loyalty": 9,
-    "playfulness": 5,
-    "aggression": 4,
-    "preyDrive": 4,
-    "barkTendency": 7,
-    "sociability": 6,
-    "adaptability": 5
-  },
-  "health": {
-    "hips": 72,
-    "eyes": 78,
-    "heart": 78,
-    "joints": 72
-  },
-  "aptitudes": ["Herding", "Conformation", "LGD"]
-}, {
+},{
   "name": "Karelian Bear Dog",
   "group": "Hound",
   "size": "M",
@@ -9148,384 +7372,7 @@ var DEMO_BREEDS = [{
     "joints": 82
   },
   "aptitudes": ["Field Trials", "Tracking"]
-}, {
-  "name": "Laika (West Siberian)",
-  "group": "Hound",
-  "size": "M",
-  "coat": "medium",
-  "colors": ["white", "gray", "black", "red"],
-  "species": "dog",
-  "sizeAvg": 40,
-  "sizeRange": [28, 55],
-  "litterSize": "M",
-  "traits": {
-    "intelligence": 7,
-    "energy": 9,
-    "trainability": 5,
-    "loyalty": 8,
-    "playfulness": 7,
-    "aggression": 4,
-    "preyDrive": 9,
-    "barkTendency": 7,
-    "sociability": 6,
-    "adaptability": 5
-  },
-  "health": {
-    "hips": 82,
-    "eyes": 85,
-    "heart": 88,
-    "joints": 82
-  },
-  "aptitudes": ["Field Trials", "Tracking"]
-}, {
-  "name": "Laika (East Siberian)",
-  "group": "Hound",
-  "size": "M",
-  "coat": "medium",
-  "colors": ["white", "gray", "black", "sable"],
-  "species": "dog",
-  "sizeAvg": 40,
-  "sizeRange": [28, 55],
-  "litterSize": "M",
-  "traits": {
-    "intelligence": 7,
-    "energy": 9,
-    "trainability": 5,
-    "loyalty": 8,
-    "playfulness": 7,
-    "aggression": 4,
-    "preyDrive": 9,
-    "barkTendency": 7,
-    "sociability": 5,
-    "adaptability": 5
-  },
-  "health": {
-    "hips": 82,
-    "eyes": 85,
-    "heart": 88,
-    "joints": 82
-  },
-  "aptitudes": ["Field Trials", "Tracking"]
-}, {
-  "name": "Laika (Russo-European)",
-  "group": "Hound",
-  "size": "M",
-  "coat": "medium",
-  "colors": ["black & white", "gray & white"],
-  "species": "dog",
-  "sizeAvg": 40,
-  "sizeRange": [28, 55],
-  "litterSize": "M",
-  "traits": {
-    "intelligence": 7,
-    "energy": 9,
-    "trainability": 5,
-    "loyalty": 8,
-    "playfulness": 7,
-    "aggression": 4,
-    "preyDrive": 9,
-    "barkTendency": 7,
-    "sociability": 5,
-    "adaptability": 5
-  },
-  "health": {
-    "hips": 80,
-    "eyes": 82,
-    "heart": 85,
-    "joints": 80
-  },
-  "aptitudes": ["Field Trials", "Tracking"]
-}, {
-  "name": "Finnish Hound",
-  "group": "Hound",
-  "size": "L",
-  "coat": "short",
-  "colors": ["tricolor"],
-  "species": "dog",
-  "sizeAvg": 65,
-  "sizeRange": [55, 85],
-  "litterSize": "L",
-  "traits": {
-    "intelligence": 7,
-    "energy": 8,
-    "trainability": 6,
-    "loyalty": 8,
-    "playfulness": 7,
-    "aggression": 2,
-    "preyDrive": 9,
-    "barkTendency": 7,
-    "sociability": 7,
-    "adaptability": 6
-  },
-  "health": {
-    "hips": 80,
-    "eyes": 82,
-    "heart": 85,
-    "joints": 80
-  },
-  "aptitudes": ["Field Trials", "Conformation"]
-}, {
-  "name": "Estonian Hound",
-  "group": "Hound",
-  "size": "M",
-  "coat": "short",
-  "colors": ["tricolor", "black & tan"],
-  "species": "dog",
-  "sizeAvg": 40,
-  "sizeRange": [28, 55],
-  "litterSize": "M",
-  "traits": {
-    "intelligence": 7,
-    "energy": 8,
-    "trainability": 6,
-    "loyalty": 8,
-    "playfulness": 7,
-    "aggression": 2,
-    "preyDrive": 8,
-    "barkTendency": 7,
-    "sociability": 7,
-    "adaptability": 6
-  },
-  "health": {
-    "hips": 80,
-    "eyes": 82,
-    "heart": 85,
-    "joints": 80
-  },
-  "aptitudes": ["Field Trials", "Conformation"]
-}, {
-  "name": "Polish Hound",
-  "group": "Hound",
-  "size": "L",
-  "coat": "short",
-  "colors": ["black & tan"],
-  "species": "dog",
-  "sizeAvg": 65,
-  "sizeRange": [55, 85],
-  "litterSize": "L",
-  "traits": {
-    "intelligence": 7,
-    "energy": 7,
-    "trainability": 6,
-    "loyalty": 8,
-    "playfulness": 7,
-    "aggression": 2,
-    "preyDrive": 8,
-    "barkTendency": 7,
-    "sociability": 7,
-    "adaptability": 5
-  },
-  "health": {
-    "hips": 78,
-    "eyes": 80,
-    "heart": 82,
-    "joints": 78
-  },
-  "aptitudes": ["Field Trials", "Conformation"]
-}, {
-  "name": "Serbian Hound",
-  "group": "Hound",
-  "size": "M",
-  "coat": "short",
-  "colors": ["red & black saddle"],
-  "species": "dog",
-  "sizeAvg": 40,
-  "sizeRange": [28, 55],
-  "litterSize": "M",
-  "traits": {
-    "intelligence": 7,
-    "energy": 8,
-    "trainability": 5,
-    "loyalty": 8,
-    "playfulness": 7,
-    "aggression": 2,
-    "preyDrive": 8,
-    "barkTendency": 7,
-    "sociability": 7,
-    "adaptability": 5
-  },
-  "health": {
-    "hips": 78,
-    "eyes": 80,
-    "heart": 82,
-    "joints": 78
-  },
-  "aptitudes": ["Field Trials", "Conformation"]
-}, {
-  "name": "Porcelaine",
-  "group": "Hound",
-  "size": "L",
-  "coat": "short",
-  "colors": ["white with orange spots"],
-  "species": "dog",
-  "sizeAvg": 65,
-  "sizeRange": [55, 85],
-  "litterSize": "L",
-  "traits": {
-    "intelligence": 7,
-    "energy": 8,
-    "trainability": 5,
-    "loyalty": 7,
-    "playfulness": 7,
-    "aggression": 2,
-    "preyDrive": 9,
-    "barkTendency": 7,
-    "sociability": 7,
-    "adaptability": 5
-  },
-  "health": {
-    "hips": 80,
-    "eyes": 82,
-    "heart": 85,
-    "joints": 80
-  },
-  "aptitudes": ["Field Trials", "Conformation"]
-}, {
-  "name": "Billy",
-  "group": "Hound",
-  "size": "L",
-  "coat": "short",
-  "colors": ["white", "white & orange"],
-  "species": "dog",
-  "sizeAvg": 65,
-  "sizeRange": [55, 85],
-  "litterSize": "L",
-  "traits": {
-    "intelligence": 7,
-    "energy": 8,
-    "trainability": 5,
-    "loyalty": 7,
-    "playfulness": 7,
-    "aggression": 2,
-    "preyDrive": 9,
-    "barkTendency": 7,
-    "sociability": 7,
-    "adaptability": 5
-  },
-  "health": {
-    "hips": 80,
-    "eyes": 82,
-    "heart": 85,
-    "joints": 80
-  },
-  "aptitudes": ["Field Trials", "Conformation"]
-}, {
-  "name": "Petit Basset Griffon Vend\xE9en",
-  "group": "Hound",
-  "size": "S",
-  "coat": "wire",
-  "colors": ["white & lemon", "white & orange", "tricolor"],
-  "species": "dog",
-  "sizeAvg": 20,
-  "sizeRange": [12, 28],
-  "litterSize": "S",
-  "traits": {
-    "intelligence": 6,
-    "energy": 8,
-    "trainability": 5,
-    "loyalty": 8,
-    "playfulness": 8,
-    "aggression": 2,
-    "preyDrive": 8,
-    "barkTendency": 7,
-    "sociability": 8,
-    "adaptability": 6
-  },
-  "health": {
-    "hips": 80,
-    "eyes": 78,
-    "heart": 82,
-    "joints": 80
-  },
-  "aptitudes": ["Field Trials", "Conformation", "Agility"]
-}, {
-  "name": "Grand Basset Griffon Vend\xE9en",
-  "group": "Hound",
-  "size": "M",
-  "coat": "wire",
-  "colors": ["white & lemon", "white & orange", "tricolor"],
-  "species": "dog",
-  "sizeAvg": 40,
-  "sizeRange": [28, 55],
-  "litterSize": "M",
-  "traits": {
-    "intelligence": 6,
-    "energy": 7,
-    "trainability": 5,
-    "loyalty": 8,
-    "playfulness": 7,
-    "aggression": 2,
-    "preyDrive": 9,
-    "barkTendency": 7,
-    "sociability": 7,
-    "adaptability": 5
-  },
-  "health": {
-    "hips": 78,
-    "eyes": 78,
-    "heart": 80,
-    "joints": 78
-  },
-  "aptitudes": ["Field Trials", "Conformation"]
-}, {
-  "name": "Briquet Griffon Vend\xE9en",
-  "group": "Hound",
-  "size": "M",
-  "coat": "wire",
-  "colors": ["white & orange", "white & black", "tricolor"],
-  "species": "dog",
-  "sizeAvg": 40,
-  "sizeRange": [28, 55],
-  "litterSize": "M",
-  "traits": {
-    "intelligence": 6,
-    "energy": 8,
-    "trainability": 5,
-    "loyalty": 7,
-    "playfulness": 7,
-    "aggression": 2,
-    "preyDrive": 8,
-    "barkTendency": 7,
-    "sociability": 7,
-    "adaptability": 5
-  },
-  "health": {
-    "hips": 78,
-    "eyes": 78,
-    "heart": 80,
-    "joints": 78
-  },
-  "aptitudes": ["Field Trials", "Conformation"]
-}, {
-  "name": "Anglo-Fran\xE7ais de Petite V\xE9nerie",
-  "group": "Hound",
-  "size": "M",
-  "coat": "short",
-  "colors": ["tricolor", "bicolor"],
-  "species": "dog",
-  "sizeAvg": 40,
-  "sizeRange": [28, 55],
-  "litterSize": "M",
-  "traits": {
-    "intelligence": 7,
-    "energy": 8,
-    "trainability": 5,
-    "loyalty": 7,
-    "playfulness": 8,
-    "aggression": 2,
-    "preyDrive": 9,
-    "barkTendency": 7,
-    "sociability": 7,
-    "adaptability": 5
-  },
-  "health": {
-    "hips": 80,
-    "eyes": 82,
-    "heart": 85,
-    "joints": 80
-  },
-  "aptitudes": ["Field Trials"]
-}, {
+},{
   "name": "Mountain Cur",
   "group": "Hound",
   "size": "M",
@@ -9554,7 +7401,7 @@ var DEMO_BREEDS = [{
     "joints": 82
   },
   "aptitudes": ["Field Trials", "Tracking"]
-}, {
+},{
   "name": "Treeing Tennessee Brindle",
   "group": "Hound",
   "size": "M",
@@ -9583,7 +7430,7 @@ var DEMO_BREEDS = [{
     "joints": 82
   },
   "aptitudes": ["Field Trials", "Tracking"]
-}, {
+},{
   "name": "Black Mouth Cur",
   "group": "Hound",
   "size": "M",
@@ -9612,7 +7459,7 @@ var DEMO_BREEDS = [{
     "joints": 82
   },
   "aptitudes": ["Field Trials", "Tracking", "Herding"]
-}, {
+},{
   "name": "American English Coonhound",
   "group": "Hound",
   "size": "L",
@@ -9641,7 +7488,7 @@ var DEMO_BREEDS = [{
     "joints": 80
   },
   "aptitudes": ["Field Trials", "Tracking"]
-}, {
+},{
   "name": "Bluetick Coonhound",
   "group": "Hound",
   "size": "L",
@@ -9670,384 +7517,7 @@ var DEMO_BREEDS = [{
     "joints": 80
   },
   "aptitudes": ["Field Trials", "Tracking"]
-}, {
-  "name": "Chien Fran\xE7ais Blanc et Noir",
-  "group": "Hound",
-  "size": "L",
-  "coat": "short",
-  "colors": ["white & black"],
-  "species": "dog",
-  "sizeAvg": 65,
-  "sizeRange": [55, 85],
-  "litterSize": "L",
-  "traits": {
-    "intelligence": 7,
-    "energy": 8,
-    "trainability": 5,
-    "loyalty": 7,
-    "playfulness": 7,
-    "aggression": 2,
-    "preyDrive": 9,
-    "barkTendency": 7,
-    "sociability": 7,
-    "adaptability": 5
-  },
-  "health": {
-    "hips": 80,
-    "eyes": 82,
-    "heart": 85,
-    "joints": 80
-  },
-  "aptitudes": ["Field Trials"]
-}, {
-  "name": "Dungker",
-  "group": "Hound",
-  "size": "L",
-  "coat": "short",
-  "colors": ["blue merle", "black & tan"],
-  "species": "dog",
-  "sizeAvg": 65,
-  "sizeRange": [55, 85],
-  "litterSize": "L",
-  "traits": {
-    "intelligence": 7,
-    "energy": 7,
-    "trainability": 5,
-    "loyalty": 8,
-    "playfulness": 7,
-    "aggression": 2,
-    "preyDrive": 8,
-    "barkTendency": 7,
-    "sociability": 7,
-    "adaptability": 5
-  },
-  "health": {
-    "hips": 78,
-    "eyes": 80,
-    "heart": 82,
-    "joints": 78
-  },
-  "aptitudes": ["Field Trials", "Conformation"]
-}, {
-  "name": "Drever",
-  "group": "Hound",
-  "size": "S",
-  "coat": "short",
-  "colors": ["tricolor", "red & white", "black & tan & white"],
-  "species": "dog",
-  "sizeAvg": 20,
-  "sizeRange": [12, 28],
-  "litterSize": "S",
-  "traits": {
-    "intelligence": 7,
-    "energy": 7,
-    "trainability": 5,
-    "loyalty": 8,
-    "playfulness": 7,
-    "aggression": 2,
-    "preyDrive": 8,
-    "barkTendency": 7,
-    "sociability": 7,
-    "adaptability": 6
-  },
-  "health": {
-    "hips": 78,
-    "eyes": 80,
-    "heart": 82,
-    "joints": 78
-  },
-  "aptitudes": ["Field Trials", "Conformation"]
-}, {
-  "name": "H\xE4lleforshund",
-  "group": "Hound",
-  "size": "M",
-  "coat": "short",
-  "colors": ["tricolor"],
-  "species": "dog",
-  "sizeAvg": 40,
-  "sizeRange": [28, 55],
-  "litterSize": "M",
-  "traits": {
-    "intelligence": 7,
-    "energy": 7,
-    "trainability": 5,
-    "loyalty": 8,
-    "playfulness": 7,
-    "aggression": 2,
-    "preyDrive": 8,
-    "barkTendency": 7,
-    "sociability": 7,
-    "adaptability": 5
-  },
-  "health": {
-    "hips": 78,
-    "eyes": 80,
-    "heart": 82,
-    "joints": 78
-  },
-  "aptitudes": ["Field Trials", "Conformation"]
-}, {
-  "name": "Schillerst\xF6vare",
-  "group": "Hound",
-  "size": "L",
-  "coat": "short",
-  "colors": ["tricolor"],
-  "species": "dog",
-  "sizeAvg": 65,
-  "sizeRange": [55, 85],
-  "litterSize": "L",
-  "traits": {
-    "intelligence": 7,
-    "energy": 8,
-    "trainability": 5,
-    "loyalty": 7,
-    "playfulness": 7,
-    "aggression": 2,
-    "preyDrive": 8,
-    "barkTendency": 7,
-    "sociability": 7,
-    "adaptability": 5
-  },
-  "health": {
-    "hips": 78,
-    "eyes": 80,
-    "heart": 82,
-    "joints": 78
-  },
-  "aptitudes": ["Field Trials", "Conformation"]
-}, {
-  "name": "Smalandsst\xF6vare",
-  "group": "Hound",
-  "size": "M",
-  "coat": "short",
-  "colors": ["black & tan"],
-  "species": "dog",
-  "sizeAvg": 40,
-  "sizeRange": [28, 55],
-  "litterSize": "M",
-  "traits": {
-    "intelligence": 7,
-    "energy": 7,
-    "trainability": 5,
-    "loyalty": 8,
-    "playfulness": 7,
-    "aggression": 2,
-    "preyDrive": 8,
-    "barkTendency": 6,
-    "sociability": 7,
-    "adaptability": 5
-  },
-  "health": {
-    "hips": 78,
-    "eyes": 80,
-    "heart": 82,
-    "joints": 78
-  },
-  "aptitudes": ["Field Trials", "Conformation"]
-}, {
-  "name": "Hygen Hound",
-  "group": "Hound",
-  "size": "M",
-  "coat": "short",
-  "colors": ["red", "yellow", "tricolor"],
-  "species": "dog",
-  "sizeAvg": 40,
-  "sizeRange": [28, 55],
-  "litterSize": "M",
-  "traits": {
-    "intelligence": 7,
-    "energy": 8,
-    "trainability": 5,
-    "loyalty": 7,
-    "playfulness": 7,
-    "aggression": 2,
-    "preyDrive": 8,
-    "barkTendency": 7,
-    "sociability": 7,
-    "adaptability": 5
-  },
-  "health": {
-    "hips": 78,
-    "eyes": 80,
-    "heart": 82,
-    "joints": 78
-  },
-  "aptitudes": ["Field Trials", "Conformation"]
-}, {
-  "name": "Hellenikos Ichnilatis",
-  "group": "Hound",
-  "size": "M",
-  "coat": "short",
-  "colors": ["black & tan"],
-  "species": "dog",
-  "sizeAvg": 40,
-  "sizeRange": [28, 55],
-  "litterSize": "M",
-  "traits": {
-    "intelligence": 7,
-    "energy": 8,
-    "trainability": 5,
-    "loyalty": 7,
-    "playfulness": 7,
-    "aggression": 2,
-    "preyDrive": 8,
-    "barkTendency": 7,
-    "sociability": 7,
-    "adaptability": 5
-  },
-  "health": {
-    "hips": 78,
-    "eyes": 80,
-    "heart": 82,
-    "joints": 78
-  },
-  "aptitudes": ["Field Trials", "Conformation"]
-}, {
-  "name": "Fell Terrier",
-  "group": "Terrier",
-  "size": "XS",
-  "coat": "wire",
-  "colors": ["black", "black & tan", "red"],
-  "species": "dog",
-  "sizeAvg": 8,
-  "sizeRange": [4, 12],
-  "litterSize": "S",
-  "traits": {
-    "intelligence": 7,
-    "energy": 9,
-    "trainability": 5,
-    "loyalty": 8,
-    "playfulness": 8,
-    "aggression": 5,
-    "preyDrive": 10,
-    "barkTendency": 6,
-    "sociability": 5,
-    "adaptability": 6
-  },
-  "health": {
-    "hips": 85,
-    "eyes": 85,
-    "heart": 88,
-    "joints": 85
-  },
-  "aptitudes": ["Earthdog", "Field Trials"]
-}, {
-  "name": "Plummer Terrier",
-  "group": "Terrier",
-  "size": "S",
-  "coat": "short",
-  "colors": ["white & tan", "tricolor"],
-  "species": "dog",
-  "sizeAvg": 20,
-  "sizeRange": [12, 28],
-  "litterSize": "S",
-  "traits": {
-    "intelligence": 7,
-    "energy": 9,
-    "trainability": 6,
-    "loyalty": 8,
-    "playfulness": 8,
-    "aggression": 4,
-    "preyDrive": 9,
-    "barkTendency": 6,
-    "sociability": 6,
-    "adaptability": 7
-  },
-  "health": {
-    "hips": 85,
-    "eyes": 85,
-    "heart": 88,
-    "joints": 85
-  },
-  "aptitudes": ["Earthdog", "Field Trials"]
-}, {
-  "name": "Lucas Terrier",
-  "group": "Terrier",
-  "size": "S",
-  "coat": "wire",
-  "colors": ["grizzle & tan", "sandy & tan"],
-  "species": "dog",
-  "sizeAvg": 20,
-  "sizeRange": [12, 28],
-  "litterSize": "S",
-  "traits": {
-    "intelligence": 7,
-    "energy": 7,
-    "trainability": 6,
-    "loyalty": 8,
-    "playfulness": 7,
-    "aggression": 3,
-    "preyDrive": 7,
-    "barkTendency": 5,
-    "sociability": 7,
-    "adaptability": 6
-  },
-  "health": {
-    "hips": 82,
-    "eyes": 82,
-    "heart": 85,
-    "joints": 82
-  },
-  "aptitudes": ["Earthdog", "Conformation"]
-}, {
-  "name": "Ratonero Bodeguero Andaluz",
-  "group": "Terrier",
-  "size": "S",
-  "coat": "short",
-  "colors": ["white & black", "white & tan", "tricolor"],
-  "species": "dog",
-  "sizeAvg": 20,
-  "sizeRange": [12, 28],
-  "litterSize": "S",
-  "traits": {
-    "intelligence": 7,
-    "energy": 9,
-    "trainability": 7,
-    "loyalty": 8,
-    "playfulness": 8,
-    "aggression": 3,
-    "preyDrive": 8,
-    "barkTendency": 6,
-    "sociability": 7,
-    "adaptability": 7
-  },
-  "health": {
-    "hips": 82,
-    "eyes": 85,
-    "heart": 88,
-    "joints": 82
-  },
-  "aptitudes": ["Earthdog", "Agility", "Conformation"]
-}, {
-  "name": "Teddy Roosevelt Terrier",
-  "group": "Terrier",
-  "size": "S",
-  "coat": "short",
-  "colors": ["white & black", "white & tan", "tricolor"],
-  "species": "dog",
-  "sizeAvg": 20,
-  "sizeRange": [12, 28],
-  "litterSize": "S",
-  "traits": {
-    "intelligence": 8,
-    "energy": 9,
-    "trainability": 7,
-    "loyalty": 8,
-    "playfulness": 9,
-    "aggression": 3,
-    "preyDrive": 8,
-    "barkTendency": 6,
-    "sociability": 7,
-    "adaptability": 7
-  },
-  "health": {
-    "hips": 84,
-    "eyes": 85,
-    "heart": 88,
-    "joints": 84
-  },
-  "aptitudes": ["Earthdog", "Agility", "Conformation"]
-}, {
+},{
   "name": "American Hairless Terrier",
   "group": "Terrier",
   "size": "S",
@@ -10076,65 +7546,7 @@ var DEMO_BREEDS = [{
     "joints": 84
   },
   "aptitudes": ["Agility", "Conformation", "Rally-O"]
-}, {
-  "name": "Tenterfield Terrier",
-  "group": "Terrier",
-  "size": "XS",
-  "coat": "short",
-  "colors": ["white & black", "white & tan", "tricolor"],
-  "species": "dog",
-  "sizeAvg": 8,
-  "sizeRange": [4, 12],
-  "litterSize": "S",
-  "traits": {
-    "intelligence": 7,
-    "energy": 8,
-    "trainability": 6,
-    "loyalty": 8,
-    "playfulness": 8,
-    "aggression": 3,
-    "preyDrive": 7,
-    "barkTendency": 6,
-    "sociability": 7,
-    "adaptability": 7
-  },
-  "health": {
-    "hips": 82,
-    "eyes": 82,
-    "heart": 85,
-    "joints": 82
-  },
-  "aptitudes": ["Earthdog", "Agility", "Conformation"]
-}, {
-  "name": "Brazilian Terrier",
-  "group": "Terrier",
-  "size": "S",
-  "coat": "short",
-  "colors": ["tricolor", "white & black", "white & tan"],
-  "species": "dog",
-  "sizeAvg": 20,
-  "sizeRange": [12, 28],
-  "litterSize": "S",
-  "traits": {
-    "intelligence": 7,
-    "energy": 9,
-    "trainability": 7,
-    "loyalty": 8,
-    "playfulness": 8,
-    "aggression": 3,
-    "preyDrive": 7,
-    "barkTendency": 6,
-    "sociability": 7,
-    "adaptability": 7
-  },
-  "health": {
-    "hips": 82,
-    "eyes": 85,
-    "heart": 88,
-    "joints": 82
-  },
-  "aptitudes": ["Agility", "Conformation", "Obedience"]
-}, {
+},{
   "name": "Irish Water Spaniel",
   "group": "Sporting",
   "size": "L",
@@ -10163,7 +7575,7 @@ var DEMO_BREEDS = [{
     "joints": 75
   },
   "aptitudes": ["Field Trials", "Dock Diving", "Conformation"]
-}, {
+},{
   "name": "Field Spaniel",
   "group": "Sporting",
   "size": "M",
@@ -10192,297 +7604,7 @@ var DEMO_BREEDS = [{
     "joints": 75
   },
   "aptitudes": ["Field Trials", "Conformation", "Agility"]
-}, {
-  "name": "Stabyhoun",
-  "group": "Sporting",
-  "size": "M",
-  "coat": "medium",
-  "colors": ["black & white", "brown & white", "orange & white"],
-  "species": "dog",
-  "sizeAvg": 40,
-  "sizeRange": [28, 55],
-  "litterSize": "M",
-  "traits": {
-    "intelligence": 8,
-    "energy": 7,
-    "trainability": 8,
-    "loyalty": 9,
-    "playfulness": 7,
-    "aggression": 1,
-    "preyDrive": 7,
-    "barkTendency": 4,
-    "sociability": 8,
-    "adaptability": 7
-  },
-  "health": {
-    "hips": 80,
-    "eyes": 82,
-    "heart": 85,
-    "joints": 80
-  },
-  "aptitudes": ["Field Trials", "Agility", "Conformation"]
-}, {
-  "name": "Small M\xFCnsterl\xE4nder",
-  "group": "Sporting",
-  "size": "M",
-  "coat": "medium",
-  "colors": ["brown & white", "brown roan"],
-  "species": "dog",
-  "sizeAvg": 40,
-  "sizeRange": [28, 55],
-  "litterSize": "M",
-  "traits": {
-    "intelligence": 8,
-    "energy": 8,
-    "trainability": 8,
-    "loyalty": 8,
-    "playfulness": 7,
-    "aggression": 1,
-    "preyDrive": 8,
-    "barkTendency": 4,
-    "sociability": 8,
-    "adaptability": 7
-  },
-  "health": {
-    "hips": 78,
-    "eyes": 80,
-    "heart": 85,
-    "joints": 78
-  },
-  "aptitudes": ["Field Trials", "Tracking", "Conformation"]
-}, {
-  "name": "Large M\xFCnsterl\xE4nder",
-  "group": "Sporting",
-  "size": "L",
-  "coat": "long",
-  "colors": ["black & white", "black roan"],
-  "species": "dog",
-  "sizeAvg": 65,
-  "sizeRange": [55, 85],
-  "litterSize": "L",
-  "traits": {
-    "intelligence": 8,
-    "energy": 8,
-    "trainability": 8,
-    "loyalty": 8,
-    "playfulness": 7,
-    "aggression": 1,
-    "preyDrive": 8,
-    "barkTendency": 4,
-    "sociability": 8,
-    "adaptability": 7
-  },
-  "health": {
-    "hips": 78,
-    "eyes": 80,
-    "heart": 85,
-    "joints": 78
-  },
-  "aptitudes": ["Field Trials", "Tracking", "Conformation"]
-}, {
-  "name": "Cesky Fousek",
-  "group": "Sporting",
-  "size": "L",
-  "coat": "wire",
-  "colors": ["brown", "brown & white", "roan"],
-  "species": "dog",
-  "sizeAvg": 65,
-  "sizeRange": [55, 85],
-  "litterSize": "L",
-  "traits": {
-    "intelligence": 8,
-    "energy": 8,
-    "trainability": 8,
-    "loyalty": 8,
-    "playfulness": 7,
-    "aggression": 2,
-    "preyDrive": 8,
-    "barkTendency": 4,
-    "sociability": 7,
-    "adaptability": 7
-  },
-  "health": {
-    "hips": 78,
-    "eyes": 80,
-    "heart": 85,
-    "joints": 78
-  },
-  "aptitudes": ["Field Trials", "Tracking", "Conformation"]
-}, {
-  "name": "Slovakian Wirehaired Pointer",
-  "group": "Sporting",
-  "size": "L",
-  "coat": "wire",
-  "colors": ["gray", "gray & white"],
-  "species": "dog",
-  "sizeAvg": 65,
-  "sizeRange": [55, 85],
-  "litterSize": "L",
-  "traits": {
-    "intelligence": 8,
-    "energy": 8,
-    "trainability": 7,
-    "loyalty": 8,
-    "playfulness": 7,
-    "aggression": 2,
-    "preyDrive": 8,
-    "barkTendency": 4,
-    "sociability": 7,
-    "adaptability": 7
-  },
-  "health": {
-    "hips": 78,
-    "eyes": 80,
-    "heart": 85,
-    "joints": 78
-  },
-  "aptitudes": ["Field Trials", "Tracking", "Conformation"]
-}, {
-  "name": "Perdigueiro Portugu\xEAs",
-  "group": "Sporting",
-  "size": "M",
-  "coat": "short",
-  "colors": ["yellow", "yellow & white", "fawn"],
-  "species": "dog",
-  "sizeAvg": 40,
-  "sizeRange": [28, 55],
-  "litterSize": "M",
-  "traits": {
-    "intelligence": 8,
-    "energy": 7,
-    "trainability": 7,
-    "loyalty": 8,
-    "playfulness": 7,
-    "aggression": 2,
-    "preyDrive": 8,
-    "barkTendency": 4,
-    "sociability": 7,
-    "adaptability": 7
-  },
-  "health": {
-    "hips": 78,
-    "eyes": 80,
-    "heart": 82,
-    "joints": 78
-  },
-  "aptitudes": ["Field Trials", "Conformation"]
-}, {
-  "name": "Perdiguero de Burgos",
-  "group": "Sporting",
-  "size": "L",
-  "coat": "short",
-  "colors": ["white & liver", "white & orange"],
-  "species": "dog",
-  "sizeAvg": 65,
-  "sizeRange": [55, 85],
-  "litterSize": "L",
-  "traits": {
-    "intelligence": 7,
-    "energy": 7,
-    "trainability": 7,
-    "loyalty": 8,
-    "playfulness": 6,
-    "aggression": 2,
-    "preyDrive": 8,
-    "barkTendency": 4,
-    "sociability": 7,
-    "adaptability": 6
-  },
-  "health": {
-    "hips": 75,
-    "eyes": 78,
-    "heart": 80,
-    "joints": 75
-  },
-  "aptitudes": ["Field Trials", "Conformation"]
-}, {
-  "name": "\xC9pagneul Pont-Audemer",
-  "group": "Sporting",
-  "size": "M",
-  "coat": "curly",
-  "colors": ["brown", "brown & gray roan"],
-  "species": "dog",
-  "sizeAvg": 40,
-  "sizeRange": [28, 55],
-  "litterSize": "M",
-  "traits": {
-    "intelligence": 8,
-    "energy": 7,
-    "trainability": 7,
-    "loyalty": 8,
-    "playfulness": 7,
-    "aggression": 1,
-    "preyDrive": 7,
-    "barkTendency": 4,
-    "sociability": 8,
-    "adaptability": 7
-  },
-  "health": {
-    "hips": 78,
-    "eyes": 80,
-    "heart": 82,
-    "joints": 78
-  },
-  "aptitudes": ["Field Trials", "Conformation"]
-}, {
-  "name": "\xC9pagneul Bleu de Picardie",
-  "group": "Sporting",
-  "size": "L",
-  "coat": "medium",
-  "colors": ["blue roan"],
-  "species": "dog",
-  "sizeAvg": 65,
-  "sizeRange": [55, 85],
-  "litterSize": "L",
-  "traits": {
-    "intelligence": 7,
-    "energy": 7,
-    "trainability": 7,
-    "loyalty": 8,
-    "playfulness": 7,
-    "aggression": 1,
-    "preyDrive": 7,
-    "barkTendency": 4,
-    "sociability": 8,
-    "adaptability": 7
-  },
-  "health": {
-    "hips": 75,
-    "eyes": 78,
-    "heart": 80,
-    "joints": 75
-  },
-  "aptitudes": ["Field Trials", "Conformation"]
-}, {
-  "name": "Volpino Italiano",
-  "group": "Toy",
-  "size": "XS",
-  "coat": "long",
-  "colors": ["white", "red"],
-  "species": "dog",
-  "sizeAvg": 8,
-  "sizeRange": [4, 12],
-  "litterSize": "S",
-  "traits": {
-    "intelligence": 7,
-    "energy": 7,
-    "trainability": 6,
-    "loyalty": 8,
-    "playfulness": 7,
-    "aggression": 3,
-    "preyDrive": 4,
-    "barkTendency": 8,
-    "sociability": 7,
-    "adaptability": 7
-  },
-  "health": {
-    "hips": 82,
-    "eyes": 80,
-    "heart": 82,
-    "joints": 82
-  },
-  "aptitudes": ["Conformation", "Agility"]
-}, {
+},{
   "name": "German Spitz (Klein)",
   "group": "Toy",
   "size": "XS",
@@ -10511,7 +7633,7 @@ var DEMO_BREEDS = [{
     "joints": 82
   },
   "aptitudes": ["Conformation", "Agility"]
-}, {
+},{
   "name": "German Spitz (Mittel)",
   "group": "Toy",
   "size": "S",
@@ -10540,36 +7662,7 @@ var DEMO_BREEDS = [{
     "joints": 82
   },
   "aptitudes": ["Conformation", "Agility"]
-}, {
-  "name": "Mi-Ki",
-  "group": "Toy",
-  "size": "XS",
-  "coat": "long",
-  "colors": ["white", "black", "cream", "gold", "parti"],
-  "species": "dog",
-  "sizeAvg": 8,
-  "sizeRange": [4, 12],
-  "litterSize": "S",
-  "traits": {
-    "intelligence": 7,
-    "energy": 4,
-    "trainability": 6,
-    "loyalty": 9,
-    "playfulness": 7,
-    "aggression": 1,
-    "preyDrive": 2,
-    "barkTendency": 3,
-    "sociability": 9,
-    "adaptability": 9
-  },
-  "health": {
-    "hips": 82,
-    "eyes": 80,
-    "heart": 82,
-    "joints": 82
-  },
-  "aptitudes": ["Conformation", "Agility"]
-}, {
+},{
   "name": "English Toy Terrier",
   "group": "Toy",
   "size": "XS",
@@ -10598,36 +7691,7 @@ var DEMO_BREEDS = [{
     "joints": 80
   },
   "aptitudes": ["Conformation", "Agility"]
-}, {
-  "name": "Thai Bangkaew",
-  "group": "Toy",
-  "size": "M",
-  "coat": "long",
-  "colors": ["white & fawn", "white & red", "white & gray"],
-  "species": "dog",
-  "sizeAvg": 40,
-  "sizeRange": [28, 55],
-  "litterSize": "M",
-  "traits": {
-    "intelligence": 7,
-    "energy": 7,
-    "trainability": 5,
-    "loyalty": 8,
-    "playfulness": 7,
-    "aggression": 4,
-    "preyDrive": 6,
-    "barkTendency": 7,
-    "sociability": 6,
-    "adaptability": 6
-  },
-  "health": {
-    "hips": 80,
-    "eyes": 80,
-    "heart": 82,
-    "joints": 80
-  },
-  "aptitudes": ["Conformation", "Agility"]
-}, {
+},{
   "name": "Samoyed",
   "group": "Working",
   "size": "L",
@@ -10656,7 +7720,7 @@ var DEMO_BREEDS = [{
     "joints": 72
   },
   "aptitudes": ["Sled Racing", "Conformation", "Agility"]
-}, {
+},{
   "name": "Chinook",
   "group": "Working",
   "size": "L",
@@ -10685,7 +7749,7 @@ var DEMO_BREEDS = [{
     "joints": 75
   },
   "aptitudes": ["Sled Racing", "Draft", "Conformation"]
-}, {
+},{
   "name": "Tamaskan",
   "group": "Working",
   "size": "L",
@@ -10714,7 +7778,7 @@ var DEMO_BREEDS = [{
     "joints": 80
   },
   "aptitudes": ["Sled Racing", "Agility", "Conformation"]
-}, {
+},{
   "name": "Northern Inuit",
   "group": "Working",
   "size": "L",
@@ -10743,7 +7807,7 @@ var DEMO_BREEDS = [{
     "joints": 78
   },
   "aptitudes": ["Conformation", "Agility"]
-}, {
+},{
   "name": "Utonagan",
   "group": "Working",
   "size": "L",
@@ -10772,297 +7836,7 @@ var DEMO_BREEDS = [{
     "joints": 78
   },
   "aptitudes": ["Conformation", "Agility"]
-}, {
-  "name": "Bucovina Shepherd",
-  "group": "Working",
-  "size": "XL",
-  "coat": "long",
-  "colors": ["white & black", "tricolor", "white & sand"],
-  "species": "dog",
-  "sizeAvg": 100,
-  "sizeRange": [80, 130],
-  "litterSize": "L",
-  "traits": {
-    "intelligence": 7,
-    "energy": 5,
-    "trainability": 5,
-    "loyalty": 9,
-    "playfulness": 4,
-    "aggression": 5,
-    "preyDrive": 5,
-    "barkTendency": 7,
-    "sociability": 5,
-    "adaptability": 5
-  },
-  "health": {
-    "hips": 70,
-    "eyes": 75,
-    "heart": 75,
-    "joints": 70
-  },
-  "aptitudes": ["Conformation"]
-}, {
-  "name": "Bankhar",
-  "group": "Working",
-  "size": "XL",
-  "coat": "long",
-  "colors": ["black & tan", "fawn", "brown"],
-  "species": "dog",
-  "sizeAvg": 100,
-  "sizeRange": [80, 130],
-  "litterSize": "L",
-  "traits": {
-    "intelligence": 7,
-    "energy": 5,
-    "trainability": 4,
-    "loyalty": 9,
-    "playfulness": 4,
-    "aggression": 6,
-    "preyDrive": 6,
-    "barkTendency": 8,
-    "sociability": 4,
-    "adaptability": 4
-  },
-  "health": {
-    "hips": 68,
-    "eyes": 72,
-    "heart": 72,
-    "joints": 68
-  },
-  "aptitudes": ["Schutzhund"]
-}, {
-  "name": "Mongolian Bankhar",
-  "group": "Working",
-  "size": "XL",
-  "coat": "long",
-  "colors": ["black & tan", "fawn", "gray"],
-  "species": "dog",
-  "sizeAvg": 100,
-  "sizeRange": [80, 130],
-  "litterSize": "L",
-  "traits": {
-    "intelligence": 7,
-    "energy": 5,
-    "trainability": 4,
-    "loyalty": 9,
-    "playfulness": 4,
-    "aggression": 6,
-    "preyDrive": 6,
-    "barkTendency": 8,
-    "sociability": 4,
-    "adaptability": 4
-  },
-  "health": {
-    "hips": 68,
-    "eyes": 72,
-    "heart": 72,
-    "joints": 68
-  },
-  "aptitudes": ["Schutzhund"]
-}, {
-  "name": "Assyrian Shepherd",
-  "group": "Working",
-  "size": "XL",
-  "coat": "medium",
-  "colors": ["fawn", "gray", "white"],
-  "species": "dog",
-  "sizeAvg": 100,
-  "sizeRange": [80, 130],
-  "litterSize": "L",
-  "traits": {
-    "intelligence": 7,
-    "energy": 5,
-    "trainability": 4,
-    "loyalty": 9,
-    "playfulness": 4,
-    "aggression": 6,
-    "preyDrive": 6,
-    "barkTendency": 7,
-    "sociability": 4,
-    "adaptability": 5
-  },
-  "health": {
-    "hips": 70,
-    "eyes": 75,
-    "heart": 75,
-    "joints": 70
-  },
-  "aptitudes": ["Schutzhund"]
-}, {
-  "name": "Dogo Canario",
-  "group": "Working",
-  "size": "XL",
-  "coat": "short",
-  "colors": ["brindle", "fawn"],
-  "species": "dog",
-  "sizeAvg": 100,
-  "sizeRange": [80, 130],
-  "litterSize": "L",
-  "traits": {
-    "intelligence": 7,
-    "energy": 6,
-    "trainability": 6,
-    "loyalty": 9,
-    "playfulness": 5,
-    "aggression": 6,
-    "preyDrive": 6,
-    "barkTendency": 4,
-    "sociability": 5,
-    "adaptability": 5
-  },
-  "health": {
-    "hips": 68,
-    "eyes": 72,
-    "heart": 70,
-    "joints": 68
-  },
-  "aptitudes": ["Schutzhund", "Conformation"]
-}, {
-  "name": "Ca de Bou",
-  "group": "Working",
-  "size": "XL",
-  "coat": "short",
-  "colors": ["brindle", "fawn", "black"],
-  "species": "dog",
-  "sizeAvg": 100,
-  "sizeRange": [80, 130],
-  "litterSize": "L",
-  "traits": {
-    "intelligence": 7,
-    "energy": 5,
-    "trainability": 6,
-    "loyalty": 9,
-    "playfulness": 5,
-    "aggression": 6,
-    "preyDrive": 5,
-    "barkTendency": 4,
-    "sociability": 6,
-    "adaptability": 5
-  },
-  "health": {
-    "hips": 68,
-    "eyes": 70,
-    "heart": 68,
-    "joints": 68
-  },
-  "aptitudes": ["Schutzhund", "Conformation"]
-}, {
-  "name": "Alano Espa\xF1ol",
-  "group": "Working",
-  "size": "L",
-  "coat": "short",
-  "colors": ["fawn", "brindle", "black"],
-  "species": "dog",
-  "sizeAvg": 65,
-  "sizeRange": [55, 85],
-  "litterSize": "L",
-  "traits": {
-    "intelligence": 7,
-    "energy": 7,
-    "trainability": 6,
-    "loyalty": 9,
-    "playfulness": 5,
-    "aggression": 6,
-    "preyDrive": 6,
-    "barkTendency": 4,
-    "sociability": 5,
-    "adaptability": 5
-  },
-  "health": {
-    "hips": 68,
-    "eyes": 72,
-    "heart": 70,
-    "joints": 68
-  },
-  "aptitudes": ["Schutzhund", "Conformation"]
-}, {
-  "name": "Cao de Fila de Sao Miguel",
-  "group": "Working",
-  "size": "L",
-  "coat": "short",
-  "colors": ["fawn", "brindle", "gray brindle"],
-  "species": "dog",
-  "sizeAvg": 65,
-  "sizeRange": [55, 85],
-  "litterSize": "L",
-  "traits": {
-    "intelligence": 8,
-    "energy": 7,
-    "trainability": 7,
-    "loyalty": 9,
-    "playfulness": 6,
-    "aggression": 5,
-    "preyDrive": 6,
-    "barkTendency": 5,
-    "sociability": 6,
-    "adaptability": 6
-  },
-  "health": {
-    "hips": 72,
-    "eyes": 75,
-    "heart": 75,
-    "joints": 72
-  },
-  "aptitudes": ["Herding", "Schutzhund", "Conformation"]
-}, {
-  "name": "C\xE3o de Castro Laboreiro",
-  "group": "Working",
-  "size": "L",
-  "coat": "short",
-  "colors": ["wolf gray", "dark", "brindle"],
-  "species": "dog",
-  "sizeAvg": 65,
-  "sizeRange": [55, 85],
-  "litterSize": "L",
-  "traits": {
-    "intelligence": 7,
-    "energy": 6,
-    "trainability": 5,
-    "loyalty": 9,
-    "playfulness": 5,
-    "aggression": 5,
-    "preyDrive": 5,
-    "barkTendency": 7,
-    "sociability": 6,
-    "adaptability": 6
-  },
-  "health": {
-    "hips": 72,
-    "eyes": 78,
-    "heart": 78,
-    "joints": 72
-  },
-  "aptitudes": ["Conformation"]
-}, {
-  "name": "Perro Cimarron",
-  "group": "Working",
-  "size": "L",
-  "coat": "short",
-  "colors": ["brindle", "fawn"],
-  "species": "dog",
-  "sizeAvg": 65,
-  "sizeRange": [55, 85],
-  "litterSize": "L",
-  "traits": {
-    "intelligence": 7,
-    "energy": 7,
-    "trainability": 6,
-    "loyalty": 9,
-    "playfulness": 6,
-    "aggression": 5,
-    "preyDrive": 6,
-    "barkTendency": 5,
-    "sociability": 6,
-    "adaptability": 5
-  },
-  "health": {
-    "hips": 70,
-    "eyes": 75,
-    "heart": 75,
-    "joints": 70
-  },
-  "aptitudes": ["Schutzhund", "Conformation"]
-}, {
+},{
   "name": "Alaunt",
   "group": "Working",
   "size": "XL",
@@ -11091,7 +7865,7 @@ var DEMO_BREEDS = [{
     "joints": 68
   },
   "aptitudes": ["Schutzhund", "Conformation"]
-}, {
+},{
   "name": "Jindo",
   "group": "Non-Sporting",
   "size": "M",
@@ -11120,65 +7894,7 @@ var DEMO_BREEDS = [{
     "joints": 82
   },
   "aptitudes": ["Conformation", "Agility"]
-}, {
-  "name": "Kishu Ken",
-  "group": "Non-Sporting",
-  "size": "M",
-  "coat": "medium",
-  "colors": ["white", "red", "sesame"],
-  "species": "dog",
-  "sizeAvg": 40,
-  "sizeRange": [28, 55],
-  "litterSize": "M",
-  "traits": {
-    "intelligence": 7,
-    "energy": 7,
-    "trainability": 5,
-    "loyalty": 8,
-    "playfulness": 6,
-    "aggression": 4,
-    "preyDrive": 7,
-    "barkTendency": 4,
-    "sociability": 5,
-    "adaptability": 6
-  },
-  "health": {
-    "hips": 82,
-    "eyes": 82,
-    "heart": 85,
-    "joints": 82
-  },
-  "aptitudes": ["Conformation", "Agility"]
-}, {
-  "name": "Kai Ken",
-  "group": "Non-Sporting",
-  "size": "M",
-  "coat": "medium",
-  "colors": ["black brindle", "red brindle", "brindle"],
-  "species": "dog",
-  "sizeAvg": 40,
-  "sizeRange": [28, 55],
-  "litterSize": "M",
-  "traits": {
-    "intelligence": 7,
-    "energy": 7,
-    "trainability": 5,
-    "loyalty": 8,
-    "playfulness": 6,
-    "aggression": 4,
-    "preyDrive": 7,
-    "barkTendency": 4,
-    "sociability": 5,
-    "adaptability": 5
-  },
-  "health": {
-    "hips": 82,
-    "eyes": 82,
-    "heart": 85,
-    "joints": 82
-  },
-  "aptitudes": ["Conformation", "Agility"]
-}, {
+},{
   "name": "Hokkaido",
   "group": "Non-Sporting",
   "size": "M",
@@ -11207,7 +7923,7 @@ var DEMO_BREEDS = [{
     "joints": 82
   },
   "aptitudes": ["Conformation", "Agility"]
-}, {
+},{
   "name": "Shikoku",
   "group": "Non-Sporting",
   "size": "M",
@@ -11236,36 +7952,7 @@ var DEMO_BREEDS = [{
     "joints": 82
   },
   "aptitudes": ["Conformation", "Agility"]
-}, {
-  "name": "Nihon Supittsu",
-  "group": "Non-Sporting",
-  "size": "M",
-  "coat": "long",
-  "colors": ["white"],
-  "species": "dog",
-  "sizeAvg": 40,
-  "sizeRange": [28, 55],
-  "litterSize": "M",
-  "traits": {
-    "intelligence": 7,
-    "energy": 6,
-    "trainability": 6,
-    "loyalty": 8,
-    "playfulness": 7,
-    "aggression": 2,
-    "preyDrive": 4,
-    "barkTendency": 7,
-    "sociability": 7,
-    "adaptability": 7
-  },
-  "health": {
-    "hips": 82,
-    "eyes": 80,
-    "heart": 82,
-    "joints": 82
-  },
-  "aptitudes": ["Conformation", "Agility"]
-}, {
+},{
   "name": "Olde English Bulldogge",
   "group": "Non-Sporting",
   "size": "L",
@@ -11294,36 +7981,7 @@ var DEMO_BREEDS = [{
     "joints": 68
   },
   "aptitudes": ["Conformation", "Obedience"]
-}, {
-  "name": "Teddy Roosevelt (Non-Sp)",
-  "group": "Non-Sporting",
-  "size": "S",
-  "coat": "short",
-  "colors": ["white & black", "white & tan"],
-  "species": "dog",
-  "sizeAvg": 20,
-  "sizeRange": [12, 28],
-  "litterSize": "S",
-  "traits": {
-    "intelligence": 8,
-    "energy": 8,
-    "trainability": 7,
-    "loyalty": 8,
-    "playfulness": 8,
-    "aggression": 3,
-    "preyDrive": 7,
-    "barkTendency": 6,
-    "sociability": 7,
-    "adaptability": 7
-  },
-  "health": {
-    "hips": 84,
-    "eyes": 82,
-    "heart": 85,
-    "joints": 82
-  },
-  "aptitudes": ["Agility", "Conformation"]
-}, {
+},{
   "name": "Czechoslovakian Vlcak",
   "group": "Non-Sporting",
   "size": "L",
@@ -11352,7 +8010,7 @@ var DEMO_BREEDS = [{
     "joints": 80
   },
   "aptitudes": ["Conformation", "Tracking"]
-}];
+}}];
 
 // ── COLOR HELPERS ─────────────────────────────────────────────
 var coiColor = function coiColor(c) {
