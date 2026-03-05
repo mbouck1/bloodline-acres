@@ -1630,27 +1630,38 @@ var CAT_BREEDS = [
 ];
 
 var CAT_LADY_MESSAGES = [
-  "This one's been nothing but trouble. Take it.",
-  "She doesn't like most people. You seem tolerable.",
-  "He bit me twice this morning. He's yours now.",
-  "Don't let her near your good furniture. Not that it matters.",
-  "This one thinks he's better than everyone. He's probably right.",
-  "She knocked my coffee over three times today. Get her out of my house.",
-  "He hasn't caught a mouse in a week. Maybe he'll do better at your place.",
-  "Don't look at her wrong or she'll scratch you. You'll figure it out.",
-  "I've had her since she was a kitten. Don't make me regret this.",
-  "He eats more than the others. Figured I'd make him your problem.",
-  "She hates Tuesdays. And Wednesdays. And most people. You'll be fine.",
+  "This one's been nothing but trouble. Take {pronoun}.",
+  "{Name} doesn't like most people. You seem tolerable.",
+  "{Name} bit me twice this morning. {PronounCap}'s yours now.",
+  "Don't let {pronoun} near your good furniture. Not that it matters.",
+  "This one thinks {pronoun}'s better than everyone. {PronounCap}'s probably right.",
+  "{Name} knocked my coffee over three times today. Get {pronoun} out of my house.",
+  "{Name} hasn't caught a mouse in a week. Maybe {pronoun}'ll do better at your place.",
+  "Don't look at {pronoun} wrong or {pronoun}'ll scratch you. You'll figure it out.",
+  "I've had {pronoun} since {pronoun} was a kitten. Don't make me regret this.",
+  "{Name} eats more than the others. Figured I'd make {pronoun} your problem.",
+  "{Name} hates Tuesdays. And Wednesdays. And most people. You'll be fine.",
   "This one knocked three things off my counter this morning. On purpose.",
-  "He stares at the wall for hours. I don't ask questions anymore.",
-  "She bit the mailman. Twice. I'm not apologizing.",
-  "Take him before I change my mind. I won't change my mind but still.",
-  "She's been giving me that look all week. I think she wants to leave.",
-  "Don't let him outside after dark. Actually, he'll be fine. You might not be.",
-  "I don't know where she goes at night. I've stopped asking.",
-  "He's particular about everything. You'll learn what that means.",
-  "She's my favorite. Don't read anything into this."
+  "{Name} stares at the wall for hours. I don't ask questions anymore.",
+  "{Name} bit the mailman. Twice. I'm not apologizing.",
+  "Take {pronoun} before I change my mind. I won't change my mind but still.",
+  "{Name}'s been giving me that look all week. I think {pronoun} wants to leave.",
+  "Don't let {pronoun} outside after dark. Actually, {pronoun}'ll be fine. You might not be.",
+  "I don't know where {pronoun} goes at night. I've stopped asking.",
+  "{Name}'s particular about everything. You'll learn what that means.",
+  "{Name}'s my favorite. Don't read anything into this."
 ];
+
+function resolveCatMsg(msg, sex) {
+  var pronoun = sex === "M" ? "him" : "her";
+  var name = sex === "M" ? "He" : "She";
+  var pronounCap = sex === "M" ? "He" : "She";
+  return msg
+    .replace(/{pronoun}/g, pronoun)
+    .replace(/{name}/g, pronoun)
+    .replace(/{Name}/g, name)
+    .replace(/{PronounCap}/g, pronounCap);
+}
 
 function OldCatLady(_ref) {
   var onClose=_ref.onClose, money=_ref.money, onReceiveCat=_ref.onReceiveCat,
@@ -1674,7 +1685,8 @@ function OldCatLady(_ref) {
     if (!canVisit) { alert("She says you were just here. Come back "+nextVisitStr+"."); return; }
     var breed = CAT_BREEDS[Math.floor(Math.random()*CAT_BREEDS.length)];
     var sex = Math.random()<0.5?"M":"F";
-    var msg = CAT_LADY_MESSAGES[Math.floor(Math.random()*CAT_LADY_MESSAGES.length)];
+    var rawMsg = CAT_LADY_MESSAGES[Math.floor(Math.random()*CAT_LADY_MESSAGES.length)];
+    var msg = resolveCatMsg(rawMsg, sex);
     var cat = { id:Date.now()+Math.random(), breed:breed.breed, desc:breed.desc,
       sex:sex, isCat:true, isMouser:true, name:breed.breed+" "+(sex==="M"?"Tom":"Queen") };
     onReceiveCat(cat, msg);
@@ -1709,7 +1721,7 @@ function OldCatLady(_ref) {
         /*#__PURE__*/React.createElement("button", {onClick:onClose,
           style:{background:"transparent",border:"1px solid #4a3728",color:"#6b4c2a",
             borderRadius:6,padding:"4px 10px",cursor:"pointer",fontSize:"0.8rem"}},
-          "\\u2715 Leave")
+          "\u2715 Leave")
       ),
       // Body
       /*#__PURE__*/React.createElement("div", {style:{padding:"20px 22px",display:"flex",flexDirection:"column",gap:16}},
