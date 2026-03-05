@@ -13640,6 +13640,225 @@ function Clock() {
   );
 }
 
+// ── FARM VIEW ─────────────────────────────────────────────────────────────────
+function FarmView(_ref) {
+  var facilitiesOwned = _ref.facilitiesOwned, kennels = _ref.kennels, animals = _ref.animals,
+      ownedLivestock = _ref.ownedLivestock, money = _ref.money, hasWhelpingKennel = _ref.hasWhelpingKennel, onClose = _ref.onClose;
+
+  var _tip = _slicedToArray(React.useState(null), 2), tipText = _tip[0], setTipText = _tip[1];
+  var _tipPos = _slicedToArray(React.useState({x:0,y:0}), 2), tipPos = _tipPos[0], setTipPos = _tipPos[1];
+
+  var hasFac = function(key) { return !!facilitiesOwned[key]; };
+  var facTier = function(key) { return facilitiesOwned[key] ? facilitiesOwned[key].tier : 0; };
+  var kennelCount = kennels.length;
+  var dogCount = animals.filter(function(a){ return !a.retired; }).length;
+  var dogCap = kennels.reduce(function(s,k){ return s + (KENNEL_TYPES[k.type] ? KENNEL_TYPES[k.type].capacity : 10); }, 0);
+
+  var TILE_W = 140, TILE_H = 140, GAP = 12;
+  var COLS = [GAP, GAP*2+TILE_W, GAP*3+TILE_W*2, GAP*4+TILE_W*3];
+  var ROWS = [GAP, GAP*2+TILE_H, GAP*3+TILE_H*2, GAP*4+TILE_H*3];
+  var GRID_W = GAP*5 + TILE_W*4, GRID_H = GAP*5 + TILE_H*4;
+
+  function tileStyle(col, row, bg, border) {
+    return {
+      position:"absolute", left:COLS[col], top:ROWS[row],
+      width:TILE_W, height:TILE_H, borderRadius:6, overflow:"hidden",
+      background: bg || "#0c1a0d", border:"1.5px solid "+(border||"#1e3a20"),
+      cursor:"pointer", transition:"transform 0.12s, filter 0.12s", zIndex:2
+    };
+  }
+
+  function EmptyPlot(props) {
+    return /*#__PURE__*/React.createElement("div", {
+      style: tileStyle(props.col, props.row),
+      onMouseEnter: function(e){ setTipText(props.tip||"Empty Plot"); },
+      onMouseMove: function(e){ setTipPos({x:e.clientX,y:e.clientY}); },
+      onMouseLeave: function(){ setTipText(null); }
+    },
+      /*#__PURE__*/React.createElement("svg", { width:TILE_W, height:TILE_H, viewBox:"0 0 110 110" },
+        React.createElement("rect",{x:0,y:0,width:110,height:110,fill:"#0c1a0d",rx:4}),
+        React.createElement("line",{x1:0,y1:37,x2:110,y2:37,stroke:"#1e3a20",strokeWidth:0.5}),
+        React.createElement("line",{x1:0,y1:73,x2:110,y2:73,stroke:"#1e3a20",strokeWidth:0.5}),
+        React.createElement("line",{x1:37,y1:0,x2:37,y2:110,stroke:"#1e3a20",strokeWidth:0.5}),
+        React.createElement("line",{x1:73,y1:0,x2:73,y2:110,stroke:"#1e3a20",strokeWidth:0.5}),
+        React.createElement("line",{x1:45,y1:55,x2:65,y2:55,stroke:"#1e3a20",strokeWidth:3,strokeLinecap:"round"}),
+        React.createElement("line",{x1:55,y1:45,x2:55,y2:65,stroke:"#1e3a20",strokeWidth:3,strokeLinecap:"round"})
+      ),
+      /*#__PURE__*/React.createElement("span", { style:{position:"absolute",bottom:5,left:0,right:0,textAlign:"center",fontSize:"0.55rem",color:"#1e3a20",letterSpacing:"0.05em",textTransform:"uppercase",fontWeight:"bold"} }, "Build Here")
+    );
+  }
+
+  function Tile(props) {
+    return /*#__PURE__*/React.createElement("div", {
+      style: tileStyle(props.col, props.row, props.bg, props.border),
+      onMouseEnter: function(){ setTipText(props.tip); },
+      onMouseMove: function(e){ setTipPos({x:e.clientX,y:e.clientY}); },
+      onMouseLeave: function(){ setTipText(null); }
+    },
+      /*#__PURE__*/React.createElement("svg", { width:TILE_W, height:TILE_H, viewBox:"0 0 110 110", dangerouslySetInnerHTML:{__html: props.svgInner} }),
+      props.badge && /*#__PURE__*/React.createElement("span", { style:{position:"absolute",top:5,left:6,fontSize:"0.52rem",fontWeight:"bold",background:"rgba(0,0,0,0.65)",borderRadius:3,padding:"1px 4px",color:props.color} }, props.badge),
+      props.count && /*#__PURE__*/React.createElement("span", { style:{position:"absolute",top:5,right:6,fontSize:"0.52rem",fontWeight:"bold",background:"rgba(0,0,0,0.65)",borderRadius:3,padding:"1px 4px",color:props.color} }, props.count),
+      /*#__PURE__*/React.createElement("span", { style:{position:"absolute",bottom:5,left:0,right:0,textAlign:"center",fontSize:"0.55rem",color:props.color||"#e2e8f0",letterSpacing:"0.05em",textTransform:"uppercase",fontWeight:"bold",textShadow:"0 1px 4px rgba(0,0,0,1)"} }, props.label)
+    );
+  }
+
+  // SVG inner strings for each building
+  var SVG = {
+    pigPen: '<rect x="0" y="0" width="110" height="110" fill="#221218" rx="4"/><rect x="4" y="4" width="102" height="102" fill="#361620" rx="4"/><line x1="55" y1="4" x2="55" y2="106" stroke="#be185d" stroke-width="2"/><line x1="4" y1="55" x2="106" y2="55" stroke="#be185d" stroke-width="2"/><rect x="4" y="4" width="102" height="102" fill="none" stroke="#be185d" stroke-width="3" rx="4"/><rect x="7" y="7" width="30" height="22" fill="#501828" rx="2"/><rect x="58" y="7" width="30" height="22" fill="#501828" rx="2"/><rect x="7" y="58" width="30" height="22" fill="#501828" rx="2"/><rect x="58" y="58" width="44" height="44" fill="#3e1422" rx="2" stroke="#be185d" stroke-width="1"/>',
+    slaughter: '<rect x="0" y="0" width="110" height="110" fill="#120808" rx="4"/><rect x="10" y="28" width="78" height="66" fill="#2a1010" rx="2"/><polygon points="49,10 88,30 10,30" fill="#3d1414"/><polygon points="49,10 72,22 26,22" fill="#5a1a1a" opacity="0.9"/><rect x="36" y="60" width="26" height="34" fill="#0e0606" rx="1"/><rect x="12" y="40" width="16" height="12" fill="#1a0a0a" rx="1" stroke="#dc2626" stroke-width="0.8"/><rect x="70" y="40" width="16" height="12" fill="#1a0a0a" rx="1" stroke="#dc2626" stroke-width="0.8"/><rect x="82" y="14" width="10" height="44" fill="#1e0808" rx="3"/><ellipse cx="87" cy="14" rx="5" ry="3" fill="#2a0c0c"/><line x1="20" y1="38" x2="80" y2="38" stroke="#7f1d1d" stroke-width="1.5" opacity="0.6"/><line x1="35" y1="34" x2="35" y2="42" stroke="#dc2626" stroke-width="1" opacity="0.5"/><line x1="55" y1="34" x2="55" y2="42" stroke="#dc2626" stroke-width="1" opacity="0.5"/>',
+    chickCoop: '<rect x="0" y="0" width="110" height="110" fill="#101d0a" rx="4"/><rect x="8" y="24" width="62" height="42" fill="#365a1a" rx="3"/><polygon points="39,8 74,26 4,26" fill="#4a7a22"/><rect x="70" y="28" width="30" height="38" fill="#2d4d14" rx="2"/><line x1="70" y1="47" x2="100" y2="47" stroke="#1a2e0a" stroke-width="1.5"/><rect x="72" y="30" width="12" height="16" fill="#1a2e0a" rx="1"/><rect x="86" y="30" width="12" height="16" fill="#1a2e0a" rx="1"/><rect x="8" y="66" width="92" height="36" fill="#1a2e0d" rx="2"/><line x1="28" y1="66" x2="28" y2="102" stroke="#4d7c0f" stroke-width="2"/><line x1="48" y1="66" x2="48" y2="102" stroke="#4d7c0f" stroke-width="2"/><line x1="68" y1="66" x2="68" y2="102" stroke="#4d7c0f" stroke-width="2"/><line x1="88" y1="66" x2="88" y2="102" stroke="#4d7c0f" stroke-width="2"/>',
+    grazing: '<rect x="0" y="0" width="110" height="110" fill="#091e0a" rx="4"/><rect x="4" y="4" width="102" height="102" fill="#102a16" rx="3"/><line x1="4" y1="22" x2="106" y2="22" stroke="#1c5224" stroke-width="0.8"/><line x1="4" y1="40" x2="106" y2="40" stroke="#1c5224" stroke-width="0.8"/><line x1="4" y1="58" x2="106" y2="58" stroke="#1c5224" stroke-width="0.8"/><line x1="4" y1="76" x2="106" y2="76" stroke="#1c5224" stroke-width="0.8"/><line x1="4" y1="94" x2="106" y2="94" stroke="#1c5224" stroke-width="0.8"/><line x1="22" y1="4" x2="22" y2="106" stroke="#1c5224" stroke-width="0.8"/><line x1="40" y1="4" x2="40" y2="106" stroke="#1c5224" stroke-width="0.8"/><line x1="58" y1="4" x2="58" y2="106" stroke="#1c5224" stroke-width="0.8"/><line x1="76" y1="4" x2="76" y2="106" stroke="#1c5224" stroke-width="0.8"/><line x1="94" y1="4" x2="94" y2="106" stroke="#1c5224" stroke-width="0.8"/><rect x="4" y="4" width="102" height="102" fill="none" stroke="#15803d" stroke-width="2" rx="3"/><rect x="6" y="6" width="28" height="20" fill="#1e4428" rx="2"/><rect x="40" y="46" width="20" height="8" fill="#0e3a5c" rx="3" stroke="#38bdf8" stroke-width="0.5"/><rect x="42" y="2" width="26" height="4" fill="#15803d" rx="1"/>',
+    barn: '<rect x="0" y="0" width="110" height="110" fill="#1c0808" rx="4"/><rect x="8" y="30" width="80" height="66" fill="#561414" rx="2"/><polygon points="48,10 88,32 8,32" fill="#7a1919"/><polygon points="48,10 74,24 22,24" fill="#b91c1c" opacity="0.9"/><rect x="36" y="60" width="24" height="36" fill="#200808" rx="1"/><rect x="10" y="42" width="16" height="12" fill="#1a2a3a" rx="1" stroke="#ef4444" stroke-width="0.5"/><rect x="62" y="42" width="16" height="12" fill="#1a2a3a" rx="1" stroke="#ef4444" stroke-width="0.5"/><rect x="90" y="18" width="12" height="60" fill="#2d0a0a" rx="4"/><ellipse cx="96" cy="18" rx="6" ry="3.5" fill="#3d0f0f"/>',
+    milkBarn: '<rect x="0" y="0" width="110" height="110" fill="#0e1828" rx="4"/><rect x="8" y="28" width="84" height="66" fill="#1c2a40" rx="2"/><polygon points="50,8 92,30 8,30" fill="#243552"/><polygon points="50,8 76,22 24,22" fill="#3b82f6" opacity="0.8"/><rect x="36" y="58" width="30" height="36" fill="#0c1018" rx="1"/><rect x="10" y="40" width="18" height="14" fill="#0d1f35" rx="1" stroke="#60a5fa" stroke-width="0.5"/><rect x="72" y="40" width="18" height="14" fill="#0d1f35" rx="1" stroke="#60a5fa" stroke-width="0.5"/><rect x="10" y="58" width="22" height="12" fill="#162840" rx="2" stroke="#3b82f6" stroke-width="0.5"/><rect x="78" y="58" width="22" height="12" fill="#162840" rx="2" stroke="#3b82f6" stroke-width="0.5"/><rect x="86" y="44" width="20" height="40" fill="#12202e" rx="2" stroke="#3b82f6" stroke-width="0.5"/>',
+    apiary: '<rect x="0" y="0" width="110" height="110" fill="#122010" rx="4"/><ellipse cx="28" cy="72" rx="14" ry="18" fill="#8b6914"/><ellipse cx="28" cy="68" rx="12" ry="14" fill="#a07820"/><line x1="16" y1="66" x2="40" y2="66" stroke="#6b500f" stroke-width="1.5"/><line x1="18" y1="60" x2="38" y2="60" stroke="#6b500f" stroke-width="1.5"/><ellipse cx="28" cy="90" rx="16" ry="4" fill="#6b500f"/><ellipse cx="55" cy="68" rx="14" ry="18" fill="#8b6914"/><ellipse cx="55" cy="64" rx="12" ry="14" fill="#a07820"/><line x1="43" y1="62" x2="67" y2="62" stroke="#6b500f" stroke-width="1.5"/><line x1="45" y1="56" x2="65" y2="56" stroke="#6b500f" stroke-width="1.5"/><ellipse cx="55" cy="86" rx="16" ry="4" fill="#6b500f"/><ellipse cx="82" cy="72" rx="14" ry="18" fill="#8b6914"/><ellipse cx="82" cy="68" rx="12" ry="14" fill="#a07820"/><line x1="70" y1="66" x2="94" y2="66" stroke="#6b500f" stroke-width="1.5"/><line x1="72" y1="60" x2="92" y2="60" stroke="#6b500f" stroke-width="1.5"/><ellipse cx="82" cy="90" rx="16" ry="4" fill="#6b500f"/><ellipse cx="20" cy="38" rx="4" ry="2.5" fill="#fbbf24" opacity="0.9"/><ellipse cx="68" cy="28" rx="4" ry="2.5" fill="#fbbf24" opacity="0.9"/><ellipse cx="90" cy="40" rx="4" ry="2.5" fill="#fbbf24" opacity="0.9"/><circle cx="40" cy="22" r="2.5" fill="#f472b6" opacity="0.6"/><circle cx="62" cy="14" r="3" fill="#fbbf24" opacity="0.5"/>',
+    pond: '<rect x="0" y="0" width="110" height="110" fill="#030d18" rx="4"/><ellipse cx="55" cy="60" rx="50" ry="42" fill="#0a2840"/><ellipse cx="55" cy="60" rx="46" ry="38" fill="#0c3454"/><ellipse cx="55" cy="60" rx="38" ry="30" fill="none" stroke="#145e8a" stroke-width="1" opacity="0.6"/><ellipse cx="55" cy="60" rx="50" ry="42" fill="none" stroke="#0369a1" stroke-width="3"/><line x1="12" y1="72" x2="12" y2="44" stroke="#365314" stroke-width="2"/><ellipse cx="12" cy="43" rx="4" ry="7" fill="#4a7c1a" opacity="0.8"/><line x1="96" y1="68" x2="96" y2="46" stroke="#365314" stroke-width="2"/><rect x="48" y="16" width="6" height="22" fill="#4a3010" rx="1"/><rect x="38" y="16" width="26" height="6" fill="#5a3c14" rx="1"/><ellipse cx="42" cy="52" rx="6" ry="4" fill="#e2e8f0" opacity="0.9"/><circle cx="46" cy="50" r="4" fill="#e2e8f0" opacity="0.9"/><polygon points="49,49 53,50 49,51" fill="#fbbf24"/><ellipse cx="64" cy="66" rx="5" ry="3.5" fill="#e2e8f0" opacity="0.8"/><circle cx="68" cy="64" r="3.5" fill="#e2e8f0" opacity="0.8"/>',
+    storageBarn: '<rect x="0" y="0" width="110" height="110" fill="#0e1008" rx="4"/><rect x="8" y="28" width="80" height="68" fill="#242a10" rx="2"/><polygon points="48,10 88,30 8,30" fill="#343e14"/><polygon points="48,10 72,22 24,22" fill="#4a5a1a" opacity="0.9"/><rect x="32" y="58" width="32" height="38" fill="#0e1008" rx="1"/><line x1="48" y1="58" x2="48" y2="96" stroke="#242a10" stroke-width="1.5"/><rect x="10" y="40" width="16" height="12" fill="#1a2a0a" rx="1" stroke="#84cc16" stroke-width="0.5"/><rect x="62" y="40" width="16" height="12" fill="#1a2a0a" rx="1" stroke="#84cc16" stroke-width="0.5"/><rect x="10" y="60" width="18" height="14" fill="#1e2a0c" rx="1" stroke="#4a5a1a" stroke-width="0.5"/><rect x="70" y="60" width="18" height="14" fill="#1e2a0c" rx="1" stroke="#4a5a1a" stroke-width="0.5"/><rect x="90" y="20" width="14" height="62" fill="#1e2a0c" rx="4"/><ellipse cx="97" cy="20" rx="7" ry="4" fill="#2a3a10"/>',
+    whelping: '<rect x="0" y="0" width="110" height="110" fill="#0d0818" rx="4"/><rect x="14" y="26" width="82" height="68" fill="#1e0f38" rx="3"/><polygon points="55,10 96,28 14,28" fill="#2d1854"/><polygon points="55,10 78,22 32,22" fill="#3d2270"/><rect x="20" y="38" width="20" height="16" fill="#2d1a4a" rx="2" stroke="#a78bfa" stroke-width="0.8"/><rect x="70" y="38" width="20" height="16" fill="#2d1a4a" rx="2" stroke="#a78bfa" stroke-width="0.8"/><rect x="21" y="39" width="18" height="14" fill="#4c1d95" opacity="0.4" rx="1"/><rect x="71" y="39" width="18" height="14" fill="#4c1d95" opacity="0.4" rx="1"/><rect x="44" y="64" width="22" height="30" fill="#12082a" rx="2"/>',
+    shearing: '<rect x="0" y="0" width="110" height="110" fill="#1a1408" rx="4"/><rect x="6" y="24" width="88" height="68" fill="#382610" rx="2"/><polygon points="50,8 94,26 6,26" fill="#4e3214"/><rect x="34" y="60" width="32" height="32" fill="#180e06" rx="1"/><rect x="8" y="36" width="20" height="16" fill="#1a1808" rx="1" stroke="#d97706" stroke-width="0.5"/><rect x="74" y="36" width="20" height="16" fill="#1a1808" rx="1" stroke="#d97706" stroke-width="0.5"/><line x1="6" y1="60" x2="94" y2="60" stroke="#4e3214" stroke-width="1.5"/><rect x="8" y="72" width="22" height="18" fill="#241a08" rx="2" stroke="#d97706" stroke-width="0.5"/><rect x="72" y="72" width="22" height="18" fill="#241a08" rx="2" stroke="#d97706" stroke-width="0.5"/>',
+    kennel: '<rect x="0" y="0" width="110" height="110" fill="#1a0808" rx="4"/><rect x="16" y="32" width="72" height="62" fill="#4a1212" rx="2"/><polygon points="52,14 88,34 16,34" fill="#6b1717"/><polygon points="52,14 76,26 28,26" fill="#991b1b" opacity="0.9"/><rect x="40" y="62" width="24" height="32" fill="#1a0505" rx="1"/><rect x="18" y="44" width="14" height="10" fill="#1a2a3a" rx="1" stroke="#ef4444" stroke-width="0.5"/><rect x="72" y="44" width="14" height="10" fill="#1a2a3a" rx="1" stroke="#ef4444" stroke-width="0.5"/><rect x="90" y="22" width="14" height="58" fill="#2d0a0a" rx="4"/><ellipse cx="97" cy="22" rx="7" ry="4" fill="#3d0f0f"/>',
+    stable: '<rect x="0" y="0" width="110" height="110" fill="#180f06" rx="4"/><rect x="4" y="14" width="102" height="42" fill="#381e08" rx="2"/><rect x="4" y="60" width="102" height="42" fill="#381e08" rx="2"/><rect x="42" y="14" width="26" height="88" fill="#200e04" rx="1"/><polygon points="55,4 106,16 4,16" fill="#4a2a0a"/><line x1="20" y1="14" x2="20" y2="56" stroke="#200e04" stroke-width="1.5"/><line x1="30" y1="14" x2="30" y2="56" stroke="#200e04" stroke-width="1.5"/><line x1="70" y1="14" x2="70" y2="56" stroke="#200e04" stroke-width="1.5"/><line x1="80" y1="14" x2="80" y2="56" stroke="#200e04" stroke-width="1.5"/><line x1="20" y1="60" x2="20" y2="102" stroke="#200e04" stroke-width="1.5"/><line x1="30" y1="60" x2="30" y2="102" stroke="#200e04" stroke-width="1.5"/><line x1="70" y1="60" x2="70" y2="102" stroke="#200e04" stroke-width="1.5"/><line x1="80" y1="60" x2="80" y2="102" stroke="#200e04" stroke-width="1.5"/>'
+  };
+
+  var lsCount = function(type) { return (ownedLivestock||[]).filter(function(a){ return a.type===type||a.species===type; }).length; };
+
+  return /*#__PURE__*/React.createElement("div", {
+    style: { position:"relative", width:"100vw", height:"100vh", background:"#0a0f1a", overflow:"hidden", display:"flex", flexDirection:"column" }
+  },
+    // Close button
+    /*#__PURE__*/React.createElement("button", {
+      onClick: onClose,
+      style: { position:"absolute", top:12, right:16, zIndex:100, background:"transparent", border:"1px solid #334155", color:"#64748b", borderRadius:6, padding:"5px 14px", cursor:"pointer", fontSize:"0.8rem" }
+    }, "\u2715 Close"),
+
+    // Title
+    /*#__PURE__*/React.createElement("div", {
+      style: { textAlign:"center", color:"#38bdf8", fontSize:"0.8rem", letterSpacing:"0.12em", textTransform:"uppercase", padding:"10px 0 6px", fontFamily:"'Courier New',monospace" }
+    }, "\uD83C\uDFD8 Bloodline Acres \u2014 Farm View"),
+
+    // Farm grid — scales to fill remaining space
+    /*#__PURE__*/React.createElement("div", {
+      style: { flex:1, display:"flex", alignItems:"center", justifyContent:"center", padding:"8px" }
+    }, /*#__PURE__*/React.createElement("div", {
+      style: { position:"relative", width:GRID_W, height:GRID_H, background:"#0d1f0f", borderRadius:12, border:"2px solid #1a3a1e", flexShrink:0,
+        backgroundImage:"repeating-linear-gradient(0deg,transparent,transparent 19px,rgba(255,255,255,0.012) 20px),repeating-linear-gradient(90deg,transparent,transparent 19px,rgba(255,255,255,0.012) 20px)" }
+    },
+      // PATH LAYER
+      /*#__PURE__*/React.createElement("svg", {
+        style:{position:"absolute",inset:0,pointerEvents:"none",zIndex:1}, width:GRID_W, height:GRID_H
+      },
+        React.createElement("defs", null,
+          React.createElement("pattern", {id:"fv-gravel",x:0,y:0,width:6,height:6,patternUnits:"userSpaceOnUse"},
+            React.createElement("rect",{width:6,height:6,fill:"#2e2418"}),
+            React.createElement("circle",{cx:1.5,cy:1.5,r:0.6,fill:"#3d3020",opacity:0.5}),
+            React.createElement("circle",{cx:3.5,cy:3.5,r:0.5,fill:"#261c10",opacity:0.6})
+          ),
+          React.createElement("pattern", {id:"fv-dirt",x:0,y:0,width:6,height:6,patternUnits:"userSpaceOnUse"},
+            React.createElement("rect",{width:6,height:6,fill:"#2a1e10"}),
+            React.createElement("circle",{cx:1,cy:1,r:0.5,fill:"#352510",opacity:0.6}),
+            React.createElement("circle",{cx:4,cy:4,r:0.4,fill:"#1e1508",opacity:0.5})
+          )
+        ),
+        // Vertical spine
+        React.createElement("rect",{x:COLS[1]+TILE_W,y:0,width:GAP,height:GRID_H,fill:"url(#fv-gravel)",opacity:0.9}),
+        React.createElement("line",{x1:COLS[1]+TILE_W,y1:0,x2:COLS[1]+TILE_W,y2:GRID_H,stroke:"#4a3820",strokeWidth:1.5,opacity:0.6}),
+        React.createElement("line",{x1:COLS[2],y1:0,x2:COLS[2],y2:GRID_H,stroke:"#4a3820",strokeWidth:1.5,opacity:0.6}),
+        // Horizontal cross
+        React.createElement("rect",{x:0,y:ROWS[2]+TILE_H,width:GRID_W,height:GAP,fill:"url(#fv-gravel)",opacity:0.9}),
+        React.createElement("line",{x1:0,y1:ROWS[2]+TILE_H,x2:GRID_W,y2:ROWS[2]+TILE_H,stroke:"#4a3820",strokeWidth:1.5,opacity:0.6}),
+        React.createElement("line",{x1:0,y1:ROWS[3],x2:GRID_W,y2:ROWS[3],stroke:"#4a3820",strokeWidth:1.5,opacity:0.6}),
+        // Branch paths top
+        React.createElement("rect",{x:0,y:ROWS[0]+TILE_H,width:COLS[2],height:GAP,fill:"url(#fv-dirt)",opacity:0.7}),
+        React.createElement("rect",{x:COLS[2],y:ROWS[0]+TILE_H,width:GRID_W-COLS[2],height:GAP,fill:"url(#fv-dirt)",opacity:0.7}),
+        // Entrance path
+        React.createElement("rect",{x:COLS[1]+TILE_W,y:ROWS[3]+TILE_H,width:GAP,height:GAP,fill:"url(#fv-gravel)",opacity:0.95})
+      ),
+
+      // ── ROW A ──
+      // A1 Pig Pen
+      React.createElement(Tile, { col:0, row:0, bg:"#221218", border:"#be185d", svgInner:SVG.pigPen, label:"Pig Pen", color:"#f9a8d4",
+        badge:"A1", count: hasFac("pig_pen") ? lsCount("pig")+"/"+FACILITIES.pig_pen.tiers[facTier("pig_pen")].capacity : null,
+        tip:"Pig Pen · "+(hasFac("pig_pen") ? FACILITIES.pig_pen.tiers[facTier("pig_pen")].name : "Not built") }),
+      // A2 Slaughterhouse
+      React.createElement(Tile, { col:1, row:0, bg:"#120808", border:"#7f1d1d", svgInner:SVG.slaughter, label:"Slaughterhouse", color:"#fca5a5",
+        badge:"A2", tip:"Slaughterhouse · Unlocks meat sales" }),
+      // A3 Chicken Coop
+      React.createElement(Tile, { col:2, row:0, bg:"#101d0a", border:"#4d7c0f", svgInner:SVG.chickCoop, label:"Chicken Coop", color:"#86efac",
+        badge:"A3", count: hasFac("chicken_coop") ? lsCount("chicken")+"/"+FACILITIES.chicken_coop.tiers[facTier("chicken_coop")].capacity : null,
+        tip:"Chicken Coop · "+(hasFac("chicken_coop") ? FACILITIES.chicken_coop.tiers[facTier("chicken_coop")].name : "Not built") }),
+      // A4 Grazing
+      hasFac("grazing_land")
+        ? React.createElement(Tile, { col:3, row:0, bg:"#091e0a", border:"#15803d", svgInner:SVG.grazing, label:"Grazing Land", color:"#4ade80",
+            badge:"A4", count: FACILITIES.grazing_land.tiers[facTier("grazing_land")].capacity+"ac",
+            tip:"Grazing Land · "+FACILITIES.grazing_land.tiers[facTier("grazing_land")].name })
+        : React.createElement(EmptyPlot, { col:3, row:0, tip:"A4 · Grazing Land · Available" }),
+
+      // ── ROW B ──
+      // B1 Barn
+      React.createElement(Tile, { col:0, row:1, bg:"#1c0808", border:"#b91c1c", svgInner:SVG.barn, label:"Barn", color:"#fca5a5",
+        badge:"B1", count: hasFac("barn") ? lsCount("beef")+"/"+FACILITIES.barn.tiers[facTier("barn")].capacity : null,
+        tip:"Barn · "+(hasFac("barn") ? FACILITIES.barn.tiers[facTier("barn")].name : "Not built") }),
+      // B2 Milking Barn
+      React.createElement(Tile, { col:1, row:1, bg:"#0e1828", border:"#3b82f6", svgInner:SVG.milkBarn, label:"Milking Barn", color:"#93c5fd",
+        badge:"B2", count: hasFac("milking_barn") ? lsCount("dairy")+"/"+FACILITIES.milking_barn.tiers[facTier("milking_barn")].capacity : null,
+        tip:"Milking Barn · "+(hasFac("milking_barn") ? FACILITIES.milking_barn.tiers[facTier("milking_barn")].name : "Not built") }),
+      // B3 Apiary
+      React.createElement(Tile, { col:2, row:1, bg:"#0d1a08", border:"#ca8a04", svgInner:SVG.apiary, label:"Apiary", color:"#fde68a",
+        badge:"B3", tip:"Apiary · Honey production" }),
+      // B4 Duck Pond
+      React.createElement(Tile, { col:3, row:1, bg:"#050f1a", border:"#0369a1", svgInner:SVG.pond, label:"Duck Pond", color:"#7dd3fc",
+        badge:"B4", count: hasFac("pond") ? lsCount("duck")+"/"+FACILITIES.pond.tiers[facTier("pond")].capacity : null,
+        tip:"Duck Pond · "+(hasFac("pond") ? FACILITIES.pond.tiers[facTier("pond")].name : "Not built") }),
+
+      // ── ROW C ──
+      // C1 Storage Barn
+      React.createElement(Tile, { col:0, row:2, bg:"#0e1008", border:"#4a5a1a", svgInner:SVG.storageBarn, label:"Storage Barn", color:"#bef264",
+        badge:"C1", tip:"Storage Barn · Boosts commodity income" }),
+      // C2 Whelping
+      React.createElement(Tile, { col:1, row:2, bg:"#130a1a", border:"#581c87", svgInner:SVG.whelping, label:"Whelping", color:"#d8b4fe",
+        badge:"C2", tip:"Whelping Kennel · "+(hasWhelpingKennel ? "Active" : "Not built") }),
+      // C3 Shearing Shed
+      React.createElement(Tile, { col:2, row:2, bg:"#1a1408", border:"#b45309", svgInner:SVG.shearing, label:"Shearing Shed", color:"#fde68a",
+        badge:"C3", count: hasFac("shearing_shed") ? lsCount("sheep")+"/"+FACILITIES.shearing_shed.tiers[facTier("shearing_shed")].capacity : null,
+        tip:"Shearing Shed · "+(hasFac("shearing_shed") ? FACILITIES.shearing_shed.tiers[facTier("shearing_shed")].name : "Not built") }),
+      // C4 Grazing
+      hasFac("grazing_land")
+        ? React.createElement(Tile, { col:3, row:2, bg:"#091e0a", border:"#15803d", svgInner:SVG.grazing, label:"Grazing Land", color:"#4ade80",
+            badge:"C4", tip:"Grazing Land · "+FACILITIES.grazing_land.tiers[facTier("grazing_land")].name })
+        : React.createElement(EmptyPlot, { col:3, row:2, tip:"C4 · Grazing Land · Available" }),
+
+      // ── ROW D ──
+      // D1 Kennel
+      React.createElement(Tile, { col:0, row:3, bg:"#180808", border:"#991b1b", svgInner:SVG.kennel, label:"Kennel", color:"#fca5a5",
+        badge:"D1", count: kennels.length > 0 ? dogCount+"/"+dogCap : null,
+        tip:"Kennel · "+(kennels.length > 0 ? kennels[0].name+" ("+kennels[0].type+")" : "Not built") }),
+      // D2 Kennel 2
+      kennels.length > 1
+        ? React.createElement(Tile, { col:1, row:3, bg:"#180808", border:"#991b1b", svgInner:SVG.kennel, label:"Kennel 2", color:"#fca5a5",
+            badge:"D2", tip:"Kennel · "+kennels[1].name+" ("+kennels[1].type+")" })
+        : React.createElement(EmptyPlot, { col:1, row:3, tip:"D2 · Second Kennel · Available" }),
+      // D3 Stable
+      React.createElement(Tile, { col:2, row:3, bg:"#180f06", border:"#d97706", svgInner:SVG.stable, label:"Stable", color:"#fcd34d",
+        badge:"D3", count: hasFac("stable") ? lsCount("horse")+"/"+FACILITIES.stable.tiers[facTier("stable")].capacity : null,
+        tip:"Stable · "+(hasFac("stable") ? FACILITIES.stable.tiers[facTier("stable")].name : "Not built") }),
+      // D4 Main Grazing
+      hasFac("grazing_land")
+        ? React.createElement(Tile, { col:3, row:3, bg:"#091e0a", border:"#15803d", svgInner:SVG.grazing, label:"Grazing Land", color:"#4ade80",
+            badge:"D4", tip:"Grazing Land · "+FACILITIES.grazing_land.tiers[facTier("grazing_land")].name })
+        : React.createElement(EmptyPlot, { col:3, row:3, tip:"D4 · Main Grazing Land · Available" }),
+
+      // Entrance
+      /*#__PURE__*/React.createElement("div", {
+        style: { position:"absolute", bottom:0, left:COLS[1]+TILE_W, width:GAP, height:12, background:"#3d2508", borderRadius:"4px 4px 0 0", border:"1px solid #78420d", borderBottom:"none", zIndex:3, display:"flex", alignItems:"center", justifyContent:"center" }
+      })
+    )),
+
+    // Tooltip
+    tipText && /*#__PURE__*/React.createElement("div", {
+      style: { position:"fixed", left:tipPos.x+14, top:tipPos.y-32, background:"#0f172a", border:"1px solid #334155", borderRadius:6, padding:"6px 12px", fontSize:"0.72rem", color:"#e2e8f0", pointerEvents:"none", zIndex:9999, whiteSpace:"nowrap" }
+    }, tipText)
+  );
+}
+
 function App() {
   var _sire$genome$coat$M, _sire$genome$coat$M2, _dam$genome$coat$M, _dam$genome$coat$M2, _litter$, _litter$2;
   // Load saved game state
@@ -14502,6 +14721,10 @@ function App() {
         borderRadius:6, padding:"5px 14px", cursor:"pointer", fontSize:"0.82rem" },
       onClick: function(){ setTab("holding"); }
     }, "\uD83D\uDC3E Holding (", holdingPups.length, ")")
+  , /*#__PURE__*/React.createElement("button", {
+      style: tabS("farm"),
+      onClick: function(){ setTab("farm"); }
+    }, "\uD83C\uDFD8 Farm")
   ), tab === "kennel" && /*#__PURE__*/React.createElement("div", {
     style: { display: "flex", flexDirection: "column", flex: 1, overflow: "hidden" }
   },
@@ -15145,6 +15368,17 @@ function App() {
     }
   }, "\uD83E\uDDEC 8 coat loci \xB7 8 health loci \xB7 5 perf QTLs \xB7 0.5% mutation rate \xB7 COI tracking"),
   /*#__PURE__*/React.createElement(Clock, null),
+  tab === "farm" && /*#__PURE__*/React.createElement("div", {
+    style: { position:"fixed", inset:0, background:"#0a0f1a", zIndex:50, overflow:"hidden", display:"flex", alignItems:"center", justifyContent:"center" }
+  }, /*#__PURE__*/React.createElement(FarmView, {
+    facilitiesOwned: facilitiesOwned,
+    kennels: kennels,
+    animals: animals,
+    ownedLivestock: ownedLivestock,
+    money: money,
+    hasWhelpingKennel: hasWhelpingKennel,
+    onClose: function(){ setTab("kennel"); }
+  })),
   showCatLady && /*#__PURE__*/React.createElement(OldCatLady, {
     onClose: function(){ setShowCatLady(false); },
     money: money,
