@@ -1274,6 +1274,42 @@ function getAgeStage(ageMonths) {
   };
 }
 
+// Heat cycle intervals in real days by size
+function getHeatCycleInterval(size) {
+  if (size === "XL") return 7;
+  if (size === "L") return 6;
+  if (size === "M") return 5;
+  return 4; // S, XS, Toy
+}
+
+// Returns heat status for a female dog
+// { status: "too_young" | "in_heat" | "waiting", daysUntilHeat: N }
+function getHeatStatus(animal, nowMs) {
+  if (animal.sex !== "F") return null;
+  var ageMs = (animal.ageMonths || 0) * (30.44 * 24 * 60 * 60 * 1000);
+  var bornMs = nowMs - ageMs;
+  var maturityMs = 12 * 30.44 * 24 * 60 * 60 * 1000; // 12 real days
+  if (ageMs < maturityMs) {
+    var daysToMature = Math.ceil((maturityMs - ageMs) / (24 * 60 * 60 * 1000));
+    return { status: "too_young", daysUntilHeat: daysToMature };
+  }
+  var interval = getHeatCycleInterval(animal.size || "M");
+  var heatWindowDays = 2;
+  var intervalMs = interval * 24 * 60 * 60 * 1000;
+  var heatWindowMs = heatWindowDays * 24 * 60 * 60 * 1000;
+  // Use lastWhelped if set, otherwise use heatStarted, otherwise use maturity date
+  var cycleStartMs = animal.lastWhelped || animal.heatCycleStart || (bornMs + maturityMs);
+  var timeSinceCycleStart = nowMs - cycleStartMs;
+  var positionInCycle = timeSinceCycleStart % intervalMs;
+  if (positionInCycle < heatWindowMs) {
+    var hoursLeft = Math.ceil((heatWindowMs - positionInCycle) / (60 * 60 * 1000));
+    return { status: "in_heat", hoursLeft: hoursLeft };
+  }
+  var msUntilNextHeat = intervalMs - positionInCycle;
+  var daysUntil = Math.ceil(msUntilNextHeat / (24 * 60 * 60 * 1000));
+  return { status: "waiting", daysUntilHeat: daysUntil };
+}
+
 // Mixed breed hybrid vigor bonus: +1 to +3 years based on diversity
 function mixedLifespanBonus(sire, dam) {
   if (!sire || !dam || sire.breed === dam.breed) return 0;
@@ -13321,7 +13357,9 @@ function Card(_ref0) {
   }, "\u2713 SEL"), onRemove && /*#__PURE__*/React.createElement("button", {
     onClick: function onClick(e) {
       e.stopPropagation();
-      onRemove(animal.id);
+      if (window.confirm("Remove " + animal.name + " from your kennel? This cannot be undone.")) {
+        onRemove(animal.id);
+      }
     },
     style: {
       background: "none",
@@ -13334,7 +13372,8 @@ function Card(_ref0) {
       fontSize: "0.78rem",
       padding: 0,
       lineHeight: 1
-    }
+    },
+    title: "Remove dog"
   }, "\u2715"))), /*#__PURE__*/React.createElement("div", {
     style: {
       display: "inline-block",
@@ -13396,33 +13435,48 @@ function Card(_ref0) {
       gap: 6,
       marginBottom: 8
     }
-  }, [["HEALTH", animal.healthScore, healthColor(animal.healthScore)], ["PERF", animal.perfScore, "#a78bfa"], ["COI", "".concat(animal.coi, "%"), coiColor(animal.coi)]].map(function (_ref1) {
-    var _ref10 = _slicedToArray(_ref1, 3),
-      l = _ref10[0],
-      v = _ref10[1],
-      col = _ref10[2];
+},
+  // Condensed stats row
+  /*#__PURE__*/React.createElement("div", {
+    style: { display: "flex", alignItems: "center", gap: 10, marginBottom: 6,
+      background: "#0f172a", borderRadius: 5, padding: "5px 8px" }
+  },
+    /*#__PURE__*/React.createElement("span", { style: { color: healthColor(animal.healthScore), fontWeight: "bold", fontSize: "0.95rem" } }, "\u2764\uFE0F ", animal.healthScore),
+    /*#__PURE__*/React.createElement("span", { style: { color: "#334155" } }, "|"),
+    /*#__PURE__*/React.createElement("span", { style: { color: "#a78bfa", fontWeight: "bold", fontSize: "0.95rem" } }, "\u26A1 ", animal.perfScore),
+    /*#__PURE__*/React.createElement("span", { style: { color: "#334155" } }, "|"),
+    /*#__PURE__*/React.createElement("span", { style: { color: coiColor(animal.coi), fontWeight: "bold", fontSize: "0.95rem" } }, "COI ", animal.coi, "%")
+  ),
+  /*#__PURE__*/React.createElement("div", {
+    style: { fontFamily: "monospace", fontSize: "0.78rem", color: "#38bdf8", background: "#0f172a",
+      borderRadius: 4, padding: "5px 10px", marginBottom: 7, overflow: "hidden",
+      textOverflow: "ellipsis", whiteSpace: "nowrap", fontWeight: "bold", letterSpacing: "0.04em",
+      border: "1px solid #1e3a5f" },
+    title: animal.vinStr
+  }, "\uD83E\uDDEC ", animal.vinStr),
+  (function() {
+    if (animal.sex !== "F" || animal.retired) return null;
+    var hs = getHeatStatus(animal, Date.now());
+    if (!hs) return null;
+    if (hs.status === "in_heat") {
+      return /*#__PURE__*/React.createElement("div", {
+        style: { display: "inline-block", background: "#3b1a00", border: "1px solid #f97316",
+          borderRadius: 4, padding: "3px 10px", fontSize: "0.82rem", color: "#fb923c",
+          fontWeight: "bold", marginBottom: 6 }
+      }, "\uD83D\uDD25 In Heat \u2014 ", hs.hoursLeft, "h remaining");
+    }
+    if (hs.status === "too_young") {
+      return /*#__PURE__*/React.createElement("div", {
+        style: { display: "inline-block", background: "#0f172a", border: "1px solid #334155",
+          borderRadius: 4, padding: "3px 10px", fontSize: "0.82rem", color: "#475569", marginBottom: 6 }
+      }, "\uD83D\uDCC5 First heat in ", hs.daysUntilHeat, hs.daysUntilHeat === 1 ? " day" : " days");
+    }
     return /*#__PURE__*/React.createElement("div", {
-      key: l,
-      style: {
-        flex: 1,
-        background: "#0f172a",
-        borderRadius: 5,
-        padding: "5px 4px",
-        textAlign: "center"
-      }
-    }, /*#__PURE__*/React.createElement("div", {
-      style: {
-        color: col,
-        fontWeight: "bold",
-        fontSize: "0.95rem"
-      }
-    }, v), /*#__PURE__*/React.createElement("div", {
-      style: {
-        color: "#475569",
-        fontSize: "0.75rem"
-      }
-    }, l));
-  })), (_animal$healthIssues = animal.healthIssues) === null || _animal$healthIssues === void 0 ? void 0 : _animal$healthIssues.filter(function (i) {
+      style: { display: "inline-block", background: "#0f172a", border: "1px solid #1e3a5f",
+        borderRadius: 4, padding: "3px 10px", fontSize: "0.82rem", color: "#64748b", marginBottom: 6 }
+    }, "\uD83D\uDCC5 Next heat in ", hs.daysUntilHeat, hs.daysUntilHeat === 1 ? " day" : " days");
+  })()),
+  (_animal$healthIssues = animal.healthIssues) === null || _animal$healthIssues === void 0 ? void 0 : _animal$healthIssues.filter(function (i) {
     return i.sev === "high";
   }).map(function (iss, i) {
     return /*#__PURE__*/React.createElement("span", {
@@ -13466,21 +13520,7 @@ function Card(_ref0) {
         marginRight: 3
       }
     }, "\u26A1 ", m.desc || m.loc, " (from ", m.src, ")");
-  }), /*#__PURE__*/React.createElement("div", {
-    style: {
-      fontFamily: "monospace",
-      fontSize: "0.56rem",
-      color: "#64748b",
-      background: "#0f172a",
-      borderRadius: 3,
-      padding: "3px 6px",
-      margin: "6px 0",
-      overflow: "hidden",
-      textOverflow: "ellipsis",
-      whiteSpace: "nowrap"
-    },
-    title: animal.vinStr
-  }, "\uD83E\uDDEC ", animal.vinStr),
+  }),
 
   animal.aptitudes && animal.aptitudes.length > 0 && /*#__PURE__*/React.createElement("div", { style: { marginBottom: 10 } },
     /*#__PURE__*/React.createElement("div", { style: { color: "#64748b", fontSize: "0.78rem", textTransform: "uppercase", letterSpacing: "0.05em", marginBottom: 5 } }, "Aptitudes"),
@@ -13790,14 +13830,16 @@ function App() {
         return prev.map(function(a) {
           var newAge = (a.ageMonths||0) + daysPassed;
           var maxAge = a.lifespan || 144;
+          // Reset stud daily count on new day
+          var studReset = { breedingsToday: 0, lastStudDate: "" };
           if (newAge >= maxAge) {
-            (function(){
+            (function(){\
               var logEntry = {id:Date.now()+Math.random(), type:"retire_age", name:a.name, breed:a.breed, ageMonths:newAge, date:new Date().toLocaleString()};
               setTimeout(function(){ setLog(function(p){ return [logEntry].concat(_toConsumableArray(p)); }); }, 0);
             })();
-            return Object.assign({}, a, {ageMonths: newAge, retired: true, retireReason: "End of natural life"});
+            return Object.assign({}, a, studReset, {ageMonths: newAge, retired: true, retireReason: "End of natural life"});
           }
-          return Object.assign({}, a, {ageMonths: newAge, lastUpdated: now});
+          return Object.assign({}, a, studReset, {ageMonths: newAge, lastUpdated: now});
         });
       });
 
@@ -13998,6 +14040,22 @@ function App() {
     if (a.injured) return "Currently injured";
     var stage = getAgeStage(a.ageMonths || 0);
     if (!stage.canBreed) return stage.label + " — not breeding age";
+    if (a.inWhelping) return "In Whelping Kennel";
+    // Stud daily limit check
+    if (a.sex === "M") {
+      var todayStr = new Date().toDateString();
+      var studsToday = a.breedingsToday || 0;
+      var lastStudDate = a.lastStudDate || "";
+      if (lastStudDate === todayStr && studsToday >= 2) return "Stud limit reached (2/day)";
+    }
+    // Heat cycle check for females
+    if (a.sex === "F") {
+      var heatStatus = getHeatStatus(a, Date.now());
+      if (heatStatus) {
+        if (heatStatus.status === "too_young") return "Not yet mature — " + heatStatus.daysUntilHeat + " days to first heat";
+        if (heatStatus.status === "waiting") return "Not in heat — " + heatStatus.daysUntilHeat + (heatStatus.daysUntilHeat === 1 ? " day" : " days") + " until next heat";
+      }
+    }
     return null;
   };
   var selectAnimal = function selectAnimal(a) {
@@ -14033,6 +14091,21 @@ function App() {
       setLitterIdx(0);
       setTab("litter");
     }
+    // Track stud daily breeding count
+    var todayStr = new Date().toDateString();
+    setAnimals(function(prev) {
+      return prev.map(function(a) {
+        if (a.id === sire.id) {
+          var prevCount = (a.lastStudDate === todayStr) ? (a.breedingsToday || 0) : 0;
+          return _objectSpread(_objectSpread({}, a), {}, { breedingsToday: prevCount + 1, lastStudDate: todayStr });
+        }
+        // Stamp dam with lastWhelped so heat cycle restarts from now
+        if (a.id === dam.id) {
+          return _objectSpread(_objectSpread({}, a), {}, { lastWhelped: now, heatCycleStart: now });
+        }
+        return a;
+      });
+    });
     setLog(function(p) {
       return [{ id: now, type: "breed", sire: sire.name, dam: dam.name, count: pups.length,
         date: new Date().toLocaleString(),
@@ -14770,7 +14843,7 @@ function App() {
             /*#__PURE__*/React.createElement("span", { style:{color:"#64748b"} }, (litter[0]||{}).sireBreed, " \xD7 ", (litter[0]||{}).damBreed),
             " \u00B7 No Whelping Kennel \u2014 select 1 pup to keep"
           ),
-          /*#__PURE__*/React.createElement("div", { style: { display:"flex", flexWrap:"wrap", gap:10, marginBottom:14 } },
+          /*#__PURE__*/React.createElement("div", { style: { display:"flex", flexWrap:"wrap", gap:10, marginBottom:14, maxHeight:"520px", overflowY:"auto", paddingRight:4 } },
             litter.map(function(pup) {
               var sel = litterSelected.includes(pup.id);
               return /*#__PURE__*/React.createElement("div", { key: pup.id, style:{ cursor:"pointer" }, onClick: function(){ toggleLitterSelect(pup.id); } },
@@ -14827,7 +14900,7 @@ function App() {
                   canWean ? "\u2705 Ready to wean" : "\u23F3 "+(3-ageDays)+" day(s) left")
               ),
               /*#__PURE__*/React.createElement("div", { style:{fontSize:"0.72rem",color:"#64748b",marginBottom:8} }, "Select up to 2 pups \u00B7 ", lit.selectedIds.length, "/2 selected"),
-              /*#__PURE__*/React.createElement("div", { style:{ display:"flex", flexWrap:"wrap", gap:8, marginBottom:10 } },
+              /*#__PURE__*/React.createElement("div", { style:{ display:"flex", flexWrap:"wrap", gap:8, marginBottom:10, maxHeight:"520px", overflowY:"auto", paddingRight:4 } },
                 lit.pups.map(function(pup) {
                   var sel = lit.selectedIds.includes(pup.id);
                   return /*#__PURE__*/React.createElement("div", { key:pup.id, style:{cursor:"pointer"}, onClick:function(){ toggleWhelpSelect(lit.litterId, pup.id); } },
@@ -15182,11 +15255,7 @@ function App() {
       if (itemId && itemSpecies) {
         setOwnedLivestock(function(prev){ return prev.filter(function(a){ return a.id!==itemId; }); });
       }
-      if (label) {
-        setLog(function(lg){ return [{ id:Date.now(), type:"financial",
-          name:"\uD83D\uDC04 Market Session \u2014 "+label,
-          amount:total, date:new Date().toLocaleString() }].concat(lg); });
-      }
+      // sale logged in grouped session summary on market close
     }
   })
 ));
