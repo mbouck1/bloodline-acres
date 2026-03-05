@@ -13718,6 +13718,31 @@ var FACILITIES = {
       { name:"25 Acres",  capacity:25,  cost:10000, upkeep:160 },
       { name:"50 Acres",  capacity:50,  cost:18000, upkeep:280 }
     ]
+  },
+  slaughterhouse: {
+    label:"Slaughterhouse", icon:"\uD83E\uDE78", desc:"Unlocks meat processing. Sell pork, beef, lamb & more at market price instead of selling live animals at a loss.",
+    tiers:[
+      { name:"Small",      capacity:10,  cost:4000,  upkeep:120 },
+      { name:"Standard",   capacity:25,  cost:9000,  upkeep:250 },
+      { name:"Commercial", capacity:50,  cost:18000, upkeep:450 }
+    ]
+  },
+  apiary: {
+    label:"Apiary", icon:"\uD83D\uDC1D", desc:"Passive honey production. Bees also boost crop and grazing land yields nearby.",
+    tiers:[
+      { name:"Small",  capacity:3,  cost:1200, upkeep:30 },
+      { name:"Medium", capacity:8,  cost:3000, upkeep:65 },
+      { name:"Large",  capacity:16, cost:6000, upkeep:120 }
+    ]
+  },
+  storage_barn: {
+    label:"Storage Barn", icon:"\uD83D\uDDC4", desc:"Stores commodities and equipment. Reduces spoilage and boosts sell prices across the farm.",
+    tiers:[
+      { name:"Small",      capacity:20,  cost:2000,  upkeep:40  },
+      { name:"Standard",   capacity:50,  cost:5000,  upkeep:90  },
+      { name:"Large",      capacity:100, cost:10000, upkeep:175 },
+      { name:"Commercial", capacity:200, cost:20000, upkeep:320 }
+    ]
   }
 };
 
