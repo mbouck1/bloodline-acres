@@ -13735,7 +13735,9 @@ function FarmView(_ref) {
   var dogCount = animals.filter(function(a){ return !a.retired; }).length;
   var dogCap = kennels.reduce(function(s,k){ return s + (KENNEL_TYPES[k.type] ? KENNEL_TYPES[k.type].capacity : 10); }, 0);
 
-  var TILE_W = 140, TILE_H = 140, GAP = 12;
+  var GAP = 14;
+  var TILE_W = Math.floor((window.innerWidth - GAP*5) / 4);
+  var TILE_H = Math.floor((window.innerHeight - 80 - GAP*5) / 4); // 80 = title+close bar
   var COLS = [GAP, GAP*2+TILE_W, GAP*3+TILE_W*2, GAP*4+TILE_W*3];
   var ROWS = [GAP, GAP*2+TILE_H, GAP*3+TILE_H*2, GAP*4+TILE_H*3];
   var GRID_W = GAP*5 + TILE_W*4, GRID_H = GAP*5 + TILE_H*4;
@@ -13818,9 +13820,9 @@ function FarmView(_ref) {
 
     // Farm grid — scales to fill remaining space
     /*#__PURE__*/React.createElement("div", {
-      style: { flex:1, display:"flex", alignItems:"center", justifyContent:"center", padding:"8px" }
+      style: { flex:1, display:"flex", alignItems:"center", justifyContent:"center" }
     }, /*#__PURE__*/React.createElement("div", {
-      style: { position:"relative", width:GRID_W, height:GRID_H, background:"#0d1f0f", borderRadius:12, border:"2px solid #1a3a1e", flexShrink:0,
+      style: { position:"relative", width:GRID_W, height:GRID_H, background:"#0d1f0f", borderRadius:12, border:"2px solid #1a3a1e",
         backgroundImage:"repeating-linear-gradient(0deg,transparent,transparent 19px,rgba(255,255,255,0.012) 20px),repeating-linear-gradient(90deg,transparent,transparent 19px,rgba(255,255,255,0.012) 20px)" }
     },
       // PATH LAYER
