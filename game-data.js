@@ -1270,7 +1270,7 @@ var LIVESTOCK_QTY = {
   horse:   function(){ return Math.floor(Math.random()*10)+1; },
   cow:     function(){ return Math.floor(Math.random()*6)+20; },
   sheep:   function(){ return Math.floor(Math.random()*21)+30; },
-  goat:    function(){ return Math.floor(Math.random()*21)+30; },
+  goat:    function(){ return Math.floor(Math.random()*6)+3; },
   pig:     function(){ return Math.floor(Math.random()*21)+30; },
   duck:    function(){ return Math.floor(Math.random()*51)+50; },
   chicken: function(){ return Math.floor(Math.random()*51)+50; }
@@ -1279,6 +1279,34 @@ var LIVESTOCK_QTY = {
 function randomSex() { return Math.random() < 0.75 ? "F" : "M"; }
 var _lsIdCtr = 1;
 function lsId() { return "ls_" + (_lsIdCtr++) + "_" + Math.floor(Math.random()*9999); }
+
+var GOAT_DAIRY_BREEDS   = ["Nubian","Alpine","LaMancha","Saanen","Oberhasli","Toggenburg"];
+var GOAT_MEAT_BREEDS    = ["Boer","Kiko","Spanish","Myotonic","Savanna","Rangeland"];
+var GOAT_DUAL_BREEDS    = ["Nigerian Dwarf","Pygmy","Kinder","Jamnapari"];
+
+var GOAT_MILK_OUTPUT = {
+  dairy: 15,   // gallons per game month
+  dual:  8,    // gallons per game month
+  meat:  0
+};
+
+var GOAT_MEAT_PRICE = {
+  dairy: 90,
+  dual:  90,
+  meat:  120
+};
+
+function randomGoatType() {
+  var r = Math.random();
+  if (r < 0.40) return "dairy";
+  if (r < 0.70) return "meat";
+  return "dual";
+}
+
+function goatBreedForType(type) {
+  var list = type==="dairy" ? GOAT_DAIRY_BREEDS : type==="meat" ? GOAT_MEAT_BREEDS : GOAT_DUAL_BREEDS;
+  return list[Math.floor(Math.random()*list.length)];
+}
 
 function generateLivestockStock() {
   var stock = {};
@@ -1303,6 +1331,14 @@ function generateLivestockStock() {
         var ca = { id:lsId(), type:cowType, breed:breed, sex:randomSex(), price:0 };
         ca.price = ca.type==="dairy" ? 600 : 500;
         stock[sp.key].push(ca);
+      }
+    } else if (sp.key === "goat") {
+      for (var i=0; i<qty; i++) {
+        var goatType = randomGoatType();
+        var goatBreed = goatBreedForType(goatType);
+        var ga = { id:lsId(), type:goatType, breed:goatBreed, sex:randomSex(), price:0 };
+        ga.price = GOAT_MEAT_PRICE[goatType] + (goatType==="dairy"||goatType==="dual" ? 30 : 0);
+        stock[sp.key].push(ga);
       }
     } else {
       for (var i=0; i<qty; i++) {
@@ -1341,7 +1377,11 @@ var LIVESTOCK_PRICES = {
 var MEAT_PRICES = {
   pig:   { label: "Pork",  price: 120,  commodity: "pork"   },
   sheep: { label: "Lamb",  price: 240,  commodity: "lamb"   },
-  goat:  { label: "Chevon", price: 120, commodity: "chevon" },
+  goat:  { label: "Chevon", price: 120, commodity: "chevon",
+    dairy: { label: "Chevon (Dairy)", price: 90,  commodity: "chevon" },
+    dual:  { label: "Chevon (Dual)",  price: 90,  commodity: "chevon" },
+    meat:  { label: "Chevon",         price: 120, commodity: "chevon" }
+  },
   cow:   { label: "Beef",  price: 800,  commodity: "beef",
     dairy: { label: "Beef (Dairy)", price: 650, commodity: "beef" }
   }
@@ -1349,14 +1389,15 @@ var MEAT_PRICES = {
 
 // Commodity market sell prices
 var COMMODITY_PRICES = {
-  milk:   { label: "Milk",   unit: "gal",  price: 3.50  },
-  eggs:   { label: "Eggs",   unit: "doz",  price: 4.00  },
-  wool:   { label: "Wool",   unit: "lb",   price: 2.50  },
-  honey:  { label: "Honey",  unit: "lb",   price: 9.00  },
-  pork:   { label: "Pork",   unit: "unit", price: 120   },
-  beef:   { label: "Beef",   unit: "unit", price: 800   },
-  lamb:   { label: "Lamb",   unit: "unit", price: 240   },
-  chevon: { label: "Chevon", unit: "unit", price: 120   }
+  milk:      { label: "Cow Milk",   unit: "gal",  price: 1.50  },
+  goat_milk: { label: "Goat Milk",  unit: "gal",  price: 4.00  },
+  eggs:      { label: "Eggs",       unit: "egg",  price: 0.40  },
+  wool:      { label: "Wool",       unit: "lb",   price: 2.50  },
+  honey:     { label: "Honey",      unit: "lb",   price: 9.00  },
+  pork:      { label: "Pork",       unit: "unit", price: 120   },
+  beef:      { label: "Beef",       unit: "unit", price: 800   },
+  lamb:      { label: "Lamb",       unit: "unit", price: 240   },
+  chevon:    { label: "Chevon",     unit: "unit", price: 120   }
 };
 
 function getListingPrice(species, animal) {
@@ -1909,13 +1950,13 @@ function getQualityTier(stars) {
 }
 
 var LIVESTOCK_INCOME = {
-  chicken: { matureAtDays:5,  baseDaily:0.40, degradeAtDays:null, degradeMult:null, degradeMsg:null, produceLabel:"egg production",      sellByDays:null },
-  duck:    { matureAtDays:6,  baseDaily:0.55, degradeAtDays:null, degradeMult:null, degradeMsg:null, produceLabel:"egg production",      sellByDays:null },
-  goat:    { matureAtDays:5,  baseDaily:1.20, degradeAtDays:null, degradeMult:null, degradeMsg:null, produceLabel:"milk yield",          sellByDays:null },
-  sheep:   { matureAtDays:6,  baseDaily:0.90, degradeAtDays:null, degradeMult:null, degradeMsg:null, produceLabel:"wool & milk",         sellByDays:null },
-  pig:     { matureAtDays:6,  baseDaily:1.80, degradeAtDays:18,   degradeMult:0.45, degradeMsg:"past peak market weight — gone tough", produceLabel:"market weight gain", sellByDays:18 },
-  cow:     { matureAtDays:9,  baseDaily:2.50, degradeAtDays:null, degradeMult:null, degradeMsg:null, produceLabel:"milk \/ beef value",  sellByDays:null },
-  horse:   { matureAtDays:36, baseDaily:3.50, degradeAtDays:null, degradeMult:null, degradeMsg:null, produceLabel:"training value",      sellByDays:null }
+  chicken: { matureAtDays:5,  baseDaily:18,   degradeAtDays:null, degradeMult:null, degradeMsg:null, produceLabel:"egg production",     commodity:"eggs",     isCommodity:true  },
+  duck:    { matureAtDays:6,  baseDaily:12,   degradeAtDays:null, degradeMult:null, degradeMsg:null, produceLabel:"egg production",     commodity:"eggs",     isCommodity:true  },
+  goat:    { matureAtDays:5,  baseDaily:0,    degradeAtDays:null, degradeMult:null, degradeMsg:null, produceLabel:"milk yield",         commodity:"goat_milk",isCommodity:true  },
+  sheep:   { matureAtDays:6,  baseDaily:0,    degradeAtDays:null, degradeMult:null, degradeMsg:null, produceLabel:"wool production",    commodity:null,       isCommodity:false },
+  pig:     { matureAtDays:6,  baseDaily:1.80, degradeAtDays:18,   degradeMult:0.45, degradeMsg:"past peak market weight — gone tough", produceLabel:"market weight gain", commodity:null, isCommodity:false, sellByDays:18 },
+  cow:     { matureAtDays:9,  baseDaily:0,    degradeAtDays:null, degradeMult:null, degradeMsg:null, produceLabel:"milk \/ beef value", commodity:"milk",     isCommodity:true  },
+  horse:   { matureAtDays:36, baseDaily:3.50, degradeAtDays:null, degradeMult:null, degradeMsg:null, produceLabel:"training value",     commodity:null,       isCommodity:false }
 };
 
 function refreshMarketMult(animal) {
@@ -1949,9 +1990,9 @@ function runDailyIncomeTick(ownedLivestock, lastTickDate) {
   var totalEarned = 0;
   var journalEntries = [];
   var bySpecies = {};
+  var commodityGains = {}; // { eggs:0, milk:0, goat_milk:0 }
 
   // Pre-calculate male fertility multiplier per species
-  // Males past prime (45 real days) lose 2% effectiveness per day, floor 20%
   var PRIME_AGE_DAYS = 45;
   var fertilityBySpecies = {};
   ["chicken","duck","pig","goat","sheep","cow"].forEach(function(sp) {
@@ -1959,9 +2000,8 @@ function runDailyIncomeTick(ownedLivestock, lastTickDate) {
       return a.species === sp && a.sex === "M";
     });
     if (males.length === 0) {
-      fertilityBySpecies[sp] = 1.0; // no male — females still produce, just no replenishment
+      fertilityBySpecies[sp] = 1.0;
     } else {
-      // Use the youngest male as the active sire
       var bestMale = males.reduce(function(best, m) {
         var mAge = (now - (m.purchasedAt || now)) / 86400000;
         var bAge = (now - (best.purchasedAt || now)) / 86400000;
@@ -1987,8 +2027,18 @@ function runDailyIncomeTick(ownedLivestock, lastTickDate) {
       return Object.assign({}, animal, { marketMult: refreshMarketMult(animal) });
     }
 
-    // Roosters and drakes earn nothing — no eggs from males
+    // Males of egg-laying species produce nothing
     if ((species === "chicken" || species === "duck") && animal.sex === "M") {
+      return Object.assign({}, animal, { marketMult: refreshMarketMult(animal) });
+    }
+
+    // Male goats and sheep produce nothing
+    if ((species === "goat" || species === "sheep") && animal.sex === "M") {
+      return Object.assign({}, animal, { marketMult: refreshMarketMult(animal) });
+    }
+
+    // Beef cows produce nothing (slaughter only)
+    if (species === "cow" && animal.type === "beef") {
       return Object.assign({}, animal, { marketMult: refreshMarketMult(animal) });
     }
 
@@ -2004,57 +2054,104 @@ function runDailyIncomeTick(ownedLivestock, lastTickDate) {
     if (isDegraded && inc.degradeMult) yieldMult = inc.degradeMult;
 
     // Apply male fertility decay to egg-laying species
-    // Old rooster = fewer fertile eggs = lower flock productivity
     if (species === "chicken" || species === "duck") {
       yieldMult = yieldMult * (fertilityBySpecies[species] || 1.0);
     }
 
     var newMarketMult = refreshMarketMult(animal);
-    var dailyEarning = Math.round(inc.baseDaily * yieldMult * newMarketMult * 100) / 100;
-    totalEarned += dailyEarning;
 
-    if (!bySpecies[species]) bySpecies[species] = { count:0, earned:0, degradedCount:0 };
+    if (!bySpecies[species]) bySpecies[species] = { count:0, earned:0, commodity:0, degradedCount:0 };
     bySpecies[species].count++;
-    bySpecies[species].earned += dailyEarning;
     if (newlyDegraded) bySpecies[species].degradedCount++;
 
-    return Object.assign({}, animal, {
-      marketMult:     newMarketMult,
-      degraded:       isDegraded,
-      lastIncomeTick: now,
-      incomeTotal:    (animal.incomeTotal || 0) + dailyEarning
-    });
+    // ── COMMODITY PRODUCERS ──
+    if (inc.isCommodity) {
+      var dailyQty = 0;
+
+      if (species === "chicken" || species === "duck") {
+        // Eggs: baseDaily is eggs per game month (real day)
+        dailyQty = Math.round(inc.baseDaily * yieldMult * 10) / 10;
+        var commodityKey = "eggs";
+        commodityGains[commodityKey] = (commodityGains[commodityKey] || 0) + dailyQty;
+        bySpecies[species].commodity += dailyQty;
+
+      } else if (species === "cow" && animal.type === "dairy") {
+        // Milk: 100 gallons per game month per dairy cow
+        dailyQty = Math.round(100 * yieldMult * 10) / 10;
+        commodityGains["milk"] = (commodityGains["milk"] || 0) + dailyQty;
+        bySpecies[species].commodity += dailyQty;
+
+      } else if (species === "goat") {
+        // Goat milk based on type
+        var goatOutput = GOAT_MILK_OUTPUT[animal.type] || 0;
+        if (goatOutput > 0) {
+          dailyQty = Math.round(goatOutput * yieldMult * 10) / 10;
+          commodityGains["goat_milk"] = (commodityGains["goat_milk"] || 0) + dailyQty;
+          bySpecies[species].commodity += dailyQty;
+        }
+      }
+
+      return Object.assign({}, animal, {
+        marketMult: newMarketMult,
+        degraded: isDegraded,
+        lastIncomeTick: now
+      });
+
+    } else {
+      // ── CASH PRODUCERS (pig, horse) ──
+      var dailyEarning = Math.round(inc.baseDaily * yieldMult * newMarketMult * 100) / 100;
+      totalEarned += dailyEarning;
+      bySpecies[species].earned += dailyEarning;
+
+      return Object.assign({}, animal, {
+        marketMult:     newMarketMult,
+        degraded:       isDegraded,
+        lastIncomeTick: now,
+        incomeTotal:    (animal.incomeTotal || 0) + dailyEarning
+      });
+    }
   });
 
+  // Journal entries
   Object.keys(bySpecies).forEach(function(species) {
     var entry = bySpecies[species];
     var sp = LIVESTOCK_SPECIES.find(function(s){ return s.key === species; });
     var icon = sp ? sp.icon : "\uD83D\uDC04";
     var label = sp ? sp.label : species;
     var inc = LIVESTOCK_INCOME[species];
-    var earned = entry.earned.toFixed(2);
-    journalEntries.push(
-      icon + " " + label + " (" + entry.count + " head) \u2014 " +
-      (inc ? inc.produceLabel : "income") +
-      ": +$" + parseFloat(earned).toLocaleString("en-US", {minimumFractionDigits:2, maximumFractionDigits:2})
-    );
+
+    if (inc && inc.isCommodity && entry.commodity > 0) {
+      var unit = (species==="chicken"||species==="duck") ? "eggs" :
+                 (species==="cow") ? "gal milk" : "gal goat milk";
+      journalEntries.push(
+        icon + " " + label + " (" + entry.count + " head) \u2014 +" +
+        entry.commodity.toFixed(1) + " " + unit + " added to inventory"
+      );
+    } else if (entry.earned > 0) {
+      journalEntries.push(
+        icon + " " + label + " (" + entry.count + " head) \u2014 " +
+        (inc ? inc.produceLabel : "income") +
+        ": +$" + entry.earned.toLocaleString("en-US", {minimumFractionDigits:2, maximumFractionDigits:2})
+      );
+    }
     if (entry.degradedCount > 0) {
       journalEntries.push(
         "\u26A0\uFE0F " + entry.degradedCount + " " + label.toLowerCase() +
-        " \u2014 " + (inc.degradeMsg || "value reduced") + ". Sell soon."
+        " \u2014 " + (inc && inc.degradeMsg ? inc.degradeMsg : "value reduced") + ". Sell soon."
       );
     }
   });
 
-  if (Object.keys(bySpecies).length > 1) {
+  if (totalEarned > 0) {
     journalEntries.push(
-      "\uD83D\uDCB0 Daily farm income: +$" +
+      "\uD83D\uDCB0 Daily cash income: +$" +
       totalEarned.toLocaleString("en-US", {minimumFractionDigits:2, maximumFractionDigits:2})
     );
   }
 
   return {
     totalEarned:    Math.round(totalEarned * 100) / 100,
+    commodityGains: commodityGains,
     journalEntries: journalEntries,
     updatedAnimals: updatedAnimals
   };

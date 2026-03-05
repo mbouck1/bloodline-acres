@@ -14108,7 +14108,7 @@ function App() {
     _useStateFACD2 = _slicedToArray(_useStateFACD, 2),
     facilitiesOwned = _useStateFACD2[0],
     setFacilitiesOwned = _useStateFACD2[1];
-  var _useStateCOM = useState(_savedState ? _savedState.commodities || { milk:0, eggs:0, wool:0, honey:0, pork:0, beef:0, lamb:0, chevon:0 } : { milk:0, eggs:0, wool:0, honey:0, pork:0, beef:0, lamb:0, chevon:0 }),
+  var _useStateCOM = useState(_savedState ? _savedState.commodities || { milk:0, eggs:0, wool:0, honey:0, pork:0, beef:0, lamb:0, chevon:0, goat_milk:0 } : { milk:0, eggs:0, wool:0, honey:0, pork:0, beef:0, lamb:0, chevon:0, goat_milk:0 }),
     _useStateCOM2 = _slicedToArray(_useStateCOM, 2),
     commodities = _useStateCOM2[0],
     setCommodities = _useStateCOM2[1];
@@ -14147,16 +14147,26 @@ function App() {
       var result = runDailyIncomeTick(ownedLivestock, lastIncomeTick ? new Date(lastIncomeTick) : null);
       if (result.totalEarned > 0) {
         setMoney(function(m){ return m + result.totalEarned; });
-        setOwnedLivestock(result.updatedAnimals);
-        result.journalEntries.forEach(function(line) {
-          setLog(function(lg){ return [{ id: Date.now()+Math.random(), type: "income",
-            name: line, date: new Date().toLocaleString() }].concat(_toConsumableArray(lg)); });
+      }
+      setOwnedLivestock(result.updatedAnimals);
+      // Apply commodity gains
+      if (result.commodityGains && Object.keys(result.commodityGains).length > 0) {
+        setCommodities(function(c){
+          var updated = Object.assign({}, c);
+          Object.keys(result.commodityGains).forEach(function(key){
+            updated[key] = Math.round(((updated[key]||0) + result.commodityGains[key]) * 10) / 10;
+          });
+          return updated;
         });
       }
-      // Honey production from Apiary — ~5 lbs per hive per month = ~0.17 lbs/day/hive
+      result.journalEntries.forEach(function(line) {
+        setLog(function(lg){ return [{ id: Date.now()+Math.random(), type: "income",
+          name: line, date: new Date().toLocaleString() }].concat(_toConsumableArray(lg)); });
+      });
+      // Honey production from Apiary
       if (facilitiesOwned.apiary) {
         var hiveCount = FACILITIES.apiary.tiers[facilitiesOwned.apiary.tier].capacity;
-        var honeyPerDay = Math.round(hiveCount * 0.17 * 10) / 10;
+        var honeyPerDay = Math.round(hiveCount * 5 * 10) / 10;
         if (honeyPerDay > 0) {
           setCommodities(function(c){ return Object.assign({}, c, { honey: Math.round((c.honey + honeyPerDay) * 10) / 10 }); });
           setLog(function(lg){ return [{ id: Date.now()+Math.random(), type: "income",
@@ -15577,7 +15587,7 @@ function App() {
     onBuy: function(species, animal){
       if (money < (animal.price||0)) { alert("Not enough funds!\nNeed $"+(animal.price||0).toLocaleString()+", you have $"+money.toLocaleString()); return false; }
       // Check facility capacity
-      var facKey = {horse:"stable",cow:"barn",sheep:null,goat:null,pig:"pig_pen",duck:"pond",chicken:"chicken_coop"}[species];
+      var facKey = {horse:"stable",cow:"barn",sheep:null,goat:"goat_pen",pig:"pig_pen",duck:"pond",chicken:"chicken_coop"}[species];
       if (species==="cow" && animal.type==="dairy") facKey="milking_barn";
       var grazingSpecies = ["cow","sheep","goat"];
       // Stable check for horses
@@ -15631,10 +15641,17 @@ function App() {
     onSlaughter: function(animal) {
       if (!facilitiesOwned.slaughterhouse) { alert("You need a Slaughterhouse to process meat."); return; }
       var species = animal.species;
-      var meatInfo = MEAT_PRICES[species];
-      if (!meatInfo) { alert("This animal cannot be slaughtered."); return; }
-      var info = (species === "cow" && animal.type === "dairy") ? meatInfo.dairy : meatInfo;
-      if (confirm("Send " + (animal.breed||species) + " to slaughter?\n\nYields: " + info.label + " worth $" + info.price)) {
+      var meatDef = MEAT_PRICES[species];
+      if (!meatDef) { alert("This animal cannot be slaughtered."); return; }
+      var info;
+      if (species === "cow") {
+        info = animal.type === "dairy" ? meatDef.dairy : meatDef;
+      } else if (species === "goat") {
+        info = meatDef[animal.type] || meatDef;
+      } else {
+        info = meatDef;
+      }
+      if (confirm("Send " + (animal.breed||species) + " (" + (animal.type||"") + ") to slaughter?\n\nYields: " + info.label + " worth $" + info.price)) {
         setOwnedLivestock(function(prev){ return prev.filter(function(a){ return a.id !== animal.id; }); });
         setCommodities(function(c){ return Object.assign({}, c, { [info.commodity]: (c[info.commodity]||0) + 1 }); });
         setLog(function(lg){ return [{ id:Date.now()+Math.random(), type:"financial",
