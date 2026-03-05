@@ -13150,7 +13150,7 @@ function BreedPhotoModal(_ref_bpm) {
 
 function BreedPhoto(_ref_bp) {
   var animal = _ref_bp.animal;
-  var _useState_bp = _slicedToArray(useState(_savedState ? !!_savedState.hasWhelpingKennel : false), 2),
+  var _useState_bp = _slicedToArray(useState(false), 2),
     imgErr = _useState_bp[0], setImgErr = _useState_bp[1];
   var _useState_bp2 = _slicedToArray(useState(false), 2),
     showModal = _useState_bp2[0], setShowModal = _useState_bp2[1];
@@ -13736,7 +13736,7 @@ function App() {
     _useState30 = _slicedToArray(_useState29, 2),
     litterIdx = _useState30[0],
     setLitterIdx = _useState30[1];
-  var _useStateWK = useState(false),
+  var _useStateWK = useState(_savedState ? !!_savedState.hasWhelpingKennel : false),
     _useStateWK2 = _slicedToArray(_useStateWK, 2),
     hasWhelpingKennel = _useStateWK2[0],
     setHasWhelpingKennel = _useStateWK2[1];
