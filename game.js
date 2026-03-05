@@ -13720,7 +13720,7 @@ var FACILITIES = {
     ]
   },
   slaughterhouse: {
-    label:"Slaughterhouse", icon:"\uD83E\uDE78", desc:"Unlocks meat processing. Sell pork, beef, lamb & more at market price instead of selling live animals at a loss.",
+    label:"Slaughterhouse", icon:"\uD83E\uDE78", desc:"Unlocks meat processing. Sell pork, beef, lamb and more at market price rather than selling live animals.",
     tiers:[
       { name:"Small",      capacity:10,  cost:4000,  upkeep:120 },
       { name:"Standard",   capacity:25,  cost:9000,  upkeep:250 },
@@ -13728,7 +13728,7 @@ var FACILITIES = {
     ]
   },
   apiary: {
-    label:"Apiary", icon:"\uD83D\uDC1D", desc:"Passive honey production. Bees also boost crop and grazing land yields nearby.",
+    label:"Apiary", icon:"\uD83D\uDC1D", desc:"Produces honey for sale. More hives means more honey.",
     tiers:[
       { name:"Small",  capacity:3,  cost:1200, upkeep:30 },
       { name:"Medium", capacity:8,  cost:3000, upkeep:65 },
@@ -13736,7 +13736,7 @@ var FACILITIES = {
     ]
   },
   storage_barn: {
-    label:"Storage Barn", icon:"\uD83D\uDDC4", desc:"Stores commodities and equipment. Reduces spoilage and boosts sell prices across the farm.",
+    label:"Storage Barn", icon:"\uD83D\uDDC4", desc:"Stores commodities and equipment. Higher tiers hold more.",
     tiers:[
       { name:"Small",      capacity:20,  cost:2000,  upkeep:40  },
       { name:"Standard",   capacity:50,  cost:5000,  upkeep:90  },
