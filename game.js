@@ -13735,6 +13735,15 @@ var FACILITIES = {
       { name:"Large",  capacity:16, cost:6000, upkeep:120 }
     ]
   },
+  goat_pen: {
+    label:"Goat Pen", icon:"\uD83D\uDC10", desc:"Housing for dairy, meat, and dual-purpose goats. Grazing Land determines total herd size.",
+    tiers:[
+      { name:"Small",      capacity:15,  cost:800,   upkeep:25  },
+      { name:"Medium",     capacity:35,  cost:2000,  upkeep:55  },
+      { name:"Large",      capacity:75,  cost:4500,  upkeep:110 },
+      { name:"Commercial", capacity:150, cost:10000, upkeep:220 }
+    ]
+  },
   storage_barn: {
     label:"Storage Barn", icon:"\uD83D\uDDC4", desc:"Stores commodities and equipment. Higher tiers hold more.",
     tiers:[
@@ -13890,15 +13899,13 @@ function FarmView(_ref) {
       React.createElement(Tile, { col:1, row:0, bg:"#120808", border:"#7f1d1d", svgInner:SVG.slaughter, label:"Slaughterhouse", color:"#fca5a5",
         badge:"A2", tip:"Slaughterhouse · Unlocks meat sales" }),
       // A3 Chicken Coop
-      React.createElement(Tile, { col:2, row:0, bg:"#101d0a", border:"#4d7c0f", svgInner:SVG.chickCoop, label:"Chicken Coop", color:"#86efac",
+      React.createElement(Tile, { col:2, row:0, bg:"#0d1a08", border:"#ca8a04", svgInner:SVG.apiary, label:"Apiary", color:"#fde68a",
         badge:"A3", count: hasFac("chicken_coop") ? lsCount("chicken")+"/"+FACILITIES.chicken_coop.tiers[facTier("chicken_coop")].capacity : null,
         tip:"Chicken Coop · "+(hasFac("chicken_coop") ? FACILITIES.chicken_coop.tiers[facTier("chicken_coop")].name : "Not built") }),
       // A4 Grazing
-      hasFac("grazing_land")
-        ? React.createElement(Tile, { col:3, row:0, bg:"#091e0a", border:"#15803d", svgInner:SVG.grazing, label:"Grazing Land", color:"#4ade80",
-            badge:"A4", count: FACILITIES.grazing_land.tiers[facTier("grazing_land")].capacity+"ac",
-            tip:"Grazing Land · "+FACILITIES.grazing_land.tiers[facTier("grazing_land")].name })
-        : React.createElement(EmptyPlot, { col:3, row:0, tip:"A4 · Grazing Land · Available" }),
+      React.createElement(Tile, { col:3, row:0, bg:"#050f1a", border:"#0369a1", svgInner:SVG.pond, label:"Duck Pond", color:"#7dd3fc",
+        badge:"A4", count: hasFac("pond") ? lsCount("duck")+"/"+FACILITIES.pond.tiers[facTier("pond")].capacity : null,
+        tip:"Duck Pond · "+(hasFac("pond") ? FACILITIES.pond.tiers[facTier("pond")].name : "Not built") }),
 
       // ── ROW B ──
       // B1 Barn
@@ -13910,17 +13917,24 @@ function FarmView(_ref) {
         badge:"B2", count: hasFac("milking_barn") ? lsCount("dairy")+"/"+FACILITIES.milking_barn.tiers[facTier("milking_barn")].capacity : null,
         tip:"Milking Barn · "+(hasFac("milking_barn") ? FACILITIES.milking_barn.tiers[facTier("milking_barn")].name : "Not built") }),
       // B3 Apiary
-      React.createElement(Tile, { col:2, row:1, bg:"#0d1a08", border:"#ca8a04", svgInner:SVG.apiary, label:"Apiary", color:"#fde68a",
+      React.createElement(Tile, { col:2, row:1, bg:"#101d0a", border:"#4d7c0f", svgInner:SVG.chickCoop, label:"Chicken Coop", color:"#86efac",
         badge:"B3", tip:"Apiary · Honey production" }),
-      // B4 Duck Pond
-      React.createElement(Tile, { col:3, row:1, bg:"#050f1a", border:"#0369a1", svgInner:SVG.pond, label:"Duck Pond", color:"#7dd3fc",
-        badge:"B4", count: hasFac("pond") ? lsCount("duck")+"/"+FACILITIES.pond.tiers[facTier("pond")].capacity : null,
+      // A4 Duck Pond
+      React.createElement(Tile, { col:3, row:0, bg:"#050f1a", border:"#0369a1", svgInner:SVG.pond, label:"Duck Pond", color:"#7dd3fc",
+        badge:"A4", count: hasFac("pond") ? lsCount("duck")+"/"+FACILITIES.pond.tiers[facTier("pond")].capacity : null,
         tip:"Duck Pond · "+(hasFac("pond") ? FACILITIES.pond.tiers[facTier("pond")].name : "Not built") }),
+
+      // ── ROW B ──
+      // B4 Grazing Land
+      hasFac("grazing_land")
+        ? React.createElement(Tile, { col:3, row:1, bg:"#091e0a", border:"#15803d", svgInner:SVG.grazing, label:"Grazing Land", color:"#4ade80",
+            badge:"B4", tip:"Grazing Land · "+FACILITIES.grazing_land.tiers[facTier("grazing_land")].name })
+        : React.createElement(EmptyPlot, { col:3, row:1, tip:"B4 · Grazing Land · Available" }),
 
       // ── ROW C ──
       // C1 Storage Barn
-      React.createElement(Tile, { col:0, row:2, bg:"#0e1008", border:"#4a5a1a", svgInner:SVG.storageBarn, label:"Storage Barn", color:"#bef264",
-        badge:"C1", tip:"Storage Barn · Boosts commodity income" }),
+      React.createElement(Tile, { col:0, row:2, bg:"#091e0a", border:"#15803d", svgInner:SVG.grazing, label:"Grazing Land", color:"#4ade80",
+        badge:"C1", tip:"Grazing Land · "+(hasFac("grazing_land") ? FACILITIES.grazing_land.tiers[facTier("grazing_land")].name : "Not built") }),
       // C2 Whelping
       React.createElement(Tile, { col:1, row:2, bg:"#130a1a", border:"#581c87", svgInner:SVG.whelping, label:"Whelping", color:"#d8b4fe",
         badge:"C2", tip:"Whelping Kennel · "+(hasWhelpingKennel ? "Active" : "Not built") }),
@@ -13930,9 +13944,10 @@ function FarmView(_ref) {
         tip:"Shearing Shed · "+(hasFac("shearing_shed") ? FACILITIES.shearing_shed.tiers[facTier("shearing_shed")].name : "Not built") }),
       // C4 Grazing
       hasFac("grazing_land")
-        ? React.createElement(Tile, { col:3, row:2, bg:"#091e0a", border:"#15803d", svgInner:SVG.grazing, label:"Grazing Land", color:"#4ade80",
-            badge:"C4", tip:"Grazing Land · "+FACILITIES.grazing_land.tiers[facTier("grazing_land")].name })
-        : React.createElement(EmptyPlot, { col:3, row:2, tip:"C4 · Grazing Land · Available" }),
+        hasFac("goat_pen")
+        ? React.createElement(Tile, { col:3, row:2, bg:"#1a1808", border:"#78350f", svgInner:SVG.pigPen, label:"Goat Pen", color:"#fdba74",
+            badge:"C4", count: lsCount("goat")+"/"+FACILITIES.goat_pen.tiers[facTier("goat_pen")].capacity, tip:"Goat Pen · "+FACILITIES.goat_pen.tiers[facTier("goat_pen")].name })
+        : React.createElement(EmptyPlot, { col:3, row:2, tip:"C4 · Goat Pen · Not built" }),
 
       // ── ROW D ──
       // D1 — second kennel slot
@@ -13950,9 +13965,8 @@ function FarmView(_ref) {
         tip:"Stable · "+(hasFac("stable") ? FACILITIES.stable.tiers[facTier("stable")].name : "Not built") }),
       // D4 Main Grazing
       hasFac("grazing_land")
-        ? React.createElement(Tile, { col:3, row:3, bg:"#091e0a", border:"#15803d", svgInner:SVG.grazing, label:"Grazing Land", color:"#4ade80",
-            badge:"D4", tip:"Grazing Land · "+FACILITIES.grazing_land.tiers[facTier("grazing_land")].name })
-        : React.createElement(EmptyPlot, { col:3, row:3, tip:"D4 · Main Grazing Land · Available" }),
+        React.createElement(Tile, { col:3, row:3, bg:"#0e1008", border:"#4a5a1a", svgInner:SVG.storageBarn, label:"Storage Barn", color:"#bef264",
+            badge:"D4", tip:"Storage Barn · "+(hasFac("storage_barn") ? FACILITIES.storage_barn.tiers[facTier("storage_barn")].name : "Not built") }),
 
       // Entrance
       /*#__PURE__*/React.createElement("div", {
