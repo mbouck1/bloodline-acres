@@ -13150,7 +13150,7 @@ function BreedPhotoModal(_ref_bpm) {
 
 function BreedPhoto(_ref_bp) {
   var animal = _ref_bp.animal;
-  var _useState_bp = _slicedToArray(useState(false), 2),
+  var _useState_bp = _slicedToArray(useState(_savedState ? !!_savedState.hasWhelpingKennel : false), 2),
     imgErr = _useState_bp[0], setImgErr = _useState_bp[1];
   var _useState_bp2 = _slicedToArray(useState(false), 2),
     showModal = _useState_bp2[0], setShowModal = _useState_bp2[1];
@@ -13634,11 +13634,15 @@ function Clock() {
 
 function App() {
   var _sire$genome$coat$M, _sire$genome$coat$M2, _dam$genome$coat$M, _dam$genome$coat$M2, _litter$, _litter$2;
+  // Load saved game state
+  var _savedState = (function() {
+    try { var s = localStorage.getItem("ba_gameState"); return s ? JSON.parse(s) : null; } catch(e) { return null; }
+  })();
   var _useState7 = useState(DEMO_BREEDS),
     _useState8 = _slicedToArray(_useState7, 2),
     breeds = _useState8[0],
     setBreeds = _useState8[1];
-  var _useState9 = useState([]),
+  var _useState9 = useState(_savedState ? _savedState.animals || [] : []),
     _useState0 = _slicedToArray(_useState9, 2),
     animals = _useState0[0],
     setAnimals = _useState0[1];
@@ -13650,11 +13654,11 @@ function App() {
     _useState12 = _slicedToArray(_useState11, 2),
     dam = _useState12[0],
     setDam = _useState12[1];
-  var _useState13 = useState([]),
+  var _useState13 = useState(_savedState ? _savedState.whelpingLitters || [] : []),
     _useState14 = _slicedToArray(_useState13, 2),
     litter = _useState14[0],
     setLitter = _useState14[1];
-  var _useState15 = useState([]),
+  var _useState15 = useState(_savedState ? _savedState.log || [] : []),
     _useState16 = _slicedToArray(_useState15, 2),
     log = _useState16[0],
     setLog = _useState16[1];
@@ -13690,9 +13694,7 @@ function App() {
   var makeKennel = function(type, name) {
     return { id: Date.now() + Math.random(), type: type, name: name || KENNEL_TYPES[type].label };
   };
-  var _useStateKL = useState(function(){
-    return [makeKennel("basic","My First Kennel")];
-  }),
+  var _useStateKL = useState(_savedState ? _savedState.kennels || [{id:1,name:"Main Kennel",type:"basic"}] : [{id:1,name:"Main Kennel",type:"basic"}]),
     _useStateKL2 = _slicedToArray(_useStateKL, 2),
     kennels = _useStateKL2[0],
     setKennels = _useStateKL2[1];
@@ -13738,11 +13740,11 @@ function App() {
     _useStateWK2 = _slicedToArray(_useStateWK, 2),
     hasWhelpingKennel = _useStateWK2[0],
     setHasWhelpingKennel = _useStateWK2[1];
-  var _useStateWL = useState([]),
+  var _useStateWL = useState(_savedState ? _savedState.holdingPups || [] : []),
     _useStateWL2 = _slicedToArray(_useStateWL, 2),
     whelpingLitters = _useStateWL2[0],
     setWhelpingLitters = _useStateWL2[1];
-  var _useStateTH = useState([]),
+  var _useStateTH = useState(_savedState ? _savedState.ownedLivestock || [] : []),
     _useStateTH2 = _slicedToArray(_useStateTH, 2),
     holdingPups = _useStateTH2[0],
     setHoldingPups = _useStateTH2[1];
@@ -13750,7 +13752,7 @@ function App() {
     _useStateLS2 = _slicedToArray(_useStateLS, 2),
     litterSelected = _useStateLS2[0],
     setLitterSelected = _useStateLS2[1];
-  var _useStateMON = useState(2500),
+  var _useStateMON = useState(_savedState && _savedState.money !== undefined ? _savedState.money : 5000),
     _useStateMON2 = _slicedToArray(_useStateMON, 2),
     money = _useStateMON2[0],
     setMoney = _useStateMON2[1];
@@ -13766,7 +13768,7 @@ function App() {
     _useStateFAC2 = _slicedToArray(_useStateFAC, 2),
     showFacilities = _useStateFAC2[0],
     setShowFacilities = _useStateFAC2[1];
-  var _useStateFACD = useState({}),
+  var _useStateFACD = useState(_savedState ? _savedState.facilitiesOwned || {} : {}),
     _useStateFACD2 = _slicedToArray(_useStateFACD, 2),
     facilitiesOwned = _useStateFACD2[0],
     setFacilitiesOwned = _useStateFACD2[1];
@@ -13833,7 +13835,7 @@ function App() {
           // Reset stud daily count on new day
           var studReset = { breedingsToday: 0, lastStudDate: "" };
           if (newAge >= maxAge) {
-            (function(){\
+            (function(){
               var logEntry = {id:Date.now()+Math.random(), type:"retire_age", name:a.name, breed:a.breed, ageMonths:newAge, date:new Date().toLocaleString()};
               setTimeout(function(){ setLog(function(p){ return [logEntry].concat(_toConsumableArray(p)); }); }, 0);
             })();
@@ -13905,6 +13907,31 @@ function App() {
     var interval = setInterval(tickDay, 60000);
     return function() { clearInterval(interval); };
   }, []);
+
+  // Autosave every 60 seconds
+  useEffect(function() {
+    var SAVE_KEY = "ba_gameState";
+    function doSave() {
+      try {
+        var state = {
+          animals: animals,
+          kennels: kennels,
+          log: log,
+          money: money,
+          hasWhelpingKennel: hasWhelpingKennel,
+          whelpingLitters: whelpingLitters,
+          holdingPups: holdingPups,
+          facilitiesOwned: facilitiesOwned,
+          ownedLivestock: ownedLivestock,
+          savedAt: Date.now()
+        };
+        localStorage.setItem(SAVE_KEY, JSON.stringify(state));
+      } catch(e) { console.warn("Autosave failed", e); }
+    }
+    doSave();
+    var interval = setInterval(doSave, 60000);
+    return function() { clearInterval(interval); };
+  }, [animals, kennels, log, money, hasWhelpingKennel, whelpingLitters, holdingPups, facilitiesOwned, ownedLivestock]);
   var loadFile = function loadFile(e) {
     var file = e.target.files[0];
     if (!file) return;
@@ -14404,31 +14431,7 @@ function App() {
     style: {
       display: "none"
     }
-  }), /*#__PURE__*/React.createElement("button", {
-    onClick: saveBreeds,
-    style: {
-      background: "#0f2d1e",
-      border: "1px solid #22c55e",
-      color: "#22c55e",
-      borderRadius: 6,
-      padding: "7px 13px",
-      cursor: "pointer",
-      fontSize: "0.78rem"
-    }
-  }, "\uD83D\uDCBE Save Breeds (", breeds.length, ")"), /*#__PURE__*/React.createElement("button", {
-    onClick: function onClick() {
-      return fileRef.current.click();
-    },
-    style: {
-      background: "#1e293b",
-      border: "1px solid #38bdf8",
-      color: "#38bdf8",
-      borderRadius: 6,
-      padding: "7px 13px",
-      cursor: "pointer",
-      fontSize: "0.78rem"
-    }
-  }, "\uD83D\uDCC2 Load Species File")))), fileError && /*#__PURE__*/React.createElement("div", {
+  }), ))), fileError && /*#__PURE__*/React.createElement("div", {
     style: {
       background: "#3b0f0f",
       borderBottom: "1px solid #ef4444",
