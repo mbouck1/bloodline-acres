@@ -13910,15 +13910,15 @@ function FarmView(_ref) {
         : React.createElement(EmptyPlot, { col:3, row:2, tip:"C4 · Grazing Land · Available" }),
 
       // ── ROW D ──
-      // D1 Kennel
-      React.createElement(Tile, { col:0, row:3, bg:"#180808", border:"#991b1b", svgInner:SVG.kennel, label:"Kennel", color:"#fca5a5",
-        badge:"D1", count: kennels.length > 0 ? dogCount+"/"+dogCap : null,
-        tip:"Kennel · "+(kennels.length > 0 ? kennels[0].name+" ("+kennels[0].type+")" : "Not built") }),
-      // D2 Kennel 2
+      // D1 — second kennel slot
       kennels.length > 1
-        ? React.createElement(Tile, { col:1, row:3, bg:"#180808", border:"#991b1b", svgInner:SVG.kennel, label:"Kennel 2", color:"#fca5a5",
-            badge:"D2", tip:"Kennel · "+kennels[1].name+" ("+kennels[1].type+")" })
-        : React.createElement(EmptyPlot, { col:1, row:3, tip:"D2 · Second Kennel · Available" }),
+        ? React.createElement(Tile, { col:0, row:3, bg:"#180808", border:"#991b1b", svgInner:SVG.kennel, label:"Kennel", color:"#fca5a5",
+            badge:"D1", tip:"Kennel · "+kennels[1].name+" ("+kennels[1].type+")" })
+        : React.createElement(EmptyPlot, { col:0, row:3, tip:"D1 · Second Kennel · Available" }),
+      // D2 — first kennel slot
+      React.createElement(Tile, { col:1, row:3, bg:"#180808", border:"#991b1b", svgInner:SVG.kennel, label:"Kennel", color:"#fca5a5",
+        badge:"D2", count: kennels.length > 0 ? dogCount+"/"+dogCap : null,
+        tip:"Kennel · "+(kennels.length > 0 ? kennels[0].name+" ("+kennels[0].type+")" : "Not built") }),
       // D3 Stable
       React.createElement(Tile, { col:2, row:3, bg:"#180f06", border:"#d97706", svgInner:SVG.stable, label:"Stable", color:"#fcd34d",
         badge:"D3", count: hasFac("stable") ? lsCount("horse")+"/"+FACILITIES.stable.tiers[facTier("stable")].capacity : null,
