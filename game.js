@@ -13598,7 +13598,7 @@ function App() {
     _useState8 = _slicedToArray(_useState7, 2),
     breeds = _useState8[0],
     setBreeds = _useState8[1];
-  var _useState9 = useState([]),
+  var _useState9 = useState(function(){ try { var s=localStorage.getItem("ba_save"); if(s){ var d=JSON.parse(s); if(d.animals) return d.animals; } } catch(e){} return []; }),
     _useState0 = _slicedToArray(_useState9, 2),
     animals = _useState0[0],
     setAnimals = _useState0[1];
@@ -13614,7 +13614,7 @@ function App() {
     _useState14 = _slicedToArray(_useState13, 2),
     litter = _useState14[0],
     setLitter = _useState14[1];
-  var _useState15 = useState([]),
+  var _useState15 = useState(function(){ try { var s=localStorage.getItem("ba_save"); if(s){ var d=JSON.parse(s); if(d.log) return d.log; } } catch(e){} return []; }),
     _useState16 = _slicedToArray(_useState15, 2),
     log = _useState16[0],
     setLog = _useState16[1];
@@ -13651,6 +13651,7 @@ function App() {
     return { id: Date.now() + Math.random(), type: type, name: name || KENNEL_TYPES[type].label };
   };
   var _useStateKL = useState(function(){
+    try { var s=localStorage.getItem("ba_save"); if(s){ var d=JSON.parse(s); if(d.kennels && d.kennels.length) return d.kennels; } } catch(e){}
     return [makeKennel("basic","My First Kennel")];
   }),
     _useStateKL2 = _slicedToArray(_useStateKL, 2),
@@ -13694,15 +13695,15 @@ function App() {
     _useState30 = _slicedToArray(_useState29, 2),
     litterIdx = _useState30[0],
     setLitterIdx = _useState30[1];
-  var _useStateWK = useState(false),
+  var _useStateWK = useState(function(){ try { var s=localStorage.getItem("ba_save"); if(s){ var d=JSON.parse(s); if(d.hasWhelpingKennel) return true; } } catch(e){} return false; }),
     _useStateWK2 = _slicedToArray(_useStateWK, 2),
     hasWhelpingKennel = _useStateWK2[0],
     setHasWhelpingKennel = _useStateWK2[1];
-  var _useStateWL = useState([]),
+  var _useStateWL = useState(function(){ try { var s=localStorage.getItem("ba_save"); if(s){ var d=JSON.parse(s); if(d.whelpingLitters) return d.whelpingLitters; } } catch(e){} return []; }),
     _useStateWL2 = _slicedToArray(_useStateWL, 2),
     whelpingLitters = _useStateWL2[0],
     setWhelpingLitters = _useStateWL2[1];
-  var _useStateTH = useState([]),
+  var _useStateTH = useState(function(){ try { var s=localStorage.getItem("ba_save"); if(s){ var d=JSON.parse(s); if(d.holdingPups) return d.holdingPups; } } catch(e){} return []; }),
     _useStateTH2 = _slicedToArray(_useStateTH, 2),
     holdingPups = _useStateTH2[0],
     setHoldingPups = _useStateTH2[1];
@@ -13710,7 +13711,7 @@ function App() {
     _useStateLS2 = _slicedToArray(_useStateLS, 2),
     litterSelected = _useStateLS2[0],
     setLitterSelected = _useStateLS2[1];
-  var _useStateMON = useState(2500),
+  var _useStateMON = useState(function(){ try { var s=localStorage.getItem("ba_save"); if(s){ var d=JSON.parse(s); if(typeof d.money === "number") return d.money; } } catch(e){} return 2500; }),
     _useStateMON2 = _slicedToArray(_useStateMON, 2),
     money = _useStateMON2[0],
     setMoney = _useStateMON2[1];
@@ -13722,7 +13723,7 @@ function App() {
     _useStateFAC2 = _slicedToArray(_useStateFAC, 2),
     showFacilities = _useStateFAC2[0],
     setShowFacilities = _useStateFAC2[1];
-  var _useStateFACD = useState({}),
+  var _useStateFACD = useState(function(){ try { var s=localStorage.getItem("ba_save"); if(s){ var d=JSON.parse(s); if(d.facilitiesOwned) return d.facilitiesOwned; } } catch(e){} return {}; }),
     _useStateFACD2 = _slicedToArray(_useStateFACD, 2),
     facilitiesOwned = _useStateFACD2[0],
     setFacilitiesOwned = _useStateFACD2[1];
@@ -13730,15 +13731,15 @@ function App() {
     _useStateCL2 = _slicedToArray(_useStateCL, 2),
     showCatLady = _useStateCL2[0],
     setShowCatLady = _useStateCL2[1];
-  var _useStateOL = useState([]),
+  var _useStateOL = useState(function(){ try { var s=localStorage.getItem("ba_save"); if(s){ var d=JSON.parse(s); if(d.ownedLivestock) return d.ownedLivestock; } } catch(e){} return []; }),
     _useStateOL2 = _slicedToArray(_useStateOL, 2),
     ownedLivestock = _useStateOL2[0],
     setOwnedLivestock = _useStateOL2[1];
-  var _useStateCLV = useState(0),
+  var _useStateCLV = useState(function(){ try { var s=localStorage.getItem("ba_save"); if(s){ var d=JSON.parse(s); if(d.catLadyLastVisit) return d.catLadyLastVisit; } } catch(e){} return 0; }),
     _useStateCLV2 = _slicedToArray(_useStateCLV, 2),
     catLadyLastVisit = _useStateCLV2[0],
     setCatLadyLastVisit = _useStateCLV2[1];
-  var _useStateCLF = useState(0),
+  var _useStateCLF = useState(function(){ try { var s=localStorage.getItem("ba_save"); if(s){ var d=JSON.parse(s); if(d.catLadyLastFeed) return d.catLadyLastFeed; } } catch(e){} return 0; }),
     _useStateCLF2 = _slicedToArray(_useStateCLF, 2),
     catLadyLastFeed = _useStateCLF2[0],
     setCatLadyLastFeed = _useStateCLF2[1];
@@ -13752,6 +13753,27 @@ function App() {
     setBreeds(profiled);
     setAnimals([]);
   }, []);
+
+  // ── Auto-Save ─────────────────────────────────────────────────────────────
+  useEffect(function() {
+    try {
+      var saveData = {
+        money: money,
+        animals: animals,
+        kennels: kennels,
+        log: log.slice(0, 200),
+        hasWhelpingKennel: hasWhelpingKennel,
+        whelpingLitters: whelpingLitters,
+        holdingPups: holdingPups,
+        facilitiesOwned: facilitiesOwned,
+        ownedLivestock: ownedLivestock,
+        catLadyLastVisit: catLadyLastVisit,
+        catLadyLastFeed: catLadyLastFeed,
+        savedAt: Date.now()
+      };
+      localStorage.setItem("ba_save", JSON.stringify(saveData));
+    } catch(e) { console.warn("Auto-save failed:", e); }
+  }, [money, animals, kennels, log, hasWhelpingKennel, whelpingLitters, holdingPups, facilitiesOwned, ownedLivestock, catLadyLastVisit, catLadyLastFeed]);
 
   // Daily farm income tick
   useEffect(function() {
@@ -14328,7 +14350,20 @@ function App() {
       display: "none"
     }
   }), /*#__PURE__*/React.createElement("button", {
-    onClick: saveBreeds,
+    onClick: function onClick() {
+      try {
+        var saveData = {
+          money: money, animals: animals, kennels: kennels,
+          log: log.slice(0, 200), hasWhelpingKennel: hasWhelpingKennel,
+          whelpingLitters: whelpingLitters, holdingPups: holdingPups,
+          facilitiesOwned: facilitiesOwned, ownedLivestock: ownedLivestock,
+          catLadyLastVisit: catLadyLastVisit, catLadyLastFeed: catLadyLastFeed,
+          savedAt: Date.now()
+        };
+        localStorage.setItem("ba_save", JSON.stringify(saveData));
+        alert("\u2705 Farm saved!");
+      } catch(e) { alert("Save failed: " + e.message); }
+    },
     style: {
       background: "#0f2d1e",
       border: "1px solid #22c55e",
@@ -14338,9 +14373,26 @@ function App() {
       cursor: "pointer",
       fontSize: "0.78rem"
     }
-  }, "\uD83D\uDCBE Save Breeds (", breeds.length, ")"), /*#__PURE__*/React.createElement("button", {
+  }, "\uD83D\uDCBE Save Game"), /*#__PURE__*/React.createElement("button", {
     onClick: function onClick() {
-      return fileRef.current.click();
+      var s = localStorage.getItem("ba_save");
+      if (!s) { alert("No saved game found!"); return; }
+      try {
+        var d = JSON.parse(s);
+        if (typeof d.money === "number") setMoney(d.money);
+        if (d.animals) setAnimals(d.animals);
+        if (d.kennels && d.kennels.length) setKennels(d.kennels);
+        if (d.log) setLog(d.log);
+        if (d.hasWhelpingKennel) setHasWhelpingKennel(true);
+        if (d.whelpingLitters) setWhelpingLitters(d.whelpingLitters);
+        if (d.holdingPups) setHoldingPups(d.holdingPups);
+        if (d.facilitiesOwned) setFacilitiesOwned(d.facilitiesOwned);
+        if (d.ownedLivestock) setOwnedLivestock(d.ownedLivestock);
+        if (d.catLadyLastVisit) setCatLadyLastVisit(d.catLadyLastVisit);
+        if (d.catLadyLastFeed) setCatLadyLastFeed(d.catLadyLastFeed);
+        var savedAt = d.savedAt ? new Date(d.savedAt).toLocaleString() : "unknown";
+        alert("\u2705 Farm loaded!\nSaved: " + savedAt);
+      } catch(e) { alert("Failed to load save: " + e.message); }
     },
     style: {
       background: "#1e293b",
@@ -14351,7 +14403,7 @@ function App() {
       cursor: "pointer",
       fontSize: "0.78rem"
     }
-  }, "\uD83D\uDCC2 Load Species File")))), fileError && /*#__PURE__*/React.createElement("div", {
+  }, "\uD83D\uDCC2 Load Game")))), fileError && /*#__PURE__*/React.createElement("div", {
     style: {
       background: "#3b0f0f",
       borderBottom: "1px solid #ef4444",
