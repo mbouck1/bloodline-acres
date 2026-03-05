@@ -13154,8 +13154,16 @@ function BreedPhoto(_ref_bp) {
     imgErr = _useState_bp[0], setImgErr = _useState_bp[1];
   var _useState_bp2 = _slicedToArray(useState(false), 2),
     showModal = _useState_bp2[0], setShowModal = _useState_bp2[1];
+  var _useState_bp3 = _slicedToArray(useState(null), 2),
+    fetchedUrl = _useState_bp3[0], setFetchedUrl = _useState_bp3[1];
   var breedName = animal.breed || "";
-  var photoUrl = BREED_PHOTOS[breedName] || null;
+  var staticUrl = BREED_PHOTOS[breedName] || null;
+  useEffect(function() {
+    if (!staticUrl && DOG_CEO_MAP[breedName]) {
+      fetchDogPhoto(breedName, function(url) { setFetchedUrl(url); }, function() {});
+    }
+  }, [breedName]);
+  var photoUrl = staticUrl || fetchedUrl;
   if (!photoUrl || imgErr) {
     return /*#__PURE__*/React.createElement("div", {
       style: { display:"flex", justifyContent:"flex-end", marginBottom:6 }
