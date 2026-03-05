@@ -13595,6 +13595,117 @@ function Card(_ref0) {
 // ── MAIN APP ──────────────────────────────────────────────────
 
 // ── CLOCK COMPONENT ──────────────────────────────────────────
+// Shearing window: open for 3 real days starting March 1 and Sept 1 (game months)
+// 1 real day = 1 game month, game starts in March (monthIndex 2)
+// ── SHEARING MODAL ───────────────────────────────────────────
+function ShearingModal(_ref) {
+  var onClose=_ref.onClose, ownedLivestock=_ref.ownedLivestock||[],
+      sheepSheared=_ref.sheepSheared||{}, onShear=_ref.onShear,
+      onShearAll=_ref.onShearAll, gameStartDate=_ref.gameStartDate,
+      hasShed=_ref.hasShed;
+
+  var win = getShearingWindow(gameStartDate);
+  var sheep = ownedLivestock.filter(function(a){ return a.species==="sheep" && a.sex==="F" && !a.retiredLivestock; });
+
+  function isSheared(a) {
+    return win.seasonKey && sheepSheared[a.id] === win.seasonKey;
+  }
+
+  var unshearedCount = sheep.filter(function(a){ return !isSheared(a); }).length;
+
+  return React.createElement("div", {
+    style:{position:"fixed",top:0,left:0,right:0,bottom:0,background:"rgba(0,0,0,0.85)",
+      zIndex:1000,display:"flex",alignItems:"center",justifyContent:"center"}},
+    React.createElement("div", {
+      style:{background:"#0a0f1e",border:"1px solid #334155",borderRadius:14,
+        width:"min(600px,95vw)",maxHeight:"85vh",display:"flex",flexDirection:"column",
+        overflow:"hidden",boxShadow:"0 20px 60px rgba(0,0,0,0.8)"}},
+
+      // Header
+      React.createElement("div",{style:{display:"flex",alignItems:"center",padding:"14px 18px",
+        borderBottom:"1px solid #1e293b",gap:12}},
+        React.createElement("div",{style:{fontSize:"1.1rem",fontWeight:"bold",color:"#e2e8f0",flex:1}},
+          "\uD83D\uDC11 Shearing Shed"),
+        React.createElement("button",{onClick:onClose,
+          style:{background:"transparent",border:"1px solid #334155",color:"#94a3b8",
+            borderRadius:6,padding:"4px 10px",cursor:"pointer",fontSize:"0.8rem"}},"\u2715 Close")
+      ),
+
+      // Status bar
+      React.createElement("div",{style:{padding:"10px 18px",borderBottom:"1px solid #1e293b",
+        background: win.isOpen ? "#0a1f0a" : "#1a0a0a"}},
+        win.isOpen
+          ? React.createElement("div",{style:{color:"#4ade80",fontSize:"0.82rem",fontWeight:"bold"}},
+              "\uD83D\uDFE2 Shearing window OPEN \u2014 " + win.season + " \u2014 " + win.daysLeft + " day" + (win.daysLeft!==1?"s":"") + " remaining")
+          : React.createElement("div",{style:{color:"#f87171",fontSize:"0.82rem",fontWeight:"bold"}},
+              "\uD83D\uDD34 Shearing window CLOSED \u2014 Opens in Spring (March) and Fall (September)")
+      ),
+
+      // Shear All button
+      win.isOpen && unshearedCount > 0 && React.createElement("div",{
+        style:{padding:"10px 18px",borderBottom:"1px solid #1e293b",display:"flex",
+          alignItems:"center",justifyContent:"space-between"}},
+        React.createElement("span",{style:{color:"#94a3b8",fontSize:"0.78rem"}},
+          unshearedCount + " sheep ready to shear"),
+        React.createElement("button",{
+          onClick:function(){ onShearAll && onShearAll(sheep.filter(function(a){return !isSheared(a);}), win.seasonKey); },
+          style:{background:"#1a3a0a",border:"1px solid #4ade80",color:"#4ade80",
+            borderRadius:6,padding:"6px 16px",cursor:"pointer",fontSize:"0.82rem",fontWeight:"bold"}},
+          "\u2702\uFE0F Shear All (" + unshearedCount + ")")
+      ),
+
+      // Sheep list
+      React.createElement("div",{style:{overflowY:"auto",flex:1,padding:"12px 18px"}},
+        sheep.length === 0
+          ? React.createElement("div",{style:{textAlign:"center",color:"#475569",padding:"40px 0"}},
+              "No female sheep owned.")
+          : sheep.map(function(a) {
+              var sheared = isSheared(a);
+              var yieldLbs = a.shearYield || (Math.floor(Math.random()*4)+7);
+              return React.createElement("div",{key:a.id,
+                style:{display:"flex",alignItems:"center",gap:10,padding:"8px 10px",
+                  background: sheared ? "#0a1a0a" : "#0f1318",
+                  borderRadius:6,border:"1px solid "+(sheared?"#166534":"#1e293b"),marginBottom:5}},
+                React.createElement("div",{style:{flex:1,fontSize:"0.8rem",color: sheared?"#4ade80":"#e2e8f0"}},
+                  (a.breed||"Sheep") + " \u2014 \u2640 Female"),
+                React.createElement("div",{style:{fontSize:"0.72rem",color:"#64748b",minWidth:80,textAlign:"right"}},
+                  sheared ? "\u2714 Sheared this season" : yieldLbs + " lbs est."),
+                win.isOpen && !sheared && React.createElement("button",{
+                  onClick:function(){ onShear && onShear(a, win.seasonKey); },
+                  style:{background:"#0a1a0a",border:"1px solid #22c55e",color:"#4ade80",
+                    borderRadius:6,padding:"4px 10px",cursor:"pointer",fontSize:"0.72rem"}},
+                  "Shear")
+              );
+            })
+      )
+    )
+  );
+}
+
+function getShearingWindow(gameStartDate) {
+  var now = Date.now();
+  var msPerDay = 24 * 60 * 60 * 1000;
+  var daysPassed = Math.floor((now - gameStartDate) / msPerDay);
+  var monthIndex = (2 + daysPassed) % 12; // 0=Jan...11=Dec
+  // Spring window: months 2,3,4 (March/April/May)
+  // Fall window: months 8,9,10 (Sept/Oct/Nov)
+  var inSpring = monthIndex >= 2 && monthIndex <= 4;
+  var inFall   = monthIndex >= 8 && monthIndex <= 10;
+  // Which 3-month window are we in?
+  var windowStart = null;
+  if (inSpring) windowStart = gameStartDate + (daysPassed - (monthIndex - 2)) * msPerDay;
+  if (inFall)   windowStart = gameStartDate + (daysPassed - (monthIndex - 8)) * msPerDay;
+  // Window is open for 3 real days from window start
+  var isOpen = windowStart && (now - windowStart) < 3 * msPerDay;
+  var season = inSpring ? "Spring" : inFall ? "Fall" : null;
+  // Days remaining in window
+  var daysLeft = windowStart ? Math.max(0, 3 - Math.floor((now - windowStart) / msPerDay)) : 0;
+  // Season key for tracking sheared sheep (spring_YYYY or fall_YYYY — we use cycle count)
+  var cycle = Math.floor(daysPassed / 6); // new cycle every 6 months
+  var seasonKey = season ? season.toLowerCase() + "_" + cycle : null;
+  return { isOpen: !!isOpen, season: season, daysLeft: daysLeft, seasonKey: seasonKey };
+}
+
 function getGameDate(gameStartDate) {
   var now = Date.now();
   var msPerDay = 24 * 60 * 60 * 1000;
@@ -13778,7 +13889,8 @@ var FACILITIES = {
 // ── FARM VIEW ─────────────────────────────────────────────────────────────────
 function FarmView(_ref) {
   var facilitiesOwned = _ref.facilitiesOwned, kennels = _ref.kennels, animals = _ref.animals,
-      ownedLivestock = _ref.ownedLivestock, money = _ref.money, hasWhelpingKennel = _ref.hasWhelpingKennel, onClose = _ref.onClose;
+      ownedLivestock = _ref.ownedLivestock, money = _ref.money, hasWhelpingKennel = _ref.hasWhelpingKennel,
+      commodities = _ref.commodities || {}, onClose = _ref.onClose;
 
   var _tip = _slicedToArray(React.useState(null), 2), tipText = _tip[0], setTipText = _tip[1];
   var _tipPos = _slicedToArray(React.useState({x:0,y:0}), 2), tipPos = _tipPos[0], setTipPos = _tipPos[1];
@@ -13827,7 +13939,9 @@ function FarmView(_ref) {
 
   function Tile(props) {
     return /*#__PURE__*/React.createElement("div", {
-      style: tileStyle(props.col, props.row, props.bg, props.border),
+      style: Object.assign({}, tileStyle(props.col, props.row, props.bg, props.border),
+        props.onClick ? {cursor:"pointer"} : {}),
+      onClick: props.onClick || null,
       onMouseEnter: function(){ setTipText(props.tip); },
       onMouseMove: function(e){ setTipPos({x:e.clientX,y:e.clientY}); },
       onMouseLeave: function(){ setTipText(null); }
@@ -13920,7 +14034,7 @@ function FarmView(_ref) {
         badge:"A2", tip:"Slaughterhouse · Unlocks meat sales" }),
       // A3 Chicken Coop
       React.createElement(Tile, { col:2, row:0, bg:"#0d1a08", border:"#ca8a04", svgInner:SVG.apiary, label:"Apiary", color:"#fde68a",
-        badge:"A3", tip:"Apiary · "+(hasFac("apiary") ? FACILITIES.apiary.tiers[facTier("apiary")].name : "Not built") }),
+        badge:"A3", count: hasFac("apiary") ? (commodities.honey||0).toFixed(1)+"lb \uD83C\uDF6F" : null, tip:"Apiary · "+(hasFac("apiary") ? FACILITIES.apiary.tiers[facTier("apiary")].name : "Not built") }),
       // A4 Duck Pond
       React.createElement(Tile, { col:3, row:0, bg:"#050f1a", border:"#0369a1", svgInner:SVG.pond, label:"Duck Pond", color:"#7dd3fc",
         badge:"A4", count: hasFac("pond") ? lsCount("duck")+"/"+FACILITIES.pond.tiers[facTier("pond")].capacity : null,
@@ -13933,11 +14047,11 @@ function FarmView(_ref) {
         tip:"Barn · "+(hasFac("barn") ? FACILITIES.barn.tiers[facTier("barn")].name : "Not built") }),
       // B2 Milking Barn
       React.createElement(Tile, { col:1, row:1, bg:"#0e1828", border:"#3b82f6", svgInner:SVG.milkBarn, label:"Milking Barn", color:"#93c5fd",
-        badge:"B2", count: hasFac("milking_barn") ? lsCount("dairy")+"/"+FACILITIES.milking_barn.tiers[facTier("milking_barn")].capacity : null,
+        badge:"B2", count: hasFac("milking_barn") ? lsCount("dairy")+"/"+FACILITIES.milking_barn.tiers[facTier("milking_barn")].capacity+" · "+(commodities.milk||0).toFixed(0)+"gal" : null,
         tip:"Milking Barn · "+(hasFac("milking_barn") ? FACILITIES.milking_barn.tiers[facTier("milking_barn")].name : "Not built") }),
       // B3 Chicken Coop
       React.createElement(Tile, { col:2, row:1, bg:"#101d0a", border:"#4d7c0f", svgInner:SVG.chickCoop, label:"Chicken Coop", color:"#86efac",
-        badge:"B3", count: hasFac("chicken_coop") ? lsCount("chicken")+"/"+FACILITIES.chicken_coop.tiers[facTier("chicken_coop")].capacity : null,
+        badge:"B3", count: hasFac("chicken_coop") ? lsCount("chicken")+"/"+FACILITIES.chicken_coop.tiers[facTier("chicken_coop")].capacity+" · "+(commodities.eggs||0).toFixed(0)+"egg" : null,
         tip:"Chicken Coop · "+(hasFac("chicken_coop") ? FACILITIES.chicken_coop.tiers[facTier("chicken_coop")].name : "Not built") }),
       // B4 Grazing Land
       hasFac("grazing_land")
@@ -13954,12 +14068,13 @@ function FarmView(_ref) {
         badge:"C2", tip:"Whelping Kennel · "+(hasWhelpingKennel ? "Active" : "Not built") }),
       // C3 Shearing Shed
       React.createElement(Tile, { col:2, row:2, bg:"#1a1408", border:"#b45309", svgInner:SVG.shearing, label:"Shearing Shed", color:"#fde68a",
-        badge:"C3", count: hasFac("shearing_shed") ? lsCount("sheep")+"/"+FACILITIES.shearing_shed.tiers[facTier("shearing_shed")].capacity : null,
-        tip:"Shearing Shed · "+(hasFac("shearing_shed") ? FACILITIES.shearing_shed.tiers[facTier("shearing_shed")].name : "Not built") }),
+        badge:"C3", count: hasFac("shearing_shed") ? lsCount("sheep")+"/"+FACILITIES.shearing_shed.tiers[facTier("shearing_shed")].capacity+" · "+(commodities.wool||0).toFixed(1)+"lb" : null,
+        tip:"Shearing Shed · "+(hasFac("shearing_shed") ? FACILITIES.shearing_shed.tiers[facTier("shearing_shed")].name : "Not built"),
+        onClick: function(){ setShowShearing(true); } }),
       // C4 Goat Pen
       hasFac("goat_pen")
         ? React.createElement(Tile, { col:3, row:2, bg:"#1a1808", border:"#78350f", svgInner:SVG.pigPen, label:"Goat Pen", color:"#fdba74",
-            badge:"C4", count: lsCount("goat")+"/"+FACILITIES.goat_pen.tiers[facTier("goat_pen")].capacity, tip:"Goat Pen · "+FACILITIES.goat_pen.tiers[facTier("goat_pen")].name })
+            badge:"C4", count: lsCount("goat")+"/"+FACILITIES.goat_pen.tiers[facTier("goat_pen")].capacity+" · "+(commodities.goat_milk||0).toFixed(0)+"gal", tip:"Goat Pen · "+FACILITIES.goat_pen.tiers[facTier("goat_pen")].name })
         : React.createElement(EmptyPlot, { col:3, row:2, tip:"C4 · Goat Pen · Not built" }),
 
       // ── ROW D ──
@@ -14131,14 +14246,22 @@ function App() {
     _useStateFACD2 = _slicedToArray(_useStateFACD, 2),
     facilitiesOwned = _useStateFACD2[0],
     setFacilitiesOwned = _useStateFACD2[1];
-  var _useStateCOM = useState(_savedState ? _savedState.commodities || { milk:0, eggs:0, wool:0, honey:0, pork:0, beef:0, lamb:0, chevon:0, goat_milk:0 } : { milk:0, eggs:0, wool:0, honey:0, pork:0, beef:0, lamb:0, chevon:0, goat_milk:0 }),
+  var _useStateCOM = useState(_savedState ? _savedState.commodities || { milk:0, eggs:0, wool:0, honey:0, pork:0, beef:0, lamb:0, chevon:0, goat_milk:0, chicken_meat:0, duck_meat:0 } : { milk:0, eggs:0, wool:0, honey:0, pork:0, beef:0, lamb:0, chevon:0, goat_milk:0, chicken_meat:0, duck_meat:0 }),
     _useStateCOM2 = _slicedToArray(_useStateCOM, 2),
     commodities = _useStateCOM2[0],
     setCommodities = _useStateCOM2[1];
+  var _useStateSHR = useState(_savedState ? _savedState.sheepSheared || {} : {}),
+    _useStateSHR2 = _slicedToArray(_useStateSHR, 2),
+    sheepSheared = _useStateSHR2[0],
+    setSheepSheared = _useStateSHR2[1];
   var _useStateCL = useState(false),
     _useStateCL2 = _slicedToArray(_useStateCL, 2),
     showCatLady = _useStateCL2[0],
     setShowCatLady = _useStateCL2[1];
+  var _useStateSHED = useState(false),
+    _useStateSHED2 = _slicedToArray(_useStateSHED, 2),
+    showShearing = _useStateSHED2[0],
+    setShowShearing = _useStateSHED2[1];
   var _useStateOL = useState([]),
     _useStateOL2 = _slicedToArray(_useStateOL, 2),
     ownedLivestock = _useStateOL2[0],
@@ -14167,7 +14290,7 @@ function App() {
     var now = Date.now();
     var oneDayMs = 24 * 60 * 60 * 1000;
     if (!lastIncomeTick || (now - lastIncomeTick) >= oneDayMs) {
-      var result = runDailyIncomeTick(ownedLivestock, lastIncomeTick ? new Date(lastIncomeTick) : null);
+      var result = runDailyIncomeTick(ownedLivestock, lastIncomeTick ? new Date(lastIncomeTick) : null, facilitiesOwned);
       if (result.totalEarned > 0) {
         setMoney(function(m){ return m + result.totalEarned; });
       }
@@ -14308,6 +14431,7 @@ function App() {
           facilitiesOwned: facilitiesOwned,
           ownedLivestock: ownedLivestock,
           commodities: commodities,
+          sheepSheared: sheepSheared,
           gameStartDate: gameStartDate,
           savedAt: Date.now()
         };
@@ -14317,7 +14441,7 @@ function App() {
     doSave();
     var interval = setInterval(doSave, 60000);
     return function() { clearInterval(interval); };
-  }, [animals, kennels, log, money, hasWhelpingKennel, whelpingLitters, holdingPups, facilitiesOwned, ownedLivestock, commodities]);
+  }, [animals, kennels, log, money, hasWhelpingKennel, whelpingLitters, holdingPups, facilitiesOwned, ownedLivestock, commodities, sheepSheared]);
   var loadFile = function loadFile(e) {
     var file = e.target.files[0];
     if (!file) return;
@@ -15536,8 +15660,47 @@ function App() {
     ownedLivestock: ownedLivestock,
     money: money,
     hasWhelpingKennel: hasWhelpingKennel,
+    commodities: commodities,
     onClose: function(){ setTab("kennel"); }
   })),
+  showShearing && /*#__PURE__*/React.createElement(ShearingModal, {
+    onClose: function(){ setShowShearing(false); },
+    ownedLivestock: ownedLivestock,
+    sheepSheared: sheepSheared,
+    gameStartDate: gameStartDate,
+    hasShed: !!facilitiesOwned.shearing_shed,
+    onShear: function(animal, seasonKey) {
+      var yieldLbs = animal.shearYield || (Math.floor(Math.random()*4)+7);
+      var storageMult = getStorageMult(facilitiesOwned);
+      var finalYield = Math.round(yieldLbs * storageMult * 10) / 10;
+      setSheepSheared(function(s){ return Object.assign({}, s, { [animal.id]: seasonKey }); });
+      setOwnedLivestock(function(prev){ return prev.map(function(a){ return a.id===animal.id ? Object.assign({},a,{shearYield: Math.floor(Math.random()*4)+7}) : a; }); });
+      setCommodities(function(c){ return Object.assign({}, c, { wool: Math.round((c.wool + finalYield)*10)/10 }); });
+      setLog(function(lg){ return [{ id:Date.now()+Math.random(), type:"income",
+        name:"\uD83D\uDC11 Sheared: "+(animal.breed||"Sheep")+" \u2014 +"+finalYield+" lbs wool",
+        date:new Date().toLocaleString() }].concat(lg); });
+    },
+    onShearAll: function(animals, seasonKey) {
+      var storageMult = getStorageMult(facilitiesOwned);
+      var totalWool = 0;
+      var newSheared = Object.assign({}, sheepSheared);
+      var updatedAnimals = ownedLivestock.slice();
+      animals.forEach(function(a) {
+        var yieldLbs = a.shearYield || (Math.floor(Math.random()*4)+7);
+        var finalYield = Math.round(yieldLbs * storageMult * 10) / 10;
+        totalWool += finalYield;
+        newSheared[a.id] = seasonKey;
+        updatedAnimals = updatedAnimals.map(function(u){ return u.id===a.id ? Object.assign({},u,{shearYield: Math.floor(Math.random()*4)+7}) : u; });
+      });
+      totalWool = Math.round(totalWool * 10) / 10;
+      setSheepSheared(newSheared);
+      setOwnedLivestock(updatedAnimals);
+      setCommodities(function(c){ return Object.assign({}, c, { wool: Math.round((c.wool + totalWool)*10)/10 }); });
+      setLog(function(lg){ return [{ id:Date.now()+Math.random(), type:"income",
+        name:"\uD83D\uDC11 Sheared "+animals.length+" sheep \u2014 +"+totalWool+" lbs wool total",
+        date:new Date().toLocaleString() }].concat(lg); });
+    }
+  }),
   showCatLady && /*#__PURE__*/React.createElement(OldCatLady, {
     onClose: function(){ setShowCatLady(false); },
     money: money,

@@ -1375,8 +1375,10 @@ var LIVESTOCK_PRICES = {
 
 // Slaughterhouse meat prices per animal
 var MEAT_PRICES = {
-  pig:   { label: "Pork",  price: 120,  commodity: "pork"   },
-  sheep: { label: "Lamb",  price: 240,  commodity: "lamb"   },
+  chicken: { label: "Chicken", price: 8,   commodity: "chicken_meat" },
+  duck:    { label: "Duck",    price: 14,  commodity: "duck_meat"    },
+  pig:     { label: "Pork",    price: 120, commodity: "pork"         },
+  sheep:   { label: "Lamb",    price: 240, commodity: "lamb"         },
   goat:  { label: "Chevon", price: 120, commodity: "chevon",
     dairy: { label: "Chevon (Dairy)", price: 90,  commodity: "chevon" },
     dual:  { label: "Chevon (Dual)",  price: 90,  commodity: "chevon" },
@@ -1387,17 +1389,31 @@ var MEAT_PRICES = {
   }
 };
 
+// Livestock productive lifespans in game months (= real days)
+var LIVESTOCK_LIFESPAN = {
+  chicken: 18,
+  duck:    24,
+  pig:     24,
+  goat:    48,
+  sheep:   42,
+  cow:     60,   // beef
+  dairy:   72,   // dairy cow
+  horse:   null  // own system later
+};
+
 // Commodity market sell prices
 var COMMODITY_PRICES = {
-  milk:      { label: "Cow Milk",   unit: "gal",  price: 1.50  },
-  goat_milk: { label: "Goat Milk",  unit: "gal",  price: 4.00  },
-  eggs:      { label: "Eggs",       unit: "egg",  price: 0.40  },
-  wool:      { label: "Wool",       unit: "lb",   price: 2.50  },
-  honey:     { label: "Honey",      unit: "lb",   price: 9.00  },
-  pork:      { label: "Pork",       unit: "unit", price: 120   },
-  beef:      { label: "Beef",       unit: "unit", price: 800   },
-  lamb:      { label: "Lamb",       unit: "unit", price: 240   },
-  chevon:    { label: "Chevon",     unit: "unit", price: 120   }
+  milk:         { label: "Cow Milk",    unit: "gal",  price: 1.50  },
+  goat_milk:    { label: "Goat Milk",   unit: "gal",  price: 4.00  },
+  eggs:         { label: "Eggs",        unit: "egg",  price: 0.40  },
+  wool:         { label: "Wool",        unit: "lb",   price: 2.50  },
+  honey:        { label: "Honey",       unit: "lb",   price: 9.00  },
+  chicken_meat: { label: "Chicken",     unit: "bird", price: 8     },
+  duck_meat:    { label: "Duck",        unit: "bird", price: 14    },
+  pork:         { label: "Pork",        unit: "unit", price: 120   },
+  beef:         { label: "Beef",        unit: "unit", price: 800   },
+  lamb:         { label: "Lamb",        unit: "unit", price: 240   },
+  chevon:       { label: "Chevon",      unit: "unit", price: 120   }
 };
 
 function getListingPrice(species, animal) {
@@ -1949,6 +1965,12 @@ function getQualityTier(stars) {
   return QUALITY_TIERS.find(function(t){ return t.stars === stars; }) || QUALITY_TIERS[2];
 }
 
+// Storage Barn yield multiplier — +10% per tier
+function getStorageMult(facilitiesOwned) {
+  if (!facilitiesOwned || !facilitiesOwned.storage_barn) return 1.0;
+  return 1.0 + ((facilitiesOwned.storage_barn.tier + 1) * 0.1);
+}
+
 var LIVESTOCK_INCOME = {
   chicken: { matureAtDays:5,  baseDaily:18,   degradeAtDays:null, degradeMult:null, degradeMsg:null, produceLabel:"egg production",     commodity:"eggs",     isCommodity:true  },
   duck:    { matureAtDays:6,  baseDaily:12,   degradeAtDays:null, degradeMult:null, degradeMsg:null, produceLabel:"egg production",     commodity:"eggs",     isCommodity:true  },
@@ -1985,12 +2007,14 @@ function revealQuality(animal) {
   return Object.assign({}, animal, { qualityRevealed: true });
 }
 
-function runDailyIncomeTick(ownedLivestock, lastTickDate) {
+function runDailyIncomeTick(ownedLivestock, lastTickDate, facilitiesOwned) {
   var now = Date.now();
   var totalEarned = 0;
   var journalEntries = [];
   var bySpecies = {};
-  var commodityGains = {}; // { eggs:0, milk:0, goat_milk:0 }
+  var commodityGains = {};
+  var newlyRetired = [];
+  var storageMult = getStorageMult(facilitiesOwned);
 
   // Pre-calculate male fertility multiplier per species
   var PRIME_AGE_DAYS = 45;
@@ -2026,6 +2050,16 @@ function runDailyIncomeTick(ownedLivestock, lastTickDate) {
     if (daysSincePurchase < inc.matureAtDays) {
       return Object.assign({}, animal, { marketMult: refreshMarketMult(animal) });
     }
+
+    // Longevity check — retire animal past productive lifespan
+    var lifespan = (species === "cow" && animal.type === "dairy")
+      ? LIVESTOCK_LIFESPAN.dairy
+      : LIVESTOCK_LIFESPAN[species];
+    if (lifespan && daysSincePurchase >= lifespan && !animal.retiredLivestock) {
+      newlyRetired.push(animal);
+      return Object.assign({}, animal, { retiredLivestock: true, retireReason: "End of productive life — send to slaughter" });
+    }
+    if (animal.retiredLivestock) return animal;
 
     // Males of egg-laying species produce nothing
     if ((species === "chicken" || species === "duck") && animal.sex === "M") {
@@ -2070,14 +2104,14 @@ function runDailyIncomeTick(ownedLivestock, lastTickDate) {
 
       if (species === "chicken" || species === "duck") {
         // Eggs: baseDaily is eggs per game month (real day)
-        dailyQty = Math.round(inc.baseDaily * yieldMult * 10) / 10;
+        dailyQty = Math.round(inc.baseDaily * yieldMult * storageMult * 10) / 10;
         var commodityKey = "eggs";
         commodityGains[commodityKey] = (commodityGains[commodityKey] || 0) + dailyQty;
         bySpecies[species].commodity += dailyQty;
 
       } else if (species === "cow" && animal.type === "dairy") {
         // Milk: 100 gallons per game month per dairy cow
-        dailyQty = Math.round(100 * yieldMult * 10) / 10;
+        dailyQty = Math.round(100 * yieldMult * storageMult * 10) / 10;
         commodityGains["milk"] = (commodityGains["milk"] || 0) + dailyQty;
         bySpecies[species].commodity += dailyQty;
 
@@ -2085,7 +2119,7 @@ function runDailyIncomeTick(ownedLivestock, lastTickDate) {
         // Goat milk based on type
         var goatOutput = GOAT_MILK_OUTPUT[animal.type] || 0;
         if (goatOutput > 0) {
-          dailyQty = Math.round(goatOutput * yieldMult * 10) / 10;
+          dailyQty = Math.round(goatOutput * yieldMult * storageMult * 10) / 10;
           commodityGains["goat_milk"] = (commodityGains["goat_milk"] || 0) + dailyQty;
           bySpecies[species].commodity += dailyQty;
         }
@@ -2142,6 +2176,15 @@ function runDailyIncomeTick(ownedLivestock, lastTickDate) {
     }
   });
 
+  // Retirement notices
+  newlyRetired.forEach(function(a) {
+    var sp = LIVESTOCK_SPECIES.find(function(s){ return s.key === a.species; });
+    var icon = sp ? sp.icon : "\uD83D\uDC04";
+    journalEntries.push(
+      "\u26A0\uFE0F " + icon + " " + (a.breed || a.species) + " has reached end of productive life. Send to slaughter."
+    );
+  });
+
   if (totalEarned > 0) {
     journalEntries.push(
       "\uD83D\uDCB0 Daily cash income: +$" +
@@ -2153,6 +2196,7 @@ function runDailyIncomeTick(ownedLivestock, lastTickDate) {
     totalEarned:    Math.round(totalEarned * 100) / 100,
     commodityGains: commodityGains,
     journalEntries: journalEntries,
-    updatedAnimals: updatedAnimals
+    updatedAnimals: updatedAnimals,
+    newlyRetired:   newlyRetired
   };
 }
