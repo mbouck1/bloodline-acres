@@ -13640,6 +13640,87 @@ function Clock() {
   );
 }
 
+// ── GLOBAL CONSTANTS ──────────────────────────────────────────────────────────
+var KENNEL_TYPES = {
+  basic:      { label: "Basic Kennel",      capacity: 10,  color: "#64748b", icon: "🏚️", cost: 500 },
+  standard:   { label: "Standard Kennel",   capacity: 25,  color: "#38bdf8", icon: "🏠", cost: 1200 },
+  commercial: { label: "Commercial Kennel", capacity: 50,  color: "#a78bfa", icon: "🏢", cost: 3000 },
+  elite:      { label: "Elite Kennel",      capacity: 100, color: "#fbbf24", icon: "🏆", cost: 8000 }
+};
+
+// ── FACILITIES ────────────────────────────────────────────────
+
+var FACILITIES = {
+  barn: {
+    label:"Basic Barn", icon:"\uD83C\uDFE0", desc:"General housing for beef cattle.",
+    tiers:[
+      { name:"Small",      capacity:10,  cost:1500,  upkeep:50  },
+      { name:"Standard",   capacity:25,  cost:3500,  upkeep:100 },
+      { name:"Large",      capacity:50,  cost:7000,  upkeep:200 },
+      { name:"Commercial", capacity:100, cost:15000, upkeep:350 }
+    ]
+  },
+  milking_barn: {
+    label:"Milking Barn", icon:"\uD83E\uDD5B", desc:"Required for dairy cow milk production.",
+    tiers:[
+      { name:"Small",      capacity:8,   cost:3000,  upkeep:80  },
+      { name:"Standard",   capacity:20,  cost:7000,  upkeep:160 },
+      { name:"Large",      capacity:40,  cost:14000, upkeep:300 },
+      { name:"Commercial", capacity:80,  cost:28000, upkeep:550 }
+    ]
+  },
+  stable: {
+    label:"Stable", icon:"\uD83D\uDC0E", desc:"1 stall per horse. Horses do not need grazing land.",
+    tiers:[
+      { name:"4 Stalls",  capacity:4,  cost:5000,  upkeep:120 },
+      { name:"8 Stalls",  capacity:8,  cost:9000,  upkeep:220 },
+      { name:"16 Stalls", capacity:16, cost:16000, upkeep:400 },
+      { name:"32 Stalls", capacity:32, cost:28000, upkeep:700 }
+    ]
+  },
+  chicken_coop: {
+    label:"Chicken Coop", icon:"\uD83D\uDC14", desc:"Required for chickens.",
+    tiers:[
+      { name:"Small",  capacity:20,  cost:500,  upkeep:15 },
+      { name:"Medium", capacity:50,  cost:1200, upkeep:30 },
+      { name:"Large",  capacity:100, cost:2500, upkeep:55 }
+    ]
+  },
+  pig_pen: {
+    label:"Pig Pen", icon:"\uD83D\uDC16", desc:"Required for pigs.",
+    tiers:[
+      { name:"Small",  capacity:10, cost:800,  upkeep:25 },
+      { name:"Medium", capacity:25, cost:2000, upkeep:55 },
+      { name:"Large",  capacity:50, cost:4000, upkeep:100 }
+    ]
+  },
+  pond: {
+    label:"Pond", icon:"\uD83E\uDD86", desc:"Required for ducks. Caps at Medium.",
+    tiers:[
+      { name:"Small",  capacity:20, cost:600,  upkeep:15 },
+      { name:"Medium", capacity:50, cost:1500, upkeep:35 }
+    ]
+  },
+  shearing_shed: {
+    label:"Shearing Shed", icon:"\uD83D\uDC11", desc:"Unlocks wool production. Sheep live on Grazing Land.",
+    tiers:[
+      { name:"Small",      capacity:15,  cost:1200, upkeep:30  },
+      { name:"Standard",   capacity:35,  cost:2800, upkeep:65  },
+      { name:"Large",      capacity:70,  cost:5500, upkeep:120 },
+      { name:"Commercial", capacity:150, cost:11000,upkeep:220 }
+    ]
+  },
+  grazing_land: {
+    label:"Grazing Land", icon:"\uD83C\uDF3E", desc:"Cows (1 acre/2), horses, sheep & goats.",
+    tiers:[
+      { name:"5 Acres",   capacity:5,   cost:2500,  upkeep:40  },
+      { name:"10 Acres",  capacity:10,  cost:4500,  upkeep:75  },
+      { name:"25 Acres",  capacity:25,  cost:10000, upkeep:160 },
+      { name:"50 Acres",  capacity:50,  cost:18000, upkeep:280 }
+    ]
+  }
+};
+
 // ── FARM VIEW ─────────────────────────────────────────────────────────────────
 function FarmView(_ref) {
   var facilitiesOwned = _ref.facilitiesOwned, kennels = _ref.kennels, animals = _ref.animals,
@@ -13906,12 +13987,7 @@ function App() {
     confirmDeleteId = _useState24[0],
     setConfirmDeleteId = _useState24[1];
   // ── Kennel System ──────────────────────────────────────────────────────
-  var KENNEL_TYPES = {
-    basic:      { label: "Basic Kennel",      capacity: 10,  color: "#64748b", icon: "🏚️", cost: 500 },
-    standard:   { label: "Standard Kennel",   capacity: 25,  color: "#38bdf8", icon: "🏠", cost: 1200 },
-    commercial: { label: "Commercial Kennel", capacity: 50,  color: "#a78bfa", icon: "🏢", cost: 3000 },
-    elite:      { label: "Elite Kennel",      capacity: 100, color: "#fbbf24", icon: "🏆", cost: 8000 }
-  };
+  // KENNEL_TYPES is defined globally above App
   var WHELPING_COST = 1500;
   var DOG_COST_PUPPY = 200;
   var DOG_COST_ADULT = 350;
@@ -15508,79 +15584,6 @@ function App() {
 
 // ── LIVESTOCK MARKET ─────────────────────────────────────────
 
-
-// ── FACILITIES ────────────────────────────────────────────────
-
-var FACILITIES = {
-  barn: {
-    label:"Basic Barn", icon:"\uD83C\uDFE0", desc:"General housing for beef cattle.",
-    tiers:[
-      { name:"Small",      capacity:10,  cost:1500,  upkeep:50  },
-      { name:"Standard",   capacity:25,  cost:3500,  upkeep:100 },
-      { name:"Large",      capacity:50,  cost:7000,  upkeep:200 },
-      { name:"Commercial", capacity:100, cost:15000, upkeep:350 }
-    ]
-  },
-  milking_barn: {
-    label:"Milking Barn", icon:"\uD83E\uDD5B", desc:"Required for dairy cow milk production.",
-    tiers:[
-      { name:"Small",      capacity:8,   cost:3000,  upkeep:80  },
-      { name:"Standard",   capacity:20,  cost:7000,  upkeep:160 },
-      { name:"Large",      capacity:40,  cost:14000, upkeep:300 },
-      { name:"Commercial", capacity:80,  cost:28000, upkeep:550 }
-    ]
-  },
-  stable: {
-    label:"Stable", icon:"\uD83D\uDC0E", desc:"1 stall per horse. Horses do not need grazing land.",
-    tiers:[
-      { name:"4 Stalls",  capacity:4,  cost:5000,  upkeep:120 },
-      { name:"8 Stalls",  capacity:8,  cost:9000,  upkeep:220 },
-      { name:"16 Stalls", capacity:16, cost:16000, upkeep:400 },
-      { name:"32 Stalls", capacity:32, cost:28000, upkeep:700 }
-    ]
-  },
-  chicken_coop: {
-    label:"Chicken Coop", icon:"\uD83D\uDC14", desc:"Required for chickens.",
-    tiers:[
-      { name:"Small",  capacity:20,  cost:500,  upkeep:15 },
-      { name:"Medium", capacity:50,  cost:1200, upkeep:30 },
-      { name:"Large",  capacity:100, cost:2500, upkeep:55 }
-    ]
-  },
-  pig_pen: {
-    label:"Pig Pen", icon:"\uD83D\uDC16", desc:"Required for pigs.",
-    tiers:[
-      { name:"Small",  capacity:10, cost:800,  upkeep:25 },
-      { name:"Medium", capacity:25, cost:2000, upkeep:55 },
-      { name:"Large",  capacity:50, cost:4000, upkeep:100 }
-    ]
-  },
-  pond: {
-    label:"Pond", icon:"\uD83E\uDD86", desc:"Required for ducks. Caps at Medium.",
-    tiers:[
-      { name:"Small",  capacity:20, cost:600,  upkeep:15 },
-      { name:"Medium", capacity:50, cost:1500, upkeep:35 }
-    ]
-  },
-  shearing_shed: {
-    label:"Shearing Shed", icon:"\uD83D\uDC11", desc:"Unlocks wool production. Sheep live on Grazing Land.",
-    tiers:[
-      { name:"Small",      capacity:15,  cost:1200, upkeep:30  },
-      { name:"Standard",   capacity:35,  cost:2800, upkeep:65  },
-      { name:"Large",      capacity:70,  cost:5500, upkeep:120 },
-      { name:"Commercial", capacity:150, cost:11000,upkeep:220 }
-    ]
-  },
-  grazing_land: {
-    label:"Grazing Land", icon:"\uD83C\uDF3E", desc:"Cows (1 acre/2), horses, sheep & goats.",
-    tiers:[
-      { name:"5 Acres",   capacity:5,   cost:2500,  upkeep:40  },
-      { name:"10 Acres",  capacity:10,  cost:4500,  upkeep:75  },
-      { name:"25 Acres",  capacity:25,  cost:10000, upkeep:160 },
-      { name:"50 Acres",  capacity:50,  cost:18000, upkeep:280 }
-    ]
-  }
-};
 
 function Facilities(_ref) {
   var onClose=_ref.onClose, money=_ref.money, facilities=_ref.facilities,
