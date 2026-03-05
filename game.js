@@ -14102,6 +14102,10 @@ function App() {
     _useStateFACD2 = _slicedToArray(_useStateFACD, 2),
     facilitiesOwned = _useStateFACD2[0],
     setFacilitiesOwned = _useStateFACD2[1];
+  var _useStateCOM = useState(_savedState ? _savedState.commodities || { milk:0, eggs:0, wool:0, honey:0, pork:0, beef:0, lamb:0, chevon:0 } : { milk:0, eggs:0, wool:0, honey:0, pork:0, beef:0, lamb:0, chevon:0 }),
+    _useStateCOM2 = _slicedToArray(_useStateCOM, 2),
+    commodities = _useStateCOM2[0],
+    setCommodities = _useStateCOM2[1];
   var _useStateCL = useState(false),
     _useStateCL2 = _slicedToArray(_useStateCL, 2),
     showCatLady = _useStateCL2[0],
@@ -14142,6 +14146,17 @@ function App() {
           setLog(function(lg){ return [{ id: Date.now()+Math.random(), type: "income",
             name: line, date: new Date().toLocaleString() }].concat(_toConsumableArray(lg)); });
         });
+      }
+      // Honey production from Apiary — ~5 lbs per hive per month = ~0.17 lbs/day/hive
+      if (facilitiesOwned.apiary) {
+        var hiveCount = FACILITIES.apiary.tiers[facilitiesOwned.apiary.tier].capacity;
+        var honeyPerDay = Math.round(hiveCount * 0.17 * 10) / 10;
+        if (honeyPerDay > 0) {
+          setCommodities(function(c){ return Object.assign({}, c, { honey: Math.round((c.honey + honeyPerDay) * 10) / 10 }); });
+          setLog(function(lg){ return [{ id: Date.now()+Math.random(), type: "income",
+            name: "\uD83D\uDC1D Apiary (" + hiveCount + " hives) — honey: +" + honeyPerDay + " lbs",
+            date: new Date().toLocaleString() }].concat(_toConsumableArray(lg)); });
+        }
       }
       setLastIncomeTick(now);
       localStorage.setItem("ba_lastIncomeTick", String(now));
@@ -14253,6 +14268,7 @@ function App() {
           holdingPups: holdingPups,
           facilitiesOwned: facilitiesOwned,
           ownedLivestock: ownedLivestock,
+          commodities: commodities,
           savedAt: Date.now()
         };
         localStorage.setItem(SAVE_KEY, JSON.stringify(state));
@@ -14261,7 +14277,7 @@ function App() {
     doSave();
     var interval = setInterval(doSave, 60000);
     return function() { clearInterval(interval); };
-  }, [animals, kennels, log, money, hasWhelpingKennel, whelpingLitters, holdingPups, facilitiesOwned, ownedLivestock]);
+  }, [animals, kennels, log, money, hasWhelpingKennel, whelpingLitters, holdingPups, facilitiesOwned, ownedLivestock, commodities]);
   var loadFile = function loadFile(e) {
     var file = e.target.files[0];
     if (!file) return;
@@ -15604,6 +15620,31 @@ function App() {
         setOwnedLivestock(function(prev){ return prev.filter(function(a){ return a.id!==itemId; }); });
       }
       // sale logged in grouped session summary on market close
+    },
+    commodities: commodities,
+    onSlaughter: function(animal) {
+      if (!facilitiesOwned.slaughterhouse) { alert("You need a Slaughterhouse to process meat."); return; }
+      var species = animal.species;
+      var meatInfo = MEAT_PRICES[species];
+      if (!meatInfo) { alert("This animal cannot be slaughtered."); return; }
+      var info = (species === "cow" && animal.type === "dairy") ? meatInfo.dairy : meatInfo;
+      if (confirm("Send " + (animal.breed||species) + " to slaughter?\n\nYields: " + info.label + " worth $" + info.price)) {
+        setOwnedLivestock(function(prev){ return prev.filter(function(a){ return a.id !== animal.id; }); });
+        setCommodities(function(c){ return Object.assign({}, c, { [info.commodity]: (c[info.commodity]||0) + 1 }); });
+        setLog(function(lg){ return [{ id:Date.now()+Math.random(), type:"financial",
+          name:"\uD83E\uDE78 Slaughtered: "+(animal.breed||species)+" \u2014 "+info.label+" added to inventory",
+          date:new Date().toLocaleString() }].concat(lg); });
+      }
+    },
+    onSellCommodities: function(key, qty) {
+      var info = COMMODITY_PRICES[key];
+      if (!info || !qty || qty <= 0) return;
+      var total = Math.round(info.price * qty * 100) / 100;
+      setCommodities(function(c){ return Object.assign({}, c, { [key]: Math.max(0, (c[key]||0) - qty) }); });
+      setMoney(function(m){ return m + total; });
+      setLog(function(lg){ return [{ id:Date.now()+Math.random(), type:"financial",
+        name:"\uD83D\uDCB0 Sold " + qty + " " + info.unit + " " + info.label + " \u2014 +$" + total.toLocaleString(),
+        amount: total, date:new Date().toLocaleString() }].concat(lg); });
     }
   })
 ));

@@ -1337,6 +1337,28 @@ var LIVESTOCK_PRICES = {
   horse:   function(a){ return calcHorsePrice(a); }
 };
 
+// Slaughterhouse meat prices per animal
+var MEAT_PRICES = {
+  pig:   { label: "Pork",  price: 120,  commodity: "pork"   },
+  sheep: { label: "Lamb",  price: 240,  commodity: "lamb"   },
+  goat:  { label: "Chevon", price: 120, commodity: "chevon" },
+  cow:   { label: "Beef",  price: 800,  commodity: "beef",
+    dairy: { label: "Beef (Dairy)", price: 650, commodity: "beef" }
+  }
+};
+
+// Commodity market sell prices
+var COMMODITY_PRICES = {
+  milk:   { label: "Milk",   unit: "gal",  price: 3.50  },
+  eggs:   { label: "Eggs",   unit: "doz",  price: 4.00  },
+  wool:   { label: "Wool",   unit: "lb",   price: 2.50  },
+  honey:  { label: "Honey",  unit: "lb",   price: 9.00  },
+  pork:   { label: "Pork",   unit: "unit", price: 120   },
+  beef:   { label: "Beef",   unit: "unit", price: 800   },
+  lamb:   { label: "Lamb",   unit: "unit", price: 240   },
+  chevon: { label: "Chevon", unit: "unit", price: 120   }
+};
+
 function getListingPrice(species, animal) {
   var p = LIVESTOCK_PRICES[species];
   if (typeof p === "function") return p(animal);
@@ -1344,7 +1366,10 @@ function getListingPrice(species, animal) {
 }
 
 function LivestockMarket(_ref) {
-  var onClose=_ref.onClose, money=_ref.money, onBuy=_ref.onBuy, onSellBack=_ref.onSellBack, ownedAnimals=_ref.ownedAnimals||[], ownedLivestock=_ref.ownedLivestock||[], facilitiesOwned=_ref.facilitiesOwned||{};
+  var onClose=_ref.onClose, money=_ref.money, onBuy=_ref.onBuy, onSellBack=_ref.onSellBack,
+      ownedAnimals=_ref.ownedAnimals||[], ownedLivestock=_ref.ownedLivestock||[],
+      facilitiesOwned=_ref.facilitiesOwned||{}, commodities=_ref.commodities||{},
+      onSlaughter=_ref.onSlaughter, onSellCommodities=_ref.onSellCommodities;
   var _a=_slicedToArray(useState("horse"),2),species=_a[0],setSpecies=_a[1];
   var _b=_slicedToArray(useState("buy"),2),mktTab=_b[0],setMktTab=_b[1];
   var _c=_slicedToArray(useState("all"),2),cowF=_c[0],setCowF=_c[1];
@@ -1423,7 +1448,9 @@ function LivestockMarket(_ref) {
       /*#__PURE__*/React.createElement("div",{style:{display:"flex",gap:8,padding:"10px 18px",
         borderBottom:"1px solid #1e293b"}},
         tb("buy","\uD83D\uDED2 Buy Livestock"),
-        tb("sell","\uD83D\uDCB0 Sell to Market")
+        tb("sell","\uD83D\uDCB0 Sell to Market"),
+        facilitiesOwned.slaughterhouse && tb("slaughter","\uD83E\uDE78 Slaughterhouse"),
+        tb("commodities","\uD83D\uDCE6 Commodities"+(Object.values(commodities).some(function(v){return v>0;})?" \u25CF":""))
       ),
       // Species bar (buy only)
       mktTab==="buy"&&/*#__PURE__*/React.createElement("div",{
@@ -1606,6 +1633,84 @@ function LivestockMarket(_ref) {
             );
           })()
         )
+      ),
+
+      // ── SLAUGHTERHOUSE TAB ──
+      mktTab==="slaughter" && /*#__PURE__*/React.createElement("div", {
+        style:{padding:"16px 18px",overflowY:"auto",flex:1}
+      },
+        /*#__PURE__*/React.createElement("div",{style:{color:"#fca5a5",fontWeight:"bold",fontSize:"0.95rem",marginBottom:12}},
+          "\uD83E\uDE78 Slaughterhouse \u2014 Send livestock to processing"),
+        /*#__PURE__*/React.createElement("div",{style:{color:"#64748b",fontSize:"0.75rem",marginBottom:16}},
+          "Processed meat is added to your commodity inventory. Take it to market to sell."),
+        ["pig","cow","sheep","goat"].map(function(sp) {
+          var animals = ownedLivestock.filter(function(a){ return a.species===sp; });
+          if (animals.length === 0) return null;
+          var spInfo = MEAT_PRICES[sp];
+          return /*#__PURE__*/React.createElement("div",{key:sp,style:{marginBottom:16}},
+            /*#__PURE__*/React.createElement("div",{style:{color:"#94a3b8",fontSize:"0.78rem",fontWeight:"bold",
+              marginBottom:6,textTransform:"uppercase",letterSpacing:"0.06em"}},
+              sp.charAt(0).toUpperCase()+sp.slice(1)+"s ("+animals.length+")"),
+            animals.map(function(a){
+              var info = (sp==="cow"&&a.type==="dairy") ? spInfo.dairy : spInfo;
+              return /*#__PURE__*/React.createElement("div",{key:a.id,
+                style:{display:"flex",alignItems:"center",gap:10,padding:"7px 10px",
+                  background:"#0f1318",borderRadius:6,border:"1px solid #1e293b",marginBottom:5}},
+                /*#__PURE__*/React.createElement("div",{style:{flex:1,fontSize:"0.78rem",color:"#e2e8f0"}},
+                  (a.breed||sp)+" \u2014 "+(a.sex==="F"?"\u2640 Female":"\u2642 Male")+
+                  (a.type?" ("+a.type+")":"")
+                ),
+                /*#__PURE__*/React.createElement("div",{style:{fontSize:"0.72rem",color:"#4ade80",minWidth:80,textAlign:"right"}},
+                  info.label+": $"+info.price),
+                /*#__PURE__*/React.createElement("button",{
+                  onClick:function(){ onSlaughter && onSlaughter(a); },
+                  style:{background:"#2a0808",border:"1px solid #dc2626",color:"#fca5a5",
+                    borderRadius:6,padding:"4px 10px",cursor:"pointer",fontSize:"0.72rem",fontWeight:"bold"}},
+                  "Slaughter")
+              );
+            })
+          );
+        }),
+        ownedLivestock.filter(function(a){return ["pig","cow","sheep","goat"].indexOf(a.species)>-1;}).length===0 &&
+          /*#__PURE__*/React.createElement("div",{style:{textAlign:"center",color:"#475569",padding:"40px 0",fontSize:"0.85rem"}},
+            "No eligible livestock owned.")
+      ),
+
+      // ── COMMODITIES TAB ──
+      mktTab==="commodities" && /*#__PURE__*/React.createElement("div", {
+        style:{padding:"16px 18px",overflowY:"auto",flex:1}
+      },
+        /*#__PURE__*/React.createElement("div",{style:{color:"#fde68a",fontWeight:"bold",fontSize:"0.95rem",marginBottom:12}},
+          "\uD83D\uDCE6 Commodity Inventory \u2014 Sell your stockpile"),
+        /*#__PURE__*/React.createElement("div",{style:{color:"#64748b",fontSize:"0.75rem",marginBottom:16}},
+          "Commodities accumulate daily and must be sold here at market."),
+        Object.keys(COMMODITY_PRICES).map(function(key) {
+          var info = COMMODITY_PRICES[key];
+          var qty = Math.floor(commodities[key]||0);
+          var totalVal = (qty * info.price).toLocaleString("en-US",{minimumFractionDigits:2,maximumFractionDigits:2});
+          return /*#__PURE__*/React.createElement("div",{key:key,
+            style:{display:"flex",alignItems:"center",gap:12,padding:"10px 14px",
+              background:"#0f1318",borderRadius:8,border:"1px solid "+(qty>0?"#334155":"#1e293b"),
+              marginBottom:8,opacity:qty>0?1:0.4}},
+            /*#__PURE__*/React.createElement("div",{style:{flex:1}},
+              /*#__PURE__*/React.createElement("div",{style:{fontSize:"0.85rem",color:"#e2e8f0",fontWeight:"bold"}},
+                info.label),
+              /*#__PURE__*/React.createElement("div",{style:{fontSize:"0.7rem",color:"#64748b"}},
+                "$"+info.price+" / "+info.unit)
+            ),
+            /*#__PURE__*/React.createElement("div",{style:{textAlign:"right",minWidth:90}},
+              /*#__PURE__*/React.createElement("div",{style:{fontSize:"0.85rem",color:qty>0?"#4ade80":"#475569",fontWeight:"bold"}},
+                qty+" "+info.unit+(qty!==1&&info.unit!=="unit"?"s":"")),
+              qty>0 && /*#__PURE__*/React.createElement("div",{style:{fontSize:"0.68rem",color:"#94a3b8"}},
+                "value: $"+totalVal)
+            ),
+            qty>0 && /*#__PURE__*/React.createElement("button",{
+              onClick:function(){ onSellCommodities && onSellCommodities(key, qty); },
+              style:{background:"#0a1f0a",border:"1px solid #22c55e",color:"#4ade80",
+                borderRadius:6,padding:"6px 14px",cursor:"pointer",fontSize:"0.78rem",fontWeight:"bold"}},
+              "Sell All")
+          );
+        })
       )
     )
   );
