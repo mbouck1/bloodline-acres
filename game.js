@@ -13595,17 +13595,31 @@ function Card(_ref0) {
 // ── MAIN APP ──────────────────────────────────────────────────
 
 // ── CLOCK COMPONENT ──────────────────────────────────────────
-function Clock() {
-  const [now, setNow] = useState(new Date());
+function getGameDate(gameStartDate) {
+  var now = Date.now();
+  var msPerDay = 24 * 60 * 60 * 1000;
+  var daysPassed = Math.floor((now - gameStartDate) / msPerDay);
+  var monthIndex = (2 + daysPassed) % 12; // start in March
+  var MONTHS = ["January","February","March","April","May","June","July","August","September","October","November","December"];
+  var SEASONS = [
+    { name:"Winter", emoji:"\u2744\uFE0F", months:[0,1,11] },
+    { name:"Spring", emoji:"\uD83C\uDF31", months:[2,3,4] },
+    { name:"Summer", emoji:"\u2600\uFE0F",  months:[5,6,7] },
+    { name:"Fall",   emoji:"\uD83C\uDF42", months:[8,9,10] }
+  ];
+  var season = SEASONS.find(function(s){ return s.months.indexOf(monthIndex) > -1; });
+  return { month: MONTHS[monthIndex], season: season, monthIndex: monthIndex };
+}
+
+function Clock(_ref) {
+  var gameStartDate = _ref ? _ref.gameStartDate : null;
+  var _n = _slicedToArray(useState(new Date()), 2), now = _n[0], setNow = _n[1];
 
   useEffect(function() {
-    var interval = setInterval(function() {
-      setNow(new Date());
-    }, 1000);
+    var interval = setInterval(function() { setNow(new Date()); }, 1000);
     return function() { clearInterval(interval); };
   }, []);
 
-  // Next reset = 5am EST = 10am UTC
   function getNextReset() {
     var n = new Date(now);
     var reset = new Date(now);
@@ -13621,11 +13635,14 @@ function Clock() {
   var ss = Math.floor((diff % 60000) / 1000);
   var pad = function(n) { return String(n).padStart(2,'0'); };
 
-  // Format current time in EST
   var estTime = now.toLocaleTimeString('en-US', {
     timeZone: 'America/New_York',
     hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true
   });
+
+  var gd = getGameDate(gameStartDate || Date.now());
+  var seasonColors = { Spring:"#4ade80", Summer:"#fbbf24", Fall:"#f97316", Winter:"#93c5fd" };
+  var seasonColor = seasonColors[gd.season.name] || "#e2e8f0";
 
   return React.createElement('div', {
     style: {
@@ -13634,9 +13651,12 @@ function Clock() {
       borderRadius: 6, padding: '3px 10px', fontSize: '0.72rem'
     }
   },
-    React.createElement('span', {style: {color: '#38bdf8'}}, '🕐 ' + estTime + ' EST'),
+    React.createElement('span', {style: {color: seasonColor, fontWeight:'bold'}},
+      gd.season.emoji + ' ' + gd.season.name + ' \u2014 ' + gd.month),
     React.createElement('span', {style: {color: '#334155'}},'|'),
-    React.createElement('span', {style: {color: '#eab308'}}, '⏱ Reset: ' + pad(hh) + ':' + pad(mm) + ':' + pad(ss))
+    React.createElement('span', {style: {color: '#38bdf8'}}, '\uD83D\uDD50 ' + estTime + ' EST'),
+    React.createElement('span', {style: {color: '#334155'}},'|'),
+    React.createElement('span', {style: {color: '#eab308'}}, '\u23F1 Reset: ' + pad(hh) + ':' + pad(mm) + ':' + pad(ss))
   );
 }
 
@@ -14092,6 +14112,9 @@ function App() {
     _useStateMON2 = _slicedToArray(_useStateMON, 2),
     money = _useStateMON2[0],
     setMoney = _useStateMON2[1];
+  var _useStateGSD = useState(_savedState && _savedState.gameStartDate ? _savedState.gameStartDate : Date.now()),
+    _useStateGSD2 = _slicedToArray(_useStateGSD, 2),
+    gameStartDate = _useStateGSD2[0];
   var _useStateMKT = useState(false),
     _useStateMKT2 = _slicedToArray(_useStateMKT, 2),
     showMarket = _useStateMKT2[0],
@@ -14285,6 +14308,7 @@ function App() {
           facilitiesOwned: facilitiesOwned,
           ownedLivestock: ownedLivestock,
           commodities: commodities,
+          gameStartDate: gameStartDate,
           savedAt: Date.now()
         };
         localStorage.setItem(SAVE_KEY, JSON.stringify(state));
@@ -15502,7 +15526,7 @@ function App() {
       fontSize:"0.65rem", padding:"4px 0", letterSpacing:"0.03em"
     }
   }, "\uD83E\uDDEC 8 coat loci \xB7 8 health loci \xB7 5 perf QTLs \xB7 0.5% mutation rate \xB7 COI tracking"),
-  /*#__PURE__*/React.createElement(Clock, null),
+  /*#__PURE__*/React.createElement(Clock, { gameStartDate: gameStartDate }),
   tab === "farm" && /*#__PURE__*/React.createElement("div", {
     style: { position:"fixed", inset:0, background:"#0a0f1a", zIndex:50, overflow:"hidden", display:"flex", alignItems:"center", justifyContent:"center" }
   }, /*#__PURE__*/React.createElement(FarmView, {
