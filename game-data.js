@@ -1833,13 +1833,45 @@ function runDailyIncomeTick(ownedLivestock, lastTickDate) {
   var journalEntries = [];
   var bySpecies = {};
 
+  // Pre-calculate male fertility multiplier per species
+  // Males past prime (45 real days) lose 2% effectiveness per day, floor 20%
+  var PRIME_AGE_DAYS = 45;
+  var fertilityBySpecies = {};
+  ["chicken","duck","pig","goat","sheep","cow"].forEach(function(sp) {
+    var males = (ownedLivestock || []).filter(function(a) {
+      return a.species === sp && a.sex === "M";
+    });
+    if (males.length === 0) {
+      fertilityBySpecies[sp] = 1.0; // no male — females still produce, just no replenishment
+    } else {
+      // Use the youngest male as the active sire
+      var bestMale = males.reduce(function(best, m) {
+        var mAge = (now - (m.purchasedAt || now)) / 86400000;
+        var bAge = (now - (best.purchasedAt || now)) / 86400000;
+        return mAge < bAge ? m : best;
+      });
+      var maleAge = (now - (bestMale.purchasedAt || now)) / 86400000;
+      if (maleAge > PRIME_AGE_DAYS) {
+        var daysOver = maleAge - PRIME_AGE_DAYS;
+        fertilityBySpecies[sp] = Math.max(0.20, 1.0 - (daysOver * 0.02));
+      } else {
+        fertilityBySpecies[sp] = 1.0;
+      }
+    }
+  });
+
   var updatedAnimals = (ownedLivestock || []).map(function(animal) {
     var species = animal.species;
     var inc = LIVESTOCK_INCOME[species];
     if (!inc) return animal;
 
-    var daysSincePurchase = (now - (animal.purchasedAt || now)) / (1000 * 60 * 60 * 24);
+    var daysSincePurchase = (now - (animal.purchasedAt || now)) / 86400000;
     if (daysSincePurchase < inc.matureAtDays) {
+      return Object.assign({}, animal, { marketMult: refreshMarketMult(animal) });
+    }
+
+    // Roosters and drakes earn nothing — no eggs from males
+    if ((species === "chicken" || species === "duck") && animal.sex === "M") {
       return Object.assign({}, animal, { marketMult: refreshMarketMult(animal) });
     }
 
@@ -1853,6 +1885,12 @@ function runDailyIncomeTick(ownedLivestock, lastTickDate) {
     var qualityTier = getQualityTier(animal.quality || 3);
     var yieldMult = qualityTier.yieldMult;
     if (isDegraded && inc.degradeMult) yieldMult = inc.degradeMult;
+
+    // Apply male fertility decay to egg-laying species
+    // Old rooster = fewer fertile eggs = lower flock productivity
+    if (species === "chicken" || species === "duck") {
+      yieldMult = yieldMult * (fertilityBySpecies[species] || 1.0);
+    }
 
     var newMarketMult = refreshMarketMult(animal);
     var dailyEarning = Math.round(inc.baseDaily * yieldMult * newMarketMult * 100) / 100;
