@@ -13900,9 +13900,8 @@ function FarmView(_ref) {
         badge:"A2", tip:"Slaughterhouse · Unlocks meat sales" }),
       // A3 Chicken Coop
       React.createElement(Tile, { col:2, row:0, bg:"#0d1a08", border:"#ca8a04", svgInner:SVG.apiary, label:"Apiary", color:"#fde68a",
-        badge:"A3", count: hasFac("chicken_coop") ? lsCount("chicken")+"/"+FACILITIES.chicken_coop.tiers[facTier("chicken_coop")].capacity : null,
-        tip:"Chicken Coop · "+(hasFac("chicken_coop") ? FACILITIES.chicken_coop.tiers[facTier("chicken_coop")].name : "Not built") }),
-      // A4 Grazing
+        badge:"A3", tip:"Apiary · "+(hasFac("apiary") ? FACILITIES.apiary.tiers[facTier("apiary")].name : "Not built") }),
+      // A4 Duck Pond
       React.createElement(Tile, { col:3, row:0, bg:"#050f1a", border:"#0369a1", svgInner:SVG.pond, label:"Duck Pond", color:"#7dd3fc",
         badge:"A4", count: hasFac("pond") ? lsCount("duck")+"/"+FACILITIES.pond.tiers[facTier("pond")].capacity : null,
         tip:"Duck Pond · "+(hasFac("pond") ? FACILITIES.pond.tiers[facTier("pond")].name : "Not built") }),
@@ -13916,15 +13915,10 @@ function FarmView(_ref) {
       React.createElement(Tile, { col:1, row:1, bg:"#0e1828", border:"#3b82f6", svgInner:SVG.milkBarn, label:"Milking Barn", color:"#93c5fd",
         badge:"B2", count: hasFac("milking_barn") ? lsCount("dairy")+"/"+FACILITIES.milking_barn.tiers[facTier("milking_barn")].capacity : null,
         tip:"Milking Barn · "+(hasFac("milking_barn") ? FACILITIES.milking_barn.tiers[facTier("milking_barn")].name : "Not built") }),
-      // B3 Apiary
+      // B3 Chicken Coop
       React.createElement(Tile, { col:2, row:1, bg:"#101d0a", border:"#4d7c0f", svgInner:SVG.chickCoop, label:"Chicken Coop", color:"#86efac",
-        badge:"B3", tip:"Apiary · Honey production" }),
-      // A4 Duck Pond
-      React.createElement(Tile, { col:3, row:0, bg:"#050f1a", border:"#0369a1", svgInner:SVG.pond, label:"Duck Pond", color:"#7dd3fc",
-        badge:"A4", count: hasFac("pond") ? lsCount("duck")+"/"+FACILITIES.pond.tiers[facTier("pond")].capacity : null,
-        tip:"Duck Pond · "+(hasFac("pond") ? FACILITIES.pond.tiers[facTier("pond")].name : "Not built") }),
-
-      // ── ROW B ──
+        badge:"B3", count: hasFac("chicken_coop") ? lsCount("chicken")+"/"+FACILITIES.chicken_coop.tiers[facTier("chicken_coop")].capacity : null,
+        tip:"Chicken Coop · "+(hasFac("chicken_coop") ? FACILITIES.chicken_coop.tiers[facTier("chicken_coop")].name : "Not built") }),
       // B4 Grazing Land
       hasFac("grazing_land")
         ? React.createElement(Tile, { col:3, row:1, bg:"#091e0a", border:"#15803d", svgInner:SVG.grazing, label:"Grazing Land", color:"#4ade80",
