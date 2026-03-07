@@ -13219,12 +13219,12 @@ function Card(_ref0) {
     if (nameVal.trim()) onRename && onRename(animal.id, nameVal.trim());
     setEditing(false);
   };
-  return /*#__PURE__*/React.createElement(React.Fragment, null, showDNA && ReactDOM.createPortal(/*#__PURE__*/React.createElement(DNAModal, {
+  return /*#__PURE__*/React.createElement(React.Fragment, null, showDNA && /*#__PURE__*/React.createElement(DNAModal, {
     animal: animal,
     onClose: function onClose() {
       return setShowDNA(false);
     }
-  }), document.body), /*#__PURE__*/React.createElement("div", {
+  }), /*#__PURE__*/React.createElement("div", {
     onClick: function onClick() {
       return onSelect && onSelect(animal);
     },
@@ -13456,12 +13456,11 @@ function Card(_ref0) {
     /*#__PURE__*/React.createElement("span", { style: { color: coiColor(animal.coi), fontWeight: "bold", fontSize: "0.95rem" } }, "COI ", animal.coi, "%")
   ),
   /*#__PURE__*/React.createElement("div", {
-    onClick: function(e){ e.stopPropagation(); setShowDNA(true); },
     style: { fontFamily: "monospace", fontSize: "0.78rem", color: "#38bdf8", background: "#0f172a",
       borderRadius: 4, padding: "5px 10px", marginBottom: 7, overflow: "hidden",
       textOverflow: "ellipsis", whiteSpace: "nowrap", fontWeight: "bold", letterSpacing: "0.04em",
-      border: "1px solid #1e3a5f", cursor: "pointer" },
-    title: "Click to view Full DNA Panel"
+      border: "1px solid #1e3a5f" },
+    title: animal.vinStr
   }, "\uD83E\uDDEC ", animal.vinStr),
   (function() {
     if (animal.sex !== "F" || animal.retired) return null;
@@ -13587,7 +13586,10 @@ function Card(_ref0) {
     )
   ),
 
-);
+  /*#__PURE__*/React.createElement("button", {
+    onClick: function onClick(e) { e.stopPropagation(); setShowDNA(true); },
+    style: { width: "100%", background: "none", border: "1px solid #1e3a5f", color: "#38bdf8", borderRadius: 5, padding: "4px", cursor: "pointer", fontSize: "0.72rem" }
+  }, "View Full DNA Panel"));
 }
 
 // ── MAIN APP ──────────────────────────────────────────────────
@@ -14193,6 +14195,14 @@ function App() {
     _useState26 = _slicedToArray(_useState25, 2),
     addAge = _useState26[0],
     setAddAge = _useState26[1];
+  var _useStateBG = useState(""),
+    _useStateBG2 = _slicedToArray(_useStateBG, 2),
+    buyGroup = _useStateBG2[0],
+    setBuyGroup = _useStateBG2[1];
+  var _useStateBB = useState(""),
+    _useStateBB2 = _slicedToArray(_useStateBB, 2),
+    buyBreed = _useStateBB2[0],
+    setBuyBreed = _useStateBB2[1];
   var _useState27 = useState(0),
     _useState28 = _slicedToArray(_useState27, 2),
     kennelIdx = _useState28[0],
@@ -15155,26 +15165,43 @@ function App() {
       /*#__PURE__*/React.createElement("div", { style: { color: "#64748b", fontSize: "0.75rem", textTransform: "uppercase", letterSpacing: "0.05em" } },
         "Add Animal to Kennel"
       ),
-      /*#__PURE__*/React.createElement("select", {
-        id: "bsel",
-        style: { background: "#0f172a", border: "1px solid #334155", color: "#e2e8f0",
-          borderRadius: 6, padding: "6px 10px", flex: 1, minWidth: 160, fontSize: "0.82rem" }
-      }, Object.entries(breeds.slice().sort(function(a,b){
+      (function(){
+        var groupMap = breeds.slice().sort(function(a,b){
           return (a.group||"Other").localeCompare(b.group||"Other") || a.name.localeCompare(b.name);
-        }).reduce(function(acc,b){ var g=b.group||"Other"; if(!acc[g])acc[g]=[]; acc[g].push(b); return acc; }, {})
-      ).map(function(_r){ var _r2=_slicedToArray(_r,2),group=_r2[0],list=_r2[1];
-        return /*#__PURE__*/React.createElement("optgroup",{key:group,label:"\u2500\u2500 "+group+" \u2500\u2500"},
-          list.map(function(b){ return /*#__PURE__*/React.createElement("option",{key:b.name,value:b.name},b.name); })
+        }).reduce(function(acc,b){ var g=b.group||"Other"; if(!acc[g])acc[g]=[]; acc[g].push(b); return acc; }, {});
+        var groupNames = Object.keys(groupMap).sort();
+        var breedsInGroup = buyGroup ? (groupMap[buyGroup]||[]) : [];
+        var selDropStyle = { background:"#0f172a", border:"1px solid #334155", color:"#e2e8f0", borderRadius:6, padding:"6px 10px", fontSize:"0.82rem" };
+        return /*#__PURE__*/React.createElement(React.Fragment, null,
+          /*#__PURE__*/React.createElement("select", {
+            value: buyGroup,
+            onChange: function(e){ setBuyGroup(e.target.value); setBuyBreed(""); },
+            style: Object.assign({}, selDropStyle, { minWidth: 140 })
+          },
+            /*#__PURE__*/React.createElement("option", { value: "" }, "\u2014 Group \u2014"),
+            groupNames.map(function(g){ return /*#__PURE__*/React.createElement("option", { key:g, value:g }, g); })
+          ),
+          /*#__PURE__*/React.createElement("select", {
+            value: buyBreed,
+            onChange: function(e){ setBuyBreed(e.target.value); },
+            disabled: !buyGroup,
+            style: Object.assign({}, selDropStyle, { minWidth: 180, opacity: buyGroup ? 1 : 0.4 })
+          },
+            /*#__PURE__*/React.createElement("option", { value: "" }, buyGroup ? "\u2014 Breed \u2014" : "\u2014 Pick group first \u2014"),
+            breedsInGroup.map(function(b){ return /*#__PURE__*/React.createElement("option", { key:b.name, value:b.name }, b.name); })
+          ),
+          /*#__PURE__*/React.createElement("button", {
+            onClick: function(){ if(buyBreed) addAnimal(buyBreed,"M",addAge); },
+            disabled: !buyBreed,
+            style: { background: buyBreed?"#1e3a5f":"#131c2e", border:"1px solid "+(buyBreed?"#38bdf8":"#334155"), color:buyBreed?"#38bdf8":"#475569", borderRadius:6, padding:"6px 12px", cursor:buyBreed?"pointer":"not-allowed", fontSize:"0.82rem" }
+          }, "+ Male \u2642 (" + formatMoney(addAge <= 12 ? DOG_COST_PUPPY : DOG_COST_ADULT) + ")"),
+          /*#__PURE__*/React.createElement("button", {
+            onClick: function(){ if(buyBreed) addAnimal(buyBreed,"F",addAge); },
+            disabled: !buyBreed,
+            style: { background: buyBreed?"#2d1e4f":"#131c2e", border:"1px solid "+(buyBreed?"#a78bfa":"#334155"), color:buyBreed?"#a78bfa":"#475569", borderRadius:6, padding:"6px 12px", cursor:buyBreed?"pointer":"not-allowed", fontSize:"0.82rem" }
+          }, "+ Female \u2640 (" + formatMoney(addAge <= 12 ? DOG_COST_PUPPY : DOG_COST_ADULT) + ")")
         );
-      })),
-      /*#__PURE__*/React.createElement("button", {
-        onClick: function(){ return addAnimal(document.getElementById("bsel").value,"M",addAge); },
-        style: { background:"#1e3a5f",border:"1px solid #38bdf8",color:"#38bdf8",borderRadius:6,padding:"6px 12px",cursor:"pointer",fontSize:"0.82rem" }
-      }, "+ Male \u2642 (" + formatMoney(addAge <= 12 ? DOG_COST_PUPPY : DOG_COST_ADULT) + ")"),
-      /*#__PURE__*/React.createElement("button", {
-        onClick: function(){ return addAnimal(document.getElementById("bsel").value,"F",addAge); },
-        style: { background:"#2d1e4f",border:"1px solid #a78bfa",color:"#a78bfa",borderRadius:6,padding:"6px 12px",cursor:"pointer",fontSize:"0.82rem" }
-      }, "+ Female \u2640 (" + formatMoney(addAge <= 12 ? DOG_COST_PUPPY : DOG_COST_ADULT) + ")"),
+      })(),
       [{ label:"\uD83D\uDC3E Puppy", age:12 }, { label:"\uD83D\uDC15 Adult", age:20 }].map(function(opt){
         return /*#__PURE__*/React.createElement("button", {
           key: opt.age, onClick: function(){ setAddAge(opt.age); },
