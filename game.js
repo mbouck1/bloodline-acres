@@ -15275,19 +15275,19 @@ function App() {
                 fontSize:"1.1rem",zIndex:10,display:"flex",alignItems:"center",justifyContent:"center" }
             }, dir<0?"\u25C4":"\u25BA");
           };
-          return /*#__PURE__*/React.createElement("div", { style: { flex:1,display:"flex",flexDirection:"column",overflow:"hidden" } },
+          return /*#__PURE__*/React.createElement("div", { style: { display:"flex", flexDirection:"column", overflow:"auto" } },
             /*#__PURE__*/React.createElement("div", {
               style: { color:"#6b5038",fontSize:"0.72rem",padding:"6px 0",textAlign:"center",flexShrink:0 }
             }, safeKennelIdx+1, " of ", filtered.length),
-            /*#__PURE__*/React.createElement("div", { style: { position:"relative",flex:1,display:"flex",flexDirection:"column",overflow:"hidden" } },
+            /*#__PURE__*/React.createElement("div", { style: { position:"relative", display:"flex", flexDirection:"column" } },
               arrowBtn(-1, safeKennelIdx===0),
-              /*#__PURE__*/React.createElement("div", { style: { flex:1,display:"flex",flexDirection:"column",overflow:"hidden",padding:"0 44px" } },
+              /*#__PURE__*/React.createElement("div", { style: { display:"flex", flexDirection:"column", padding:"0 44px" } },
                 /*#__PURE__*/React.createElement(Card, {
                   animal:a, onSelect:selectAnimal,
                   isSelected:(sire&&sire.id===a.id)||(dam&&dam.id===a.id),
                   ineligibleReason:breedingIneligibleReason(a),
                   onRemove:function(id){ setActionModalId(id); },
-                  onRename:renameAnimal, fullHeight:true,
+                  onRename:renameAnimal, fullHeight:false,
                   onStud:function(a){ toggleStud(a.id); },
                   onSell:function(a){ handleSellListing(a.id); },
                   onRetire:function(a){ retireAnimal(a.id); }
