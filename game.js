@@ -13245,10 +13245,10 @@ function Card(_ref0) {
     }
   },
   /*#__PURE__*/React.createElement("div", {
-    style: { position:"relative", marginBottom:10 }
+    style: { position:"relative", marginBottom:10, width:"100%", height: fullHeight ? 220 : 140, borderRadius:8, overflow:"hidden" }
   },
     /*#__PURE__*/React.createElement("div", {
-      style: { width:"100%", height: fullHeight ? 180 : 120, borderRadius:8, overflow:"hidden" }
+      style: { width:"100%", height:"100%" }
     }, /*#__PURE__*/React.createElement(DogSilhouette, { animal: animal })),
     /*#__PURE__*/React.createElement("div", {
       style: { position:"absolute", top:6, right:6 }
