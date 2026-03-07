@@ -13083,7 +13083,7 @@ function DogSilhouette(_ref_sil) {
   var merleEl = renderMerlePatches(palette, W, H);
 
   var svgStr =
-    '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 '+W+' '+H+'" width="100%" height="100%" style="display:block">'+
+    '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 '+W+' '+H+'" width="100%" height="100%" preserveAspectRatio="xMidYMid slice" style="display:block;width:100%;height:100%">'+
       brindlePattern+
       '<defs>'+
         '<clipPath id="'+clipId+'">'+
@@ -13109,7 +13109,7 @@ function DogSilhouette(_ref_sil) {
 
   return React.createElement("div", {
     dangerouslySetInnerHTML: { __html: svgStr },
-    style: { width:"100%", height:"100%", borderRadius:7, overflow:"hidden" }
+    style: { width:"100%", height:"100%", borderRadius:7, overflow:"hidden", display:"block" }
   });
 }
 
