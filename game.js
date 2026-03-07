@@ -1238,13 +1238,13 @@ function getLifespan(breed) {
 function getAgeStage(ageMonths) {
   if (ageMonths < 3) return {
     label: "Newborn",
-    color: "#94a3b8",
+    color: "#b09070",
     canWork: false,
     canBreed: false
   };
   if (ageMonths < 18) return {
     label: "Puppy",
-    color: "#38bdf8",
+    color: "#d4942a",
     canWork: false,
     canBreed: false
   };
@@ -1256,13 +1256,13 @@ function getAgeStage(ageMonths) {
   };
   if (ageMonths < 96) return {
     label: "Prime",
-    color: "#a78bfa",
+    color: "#c4956a",
     canWork: true,
     canBreed: true
   };
   if (ageMonths < 110) return {
     label: "Senior",
-    color: "#eab308",
+    color: "#d4960a",
     canWork: true,
     canBreed: false
   };
@@ -12402,13 +12402,13 @@ var DEMO_BREEDS = [{
 
 // ── COLOR HELPERS ─────────────────────────────────────────────
 var coiColor = function coiColor(c) {
-  return c < 3 ? "#22c55e" : c < 10 ? "#eab308" : c < 25 ? "#f97316" : "#ef4444";
+  return c < 3 ? "#22c55e" : c < 10 ? "#d4960a" : c < 25 ? "#f97316" : "#ef4444";
 };
 var coiLabel = function coiLabel(c) {
   return c < 3 ? "Outcross" : c < 10 ? "Moderate" : c < 25 ? "High" : "Very High";
 };
 var healthColor = function healthColor(s) {
-  return s >= 85 ? "#22c55e" : s >= 65 ? "#eab308" : s >= 40 ? "#f97316" : "#ef4444";
+  return s >= 85 ? "#22c55e" : s >= 65 ? "#d4960a" : s >= 40 ? "#f97316" : "#ef4444";
 };
 
 // ── DNA MODAL ─────────────────────────────────────────────────
@@ -12438,8 +12438,8 @@ function DNAModal(_ref5) {
       return e.stopPropagation();
     },
     style: {
-      background: "#0f172a",
-      border: "1px solid #334155",
+      background: "#100d08",
+      border: "1px solid #3a2a18",
       borderRadius: 12,
       width: "100%",
       maxWidth: 720,
@@ -12456,22 +12456,22 @@ function DNAModal(_ref5) {
     }
   }, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
     style: {
-      color: "#38bdf8",
+      color: "#d4942a",
       fontFamily: "monospace",
       fontSize: "1.1rem",
       fontWeight: "bold"
     }
   }, "\uD83E\uDDEC Full DNA Panel"), /*#__PURE__*/React.createElement("div", {
     style: {
-      color: "#64748b",
+      color: "#8a7055",
       fontSize: "0.75rem"
     }
   }, animal.name, " \xB7 ", animal.breed, " \xB7 ID: ", animal.id)), /*#__PURE__*/React.createElement("button", {
     onClick: onClose,
     style: {
       background: "none",
-      border: "1px solid #475569",
-      color: "#94a3b8",
+      border: "1px solid #6b5038",
+      color: "#b09070",
       borderRadius: 5,
       padding: "4px 12px",
       cursor: "pointer",
@@ -12481,16 +12481,16 @@ function DNAModal(_ref5) {
     style: {
       fontFamily: "monospace",
       fontSize: "0.62rem",
-      background: "#1e293b",
+      background: "#211810",
       borderRadius: 6,
       padding: "8px 12px",
       marginBottom: 16,
-      color: "#475569",
+      color: "#6b5038",
       wordBreak: "break-all"
     }
   }, "\uD83E\uDDEC ", animal.vinStr), /*#__PURE__*/React.createElement("div", {
     style: {
-      color: "#f59e0b",
+      color: "#d4860a",
       fontWeight: "bold",
       fontSize: "0.8rem",
       textTransform: "uppercase",
@@ -12515,8 +12515,8 @@ function DNAModal(_ref5) {
     return /*#__PURE__*/React.createElement("div", {
       key: loc,
       style: {
-        background: warn ? "#3b0f0f" : "#1e293b",
-        border: "1px solid ".concat(warn ? "#ef4444" : "#334155"),
+        background: warn ? "#3a1008" : "#211810",
+        border: "1px solid ".concat(warn ? "#ef4444" : "#3a2a18"),
         borderRadius: 6,
         padding: 8
       }
@@ -12528,19 +12528,19 @@ function DNAModal(_ref5) {
       }
     }, /*#__PURE__*/React.createElement("span", {
       style: {
-        color: "#f59e0b",
+        color: "#d4860a",
         fontWeight: "bold",
         fontSize: "0.78rem"
       }
     }, loc), /*#__PURE__*/React.createElement("span", {
       style: {
         fontFamily: "monospace",
-        color: "#e2e8f0",
+        color: "#f0e6d3",
         fontSize: "0.82rem"
       }
     }, al[0], "/", al[1])), /*#__PURE__*/React.createElement("div", {
       style: {
-        color: "#64748b",
+        color: "#8a7055",
         fontSize: "0.68rem",
         marginTop: 2
       }
@@ -12579,8 +12579,8 @@ function DNAModal(_ref5) {
     return /*#__PURE__*/React.createElement("div", {
       key: loc,
       style: {
-        background: aff ? "#3b0f0f" : "#1e293b",
-        border: "1px solid ".concat(aff ? "#ef4444" : car ? "#ca8a04" : "#334155"),
+        background: aff ? "#3a1008" : "#211810",
+        border: "1px solid ".concat(aff ? "#ef4444" : car ? "#ca8a04" : "#3a2a18"),
         borderRadius: 6,
         padding: 8
       }
@@ -12599,25 +12599,25 @@ function DNAModal(_ref5) {
     }, loc), /*#__PURE__*/React.createElement("span", {
       style: {
         fontFamily: "monospace",
-        color: "#e2e8f0",
+        color: "#f0e6d3",
         fontSize: "0.82rem"
       }
     }, al[0], "/", al[1])), /*#__PURE__*/React.createElement("div", {
       style: {
-        color: "#64748b",
+        color: "#8a7055",
         fontSize: "0.68rem",
         marginTop: 2
       }
     }, ld.name), /*#__PURE__*/React.createElement("div", {
       style: {
-        color: aff ? "#fca5a5" : car ? "#fde68a" : "#cbd5e1",
+        color: aff ? "#fca5a5" : car ? "#f5d870" : "#cbd5e1",
         fontSize: "0.7rem",
         marginTop: 2
       }
     }, d));
   })), /*#__PURE__*/React.createElement("div", {
     style: {
-      color: "#a78bfa",
+      color: "#c4956a",
       fontWeight: "bold",
       fontSize: "0.8rem",
       textTransform: "uppercase",
@@ -12642,23 +12642,23 @@ function DNAModal(_ref5) {
       return /*#__PURE__*/React.createElement("div", {
         key: q,
         title: tipText,
-        style: { background: "#1e293b", border: "1px solid #334155", borderRadius: 6, padding: 8, textAlign: "center", cursor: "help" }
+        style: { background: "#211810", border: "1px solid #3a2a18", borderRadius: 6, padding: 8, textAlign: "center", cursor: "help" }
       },
-      /*#__PURE__*/React.createElement("div", { style: { color: "#a78bfa", fontSize: "0.68rem", fontWeight: "bold", lineHeight: 1.15 } }, info.full),
+      /*#__PURE__*/React.createElement("div", { style: { color: "#c4956a", fontSize: "0.68rem", fontWeight: "bold", lineHeight: 1.15 } }, info.full),
       /*#__PURE__*/React.createElement("div", { style: { color: "#7c6fa8", fontSize: "0.58rem", marginBottom: 4, lineHeight: 1.1 } }, info.line2 || "\u00a0"),
-      /*#__PURE__*/React.createElement("div", { style: { display: "flex", justifyContent: "space-between", fontSize: "0.75rem", color: "#64748b", marginBottom: 1 } },
+      /*#__PURE__*/React.createElement("div", { style: { display: "flex", justifyContent: "space-between", fontSize: "0.75rem", color: "#8a7055", marginBottom: 1 } },
         /*#__PURE__*/React.createElement("span", null, "Sire"),
         /*#__PURE__*/React.createElement("span", null, "Dam")
       ),
-      /*#__PURE__*/React.createElement("div", { style: { display: "flex", justifyContent: "space-between", fontFamily: "monospace", color: "#e2e8f0", fontSize: "0.95rem", marginBottom: 5 } },
+      /*#__PURE__*/React.createElement("div", { style: { display: "flex", justifyContent: "space-between", fontFamily: "monospace", color: "#f0e6d3", fontSize: "0.95rem", marginBottom: 5 } },
         /*#__PURE__*/React.createElement("span", null, v[0]),
         /*#__PURE__*/React.createElement("span", null, v[1])
       ),
-      /*#__PURE__*/React.createElement("div", { style: { fontSize: "0.58rem", color: "#64748b", marginBottom: 2 } }, "Avg score (1\u20135)"),
-      /*#__PURE__*/React.createElement("div", { style: { background: "#0f172a", borderRadius: 3, height: 4, overflow: "hidden", marginBottom: 3 } },
-        /*#__PURE__*/React.createElement("div", { style: { background: "#a78bfa", width: "".concat(avg / 5 * 100, "%"), height: "100%" } })
+      /*#__PURE__*/React.createElement("div", { style: { fontSize: "0.58rem", color: "#8a7055", marginBottom: 2 } }, "Avg score (1\u20135)"),
+      /*#__PURE__*/React.createElement("div", { style: { background: "#100d08", borderRadius: 3, height: 4, overflow: "hidden", marginBottom: 3 } },
+        /*#__PURE__*/React.createElement("div", { style: { background: "#c4956a", width: "".concat(avg / 5 * 100, "%"), height: "100%" } })
       ),
-      /*#__PURE__*/React.createElement("div", { style: { color: "#a78bfa", fontSize: "0.72rem", fontWeight: "bold" } }, avg, "/5"));
+      /*#__PURE__*/React.createElement("div", { style: { color: "#c4956a", fontSize: "0.72rem", fontWeight: "bold" } }, avg, "/5"));
     });
   })()), ((_animal$mutations = animal.mutations) === null || _animal$mutations === void 0 ? void 0 : _animal$mutations.length) > 0 && /*#__PURE__*/React.createElement("div", {
     style: {
@@ -12689,13 +12689,13 @@ function DNAModal(_ref5) {
       }
     }, "\u26A1 Mutation at ", m.loc), " ", /*#__PURE__*/React.createElement("span", {
       style: {
-        color: "#94a3b8"
+        color: "#b09070"
       }
     }, "(from ", m.src, ")"));
   })), /*#__PURE__*/React.createElement("div", {
     style: {
-      background: "#1e293b",
-      border: "1px solid #334155",
+      background: "#211810",
+      border: "1px solid #3a2a18",
       borderRadius: 6,
       padding: 12
     }
@@ -12707,7 +12707,7 @@ function DNAModal(_ref5) {
     }
   }, /*#__PURE__*/React.createElement("span", {
     style: {
-      color: "#94a3b8",
+      color: "#b09070",
       fontSize: "0.85rem"
     }
   }, "Coefficient of Inbreeding (COI)"), /*#__PURE__*/React.createElement("span", {
@@ -12717,7 +12717,7 @@ function DNAModal(_ref5) {
     }
   }, animal.coi, "% \u2014 ", coiLabel(animal.coi))), /*#__PURE__*/React.createElement("div", {
     style: {
-      background: "#0f172a",
+      background: "#100d08",
       borderRadius: 4,
       height: 6,
       overflow: "hidden",
@@ -12732,10 +12732,10 @@ function DNAModal(_ref5) {
   })), /*#__PURE__*/React.createElement("div", {
     style: { display: "flex", gap: 4, marginTop: 8, flexWrap: "wrap" }
   },
-    /*#__PURE__*/React.createElement("span", { key: 0, title: "Outcross (0-3%): Minimal shared ancestry. Maximum genetic diversity. Ideal for hybrid vigor, reducing hereditary disease risk, and introducing new traits. Best for health-first breeding programs.", style: { fontSize: "0.62rem", color: "#22c55e", cursor: "help", background: "#0f172a", border: "1px solid #22c55e", borderRadius: 3, padding: "2px 6px", whiteSpace: "nowrap" } }, "0-3% Outcross \u2139\uFE0F"),
-    /*#__PURE__*/React.createElement("span", { key: 1, title: "Moderate (3-10%): Some shared ancestors, common in established purebred lines. Acceptable for maintaining breed type. Watch for slight increases in recessive disease expression. Most kennel clubs consider this normal range.", style: { fontSize: "0.62rem", color: "#eab308", cursor: "help", background: "#0f172a", border: "1px solid #eab308", borderRadius: 3, padding: "2px 6px", whiteSpace: "nowrap" } }, "3-10% Moderate \u2139\uFE0F"),
-    /*#__PURE__*/React.createElement("span", { key: 2, title: "High (10-25%): Significant inbreeding - equivalent to breeding half-siblings or double first cousins. Noticeably reduced immune function, smaller litters, higher puppy mortality. Recessive disorders become much more likely. Use only with strong justification.", style: { fontSize: "0.62rem", color: "#f97316", cursor: "help", background: "#0f172a", border: "1px solid #f97316", borderRadius: 3, padding: "2px 6px", whiteSpace: "nowrap" } }, "10-25% High \u2139\uFE0F"),
-    /*#__PURE__*/React.createElement("span", { key: 3, title: "Very High (25%+): Equivalent to parent-offspring or full sibling breeding. Severe inbreeding depression - reduced fertility, immune collapse, elevated cancer risk, shorter lifespan, and high probability of expressing multiple recessive disorders. Avoid.", style: { fontSize: "0.62rem", color: "#ef4444", cursor: "help", background: "#0f172a", border: "1px solid #ef4444", borderRadius: 3, padding: "2px 6px", whiteSpace: "nowrap" } }, "25%+ Very High \u2139\uFE0F")
+    /*#__PURE__*/React.createElement("span", { key: 0, title: "Outcross (0-3%): Minimal shared ancestry. Maximum genetic diversity. Ideal for hybrid vigor, reducing hereditary disease risk, and introducing new traits. Best for health-first breeding programs.", style: { fontSize: "0.62rem", color: "#22c55e", cursor: "help", background: "#100d08", border: "1px solid #22c55e", borderRadius: 3, padding: "2px 6px", whiteSpace: "nowrap" } }, "0-3% Outcross \u2139\uFE0F"),
+    /*#__PURE__*/React.createElement("span", { key: 1, title: "Moderate (3-10%): Some shared ancestors, common in established purebred lines. Acceptable for maintaining breed type. Watch for slight increases in recessive disease expression. Most kennel clubs consider this normal range.", style: { fontSize: "0.62rem", color: "#d4960a", cursor: "help", background: "#100d08", border: "1px solid #d4960a", borderRadius: 3, padding: "2px 6px", whiteSpace: "nowrap" } }, "3-10% Moderate \u2139\uFE0F"),
+    /*#__PURE__*/React.createElement("span", { key: 2, title: "High (10-25%): Significant inbreeding - equivalent to breeding half-siblings or double first cousins. Noticeably reduced immune function, smaller litters, higher puppy mortality. Recessive disorders become much more likely. Use only with strong justification.", style: { fontSize: "0.62rem", color: "#f97316", cursor: "help", background: "#100d08", border: "1px solid #f97316", borderRadius: 3, padding: "2px 6px", whiteSpace: "nowrap" } }, "10-25% High \u2139\uFE0F"),
+    /*#__PURE__*/React.createElement("span", { key: 3, title: "Very High (25%+): Equivalent to parent-offspring or full sibling breeding. Severe inbreeding depression - reduced fertility, immune collapse, elevated cancer risk, shorter lifespan, and high probability of expressing multiple recessive disorders. Avoid.", style: { fontSize: "0.62rem", color: "#ef4444", cursor: "help", background: "#100d08", border: "1px solid #ef4444", borderRadius: 3, padding: "2px 6px", whiteSpace: "nowrap" } }, "25%+ Very High \u2139\uFE0F")
   ))));
 }
 
@@ -12858,7 +12858,7 @@ function getCoatPalette(genome) {
   var ticked = !!(c.T && (c.T[0]==="T"||c.T[1]==="T") && white>0);
 
   // Base colors by genetics
-  var BLACK  = brown&&dilute?"#a89080":brown?"#7b4f3a":dilute?"#8a96a8":"#2c2c2c";
+  var BLACK  = brown&&dilute?"#a89080":brown?"#7b4f3a":dilute?"#8a96a8":"#2a2018";
   var TAN    = brown&&dilute?"#d4b89a":dilute?"#c8b89a":"#c8833a";
   var RED    = intensity?"#f0d090":dilute?"#d4b87a":"#d4783a";
   var CREAM  = "#f0e8c8";
@@ -13134,14 +13134,14 @@ function BreedPhotoModal(_ref_bpm) {
           borderRadius:12, display:"block", boxShadow:"0 0 60px rgba(0,0,0,0.8)" }
       }),
       /*#__PURE__*/React.createElement("div", {
-        style: { textAlign:"center", color:"#94a3b8", marginTop:10, fontSize:"0.9rem",
+        style: { textAlign:"center", color:"#b09070", marginTop:10, fontSize:"0.9rem",
           fontStyle:"italic" }
       }, breedName)
     ),
     /*#__PURE__*/React.createElement("button", {
       onClick: onClose,
-      style: { position:"fixed", top:16, right:16, background:"#1e293b",
-        border:"1px solid #334155", color:"#e2e8f0", borderRadius:"50%",
+      style: { position:"fixed", top:16, right:16, background:"#211810",
+        border:"1px solid #3a2a18", color:"#f0e6d3", borderRadius:"50%",
         width:36, height:36, fontSize:"1.1rem", cursor:"pointer",
         display:"flex", alignItems:"center", justifyContent:"center" }
     }, "✕")
@@ -13181,9 +13181,9 @@ function BreedPhoto(_ref_bp) {
     }, /*#__PURE__*/React.createElement("button", {
       onClick: function(e){ e.stopPropagation(); setShowModal(true); },
       title: "View " + breedName + " photo",
-      style: { background:"#0f172a", border:"1px solid #334155",
+      style: { background:"#100d08", border:"1px solid #3a2a18",
         borderRadius:6, padding:"3px 8px", cursor:"pointer",
-        color:"#94a3b8", fontSize:"0.75rem", display:"flex",
+        color:"#b09070", fontSize:"0.75rem", display:"flex",
         alignItems:"center", gap:4 }
     }, "📷 Photo"))
   );
@@ -13229,18 +13229,19 @@ function Card(_ref0) {
       return onSelect && onSelect(animal);
     },
     style: {
-      background: isSelected ? "#1e3a5f" : "#131c2e",
-      border: "2px solid ".concat(isSelected ? "#38bdf8" : ineligibleReason && onSelect ? "#334155" : "#1e293b"),
+      background: isSelected ? "#2e1e08" : "#1a1208",
+      border: "1px solid " + (isSelected ? "#d4942a" : ineligibleReason && onSelect ? "#3a2a18" : "#3a2a18"),
       borderRadius: 10,
-      padding: 14,
+      padding: 16,
       cursor: onSelect ? (ineligibleReason ? "not-allowed" : "pointer") : "default",
-      transition: "border-color 0.15s",
-      opacity: ineligibleReason && onSelect ? 0.75 : 1,
+      transition: "border-color 0.15s, background 0.15s",
+      opacity: ineligibleReason && onSelect ? 0.65 : 1,
       display: "flex",
       flexDirection: "column",
       height: fullHeight ? "100%" : "auto",
       boxSizing: "border-box",
-      overflow: "auto"
+      overflow: "auto",
+      boxShadow: isSelected ? "0 0 12px rgba(212,148,42,0.2)" : "0 1px 4px rgba(0,0,0,0.3)"
     }
   }, /*#__PURE__*/React.createElement(BreedPhoto, { animal: animal })),
   (onStud || onSell || onRetire) && /*#__PURE__*/React.createElement("div", {
@@ -13249,17 +13250,17 @@ function Card(_ref0) {
   },
     animal.sex === "M" && onStud && /*#__PURE__*/React.createElement("button", {
       onClick: function(e){ e.stopPropagation(); onStud(animal); },
-      style: { flex:1, background: animal.isStud?"#0f2d1e":"#0a0f1a", border:"1px solid "+(animal.isStud?"#22c55e":"#334155"),
-        color: animal.isStud?"#22c55e":"#64748b", borderRadius:5, padding:"5px 0", cursor:"pointer", fontSize:"0.8rem", fontWeight:"bold" }
+      style: { flex:1, background: animal.isStud?"#1a1208":"#0c0a08", border:"1px solid "+(animal.isStud?"#22c55e":"#3a2a18"),
+        color: animal.isStud?"#22c55e":"#8a7055", borderRadius:5, padding:"5px 0", cursor:"pointer", fontSize:"0.8rem", fontWeight:"bold" }
     }, animal.isStud ? "\uD83D\uDC3E Stud \u2713" : "\uD83D\uDC3E Stud"),
     onSell && /*#__PURE__*/React.createElement("button", {
       onClick: function(e){ e.stopPropagation(); onSell(animal); },
-      style: { flex:1, background: animal.forSale?"#1a1200":"#0a0f1a", border:"1px solid "+(animal.forSale?"#f59e0b":"#334155"),
-        color: animal.forSale?"#f59e0b":"#64748b", borderRadius:5, padding:"5px 0", cursor:"pointer", fontSize:"0.8rem", fontWeight:"bold" }
+      style: { flex:1, background: animal.forSale?"#1a1208":"#0c0a08", border:"1px solid "+(animal.forSale?"#d4860a":"#3a2a18"),
+        color: animal.forSale?"#d4860a":"#8a7055", borderRadius:5, padding:"5px 0", cursor:"pointer", fontSize:"0.8rem", fontWeight:"bold" }
     }, animal.forSale ? "\uD83D\uDCB0 Listed" : "\uD83D\uDCB0 Sell"),
     onRetire && /*#__PURE__*/React.createElement("button", {
       onClick: function(e){ e.stopPropagation(); onRetire(animal); },
-      style: { flex:1, background:"#0a0f1a", border:"1px solid #334155", color:"#64748b",
+      style: { flex:1, background:"#0c0a08", border:"1px solid #3a2a18", color:"#8a7055",
         borderRadius:5, padding:"3px 0", cursor:"pointer", fontSize:"0.68rem", fontWeight:"bold" }
     }, "\uD83C\uDFE1 Retire")
   ),
@@ -13297,8 +13298,8 @@ function Card(_ref0) {
     },
     autoFocus: true,
     style: {
-      background: "#0f172a",
-      border: "1px solid #38bdf8",
+      background: "#100d08",
+      border: "1px solid #d4942a",
       color: "#f1f5f9",
       borderRadius: 4,
       padding: "2px 6px",
@@ -13309,9 +13310,9 @@ function Card(_ref0) {
   }), /*#__PURE__*/React.createElement("button", {
     onClick: submitRename,
     style: {
-      background: "#1e3a5f",
-      border: "1px solid #38bdf8",
-      color: "#38bdf8",
+      background: "#2e1e08",
+      border: "1px solid #d4942a",
+      color: "#d4942a",
       borderRadius: 4,
       padding: "2px 6px",
       cursor: "pointer",
@@ -13338,7 +13339,7 @@ function Card(_ref0) {
     style: {
       background: "none",
       border: "none",
-      color: "#475569",
+      color: "#6b5038",
       cursor: "pointer",
       fontSize: "0.78rem",
       padding: "1px 3px",
@@ -13347,7 +13348,7 @@ function Card(_ref0) {
     title: "Rename"
   }, "\u270F\uFE0F")), /*#__PURE__*/React.createElement("div", {
     style: {
-      color: "#94a3b8",
+      color: "#b09070",
       fontSize: "0.85rem"
     }
   }, animal.breed, " \xB7 ", animal.sex === "M" ? "♂ Male" : "♀ Female", " \xB7 Gen ", animal.generation)), /*#__PURE__*/React.createElement("div", {
@@ -13358,7 +13359,7 @@ function Card(_ref0) {
     }
   }, isSelected && /*#__PURE__*/React.createElement("span", {
     style: {
-      color: "#38bdf8",
+      color: "#d4942a",
       fontSize: "0.72rem",
       fontWeight: "bold"
     }
@@ -13371,8 +13372,8 @@ function Card(_ref0) {
     },
     style: {
       background: "none",
-      border: "1px solid #475569",
-      color: "#64748b",
+      border: "1px solid #6b5038",
+      color: "#8a7055",
       borderRadius: 4,
       width: 20,
       height: 20,
@@ -13385,22 +13386,22 @@ function Card(_ref0) {
   }, "\u2715"))), /*#__PURE__*/React.createElement("div", {
     style: {
       display: "inline-block",
-      background: "#0f172a",
-      border: "1px solid #1e3a5f",
+      background: "#100d08",
+      border: "1px solid #2e1e08",
       borderRadius: 4,
       padding: "2px 8px",
       fontSize: "0.72rem",
-      color: "#94a3b8",
+      color: "#b09070",
       marginBottom: 8
     }
   },
     /*#__PURE__*/React.createElement("span", {
-      style: { display:"inline-block", background:"#0f172a", border:"1px solid #1e3a5f",
-        borderRadius:4, padding:"3px 10px", fontSize:"0.82rem", color:"#94a3b8", marginRight:4 }
+      style: { display:"inline-block", background:"#100d08", border:"1px solid #2e1e08",
+        borderRadius:4, padding:"3px 10px", fontSize:"0.82rem", color:"#b09070", marginRight:4 }
     }, animal.coatColor ? animal.coatColor.split(" \xB7 ")[0] : "Unknown"),
     animal.coatColor && animal.coatColor.includes(" \xB7 ") && /*#__PURE__*/React.createElement("span", {
-      style: { display:"inline-block", background:"#0f172a", border:"1px solid #334155",
-        borderRadius:4, padding:"3px 10px", fontSize:"0.82rem", color:"#e2e8f0" }
+      style: { display:"inline-block", background:"#100d08", border:"1px solid #3a2a18",
+        borderRadius:4, padding:"3px 10px", fontSize:"0.82rem", color:"#f0e6d3" }
     }, animal.coatColor.split(" \xB7 ").slice(1).join(" \xB7 "))
   ), (function() {
     var stage = getAgeStage(animal.ageMonths || 0);
@@ -13411,23 +13412,23 @@ function Card(_ref0) {
     },
       /*#__PURE__*/React.createElement("span", {
         style: {
-          display: "inline-block", background: "#0f172a", border: "1px solid " + stage.color,
+          display: "inline-block", background: "#100d08", border: "1px solid " + stage.color,
           borderRadius: 4, padding: "3px 10px", fontSize: "0.82rem", color: stage.color, fontWeight: "bold"
         }
       }, stage.label),
       /*#__PURE__*/React.createElement("span", {
-        style: { color: "#94a3b8", fontSize: "0.82rem" }
+        style: { color: "#b09070", fontSize: "0.82rem" }
       }, ageYrs + " / " + lifespanYrs + " yrs"),
       animal.retired && /*#__PURE__*/React.createElement("span", {
         style: {
-          display: "inline-block", background: "#3b0f0f", border: "1px solid #ef4444",
+          display: "inline-block", background: "#3a1008", border: "1px solid #ef4444",
           borderRadius: 4, padding: "3px 10px", fontSize: "0.8rem", color: "#fca5a5"
         }
       }, "\uD83C\uDFF4 Retired"),
       animal.sick && /*#__PURE__*/React.createElement("span", {
         style: {
-          display: "inline-block", background: "#2d1a00", border: "1px solid #f59e0b",
-          borderRadius: 4, padding: "3px 10px", fontSize: "0.8rem", color: "#fcd34d"
+          display: "inline-block", background: "#2d1a00", border: "1px solid #d4860a",
+          borderRadius: 4, padding: "3px 10px", fontSize: "0.8rem", color: "#f0c040"
         }
       }, "\uD83E\uDD22 Sick"),
       animal.injured && /*#__PURE__*/React.createElement("span", {
@@ -13447,20 +13448,20 @@ function Card(_ref0) {
   // Condensed stats row
   /*#__PURE__*/React.createElement("div", {
     style: { display: "flex", alignItems: "center", gap: 10, marginBottom: 6,
-      background: "#0f172a", borderRadius: 5, padding: "5px 8px" }
+      background: "#100d08", borderRadius: 5, padding: "5px 8px" }
   },
     /*#__PURE__*/React.createElement("span", { style: { color: healthColor(animal.healthScore), fontWeight: "bold", fontSize: "0.95rem" } }, "\u2764\uFE0F ", animal.healthScore),
-    /*#__PURE__*/React.createElement("span", { style: { color: "#334155" } }, "|"),
-    /*#__PURE__*/React.createElement("span", { style: { color: "#a78bfa", fontWeight: "bold", fontSize: "0.95rem" } }, "\u26A1 ", animal.perfScore),
-    /*#__PURE__*/React.createElement("span", { style: { color: "#334155" } }, "|"),
+    /*#__PURE__*/React.createElement("span", { style: { color: "#3a2a18" } }, "|"),
+    /*#__PURE__*/React.createElement("span", { style: { color: "#c4956a", fontWeight: "bold", fontSize: "0.95rem" } }, "\u26A1 ", animal.perfScore),
+    /*#__PURE__*/React.createElement("span", { style: { color: "#3a2a18" } }, "|"),
     /*#__PURE__*/React.createElement("span", { style: { color: coiColor(animal.coi), fontWeight: "bold", fontSize: "0.95rem" } }, "COI ", animal.coi, "%")
   ),
   /*#__PURE__*/React.createElement("div", {
     onClick: function(e){ e.stopPropagation(); setShowDNA(true); },
-    style: { fontFamily: "monospace", fontSize: "0.78rem", color: "#38bdf8", background: "#0f172a",
+    style: { fontFamily: "monospace", fontSize: "0.78rem", color: "#d4942a", background: "#100d08",
       borderRadius: 4, padding: "5px 10px", marginBottom: 7, overflow: "hidden",
       textOverflow: "ellipsis", whiteSpace: "nowrap", fontWeight: "bold", letterSpacing: "0.04em",
-      border: "1px solid #1e3a5f", cursor: "pointer" },
+      border: "1px solid #2e1e08", cursor: "pointer" },
     title: "Click to view Full DNA Panel"
   }, "\uD83E\uDDEC ", animal.vinStr),
   (function() {
@@ -13469,20 +13470,20 @@ function Card(_ref0) {
     if (!hs) return null;
     if (hs.status === "in_heat") {
       return /*#__PURE__*/React.createElement("div", {
-        style: { display: "inline-block", background: "#3b1a00", border: "1px solid #f97316",
+        style: { display: "inline-block", background: "#3a2008", border: "1px solid #f97316",
           borderRadius: 4, padding: "3px 10px", fontSize: "0.82rem", color: "#fb923c",
           fontWeight: "bold", marginBottom: 6 }
       }, "\uD83D\uDD25 In Heat \u2014 ", hs.hoursLeft, "h remaining");
     }
     if (hs.status === "too_young") {
       return /*#__PURE__*/React.createElement("div", {
-        style: { display: "inline-block", background: "#0f172a", border: "1px solid #334155",
-          borderRadius: 4, padding: "3px 10px", fontSize: "0.82rem", color: "#475569", marginBottom: 6 }
+        style: { display: "inline-block", background: "#100d08", border: "1px solid #3a2a18",
+          borderRadius: 4, padding: "3px 10px", fontSize: "0.82rem", color: "#6b5038", marginBottom: 6 }
       }, "\uD83D\uDCC5 First heat in ", hs.daysUntilHeat, hs.daysUntilHeat === 1 ? " day" : " days");
     }
     return /*#__PURE__*/React.createElement("div", {
-      style: { display: "inline-block", background: "#0f172a", border: "1px solid #1e3a5f",
-        borderRadius: 4, padding: "3px 10px", fontSize: "0.82rem", color: "#64748b", marginBottom: 6 }
+      style: { display: "inline-block", background: "#100d08", border: "1px solid #2e1e08",
+        borderRadius: 4, padding: "3px 10px", fontSize: "0.82rem", color: "#8a7055", marginBottom: 6 }
     }, "\uD83D\uDCC5 Next heat in ", hs.daysUntilHeat, hs.daysUntilHeat === 1 ? " day" : " days");
   })()),
   (_animal$healthIssues = animal.healthIssues) === null || _animal$healthIssues === void 0 ? void 0 : _animal$healthIssues.filter(function (i) {
@@ -13492,7 +13493,7 @@ function Card(_ref0) {
       key: i,
       style: {
         display: "inline-block",
-        background: "#3b0f0f",
+        background: "#3a1008",
         color: "#fca5a5",
         fontSize: "0.62rem",
         borderRadius: 3,
@@ -13506,7 +13507,7 @@ function Card(_ref0) {
       key: i,
       style: {
         display: "inline-block",
-        background: "#3b0f0f",
+        background: "#3a1008",
         color: "#fca5a5",
         fontSize: "0.62rem",
         borderRadius: 3,
@@ -13532,17 +13533,17 @@ function Card(_ref0) {
   }),
 
   animal.aptitudes && animal.aptitudes.length > 0 && /*#__PURE__*/React.createElement("div", { style: { marginBottom: 10 } },
-    /*#__PURE__*/React.createElement("div", { style: { color: "#64748b", fontSize: "0.78rem", textTransform: "uppercase", letterSpacing: "0.05em", marginBottom: 5 } }, "Aptitudes"),
+    /*#__PURE__*/React.createElement("div", { style: { color: "#8a7055", fontSize: "0.78rem", textTransform: "uppercase", letterSpacing: "0.05em", marginBottom: 5 } }, "Aptitudes"),
     /*#__PURE__*/React.createElement("div", { style: { display: "flex", flexWrap: "wrap", gap: 4 } },
       animal.aptitudes.map(function(apt, i) {
         var APT_COLORS = {
-          "LGD":["#7c3aed","#4c1d95"],"Schutzhund":["#dc2626","#7f1d1d"],"IPO":["#dc2626","#7f1d1d"],
-          "PoliceWork":["#1d4ed8","#1e3a8a"],"Military":["#1d4ed8","#1e3a8a"],"Search&Rescue":["#d97706","#78350f"],
-          "Herding":["#059669","#064e3b"],"Tracking":["#0891b2","#164e63"],"FieldTrials":["#ca8a04","#713f12"],
+          "LGD":["#7c3aed","#4c1d95"],"Schutzhund":["#cc2a1a","#7a2010"],"IPO":["#cc2a1a","#7a2010"],
+          "PoliceWork":["#1d4ed8","#1e3a8a"],"Military":["#1d4ed8","#1e3a8a"],"Search&Rescue":["#c07010","#78350f"],
+          "Herding":["#1a9a40","#1a3a1a"],"Tracking":["#0891b2","#164e63"],"FieldTrials":["#ca8a04","#713f12"],
           "Agility":["#7c3aed","#3b0764"],"Obedience":["#0284c7","#0c4a6e"],"Rally-O":["#0284c7","#0c4a6e"],
-          "Flyball":["#ea580c","#7c2d12"],"DockDiving":["#0891b2","#164e63"],"LureCoursing":["#be185d","#500724"],
-          "Racing":["#be185d","#500724"],"Draft":["#78716c","#292524"],"SledRacing":["#6b7280","#1f2937"],
-          "Earthdog":["#92400e","#451a03"],"Therapy":["#be185d","#500724"],"Conformation":["#475569","#1e293b"]
+          "Flyball":["#ea580c","#7c2d12"],"DockDiving":["#0891b2","#164e63"],"LureCoursing":["#a83060","#500724"],
+          "Racing":["#a83060","#500724"],"Draft":["#78716c","#211810"],"SledRacing":["#6b7280","#211810"],
+          "Earthdog":["#92400e","#451a03"],"Therapy":["#a83060","#500724"],"Conformation":["#6b5038","#211810"]
         };
         var APT_LABELS = {
           "LGD":"\uD83D\uDC11 LGD","Schutzhund":"\uD83D\uDEE1\uFE0F Schutzhund","IPO":"\uD83D\uDEE1\uFE0F IPO",
@@ -13553,7 +13554,7 @@ function Card(_ref0) {
           "Racing":"\uD83C\uDFC1 Racing","Draft":"\uD83D\uDC02 Draft","SledRacing":"\uD83D\uDEF7 Sled",
           "Earthdog":"\uD83D\uDD73\uFE0F Earthdog","Therapy":"\u2764\uFE0F Therapy","Conformation":"\uD83C\uDFC6 Show"
         };
-        var cols = APT_COLORS[apt] || ["#475569","#1e293b"];
+        var cols = APT_COLORS[apt] || ["#6b5038","#211810"];
         return /*#__PURE__*/React.createElement("span", {
           key: i,
           style: { background: cols[1], border: "1px solid " + cols[0], color: cols[0], borderRadius: 4, padding: "2px 7px", fontSize: "0.78rem", fontWeight: "bold", whiteSpace: "nowrap" }
@@ -13563,23 +13564,23 @@ function Card(_ref0) {
   ),
 
   animal.traits && /*#__PURE__*/React.createElement("div", { style: { marginBottom: 10 } },
-    /*#__PURE__*/React.createElement("div", { style: { color: "#64748b", fontSize: "0.78rem", textTransform: "uppercase", letterSpacing: "0.05em", marginBottom: 5 } }, "Breed Traits"),
+    /*#__PURE__*/React.createElement("div", { style: { color: "#8a7055", fontSize: "0.78rem", textTransform: "uppercase", letterSpacing: "0.05em", marginBottom: 5 } }, "Breed Traits"),
     /*#__PURE__*/React.createElement("div", { style: { display: "grid", gridTemplateColumns: "1fr 1fr", gap: "3px 14px" } },
-      [["intelligence","\uD83E\uDDE0 Intelligence","#38bdf8"],["trainability","\uD83C\uDF93 Trainability","#34d399"],
-       ["energy","\u26A1 Energy","#fbbf24"],["loyalty","\u2764\uFE0F Loyalty","#f472b6"],
+      [["intelligence","\uD83E\uDDE0 Intelligence","#d4942a"],["trainability","\uD83C\uDF93 Trainability","#34d399"],
+       ["energy","\u26A1 Energy","#e8a020"],["loyalty","\u2764\uFE0F Loyalty","#e870a0"],
        ["sociability","\uD83E\uDD1D Sociability","#34d399"],["preyDrive","\uD83C\uDFAF Prey Drive","#f97316"],
-       ["aggression","\u26A0\uFE0F Aggression","#ef4444"],["barkTendency","\uD83D\uDD0A Barking","#fbbf24"],
-       ["adaptability","\uD83D\uDD04 Adaptability","#38bdf8"],["playfulness","\uD83E\uDDF8 Playfulness","#a78bfa"]
+       ["aggression","\u26A0\uFE0F Aggression","#ef4444"],["barkTendency","\uD83D\uDD0A Barking","#e8a020"],
+       ["adaptability","\uD83D\uDD04 Adaptability","#d4942a"],["playfulness","\uD83E\uDDF8 Playfulness","#c4956a"]
       ].map(function(row) {
         var key = row[0], label = row[1], color = row[2];
         var val = animal.traits[key];
         if (val === undefined || val === null) return null;
         return /*#__PURE__*/React.createElement("div", { key: key, title: label + ": " + val + "/10" },
           /*#__PURE__*/React.createElement("div", { style: { display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 1 } },
-            /*#__PURE__*/React.createElement("span", { style: { fontSize: "0.75rem", color: "#94a3b8" } }, label),
+            /*#__PURE__*/React.createElement("span", { style: { fontSize: "0.75rem", color: "#b09070" } }, label),
             /*#__PURE__*/React.createElement("span", { style: { fontSize: "0.75rem", color: color, fontWeight: "bold" } }, val, "/10")
           ),
-          /*#__PURE__*/React.createElement("div", { style: { background: "#0f172a", borderRadius: 2, height: 3 } },
+          /*#__PURE__*/React.createElement("div", { style: { background: "#100d08", borderRadius: 2, height: 3 } },
             /*#__PURE__*/React.createElement("div", { style: { background: color, width: (val/10*100) + "%", height: "100%", borderRadius: 2 } })
           )
         );
@@ -13589,7 +13590,7 @@ function Card(_ref0) {
 
   /*#__PURE__*/React.createElement("button", {
     onClick: function onClick(e) { e.stopPropagation(); setShowDNA(true); },
-    style: { width: "100%", background: "none", border: "1px solid #1e3a5f", color: "#38bdf8", borderRadius: 5, padding: "4px", cursor: "pointer", fontSize: "0.72rem" }
+    style: { width: "100%", background: "none", border: "1px solid #2e1e08", color: "#d4942a", borderRadius: 5, padding: "4px", cursor: "pointer", fontSize: "0.72rem" }
   }, "View Full DNA Panel"));
 }
 
@@ -13618,25 +13619,25 @@ function ShearingModal(_ref) {
     style:{position:"fixed",top:0,left:0,right:0,bottom:0,background:"rgba(0,0,0,0.85)",
       zIndex:1000,display:"flex",alignItems:"center",justifyContent:"center"}},
     React.createElement("div", {
-      style:{background:"#0a0f1e",border:"1px solid #334155",borderRadius:14,
+      style:{background:"#0a0f1e",border:"1px solid #3a2a18",borderRadius:14,
         width:"min(600px,95vw)",maxHeight:"85vh",display:"flex",flexDirection:"column",
         overflow:"hidden",boxShadow:"0 20px 60px rgba(0,0,0,0.8)"}},
 
       // Header
       React.createElement("div",{style:{display:"flex",alignItems:"center",padding:"14px 18px",
-        borderBottom:"1px solid #1e293b",gap:12}},
-        React.createElement("div",{style:{fontSize:"1.1rem",fontWeight:"bold",color:"#e2e8f0",flex:1}},
+        borderBottom:"1px solid #211810",gap:12}},
+        React.createElement("div",{style:{fontSize:"1.1rem",fontWeight:"bold",color:"#f0e6d3",flex:1}},
           "\uD83D\uDC11 Shearing Shed"),
         React.createElement("button",{onClick:onClose,
-          style:{background:"transparent",border:"1px solid #334155",color:"#94a3b8",
+          style:{background:"transparent",border:"1px solid #3a2a18",color:"#b09070",
             borderRadius:6,padding:"4px 10px",cursor:"pointer",fontSize:"0.8rem"}},"\u2715 Close")
       ),
 
       // Status bar
-      React.createElement("div",{style:{padding:"10px 18px",borderBottom:"1px solid #1e293b",
-        background: win.isOpen ? "#0a1f0a" : "#1a0a0a"}},
+      React.createElement("div",{style:{padding:"10px 18px",borderBottom:"1px solid #211810",
+        background: win.isOpen ? "#0a1f0a" : "#2a1008"}},
         win.isOpen
-          ? React.createElement("div",{style:{color:"#4ade80",fontSize:"0.82rem",fontWeight:"bold"}},
+          ? React.createElement("div",{style:{color:"#5aaa30",fontSize:"0.82rem",fontWeight:"bold"}},
               "\uD83D\uDFE2 Shearing window OPEN \u2014 " + win.season + " \u2014 " + win.daysLeft + " day" + (win.daysLeft!==1?"s":"") + " remaining")
           : React.createElement("div",{style:{color:"#f87171",fontSize:"0.82rem",fontWeight:"bold"}},
               "\uD83D\uDD34 Shearing window CLOSED \u2014 Opens in Spring (March) and Fall (September)")
@@ -13644,13 +13645,13 @@ function ShearingModal(_ref) {
 
       // Shear All button
       win.isOpen && unshearedCount > 0 && React.createElement("div",{
-        style:{padding:"10px 18px",borderBottom:"1px solid #1e293b",display:"flex",
+        style:{padding:"10px 18px",borderBottom:"1px solid #211810",display:"flex",
           alignItems:"center",justifyContent:"space-between"}},
-        React.createElement("span",{style:{color:"#94a3b8",fontSize:"0.78rem"}},
+        React.createElement("span",{style:{color:"#b09070",fontSize:"0.78rem"}},
           unshearedCount + " sheep ready to shear"),
         React.createElement("button",{
           onClick:function(){ onShearAll && onShearAll(sheep.filter(function(a){return !isSheared(a);}), win.seasonKey); },
-          style:{background:"#1a3a0a",border:"1px solid #4ade80",color:"#4ade80",
+          style:{background:"#1a2010",border:"1px solid #5aaa30",color:"#5aaa30",
             borderRadius:6,padding:"6px 16px",cursor:"pointer",fontSize:"0.82rem",fontWeight:"bold"}},
           "\u2702\uFE0F Shear All (" + unshearedCount + ")")
       ),
@@ -13658,22 +13659,22 @@ function ShearingModal(_ref) {
       // Sheep list
       React.createElement("div",{style:{overflowY:"auto",flex:1,padding:"12px 18px"}},
         sheep.length === 0
-          ? React.createElement("div",{style:{textAlign:"center",color:"#475569",padding:"40px 0"}},
+          ? React.createElement("div",{style:{textAlign:"center",color:"#6b5038",padding:"40px 0"}},
               "No female sheep owned.")
           : sheep.map(function(a) {
               var sheared = isSheared(a);
               var yieldLbs = a.shearYield || (Math.floor(Math.random()*4)+7);
               return React.createElement("div",{key:a.id,
                 style:{display:"flex",alignItems:"center",gap:10,padding:"8px 10px",
-                  background: sheared ? "#0a1a0a" : "#0f1318",
-                  borderRadius:6,border:"1px solid "+(sheared?"#166534":"#1e293b"),marginBottom:5}},
-                React.createElement("div",{style:{flex:1,fontSize:"0.8rem",color: sheared?"#4ade80":"#e2e8f0"}},
+                  background: sheared ? "#0a1a0a" : "#100d08",
+                  borderRadius:6,border:"1px solid "+(sheared?"#1a7a2a":"#211810"),marginBottom:5}},
+                React.createElement("div",{style:{flex:1,fontSize:"0.8rem",color: sheared?"#5aaa30":"#f0e6d3"}},
                   (a.breed||"Sheep") + " \u2014 \u2640 Female"),
-                React.createElement("div",{style:{fontSize:"0.72rem",color:"#64748b",minWidth:80,textAlign:"right"}},
+                React.createElement("div",{style:{fontSize:"0.72rem",color:"#8a7055",minWidth:80,textAlign:"right"}},
                   sheared ? "\u2714 Sheared this season" : yieldLbs + " lbs est."),
                 win.isOpen && !sheared && React.createElement("button",{
                   onClick:function(){ onShear && onShear(a, win.seasonKey); },
-                  style:{background:"#0a1a0a",border:"1px solid #22c55e",color:"#4ade80",
+                  style:{background:"#0a1a0a",border:"1px solid #22c55e",color:"#5aaa30",
                     borderRadius:6,padding:"4px 10px",cursor:"pointer",fontSize:"0.72rem"}},
                   "Shear")
               );
@@ -13753,31 +13754,32 @@ function Clock(_ref) {
   });
 
   var gd = getGameDate(gameStartDate || Date.now());
-  var seasonColors = { Spring:"#4ade80", Summer:"#fbbf24", Fall:"#f97316", Winter:"#93c5fd" };
-  var seasonColor = seasonColors[gd.season.name] || "#e2e8f0";
+  var seasonColors = { Spring:"#5aaa30", Summer:"#e8a020", Fall:"#f97316", Winter:"#93c5fd" };
+  var seasonColor = seasonColors[gd.season.name] || "#f0e6d3";
 
   return React.createElement('div', {
     style: {
       display: 'flex', alignItems: 'center', gap: 10,
-      background: '#0f172a', border: '1px solid #1e3a5f',
-      borderRadius: 6, padding: '3px 10px', fontSize: '0.72rem'
+      background: '#1a1208', border: '1px solid #3a2a18',
+      borderRadius: 6, padding: '4px 12px', fontSize: '0.72rem',
+      boxShadow: 'inset 0 1px 3px rgba(0,0,0,0.3)'
     }
   },
     React.createElement('span', {style: {color: seasonColor, fontWeight:'bold'}},
       gd.season.emoji + ' ' + gd.season.name + ' \u2014 ' + gd.month),
-    React.createElement('span', {style: {color: '#334155'}},'|'),
-    React.createElement('span', {style: {color: '#38bdf8'}}, '\uD83D\uDD50 ' + estTime + ' EST'),
-    React.createElement('span', {style: {color: '#334155'}},'|'),
-    React.createElement('span', {style: {color: '#eab308'}}, '\u23F1 Reset: ' + pad(hh) + ':' + pad(mm) + ':' + pad(ss))
+    React.createElement('span', {style: {color: '#3a2a18'}},'|'),
+    React.createElement('span', {style: {color: '#d4942a'}}, '\uD83D\uDD50 ' + estTime + ' EST'),
+    React.createElement('span', {style: {color: '#3a2a18'}},'|'),
+    React.createElement('span', {style: {color: '#d4960a'}}, '\u23F1 Reset: ' + pad(hh) + ':' + pad(mm) + ':' + pad(ss))
   );
 }
 
 // ── GLOBAL CONSTANTS ──────────────────────────────────────────────────────────
 var KENNEL_TYPES = {
-  basic:      { label: "Basic Kennel",      capacity: 10,  color: "#64748b", icon: "🏚️", cost: 500 },
-  standard:   { label: "Standard Kennel",   capacity: 25,  color: "#38bdf8", icon: "🏠", cost: 1200 },
-  commercial: { label: "Commercial Kennel", capacity: 50,  color: "#a78bfa", icon: "🏢", cost: 3000 },
-  elite:      { label: "Elite Kennel",      capacity: 100, color: "#fbbf24", icon: "🏆", cost: 8000 }
+  basic:      { label: "Basic Kennel",      capacity: 10,  color: "#8a7055", icon: "🏚️", cost: 500 },
+  standard:   { label: "Standard Kennel",   capacity: 25,  color: "#d4942a", icon: "🏠", cost: 1200 },
+  commercial: { label: "Commercial Kennel", capacity: 50,  color: "#c4956a", icon: "🏢", cost: 3000 },
+  elite:      { label: "Elite Kennel",      capacity: 100, color: "#e8a020", icon: "🏆", cost: 8000 }
 };
 
 // ── FACILITIES ────────────────────────────────────────────────
@@ -13913,7 +13915,7 @@ function FarmView(_ref) {
     return {
       position:"absolute", left:COLS[col], top:ROWS[row],
       width:TILE_W, height:TILE_H, borderRadius:6, overflow:"hidden",
-      background: bg || "#0c1a0d", border:"1.5px solid "+(border||"#1e3a20"),
+      background: bg || "#0c1a0d", border:"1.5px solid "+(border||"#1a2010"),
       cursor:"pointer", transition:"transform 0.12s, filter 0.12s", zIndex:2
     };
   }
@@ -13927,14 +13929,14 @@ function FarmView(_ref) {
     },
       /*#__PURE__*/React.createElement("svg", { width:TILE_W, height:TILE_H, viewBox:"0 0 110 110" },
         React.createElement("rect",{x:0,y:0,width:110,height:110,fill:"#0c1a0d",rx:4}),
-        React.createElement("line",{x1:0,y1:37,x2:110,y2:37,stroke:"#1e3a20",strokeWidth:0.5}),
-        React.createElement("line",{x1:0,y1:73,x2:110,y2:73,stroke:"#1e3a20",strokeWidth:0.5}),
-        React.createElement("line",{x1:37,y1:0,x2:37,y2:110,stroke:"#1e3a20",strokeWidth:0.5}),
-        React.createElement("line",{x1:73,y1:0,x2:73,y2:110,stroke:"#1e3a20",strokeWidth:0.5}),
-        React.createElement("line",{x1:45,y1:55,x2:65,y2:55,stroke:"#1e3a20",strokeWidth:3,strokeLinecap:"round"}),
-        React.createElement("line",{x1:55,y1:45,x2:55,y2:65,stroke:"#1e3a20",strokeWidth:3,strokeLinecap:"round"})
+        React.createElement("line",{x1:0,y1:37,x2:110,y2:37,stroke:"#1a2010",strokeWidth:0.5}),
+        React.createElement("line",{x1:0,y1:73,x2:110,y2:73,stroke:"#1a2010",strokeWidth:0.5}),
+        React.createElement("line",{x1:37,y1:0,x2:37,y2:110,stroke:"#1a2010",strokeWidth:0.5}),
+        React.createElement("line",{x1:73,y1:0,x2:73,y2:110,stroke:"#1a2010",strokeWidth:0.5}),
+        React.createElement("line",{x1:45,y1:55,x2:65,y2:55,stroke:"#1a2010",strokeWidth:3,strokeLinecap:"round"}),
+        React.createElement("line",{x1:55,y1:45,x2:55,y2:65,stroke:"#1a2010",strokeWidth:3,strokeLinecap:"round"})
       ),
-      /*#__PURE__*/React.createElement("span", { style:{position:"absolute",bottom:5,left:0,right:0,textAlign:"center",fontSize:"0.55rem",color:"#1e3a20",letterSpacing:"0.05em",textTransform:"uppercase",fontWeight:"bold"} }, "Build Here")
+      /*#__PURE__*/React.createElement("span", { style:{position:"absolute",bottom:5,left:0,right:0,textAlign:"center",fontSize:"0.55rem",color:"#1a2010",letterSpacing:"0.05em",textTransform:"uppercase",fontWeight:"bold"} }, "Build Here")
     );
   }
 
@@ -13950,48 +13952,48 @@ function FarmView(_ref) {
       /*#__PURE__*/React.createElement("svg", { width:TILE_W, height:TILE_H, viewBox:"0 0 110 110", dangerouslySetInnerHTML:{__html: props.svgInner} }),
       props.badge && /*#__PURE__*/React.createElement("span", { style:{position:"absolute",top:5,left:6,fontSize:"0.52rem",fontWeight:"bold",background:"rgba(0,0,0,0.65)",borderRadius:3,padding:"1px 4px",color:props.color} }, props.badge),
       props.count && /*#__PURE__*/React.createElement("span", { style:{position:"absolute",top:5,right:6,fontSize:"0.52rem",fontWeight:"bold",background:"rgba(0,0,0,0.65)",borderRadius:3,padding:"1px 4px",color:props.color} }, props.count),
-      /*#__PURE__*/React.createElement("span", { style:{position:"absolute",bottom:5,left:0,right:0,textAlign:"center",fontSize:"0.55rem",color:props.color||"#e2e8f0",letterSpacing:"0.05em",textTransform:"uppercase",fontWeight:"bold",textShadow:"0 1px 4px rgba(0,0,0,1)"} }, props.label)
+      /*#__PURE__*/React.createElement("span", { style:{position:"absolute",bottom:5,left:0,right:0,textAlign:"center",fontSize:"0.55rem",color:props.color||"#f0e6d3",letterSpacing:"0.05em",textTransform:"uppercase",fontWeight:"bold",textShadow:"0 1px 4px rgba(0,0,0,1)"} }, props.label)
     );
   }
 
   // SVG inner strings for each building
   var SVG = {
-    pigPen: '<rect x="0" y="0" width="110" height="110" fill="#221218" rx="4"/><rect x="4" y="4" width="102" height="102" fill="#361620" rx="4"/><line x1="55" y1="4" x2="55" y2="106" stroke="#be185d" stroke-width="2"/><line x1="4" y1="55" x2="106" y2="55" stroke="#be185d" stroke-width="2"/><rect x="4" y="4" width="102" height="102" fill="none" stroke="#be185d" stroke-width="3" rx="4"/><rect x="7" y="7" width="30" height="22" fill="#501828" rx="2"/><rect x="58" y="7" width="30" height="22" fill="#501828" rx="2"/><rect x="7" y="58" width="30" height="22" fill="#501828" rx="2"/><rect x="58" y="58" width="44" height="44" fill="#3e1422" rx="2" stroke="#be185d" stroke-width="1"/>',
-    slaughter: '<rect x="0" y="0" width="110" height="110" fill="#120808" rx="4"/><rect x="10" y="28" width="78" height="66" fill="#2a1010" rx="2"/><polygon points="49,10 88,30 10,30" fill="#3d1414"/><polygon points="49,10 72,22 26,22" fill="#5a1a1a" opacity="0.9"/><rect x="36" y="60" width="26" height="34" fill="#0e0606" rx="1"/><rect x="12" y="40" width="16" height="12" fill="#1a0a0a" rx="1" stroke="#dc2626" stroke-width="0.8"/><rect x="70" y="40" width="16" height="12" fill="#1a0a0a" rx="1" stroke="#dc2626" stroke-width="0.8"/><rect x="82" y="14" width="10" height="44" fill="#1e0808" rx="3"/><ellipse cx="87" cy="14" rx="5" ry="3" fill="#2a0c0c"/><line x1="20" y1="38" x2="80" y2="38" stroke="#7f1d1d" stroke-width="1.5" opacity="0.6"/><line x1="35" y1="34" x2="35" y2="42" stroke="#dc2626" stroke-width="1" opacity="0.5"/><line x1="55" y1="34" x2="55" y2="42" stroke="#dc2626" stroke-width="1" opacity="0.5"/>',
-    chickCoop: '<rect x="0" y="0" width="110" height="110" fill="#101d0a" rx="4"/><rect x="8" y="24" width="62" height="42" fill="#365a1a" rx="3"/><polygon points="39,8 74,26 4,26" fill="#4a7a22"/><rect x="70" y="28" width="30" height="38" fill="#2d4d14" rx="2"/><line x1="70" y1="47" x2="100" y2="47" stroke="#1a2e0a" stroke-width="1.5"/><rect x="72" y="30" width="12" height="16" fill="#1a2e0a" rx="1"/><rect x="86" y="30" width="12" height="16" fill="#1a2e0a" rx="1"/><rect x="8" y="66" width="92" height="36" fill="#1a2e0d" rx="2"/><line x1="28" y1="66" x2="28" y2="102" stroke="#4d7c0f" stroke-width="2"/><line x1="48" y1="66" x2="48" y2="102" stroke="#4d7c0f" stroke-width="2"/><line x1="68" y1="66" x2="68" y2="102" stroke="#4d7c0f" stroke-width="2"/><line x1="88" y1="66" x2="88" y2="102" stroke="#4d7c0f" stroke-width="2"/>',
-    grazing: '<rect x="0" y="0" width="110" height="110" fill="#091e0a" rx="4"/><rect x="4" y="4" width="102" height="102" fill="#102a16" rx="3"/><line x1="4" y1="22" x2="106" y2="22" stroke="#1c5224" stroke-width="0.8"/><line x1="4" y1="40" x2="106" y2="40" stroke="#1c5224" stroke-width="0.8"/><line x1="4" y1="58" x2="106" y2="58" stroke="#1c5224" stroke-width="0.8"/><line x1="4" y1="76" x2="106" y2="76" stroke="#1c5224" stroke-width="0.8"/><line x1="4" y1="94" x2="106" y2="94" stroke="#1c5224" stroke-width="0.8"/><line x1="22" y1="4" x2="22" y2="106" stroke="#1c5224" stroke-width="0.8"/><line x1="40" y1="4" x2="40" y2="106" stroke="#1c5224" stroke-width="0.8"/><line x1="58" y1="4" x2="58" y2="106" stroke="#1c5224" stroke-width="0.8"/><line x1="76" y1="4" x2="76" y2="106" stroke="#1c5224" stroke-width="0.8"/><line x1="94" y1="4" x2="94" y2="106" stroke="#1c5224" stroke-width="0.8"/><rect x="4" y="4" width="102" height="102" fill="none" stroke="#15803d" stroke-width="2" rx="3"/><rect x="6" y="6" width="28" height="20" fill="#1e4428" rx="2"/><rect x="40" y="46" width="20" height="8" fill="#0e3a5c" rx="3" stroke="#38bdf8" stroke-width="0.5"/><rect x="42" y="2" width="26" height="4" fill="#15803d" rx="1"/>',
-    barn: '<rect x="0" y="0" width="110" height="110" fill="#1c0808" rx="4"/><rect x="8" y="30" width="80" height="66" fill="#561414" rx="2"/><polygon points="48,10 88,32 8,32" fill="#7a1919"/><polygon points="48,10 74,24 22,24" fill="#b91c1c" opacity="0.9"/><rect x="36" y="60" width="24" height="36" fill="#200808" rx="1"/><rect x="10" y="42" width="16" height="12" fill="#1a2a3a" rx="1" stroke="#ef4444" stroke-width="0.5"/><rect x="62" y="42" width="16" height="12" fill="#1a2a3a" rx="1" stroke="#ef4444" stroke-width="0.5"/><rect x="90" y="18" width="12" height="60" fill="#2d0a0a" rx="4"/><ellipse cx="96" cy="18" rx="6" ry="3.5" fill="#3d0f0f"/>',
-    milkBarn: '<rect x="0" y="0" width="110" height="110" fill="#0e1828" rx="4"/><rect x="8" y="28" width="84" height="66" fill="#1c2a40" rx="2"/><polygon points="50,8 92,30 8,30" fill="#243552"/><polygon points="50,8 76,22 24,22" fill="#3b82f6" opacity="0.8"/><rect x="36" y="58" width="30" height="36" fill="#0c1018" rx="1"/><rect x="10" y="40" width="18" height="14" fill="#0d1f35" rx="1" stroke="#60a5fa" stroke-width="0.5"/><rect x="72" y="40" width="18" height="14" fill="#0d1f35" rx="1" stroke="#60a5fa" stroke-width="0.5"/><rect x="10" y="58" width="22" height="12" fill="#162840" rx="2" stroke="#3b82f6" stroke-width="0.5"/><rect x="78" y="58" width="22" height="12" fill="#162840" rx="2" stroke="#3b82f6" stroke-width="0.5"/><rect x="86" y="44" width="20" height="40" fill="#12202e" rx="2" stroke="#3b82f6" stroke-width="0.5"/>',
-    apiary: '<rect x="0" y="0" width="110" height="110" fill="#122010" rx="4"/><ellipse cx="28" cy="72" rx="14" ry="18" fill="#8b6914"/><ellipse cx="28" cy="68" rx="12" ry="14" fill="#a07820"/><line x1="16" y1="66" x2="40" y2="66" stroke="#6b500f" stroke-width="1.5"/><line x1="18" y1="60" x2="38" y2="60" stroke="#6b500f" stroke-width="1.5"/><ellipse cx="28" cy="90" rx="16" ry="4" fill="#6b500f"/><ellipse cx="55" cy="68" rx="14" ry="18" fill="#8b6914"/><ellipse cx="55" cy="64" rx="12" ry="14" fill="#a07820"/><line x1="43" y1="62" x2="67" y2="62" stroke="#6b500f" stroke-width="1.5"/><line x1="45" y1="56" x2="65" y2="56" stroke="#6b500f" stroke-width="1.5"/><ellipse cx="55" cy="86" rx="16" ry="4" fill="#6b500f"/><ellipse cx="82" cy="72" rx="14" ry="18" fill="#8b6914"/><ellipse cx="82" cy="68" rx="12" ry="14" fill="#a07820"/><line x1="70" y1="66" x2="94" y2="66" stroke="#6b500f" stroke-width="1.5"/><line x1="72" y1="60" x2="92" y2="60" stroke="#6b500f" stroke-width="1.5"/><ellipse cx="82" cy="90" rx="16" ry="4" fill="#6b500f"/><ellipse cx="20" cy="38" rx="4" ry="2.5" fill="#fbbf24" opacity="0.9"/><ellipse cx="68" cy="28" rx="4" ry="2.5" fill="#fbbf24" opacity="0.9"/><ellipse cx="90" cy="40" rx="4" ry="2.5" fill="#fbbf24" opacity="0.9"/><circle cx="40" cy="22" r="2.5" fill="#f472b6" opacity="0.6"/><circle cx="62" cy="14" r="3" fill="#fbbf24" opacity="0.5"/>',
-    pond: '<rect x="0" y="0" width="110" height="110" fill="#030d18" rx="4"/><ellipse cx="55" cy="60" rx="50" ry="42" fill="#0a2840"/><ellipse cx="55" cy="60" rx="46" ry="38" fill="#0c3454"/><ellipse cx="55" cy="60" rx="38" ry="30" fill="none" stroke="#145e8a" stroke-width="1" opacity="0.6"/><ellipse cx="55" cy="60" rx="50" ry="42" fill="none" stroke="#0369a1" stroke-width="3"/><line x1="12" y1="72" x2="12" y2="44" stroke="#365314" stroke-width="2"/><ellipse cx="12" cy="43" rx="4" ry="7" fill="#4a7c1a" opacity="0.8"/><line x1="96" y1="68" x2="96" y2="46" stroke="#365314" stroke-width="2"/><rect x="48" y="16" width="6" height="22" fill="#4a3010" rx="1"/><rect x="38" y="16" width="26" height="6" fill="#5a3c14" rx="1"/><ellipse cx="42" cy="52" rx="6" ry="4" fill="#e2e8f0" opacity="0.9"/><circle cx="46" cy="50" r="4" fill="#e2e8f0" opacity="0.9"/><polygon points="49,49 53,50 49,51" fill="#fbbf24"/><ellipse cx="64" cy="66" rx="5" ry="3.5" fill="#e2e8f0" opacity="0.8"/><circle cx="68" cy="64" r="3.5" fill="#e2e8f0" opacity="0.8"/>',
-    storageBarn: '<rect x="0" y="0" width="110" height="110" fill="#0e1008" rx="4"/><rect x="8" y="28" width="80" height="68" fill="#242a10" rx="2"/><polygon points="48,10 88,30 8,30" fill="#343e14"/><polygon points="48,10 72,22 24,22" fill="#4a5a1a" opacity="0.9"/><rect x="32" y="58" width="32" height="38" fill="#0e1008" rx="1"/><line x1="48" y1="58" x2="48" y2="96" stroke="#242a10" stroke-width="1.5"/><rect x="10" y="40" width="16" height="12" fill="#1a2a0a" rx="1" stroke="#84cc16" stroke-width="0.5"/><rect x="62" y="40" width="16" height="12" fill="#1a2a0a" rx="1" stroke="#84cc16" stroke-width="0.5"/><rect x="10" y="60" width="18" height="14" fill="#1e2a0c" rx="1" stroke="#4a5a1a" stroke-width="0.5"/><rect x="70" y="60" width="18" height="14" fill="#1e2a0c" rx="1" stroke="#4a5a1a" stroke-width="0.5"/><rect x="90" y="20" width="14" height="62" fill="#1e2a0c" rx="4"/><ellipse cx="97" cy="20" rx="7" ry="4" fill="#2a3a10"/>',
-    whelping: '<rect x="0" y="0" width="110" height="110" fill="#0d0818" rx="4"/><rect x="14" y="26" width="82" height="68" fill="#1e0f38" rx="3"/><polygon points="55,10 96,28 14,28" fill="#2d1854"/><polygon points="55,10 78,22 32,22" fill="#3d2270"/><rect x="20" y="38" width="20" height="16" fill="#2d1a4a" rx="2" stroke="#a78bfa" stroke-width="0.8"/><rect x="70" y="38" width="20" height="16" fill="#2d1a4a" rx="2" stroke="#a78bfa" stroke-width="0.8"/><rect x="21" y="39" width="18" height="14" fill="#4c1d95" opacity="0.4" rx="1"/><rect x="71" y="39" width="18" height="14" fill="#4c1d95" opacity="0.4" rx="1"/><rect x="44" y="64" width="22" height="30" fill="#12082a" rx="2"/>',
-    shearing: '<rect x="0" y="0" width="110" height="110" fill="#1a1408" rx="4"/><rect x="6" y="24" width="88" height="68" fill="#382610" rx="2"/><polygon points="50,8 94,26 6,26" fill="#4e3214"/><rect x="34" y="60" width="32" height="32" fill="#180e06" rx="1"/><rect x="8" y="36" width="20" height="16" fill="#1a1808" rx="1" stroke="#d97706" stroke-width="0.5"/><rect x="74" y="36" width="20" height="16" fill="#1a1808" rx="1" stroke="#d97706" stroke-width="0.5"/><line x1="6" y1="60" x2="94" y2="60" stroke="#4e3214" stroke-width="1.5"/><rect x="8" y="72" width="22" height="18" fill="#241a08" rx="2" stroke="#d97706" stroke-width="0.5"/><rect x="72" y="72" width="22" height="18" fill="#241a08" rx="2" stroke="#d97706" stroke-width="0.5"/>',
-    kennel: '<rect x="0" y="0" width="110" height="110" fill="#1a0808" rx="4"/><rect x="16" y="32" width="72" height="62" fill="#4a1212" rx="2"/><polygon points="52,14 88,34 16,34" fill="#6b1717"/><polygon points="52,14 76,26 28,26" fill="#991b1b" opacity="0.9"/><rect x="40" y="62" width="24" height="32" fill="#1a0505" rx="1"/><rect x="18" y="44" width="14" height="10" fill="#1a2a3a" rx="1" stroke="#ef4444" stroke-width="0.5"/><rect x="72" y="44" width="14" height="10" fill="#1a2a3a" rx="1" stroke="#ef4444" stroke-width="0.5"/><rect x="90" y="22" width="14" height="58" fill="#2d0a0a" rx="4"/><ellipse cx="97" cy="22" rx="7" ry="4" fill="#3d0f0f"/>',
-    stable: '<rect x="0" y="0" width="110" height="110" fill="#180f06" rx="4"/><rect x="4" y="14" width="102" height="42" fill="#381e08" rx="2"/><rect x="4" y="60" width="102" height="42" fill="#381e08" rx="2"/><rect x="42" y="14" width="26" height="88" fill="#200e04" rx="1"/><polygon points="55,4 106,16 4,16" fill="#4a2a0a"/><line x1="20" y1="14" x2="20" y2="56" stroke="#200e04" stroke-width="1.5"/><line x1="30" y1="14" x2="30" y2="56" stroke="#200e04" stroke-width="1.5"/><line x1="70" y1="14" x2="70" y2="56" stroke="#200e04" stroke-width="1.5"/><line x1="80" y1="14" x2="80" y2="56" stroke="#200e04" stroke-width="1.5"/><line x1="20" y1="60" x2="20" y2="102" stroke="#200e04" stroke-width="1.5"/><line x1="30" y1="60" x2="30" y2="102" stroke="#200e04" stroke-width="1.5"/><line x1="70" y1="60" x2="70" y2="102" stroke="#200e04" stroke-width="1.5"/><line x1="80" y1="60" x2="80" y2="102" stroke="#200e04" stroke-width="1.5"/>'
+    pigPen: '<rect x="0" y="0" width="110" height="110" fill="#221218" rx="4"/><rect x="4" y="4" width="102" height="102" fill="#2a1008" rx="4"/><line x1="55" y1="4" x2="55" y2="106" stroke="#a83060" stroke-width="2"/><line x1="4" y1="55" x2="106" y2="55" stroke="#a83060" stroke-width="2"/><rect x="4" y="4" width="102" height="102" fill="none" stroke="#a83060" stroke-width="3" rx="4"/><rect x="7" y="7" width="30" height="22" fill="#501828" rx="2"/><rect x="58" y="7" width="30" height="22" fill="#501828" rx="2"/><rect x="7" y="58" width="30" height="22" fill="#501828" rx="2"/><rect x="58" y="58" width="44" height="44" fill="#3e1422" rx="2" stroke="#a83060" stroke-width="1"/>',
+    slaughter: '<rect x="0" y="0" width="110" height="110" fill="#120808" rx="4"/><rect x="10" y="28" width="78" height="66" fill="#2a1008" rx="2"/><polygon points="49,10 88,30 10,30" fill="#3d1414"/><polygon points="49,10 72,22 26,22" fill="#5a1a1a" opacity="0.9"/><rect x="36" y="60" width="26" height="34" fill="#1a0e06" rx="1"/><rect x="12" y="40" width="16" height="12" fill="#2a1008" rx="1" stroke="#cc2a1a" stroke-width="0.8"/><rect x="70" y="40" width="16" height="12" fill="#2a1008" rx="1" stroke="#cc2a1a" stroke-width="0.8"/><rect x="82" y="14" width="10" height="44" fill="#1a0e06" rx="3"/><ellipse cx="87" cy="14" rx="5" ry="3" fill="#2a1008"/><line x1="20" y1="38" x2="80" y2="38" stroke="#7a2010" stroke-width="1.5" opacity="0.6"/><line x1="35" y1="34" x2="35" y2="42" stroke="#cc2a1a" stroke-width="1" opacity="0.5"/><line x1="55" y1="34" x2="55" y2="42" stroke="#cc2a1a" stroke-width="1" opacity="0.5"/>',
+    chickCoop: '<rect x="0" y="0" width="110" height="110" fill="#101d0a" rx="4"/><rect x="8" y="24" width="62" height="42" fill="#2a3810" rx="3"/><polygon points="39,8 74,26 4,26" fill="#4a7a22"/><rect x="70" y="28" width="30" height="38" fill="#2a3810" rx="2"/><line x1="70" y1="47" x2="100" y2="47" stroke="#1a2e0a" stroke-width="1.5"/><rect x="72" y="30" width="12" height="16" fill="#1a2e0a" rx="1"/><rect x="86" y="30" width="12" height="16" fill="#1a2e0a" rx="1"/><rect x="8" y="66" width="92" height="36" fill="#1a1208" rx="2"/><line x1="28" y1="66" x2="28" y2="102" stroke="#4a6a18" stroke-width="2"/><line x1="48" y1="66" x2="48" y2="102" stroke="#4a6a18" stroke-width="2"/><line x1="68" y1="66" x2="68" y2="102" stroke="#4a6a18" stroke-width="2"/><line x1="88" y1="66" x2="88" y2="102" stroke="#4a6a18" stroke-width="2"/>',
+    grazing: '<rect x="0" y="0" width="110" height="110" fill="#091e0a" rx="4"/><rect x="4" y="4" width="102" height="102" fill="#1a1208" rx="3"/><line x1="4" y1="22" x2="106" y2="22" stroke="#1a2010" stroke-width="0.8"/><line x1="4" y1="40" x2="106" y2="40" stroke="#1a2010" stroke-width="0.8"/><line x1="4" y1="58" x2="106" y2="58" stroke="#1a2010" stroke-width="0.8"/><line x1="4" y1="76" x2="106" y2="76" stroke="#1a2010" stroke-width="0.8"/><line x1="4" y1="94" x2="106" y2="94" stroke="#1a2010" stroke-width="0.8"/><line x1="22" y1="4" x2="22" y2="106" stroke="#1a2010" stroke-width="0.8"/><line x1="40" y1="4" x2="40" y2="106" stroke="#1a2010" stroke-width="0.8"/><line x1="58" y1="4" x2="58" y2="106" stroke="#1a2010" stroke-width="0.8"/><line x1="76" y1="4" x2="76" y2="106" stroke="#1a2010" stroke-width="0.8"/><line x1="94" y1="4" x2="94" y2="106" stroke="#1a2010" stroke-width="0.8"/><rect x="4" y="4" width="102" height="102" fill="none" stroke="#1a7a2a" stroke-width="2" rx="3"/><rect x="6" y="6" width="28" height="20" fill="#1a1208" rx="2"/><rect x="40" y="46" width="20" height="8" fill="#2e1e08" rx="3" stroke="#d4942a" stroke-width="0.5"/><rect x="42" y="2" width="26" height="4" fill="#1a7a2a" rx="1"/>',
+    barn: '<rect x="0" y="0" width="110" height="110" fill="#1c0808" rx="4"/><rect x="8" y="30" width="80" height="66" fill="#561414" rx="2"/><polygon points="48,10 88,32 8,32" fill="#7a1919"/><polygon points="48,10 74,24 22,24" fill="#b91c1c" opacity="0.9"/><rect x="36" y="60" width="24" height="36" fill="#1a0e06" rx="1"/><rect x="10" y="42" width="16" height="12" fill="#211810" rx="1" stroke="#ef4444" stroke-width="0.5"/><rect x="62" y="42" width="16" height="12" fill="#211810" rx="1" stroke="#ef4444" stroke-width="0.5"/><rect x="90" y="18" width="12" height="60" fill="#2d0a0a" rx="4"/><ellipse cx="96" cy="18" rx="6" ry="3.5" fill="#3d0f0f"/>',
+    milkBarn: '<rect x="0" y="0" width="110" height="110" fill="#0e1828" rx="4"/><rect x="8" y="28" width="84" height="66" fill="#211810" rx="2"/><polygon points="50,8 92,30 8,30" fill="#2e1e08"/><polygon points="50,8 76,22 24,22" fill="#c4801a" opacity="0.8"/><rect x="36" y="58" width="30" height="36" fill="#100d08" rx="1"/><rect x="10" y="40" width="18" height="14" fill="#0d1f35" rx="1" stroke="#60a5fa" stroke-width="0.5"/><rect x="72" y="40" width="18" height="14" fill="#0d1f35" rx="1" stroke="#60a5fa" stroke-width="0.5"/><rect x="10" y="58" width="22" height="12" fill="#162840" rx="2" stroke="#c4801a" stroke-width="0.5"/><rect x="78" y="58" width="22" height="12" fill="#162840" rx="2" stroke="#c4801a" stroke-width="0.5"/><rect x="86" y="44" width="20" height="40" fill="#211810" rx="2" stroke="#c4801a" stroke-width="0.5"/>',
+    apiary: '<rect x="0" y="0" width="110" height="110" fill="#1a1208" rx="4"/><ellipse cx="28" cy="72" rx="14" ry="18" fill="#8b6914"/><ellipse cx="28" cy="68" rx="12" ry="14" fill="#a07820"/><line x1="16" y1="66" x2="40" y2="66" stroke="#8a6a20" stroke-width="1.5"/><line x1="18" y1="60" x2="38" y2="60" stroke="#8a6a20" stroke-width="1.5"/><ellipse cx="28" cy="90" rx="16" ry="4" fill="#8a6a20"/><ellipse cx="55" cy="68" rx="14" ry="18" fill="#8b6914"/><ellipse cx="55" cy="64" rx="12" ry="14" fill="#a07820"/><line x1="43" y1="62" x2="67" y2="62" stroke="#8a6a20" stroke-width="1.5"/><line x1="45" y1="56" x2="65" y2="56" stroke="#8a6a20" stroke-width="1.5"/><ellipse cx="55" cy="86" rx="16" ry="4" fill="#8a6a20"/><ellipse cx="82" cy="72" rx="14" ry="18" fill="#8b6914"/><ellipse cx="82" cy="68" rx="12" ry="14" fill="#a07820"/><line x1="70" y1="66" x2="94" y2="66" stroke="#8a6a20" stroke-width="1.5"/><line x1="72" y1="60" x2="92" y2="60" stroke="#8a6a20" stroke-width="1.5"/><ellipse cx="82" cy="90" rx="16" ry="4" fill="#8a6a20"/><ellipse cx="20" cy="38" rx="4" ry="2.5" fill="#e8a020" opacity="0.9"/><ellipse cx="68" cy="28" rx="4" ry="2.5" fill="#e8a020" opacity="0.9"/><ellipse cx="90" cy="40" rx="4" ry="2.5" fill="#e8a020" opacity="0.9"/><circle cx="40" cy="22" r="2.5" fill="#e870a0" opacity="0.6"/><circle cx="62" cy="14" r="3" fill="#e8a020" opacity="0.5"/>',
+    pond: '<rect x="0" y="0" width="110" height="110" fill="#0c0a08" rx="4"/><ellipse cx="55" cy="60" rx="50" ry="42" fill="#2e1e08"/><ellipse cx="55" cy="60" rx="46" ry="38" fill="#2e1e08"/><ellipse cx="55" cy="60" rx="38" ry="30" fill="none" stroke="#8a5a1a" stroke-width="1" opacity="0.6"/><ellipse cx="55" cy="60" rx="50" ry="42" fill="none" stroke="#0369a1" stroke-width="3"/><line x1="12" y1="72" x2="12" y2="44" stroke="#365314" stroke-width="2"/><ellipse cx="12" cy="43" rx="4" ry="7" fill="#4a7c1a" opacity="0.8"/><line x1="96" y1="68" x2="96" y2="46" stroke="#365314" stroke-width="2"/><rect x="48" y="16" width="6" height="22" fill="#4a3010" rx="1"/><rect x="38" y="16" width="26" height="6" fill="#5a3c14" rx="1"/><ellipse cx="42" cy="52" rx="6" ry="4" fill="#f0e6d3" opacity="0.9"/><circle cx="46" cy="50" r="4" fill="#f0e6d3" opacity="0.9"/><polygon points="49,49 53,50 49,51" fill="#e8a020"/><ellipse cx="64" cy="66" rx="5" ry="3.5" fill="#f0e6d3" opacity="0.8"/><circle cx="68" cy="64" r="3.5" fill="#f0e6d3" opacity="0.8"/>',
+    storageBarn: '<rect x="0" y="0" width="110" height="110" fill="#0e1008" rx="4"/><rect x="8" y="28" width="80" height="68" fill="#242a10" rx="2"/><polygon points="48,10 88,30 8,30" fill="#2a3810"/><polygon points="48,10 72,22 24,22" fill="#4a6a18" opacity="0.9"/><rect x="32" y="58" width="32" height="38" fill="#0e1008" rx="1"/><line x1="48" y1="58" x2="48" y2="96" stroke="#242a10" stroke-width="1.5"/><rect x="10" y="40" width="16" height="12" fill="#1a2a0a" rx="1" stroke="#84cc16" stroke-width="0.5"/><rect x="62" y="40" width="16" height="12" fill="#1a2a0a" rx="1" stroke="#84cc16" stroke-width="0.5"/><rect x="10" y="60" width="18" height="14" fill="#1e2a0c" rx="1" stroke="#4a6a18" stroke-width="0.5"/><rect x="70" y="60" width="18" height="14" fill="#1e2a0c" rx="1" stroke="#4a6a18" stroke-width="0.5"/><rect x="90" y="20" width="14" height="62" fill="#1e2a0c" rx="4"/><ellipse cx="97" cy="20" rx="7" ry="4" fill="#2a3810"/>',
+    whelping: '<rect x="0" y="0" width="110" height="110" fill="#2a1a08" rx="4"/><rect x="14" y="26" width="82" height="68" fill="#2a1a08" rx="3"/><polygon points="55,10 96,28 14,28" fill="#2a1a08"/><polygon points="55,10 78,22 32,22" fill="#3d2270"/><rect x="20" y="38" width="20" height="16" fill="#2d1a4a" rx="2" stroke="#c4956a" stroke-width="0.8"/><rect x="70" y="38" width="20" height="16" fill="#2d1a4a" rx="2" stroke="#c4956a" stroke-width="0.8"/><rect x="21" y="39" width="18" height="14" fill="#4c1d95" opacity="0.4" rx="1"/><rect x="71" y="39" width="18" height="14" fill="#4c1d95" opacity="0.4" rx="1"/><rect x="44" y="64" width="22" height="30" fill="#2a1a08" rx="2"/>',
+    shearing: '<rect x="0" y="0" width="110" height="110" fill="#1a1408" rx="4"/><rect x="6" y="24" width="88" height="68" fill="#2a1e12" rx="2"/><polygon points="50,8 94,26 6,26" fill="#4e3214"/><rect x="34" y="60" width="32" height="32" fill="#1a0e06" rx="1"/><rect x="8" y="36" width="20" height="16" fill="#1a1808" rx="1" stroke="#c07010" stroke-width="0.5"/><rect x="74" y="36" width="20" height="16" fill="#1a1808" rx="1" stroke="#c07010" stroke-width="0.5"/><line x1="6" y1="60" x2="94" y2="60" stroke="#4e3214" stroke-width="1.5"/><rect x="8" y="72" width="22" height="18" fill="#241a08" rx="2" stroke="#c07010" stroke-width="0.5"/><rect x="72" y="72" width="22" height="18" fill="#241a08" rx="2" stroke="#c07010" stroke-width="0.5"/>',
+    kennel: '<rect x="0" y="0" width="110" height="110" fill="#1a0e06" rx="4"/><rect x="16" y="32" width="72" height="62" fill="#4a1212" rx="2"/><polygon points="52,14 88,34 16,34" fill="#6b1717"/><polygon points="52,14 76,26 28,26" fill="#991b1b" opacity="0.9"/><rect x="40" y="62" width="24" height="32" fill="#1a0e06" rx="1"/><rect x="18" y="44" width="14" height="10" fill="#211810" rx="1" stroke="#ef4444" stroke-width="0.5"/><rect x="72" y="44" width="14" height="10" fill="#211810" rx="1" stroke="#ef4444" stroke-width="0.5"/><rect x="90" y="22" width="14" height="58" fill="#2d0a0a" rx="4"/><ellipse cx="97" cy="22" rx="7" ry="4" fill="#3d0f0f"/>',
+    stable: '<rect x="0" y="0" width="110" height="110" fill="#180f06" rx="4"/><rect x="4" y="14" width="102" height="42" fill="#381e08" rx="2"/><rect x="4" y="60" width="102" height="42" fill="#381e08" rx="2"/><rect x="42" y="14" width="26" height="88" fill="#1a0e06" rx="1"/><polygon points="55,4 106,16 4,16" fill="#4a2a0a"/><line x1="20" y1="14" x2="20" y2="56" stroke="#1a0e06" stroke-width="1.5"/><line x1="30" y1="14" x2="30" y2="56" stroke="#1a0e06" stroke-width="1.5"/><line x1="70" y1="14" x2="70" y2="56" stroke="#1a0e06" stroke-width="1.5"/><line x1="80" y1="14" x2="80" y2="56" stroke="#1a0e06" stroke-width="1.5"/><line x1="20" y1="60" x2="20" y2="102" stroke="#1a0e06" stroke-width="1.5"/><line x1="30" y1="60" x2="30" y2="102" stroke="#1a0e06" stroke-width="1.5"/><line x1="70" y1="60" x2="70" y2="102" stroke="#1a0e06" stroke-width="1.5"/><line x1="80" y1="60" x2="80" y2="102" stroke="#1a0e06" stroke-width="1.5"/>'
   };
 
   var lsCount = function(type) { return (ownedLivestock||[]).filter(function(a){ return a.type===type||a.species===type; }).length; };
 
   return /*#__PURE__*/React.createElement("div", {
-    style: { position:"relative", width:"100vw", height:"100vh", background:"#0a0f1a", overflow:"hidden", display:"flex", flexDirection:"column" }
+    style: { position:"relative", width:"100vw", height:"100vh", background:"#0c0a08", overflow:"hidden", display:"flex", flexDirection:"column" }
   },
     // Close button
     /*#__PURE__*/React.createElement("button", {
       onClick: onClose,
-      style: { position:"absolute", top:12, right:16, zIndex:100, background:"transparent", border:"1px solid #334155", color:"#64748b", borderRadius:6, padding:"5px 14px", cursor:"pointer", fontSize:"0.8rem" }
+      style: { position:"absolute", top:12, right:16, zIndex:100, background:"transparent", border:"1px solid #3a2a18", color:"#8a7055", borderRadius:6, padding:"5px 14px", cursor:"pointer", fontSize:"0.8rem" }
     }, "\u2715 Close"),
 
     // Title
     /*#__PURE__*/React.createElement("div", {
-      style: { textAlign:"center", color:"#38bdf8", fontSize:"0.8rem", letterSpacing:"0.12em", textTransform:"uppercase", padding:"10px 0 6px", fontFamily:"'Courier New',monospace" }
+      style: { textAlign:"center", color:"#d4942a", fontSize:"0.8rem", letterSpacing:"0.12em", textTransform:"uppercase", padding:"10px 0 6px", fontFamily:"'Courier New',monospace" }
     }, "\uD83C\uDFD8 Bloodline Acres \u2014 Farm View"),
 
     // Farm grid — scales to fill remaining space
     /*#__PURE__*/React.createElement("div", {
       style: { flex:1, display:"flex", alignItems:"center", justifyContent:"center" }
     }, /*#__PURE__*/React.createElement("div", {
-      style: { position:"relative", width:GRID_W, height:GRID_H, background:"#0d1f0f", borderRadius:12, border:"2px solid #1a3a1e",
+      style: { position:"relative", width:GRID_W, height:GRID_H, background:"#1a1208", borderRadius:12, border:"2px solid #1a1208",
         backgroundImage:"repeating-linear-gradient(0deg,transparent,transparent 19px,rgba(255,255,255,0.012) 20px),repeating-linear-gradient(90deg,transparent,transparent 19px,rgba(255,255,255,0.012) 20px)" }
     },
       // PATH LAYER
@@ -14000,24 +14002,24 @@ function FarmView(_ref) {
       },
         React.createElement("defs", null,
           React.createElement("pattern", {id:"fv-gravel",x:0,y:0,width:6,height:6,patternUnits:"userSpaceOnUse"},
-            React.createElement("rect",{width:6,height:6,fill:"#2e2418"}),
+            React.createElement("rect",{width:6,height:6,fill:"#2a1e12"}),
             React.createElement("circle",{cx:1.5,cy:1.5,r:0.6,fill:"#3d3020",opacity:0.5}),
-            React.createElement("circle",{cx:3.5,cy:3.5,r:0.5,fill:"#261c10",opacity:0.6})
+            React.createElement("circle",{cx:3.5,cy:3.5,r:0.5,fill:"#2a1e12",opacity:0.6})
           ),
           React.createElement("pattern", {id:"fv-dirt",x:0,y:0,width:6,height:6,patternUnits:"userSpaceOnUse"},
-            React.createElement("rect",{width:6,height:6,fill:"#2a1e10"}),
-            React.createElement("circle",{cx:1,cy:1,r:0.5,fill:"#352510",opacity:0.6}),
-            React.createElement("circle",{cx:4,cy:4,r:0.4,fill:"#1e1508",opacity:0.5})
+            React.createElement("rect",{width:6,height:6,fill:"#2a1e12"}),
+            React.createElement("circle",{cx:1,cy:1,r:0.5,fill:"#2a1e12",opacity:0.6}),
+            React.createElement("circle",{cx:4,cy:4,r:0.4,fill:"#18120a",opacity:0.5})
           )
         ),
         // Vertical spine
         React.createElement("rect",{x:COLS[1]+TILE_W,y:0,width:GAP,height:GRID_H,fill:"url(#fv-gravel)",opacity:0.9}),
-        React.createElement("line",{x1:COLS[1]+TILE_W,y1:0,x2:COLS[1]+TILE_W,y2:GRID_H,stroke:"#4a3820",strokeWidth:1.5,opacity:0.6}),
-        React.createElement("line",{x1:COLS[2],y1:0,x2:COLS[2],y2:GRID_H,stroke:"#4a3820",strokeWidth:1.5,opacity:0.6}),
+        React.createElement("line",{x1:COLS[1]+TILE_W,y1:0,x2:COLS[1]+TILE_W,y2:GRID_H,stroke:"#3a2a12",strokeWidth:1.5,opacity:0.6}),
+        React.createElement("line",{x1:COLS[2],y1:0,x2:COLS[2],y2:GRID_H,stroke:"#3a2a12",strokeWidth:1.5,opacity:0.6}),
         // Horizontal cross
         React.createElement("rect",{x:0,y:ROWS[2]+TILE_H,width:GRID_W,height:GAP,fill:"url(#fv-gravel)",opacity:0.9}),
-        React.createElement("line",{x1:0,y1:ROWS[2]+TILE_H,x2:GRID_W,y2:ROWS[2]+TILE_H,stroke:"#4a3820",strokeWidth:1.5,opacity:0.6}),
-        React.createElement("line",{x1:0,y1:ROWS[3],x2:GRID_W,y2:ROWS[3],stroke:"#4a3820",strokeWidth:1.5,opacity:0.6}),
+        React.createElement("line",{x1:0,y1:ROWS[2]+TILE_H,x2:GRID_W,y2:ROWS[2]+TILE_H,stroke:"#3a2a12",strokeWidth:1.5,opacity:0.6}),
+        React.createElement("line",{x1:0,y1:ROWS[3],x2:GRID_W,y2:ROWS[3],stroke:"#3a2a12",strokeWidth:1.5,opacity:0.6}),
         // Branch paths top
         React.createElement("rect",{x:0,y:ROWS[0]+TILE_H,width:COLS[2],height:GAP,fill:"url(#fv-dirt)",opacity:0.7}),
         React.createElement("rect",{x:COLS[2],y:ROWS[0]+TILE_H,width:GRID_W-COLS[2],height:GAP,fill:"url(#fv-dirt)",opacity:0.7}),
@@ -14027,17 +14029,17 @@ function FarmView(_ref) {
 
       // ── ROW A ──
       // A1 Pig Pen
-      React.createElement(Tile, { col:0, row:0, bg:"#221218", border:"#be185d", svgInner:SVG.pigPen, label:"Pig Pen", color:"#f9a8d4",
+      React.createElement(Tile, { col:0, row:0, bg:"#221218", border:"#a83060", svgInner:SVG.pigPen, label:"Pig Pen", color:"#f9a8d4",
         badge:"A1", count: hasFac("pig_pen") ? lsCount("pig")+"/"+FACILITIES.pig_pen.tiers[facTier("pig_pen")].capacity : null,
         tip:"Pig Pen · "+(hasFac("pig_pen") ? FACILITIES.pig_pen.tiers[facTier("pig_pen")].name : "Not built") }),
       // A2 Slaughterhouse
-      React.createElement(Tile, { col:1, row:0, bg:"#120808", border:"#7f1d1d", svgInner:SVG.slaughter, label:"Slaughterhouse", color:"#fca5a5",
+      React.createElement(Tile, { col:1, row:0, bg:"#120808", border:"#7a2010", svgInner:SVG.slaughter, label:"Slaughterhouse", color:"#fca5a5",
         badge:"A2", tip:"Slaughterhouse · Unlocks meat sales" }),
       // A3 Chicken Coop
-      React.createElement(Tile, { col:2, row:0, bg:"#0d1a08", border:"#ca8a04", svgInner:SVG.apiary, label:"Apiary", color:"#fde68a",
+      React.createElement(Tile, { col:2, row:0, bg:"#1a1208", border:"#ca8a04", svgInner:SVG.apiary, label:"Apiary", color:"#f5d870",
         badge:"A3", count: hasFac("apiary") ? (commodities.honey||0).toFixed(1)+"lb \uD83C\uDF6F" : null, tip:"Apiary · "+(hasFac("apiary") ? FACILITIES.apiary.tiers[facTier("apiary")].name : "Not built") }),
       // A4 Duck Pond
-      React.createElement(Tile, { col:3, row:0, bg:"#050f1a", border:"#0369a1", svgInner:SVG.pond, label:"Duck Pond", color:"#7dd3fc",
+      React.createElement(Tile, { col:3, row:0, bg:"#0c0a08", border:"#0369a1", svgInner:SVG.pond, label:"Duck Pond", color:"#7dd3fc",
         badge:"A4", count: hasFac("pond") ? lsCount("duck")+"/"+FACILITIES.pond.tiers[facTier("pond")].capacity : null,
         tip:"Duck Pond · "+(hasFac("pond") ? FACILITIES.pond.tiers[facTier("pond")].name : "Not built") }),
 
@@ -14047,28 +14049,28 @@ function FarmView(_ref) {
         badge:"B1", count: hasFac("barn") ? lsCount("beef")+"/"+FACILITIES.barn.tiers[facTier("barn")].capacity : null,
         tip:"Barn · "+(hasFac("barn") ? FACILITIES.barn.tiers[facTier("barn")].name : "Not built") }),
       // B2 Milking Barn
-      React.createElement(Tile, { col:1, row:1, bg:"#0e1828", border:"#3b82f6", svgInner:SVG.milkBarn, label:"Milking Barn", color:"#93c5fd",
+      React.createElement(Tile, { col:1, row:1, bg:"#0e1828", border:"#c4801a", svgInner:SVG.milkBarn, label:"Milking Barn", color:"#93c5fd",
         badge:"B2", count: hasFac("milking_barn") ? lsCount("dairy")+"/"+FACILITIES.milking_barn.tiers[facTier("milking_barn")].capacity+" · "+(commodities.milk||0).toFixed(0)+"gal" : null,
         tip:"Milking Barn · "+(hasFac("milking_barn") ? FACILITIES.milking_barn.tiers[facTier("milking_barn")].name : "Not built") }),
       // B3 Chicken Coop
-      React.createElement(Tile, { col:2, row:1, bg:"#101d0a", border:"#4d7c0f", svgInner:SVG.chickCoop, label:"Chicken Coop", color:"#86efac",
+      React.createElement(Tile, { col:2, row:1, bg:"#101d0a", border:"#4a6a18", svgInner:SVG.chickCoop, label:"Chicken Coop", color:"#86efac",
         badge:"B3", count: hasFac("chicken_coop") ? lsCount("chicken")+"/"+FACILITIES.chicken_coop.tiers[facTier("chicken_coop")].capacity+" · "+(commodities.eggs||0).toFixed(0)+"egg" : null,
         tip:"Chicken Coop · "+(hasFac("chicken_coop") ? FACILITIES.chicken_coop.tiers[facTier("chicken_coop")].name : "Not built") }),
       // B4 Grazing Land
       hasFac("grazing_land")
-        ? React.createElement(Tile, { col:3, row:1, bg:"#091e0a", border:"#15803d", svgInner:SVG.grazing, label:"Grazing Land", color:"#4ade80",
+        ? React.createElement(Tile, { col:3, row:1, bg:"#091e0a", border:"#1a7a2a", svgInner:SVG.grazing, label:"Grazing Land", color:"#5aaa30",
             badge:"B4", tip:"Grazing Land · "+FACILITIES.grazing_land.tiers[facTier("grazing_land")].name })
         : React.createElement(EmptyPlot, { col:3, row:1, tip:"B4 · Grazing Land · Available" }),
 
       // ── ROW C ──
       // C1 Storage Barn
-      React.createElement(Tile, { col:0, row:2, bg:"#091e0a", border:"#15803d", svgInner:SVG.grazing, label:"Grazing Land", color:"#4ade80",
+      React.createElement(Tile, { col:0, row:2, bg:"#091e0a", border:"#1a7a2a", svgInner:SVG.grazing, label:"Grazing Land", color:"#5aaa30",
         badge:"C1", tip:"Grazing Land · "+(hasFac("grazing_land") ? FACILITIES.grazing_land.tiers[facTier("grazing_land")].name : "Not built") }),
       // C2 Whelping
-      React.createElement(Tile, { col:1, row:2, bg:"#130a1a", border:"#581c87", svgInner:SVG.whelping, label:"Whelping", color:"#d8b4fe",
+      React.createElement(Tile, { col:1, row:2, bg:"#2a1a08", border:"#581c87", svgInner:SVG.whelping, label:"Whelping", color:"#d8b4fe",
         badge:"C2", tip:"Whelping Kennel · "+(hasWhelpingKennel ? "Active" : "Not built") }),
       // C3 Shearing Shed
-      React.createElement(Tile, { col:2, row:2, bg:"#1a1408", border:"#b45309", svgInner:SVG.shearing, label:"Shearing Shed", color:"#fde68a",
+      React.createElement(Tile, { col:2, row:2, bg:"#1a1408", border:"#b45309", svgInner:SVG.shearing, label:"Shearing Shed", color:"#f5d870",
         badge:"C3", count: hasFac("shearing_shed") ? lsCount("sheep")+"/"+FACILITIES.shearing_shed.tiers[facTier("shearing_shed")].capacity+" · "+(commodities.wool||0).toFixed(1)+"lb" : null,
         tip:"Shearing Shed · "+(hasFac("shearing_shed") ? FACILITIES.shearing_shed.tiers[facTier("shearing_shed")].name : "Not built"),
         onClick: function(){ setShowShearing(true); } }),
@@ -14089,11 +14091,11 @@ function FarmView(_ref) {
         badge:"D2", count: kennels.length > 0 ? dogCount+"/"+dogCap : null,
         tip:"Kennel · "+(kennels.length > 0 ? kennels[0].name+" ("+kennels[0].type+")" : "Not built") }),
       // D3 Stable
-      React.createElement(Tile, { col:2, row:3, bg:"#180f06", border:"#d97706", svgInner:SVG.stable, label:"Stable", color:"#fcd34d",
+      React.createElement(Tile, { col:2, row:3, bg:"#180f06", border:"#c07010", svgInner:SVG.stable, label:"Stable", color:"#f0c040",
         badge:"D3", count: hasFac("stable") ? lsCount("horse")+"/"+FACILITIES.stable.tiers[facTier("stable")].capacity : null,
         tip:"Stable · "+(hasFac("stable") ? FACILITIES.stable.tiers[facTier("stable")].name : "Not built") }),
       // D4 Storage Barn
-      React.createElement(Tile, { col:3, row:3, bg:"#0e1008", border:"#4a5a1a", svgInner:SVG.storageBarn, label:"Storage Barn", color:"#bef264",
+      React.createElement(Tile, { col:3, row:3, bg:"#0e1008", border:"#4a6a18", svgInner:SVG.storageBarn, label:"Storage Barn", color:"#bef264",
             badge:"D4", tip:"Storage Barn · "+(hasFac("storage_barn") ? FACILITIES.storage_barn.tiers[facTier("storage_barn")].name : "Not built") }),
 
       // Entrance
@@ -14104,7 +14106,7 @@ function FarmView(_ref) {
 
     // Tooltip
     tipText && /*#__PURE__*/React.createElement("div", {
-      style: { position:"fixed", left:tipPos.x+14, top:tipPos.y-32, background:"#0f172a", border:"1px solid #334155", borderRadius:6, padding:"6px 12px", fontSize:"0.72rem", color:"#e2e8f0", pointerEvents:"none", zIndex:9999, whiteSpace:"nowrap" }
+      style: { position:"fixed", left:tipPos.x+14, top:tipPos.y-32, background:"#100d08", border:"1px solid #3a2a18", borderRadius:6, padding:"6px 12px", fontSize:"0.72rem", color:"#f0e6d3", pointerEvents:"none", zIndex:9999, whiteSpace:"nowrap" }
     }, tipText)
   );
 }
@@ -14196,6 +14198,14 @@ function App() {
     _useState26 = _slicedToArray(_useState25, 2),
     addAge = _useState26[0],
     setAddAge = _useState26[1];
+  var _useStateBG = useState(""),
+    _useStateBG2 = _slicedToArray(_useStateBG, 2),
+    buyGroup = _useStateBG2[0],
+    setBuyGroup = _useStateBG2[1];
+  var _useStateBB = useState(""),
+    _useStateBB2 = _slicedToArray(_useStateBB, 2),
+    buyBreed = _useStateBB2[0],
+    setBuyBreed = _useStateBB2[1];
   var _useState27 = useState(0),
     _useState28 = _slicedToArray(_useState27, 2),
     kennelIdx = _useState28[0],
@@ -14821,13 +14831,16 @@ function App() {
   var safeLitterIdx = Math.min(litterIdx, Math.max(0, litter.length - 1));
   var tabS = function tabS(t) {
     return {
-      padding: "8px 16px",
-      background: tab === t ? "#1e3a5f" : "transparent",
-      border: "1px solid ".concat(tab === t ? "#38bdf8" : "#334155"),
-      borderRadius: 6,
-      color: tab === t ? "#38bdf8" : "#64748b",
+      padding: "9px 18px",
+      background: tab === t ? "#2e1e08" : "transparent",
+      border: "1px solid " + (tab === t ? "#d4942a" : "transparent"),
+      borderBottom: tab === t ? "2px solid #d4942a" : "2px solid transparent",
+      borderRadius: "6px 6px 0 0",
+      color: tab === t ? "#e8a020" : "#8a7055",
       cursor: "pointer",
-      fontSize: "0.82rem",
+      fontSize: "0.83rem",
+      fontWeight: tab === t ? "bold" : "normal",
+      letterSpacing: "0.02em",
       transition: "all 0.15s"
     };
   };
@@ -14837,9 +14850,9 @@ function App() {
       height: "100vh",
       display: "flex",
       flexDirection: "column",
-      background: "#0a0f1e",
+      background: "#100d08",
       fontFamily: "system-ui,sans-serif",
-      color: "#e2e8f0",
+      color: "#f0e6d3",
       overflow: "hidden"
     }
   }, actionModalId && /*#__PURE__*/React.createElement("div", {
@@ -14850,7 +14863,7 @@ function App() {
     onClick: function(){ setActionModalId(null); }
   }, /*#__PURE__*/React.createElement("div", {
     style: {
-      background: "#1e293b", border: "2px solid #475569", borderRadius: 14,
+      background: "#211810", border: "2px solid #6b5038", borderRadius: 14,
       padding: "26px 28px", maxWidth: 380, width: "92%", textAlign: "center"
     },
     onClick: function(e){ e.stopPropagation(); }
@@ -14859,7 +14872,7 @@ function App() {
     style: { color: "#f1f5f9", fontWeight: "bold", fontSize: "1.1rem", marginBottom: 4 }
   }, actionModalAnimal ? actionModalAnimal.name : "Dog"),
   /*#__PURE__*/React.createElement("div", {
-    style: { color: "#64748b", fontSize: "0.8rem", marginBottom: 18 }
+    style: { color: "#8a7055", fontSize: "0.8rem", marginBottom: 18 }
   }, "What would you like to do with this dog?"),
   /*#__PURE__*/React.createElement("div", { style: { display: "flex", flexDirection: "column", gap: 10, marginBottom: 14 } },
     /*#__PURE__*/React.createElement("button", {
@@ -14868,7 +14881,7 @@ function App() {
         setActionModalId(null);
       },
       style: {
-        background: "#1a2a1a", border: "2px solid #4ade80", color: "#4ade80",
+        background: "#1a2010", border: "2px solid #5aaa30", color: "#5aaa30",
         borderRadius: 8, padding: "10px 16px", cursor: "pointer", fontSize: "0.88rem", fontWeight: "bold"
       }
     }, "🏡 Retire  —  stays in kennel, no longer breeding, doesn't count toward capacity"),
@@ -14878,7 +14891,7 @@ function App() {
         setActionModalId(null);
       },
       style: {
-        background: "#1a1a2a", border: "2px solid #a78bfa", color: "#a78bfa",
+        background: "#211810", border: "2px solid #c4956a", color: "#c4956a",
         borderRadius: 8, padding: "10px 16px", cursor: "pointer", fontSize: "0.88rem", fontWeight: "bold"
       }
     }, "🚐 Rehome  —  placed in a new home, logged, frees up a kennel slot"),
@@ -14888,7 +14901,7 @@ function App() {
         setActionModalId(null);
       },
       style: {
-        background: "#3b0f0f", border: "2px solid #ef4444", color: "#fca5a5",
+        background: "#3a1008", border: "2px solid #ef4444", color: "#fca5a5",
         borderRadius: 8, padding: "10px 16px", cursor: "pointer", fontSize: "0.88rem", fontWeight: "bold"
       }
     }, "🗑️ Remove  —  permanently delete this dog")
@@ -14896,14 +14909,15 @@ function App() {
   /*#__PURE__*/React.createElement("button", {
     onClick: function(){ setActionModalId(null); },
     style: {
-      background: "#0f172a", border: "1px solid #334155", color: "#64748b",
+      background: "#100d08", border: "1px solid #3a2a18", color: "#8a7055",
       borderRadius: 6, padding: "7px 24px", cursor: "pointer", fontSize: "0.85rem"
     }
   }, "Cancel"))), /*#__PURE__*/React.createElement("div", {
     style: {
-      background: "linear-gradient(135deg,#0f172a,#1e293b)",
-      borderBottom: "1px solid #1e3a5f",
-      padding: "16px 22px"
+      background: "linear-gradient(135deg,#0c0a08 0%,#1e1208 50%,#2a1a08 100%)",
+      borderBottom: "2px solid #3a2a18",
+      padding: "14px 22px",
+      boxShadow: "0 2px 12px rgba(0,0,0,0.5)"
     }
   }, /*#__PURE__*/React.createElement("div", {
     style: {
@@ -14917,18 +14931,19 @@ function App() {
     }
   }, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
     style: {
-      color: "#38bdf8",
-      fontSize: "1.35rem",
+      color: "#e8a020",
+      fontSize: "1.45rem",
       fontWeight: "bold",
-      letterSpacing: "-0.01em"
+      letterSpacing: "0.02em",
+      textShadow: "0 1px 8px rgba(212,148,42,0.4)"
     }
-  }, "\uD83E\uDDEC Bloodline Acres"), /*#__PURE__*/React.createElement("div", {
+  }, "\uD83D\uDC3E Bloodline Acres"), /*#__PURE__*/React.createElement("div", {
     style: {
-      color: "#475569",
+      color: "#6b5038",
       fontSize: "0.75rem",
       marginTop: 2
     }
-  }, "Genetics Engine v1.0 \xB7 ", breeds.length, " breeds loaded \xB7 ", kennels.length, " kennel", kennels.length!==1?"s":"", " \xB7 ", animals.filter(function(a){return !a.retired;}).length, " active dogs  · ", /*#__PURE__*/React.createElement("span", { style:{ color: money < 500 ? "#ef4444" : money < 1500 ? "#f59e0b" : "#22c55e", fontWeight:"bold" } }, formatMoney(money)))), /*#__PURE__*/React.createElement("div", {
+  }, "Genetics Engine v1.0 \xB7 ", breeds.length, " breeds loaded \xB7 ", kennels.length, " kennel", kennels.length!==1?"s":"", " \xB7 ", animals.filter(function(a){return !a.retired;}).length, " active dogs  · ", /*#__PURE__*/React.createElement("span", { style:{ color: money < 500 ? "#ef4444" : money < 1500 ? "#d4860a" : "#22c55e", fontWeight:"bold" } }, formatMoney(money)))), /*#__PURE__*/React.createElement("div", {
     style: {
       display: "flex",
       gap: 8,
@@ -14944,7 +14959,7 @@ function App() {
     }
   }), ))), fileError && /*#__PURE__*/React.createElement("div", {
     style: {
-      background: "#3b0f0f",
+      background: "#3a1008",
       borderBottom: "1px solid #ef4444",
       color: "#fca5a5",
       padding: "8px 22px",
@@ -14965,9 +14980,11 @@ function App() {
   }, /*#__PURE__*/React.createElement("div", {
     style: {
       display: "flex",
-      gap: 8,
+      gap: 4,
       marginBottom: 18,
-      flexWrap: "wrap"
+      flexWrap: "wrap",
+      borderBottom: "2px solid #3a2a18",
+      paddingBottom: 0
     }
   }, /*#__PURE__*/React.createElement("button", {
     style: tabS("kennel"),
@@ -15001,7 +15018,7 @@ function App() {
       title: hasWhelpingKennel ? "Whelping Kennel" : "Purchase a Whelping Kennel to unlock"
     }, "\uD83C\uDFE5 Whelping", whelpingLitters.length > 0 ? " ("+whelpingLitters.length+"/4)" : " (0/4)"),
     holdingPups.length > 0 && /*#__PURE__*/React.createElement("button", {
-      style: { background: tab==="holding"?"#0f2d1e":"transparent", border:"1px solid #22c55e", color:"#22c55e",
+      style: { background: tab==="holding"?"#1a1208":"transparent", border:"1px solid #22c55e", color:"#22c55e",
         borderRadius:6, padding:"5px 14px", cursor:"pointer", fontSize:"0.82rem" },
       onClick: function(){ setTab("holding"); }
     }, "\uD83D\uDC3E Holding (", holdingPups.length, ")")
@@ -15029,9 +15046,9 @@ function App() {
           key: k.id,
           onClick: function(){ setActiveKennelId(k.id); },
           style: {
-            background: isActive ? "#1e293b" : "transparent",
-            border: "2px solid " + (isActive ? kt.color : "#334155"),
-            color: isActive ? kt.color : "#64748b",
+            background: isActive ? "#211810" : "transparent",
+            border: "2px solid " + (isActive ? kt.color : "#3a2a18"),
+            color: isActive ? kt.color : "#8a7055",
             borderRadius: 8, padding: "4px 10px", cursor: "pointer", fontSize: "0.75rem",
             display: "flex", alignItems: "center", gap: 4
           }
@@ -15039,7 +15056,7 @@ function App() {
           kt.icon + " " + k.name + " ",
           /*#__PURE__*/React.createElement("span", {
             style: {
-              background: isFull ? "#3b0f0f" : "#0f2d1e",
+              background: isFull ? "#3a1008" : "#1a1208",
               color: isFull ? "#ef4444" : "#22c55e",
               borderRadius: 4, padding: "1px 5px", fontSize: "0.7rem", fontWeight: "bold"
             }
@@ -15049,16 +15066,16 @@ function App() {
       /*#__PURE__*/React.createElement("button", {
         onClick: function(){ setShowKennelMgr(function(v){ return !v; }); },
         style: {
-          background: showKennelMgr ? "#1e3a5f" : "transparent",
-          border: "1px solid " + (showKennelMgr ? "#38bdf8" : "#334155"),
-          color: showKennelMgr ? "#38bdf8" : "#64748b",
+          background: showKennelMgr ? "#2e1e08" : "transparent",
+          border: "1px solid " + (showKennelMgr ? "#d4942a" : "#3a2a18"),
+          color: showKennelMgr ? "#d4942a" : "#8a7055",
           borderRadius: 6, padding: "4px 10px", cursor: "pointer", fontSize: "0.72rem"
         }
       }, showKennelMgr ? "\u2715 Close" : "+ Manage Kennels"),
       /*#__PURE__*/React.createElement("button", {
         onClick: function(){ setShowMarket(true); },
         style: {
-          background: "transparent", border: "1px solid #334155", color: "#64748b",
+          background: "transparent", border: "1px solid #3a2a18", color: "#8a7055",
           borderRadius: 6, padding: "4px 10px", cursor: "pointer", fontSize: "0.72rem",
           marginLeft: 16
         }
@@ -15066,7 +15083,7 @@ function App() {
       /*#__PURE__*/React.createElement("button", {
         onClick: function(){ setShowCatLady(true); },
         style: {
-          background: "transparent", border: "1px solid #334155", color: "#64748b",
+          background: "transparent", border: "1px solid #3a2a18", color: "#8a7055",
           borderRadius: 6, padding: "4px 10px", cursor: "pointer", fontSize: "0.72rem",
           marginLeft: 8
         }
@@ -15074,22 +15091,22 @@ function App() {
       /*#__PURE__*/React.createElement("button", {
         onClick: function(){ setShowFacilities(true); },
         style: {
-          background: "transparent", border: "1px solid #334155", color: "#64748b",
+          background: "transparent", border: "1px solid #3a2a18", color: "#8a7055",
           borderRadius: 6, padding: "4px 10px", cursor: "pointer", fontSize: "0.72rem",
           marginLeft: "auto"
         }
       }, "\uD83C\uDFD7 Facilities"),
       /*#__PURE__*/React.createElement("span", {
-        style: { color: "#475569", fontSize: "0.68rem" }
+        style: { color: "#6b5038", fontSize: "0.68rem" }
       }, "Aerial View \u00B7 Click \uD83C\uDFE0 Kennel to see cards")
     ),
     showKennelMgr && /*#__PURE__*/React.createElement("div", {
       style: {
-        background: "#0f172a", border: "1px solid #334155", borderRadius: 10,
+        background: "#100d08", border: "1px solid #3a2a18", borderRadius: 10,
         padding: "12px 14px", marginBottom: 8, display: "flex", flexWrap: "wrap", gap: 8, alignItems: "center"
       }
     },
-      /*#__PURE__*/React.createElement("span", { style: { color: "#64748b", fontSize: "0.75rem", fontWeight: "bold", textTransform: "uppercase" } }, "Add Kennel:"),
+      /*#__PURE__*/React.createElement("span", { style: { color: "#8a7055", fontSize: "0.75rem", fontWeight: "bold", textTransform: "uppercase" } }, "Add Kennel:"),
       Object.entries(KENNEL_TYPES).map(function(entry) {
         var typeKey = entry[0], kt = entry[1];
         return /*#__PURE__*/React.createElement("button", {
@@ -15106,7 +15123,7 @@ function App() {
             }
           },
           style: {
-            background: "#1e293b", border: "1px solid " + kt.color, color: kt.color,
+            background: "#211810", border: "1px solid " + kt.color, color: kt.color,
             borderRadius: 6, padding: "5px 10px", cursor: "pointer", fontSize: "0.75rem"
           }
         }, kt.icon + " " + kt.label + " (" + kt.capacity + " dogs · " + formatMoney(kt.cost) + ")");
@@ -15124,22 +15141,22 @@ function App() {
           }
         },
         style: {
-          background: "#3b0f0f", border: "1px solid #ef4444", color: "#fca5a5",
+          background: "#3a1008", border: "1px solid #ef4444", color: "#fca5a5",
           borderRadius: 6, padding: "5px 10px", cursor: "pointer", fontSize: "0.72rem", marginLeft: "auto"
         }
       }, "\uD83D\uDDD1\uFE0F Delete Active Kennel")
     ),
     /*#__PURE__*/React.createElement("div", {
       style: {
-        flex: 1, background: "#0f172a", borderRadius: 12, border: "1px solid #1e293b",
+        flex: 1, background: "#100d08", borderRadius: 12, border: "1px solid #211810",
         display: "flex", alignItems: "center", justifyContent: "center",
         padding: 20
       }
     },
-      /*#__PURE__*/React.createElement("div", { style: { textAlign: "center", color: "#334155" } },
+      /*#__PURE__*/React.createElement("div", { style: { textAlign: "center", color: "#3a2a18" } },
         /*#__PURE__*/React.createElement("div", { style: { fontSize: "3rem", marginBottom: 10 } }, "\uD83D\uDDFA\uFE0F"),
-        /*#__PURE__*/React.createElement("div", { style: { fontSize: "0.9rem", color: "#475569", marginBottom: 6 } }, "Property Map"),
-        /*#__PURE__*/React.createElement("div", { style: { fontSize: "0.75rem", color: "#334155" } }, "Coming soon \u2014 click \uD83C\uDFE0 Kennel to manage your dogs")
+        /*#__PURE__*/React.createElement("div", { style: { fontSize: "0.9rem", color: "#6b5038", marginBottom: 6 } }, "Property Map"),
+        /*#__PURE__*/React.createElement("div", { style: { fontSize: "0.75rem", color: "#3a2a18" } }, "Coming soon \u2014 click \uD83C\uDFE0 Kennel to manage your dogs")
       )
     )
   ),
@@ -15147,43 +15164,60 @@ function App() {
   kennelOpen && /*#__PURE__*/React.createElement("div", {
     style: {
       position: "absolute", top: 0, left: 0, right: 0, bottom: 0,
-      background: "#0f172a", zIndex: 20, display: "flex", flexDirection: "column",
+      background: "#100d08", zIndex: 20, display: "flex", flexDirection: "column",
       borderRadius: 10, overflow: "hidden"
     }
   },
     /*#__PURE__*/React.createElement("div", {
-      style: { background: "#1e293b", borderBottom: "1px solid #334155", padding: "10px 14px",
+      style: { background: "#211810", borderBottom: "1px solid #3a2a18", padding: "10px 14px",
         display: "flex", gap: 8, flexWrap: "wrap", alignItems: "center", flexShrink: 0 }
     },
-      /*#__PURE__*/React.createElement("div", { style: { color: "#64748b", fontSize: "0.75rem", textTransform: "uppercase", letterSpacing: "0.05em" } },
+      /*#__PURE__*/React.createElement("div", { style: { color: "#8a7055", fontSize: "0.75rem", textTransform: "uppercase", letterSpacing: "0.05em" } },
         "Add Animal to Kennel"
       ),
-      /*#__PURE__*/React.createElement("select", {
-        id: "bsel",
-        style: { background: "#0f172a", border: "1px solid #334155", color: "#e2e8f0",
-          borderRadius: 6, padding: "6px 10px", flex: 1, minWidth: 160, fontSize: "0.82rem" }
-      }, Object.entries(breeds.slice().sort(function(a,b){
+      (function(){
+        var groupMap = breeds.slice().sort(function(a,b){
           return (a.group||"Other").localeCompare(b.group||"Other") || a.name.localeCompare(b.name);
-        }).reduce(function(acc,b){ var g=b.group||"Other"; if(!acc[g])acc[g]=[]; acc[g].push(b); return acc; }, {})
-      ).map(function(_r){ var _r2=_slicedToArray(_r,2),group=_r2[0],list=_r2[1];
-        return /*#__PURE__*/React.createElement("optgroup",{key:group,label:"\u2500\u2500 "+group+" \u2500\u2500"},
-          list.map(function(b){ return /*#__PURE__*/React.createElement("option",{key:b.name,value:b.name},b.name); })
+        }).reduce(function(acc,b){ var g=b.group||"Other"; if(!acc[g])acc[g]=[]; acc[g].push(b); return acc; }, {});
+        var groupNames = Object.keys(groupMap).sort();
+        var breedsInGroup = buyGroup ? (groupMap[buyGroup]||[]) : [];
+        var selDropStyle = { background:"#100d08", border:"1px solid #3a2a18", color:"#f0e6d3", borderRadius:6, padding:"6px 10px", fontSize:"0.82rem" };
+        return /*#__PURE__*/React.createElement(React.Fragment, null,
+          /*#__PURE__*/React.createElement("select", {
+            value: buyGroup,
+            onChange: function(e){ setBuyGroup(e.target.value); setBuyBreed(""); },
+            style: Object.assign({}, selDropStyle, { minWidth: 140 })
+          },
+            /*#__PURE__*/React.createElement("option", { value: "" }, "\u2014 Group \u2014"),
+            groupNames.map(function(g){ return /*#__PURE__*/React.createElement("option", { key:g, value:g }, g); })
+          ),
+          /*#__PURE__*/React.createElement("select", {
+            value: buyBreed,
+            onChange: function(e){ setBuyBreed(e.target.value); },
+            disabled: !buyGroup,
+            style: Object.assign({}, selDropStyle, { minWidth: 180, opacity: buyGroup ? 1 : 0.4 })
+          },
+            /*#__PURE__*/React.createElement("option", { value: "" }, buyGroup ? "\u2014 Breed \u2014" : "\u2014 Pick group first \u2014"),
+            breedsInGroup.map(function(b){ return /*#__PURE__*/React.createElement("option", { key:b.name, value:b.name }, b.name); })
+          ),
+          /*#__PURE__*/React.createElement("button", {
+            onClick: function(){ if(buyBreed) addAnimal(buyBreed,"M",addAge); },
+            disabled: !buyBreed,
+            style: { background: buyBreed?"#2e1e08":"#18120a", border:"1px solid "+(buyBreed?"#d4942a":"#3a2a18"), color:buyBreed?"#e8a020":"#6b5038", borderRadius:6, padding:"6px 12px", cursor:buyBreed?"pointer":"not-allowed", fontSize:"0.82rem" }
+          }, "+ Male \u2642 (" + formatMoney(addAge <= 12 ? DOG_COST_PUPPY : DOG_COST_ADULT) + ")"),
+          /*#__PURE__*/React.createElement("button", {
+            onClick: function(){ if(buyBreed) addAnimal(buyBreed,"F",addAge); },
+            disabled: !buyBreed,
+            style: { background: buyBreed?"#2a1a08":"#18120a", border:"1px solid "+(buyBreed?"#c4956a":"#3a2a18"), color:buyBreed?"#c4956a":"#6b5038", borderRadius:6, padding:"6px 12px", cursor:buyBreed?"pointer":"not-allowed", fontSize:"0.82rem" }
+          }, "+ Female \u2640 (" + formatMoney(addAge <= 12 ? DOG_COST_PUPPY : DOG_COST_ADULT) + ")")
         );
-      })),
-      /*#__PURE__*/React.createElement("button", {
-        onClick: function(){ return addAnimal(document.getElementById("bsel").value,"M",addAge); },
-        style: { background:"#1e3a5f",border:"1px solid #38bdf8",color:"#38bdf8",borderRadius:6,padding:"6px 12px",cursor:"pointer",fontSize:"0.82rem" }
-      }, "+ Male \u2642 (" + formatMoney(addAge <= 12 ? DOG_COST_PUPPY : DOG_COST_ADULT) + ")"),
-      /*#__PURE__*/React.createElement("button", {
-        onClick: function(){ return addAnimal(document.getElementById("bsel").value,"F",addAge); },
-        style: { background:"#2d1e4f",border:"1px solid #a78bfa",color:"#a78bfa",borderRadius:6,padding:"6px 12px",cursor:"pointer",fontSize:"0.82rem" }
-      }, "+ Female \u2640 (" + formatMoney(addAge <= 12 ? DOG_COST_PUPPY : DOG_COST_ADULT) + ")"),
+      })(),
       [{ label:"\uD83D\uDC3E Puppy", age:12 }, { label:"\uD83D\uDC15 Adult", age:20 }].map(function(opt){
         return /*#__PURE__*/React.createElement("button", {
           key: opt.age, onClick: function(){ setAddAge(opt.age); },
-          style: { background: addAge===opt.age?"#1e3a5f":"transparent",
-            border:"1px solid "+(addAge===opt.age?"#38bdf8":"#334155"),
-            color:addAge===opt.age?"#38bdf8":"#64748b",
+          style: { background: addAge===opt.age?"#2e1e08":"transparent",
+            border:"1px solid "+(addAge===opt.age?"#d4942a":"#3a2a18"),
+            color:addAge===opt.age?"#d4942a":"#8a7055",
             borderRadius:6,padding:"4px 10px",cursor:"pointer",fontSize:"0.75rem" }
         }, opt.label, " (", opt.age===12?"12mo":"20mo", ")");
       }),
@@ -15191,22 +15225,22 @@ function App() {
         ["All","M","F"].map(function(s){
           return /*#__PURE__*/React.createElement("button", {
             key:s, onClick:function(){ setFilterSex(s); },
-            style: { background:filterSex===s?"#1e3a5f":"transparent",
-              border:"1px solid "+(filterSex===s?"#38bdf8":"#334155"),
-              color:filterSex===s?"#38bdf8":"#64748b",
+            style: { background:filterSex===s?"#2e1e08":"transparent",
+              border:"1px solid "+(filterSex===s?"#d4942a":"#3a2a18"),
+              color:filterSex===s?"#d4942a":"#8a7055",
               borderRadius:5,padding:"3px 10px",cursor:"pointer",fontSize:"0.75rem" }
           }, s==="All"?"All":s==="M"?"Males \u2642":"Females \u2640");
         }),
         /*#__PURE__*/React.createElement("button", {
           onClick: function(){ setKennelOpen(false); },
-          style: { background:"#3b0f0f",border:"1px solid #ef4444",color:"#fca5a5",
+          style: { background:"#3a1008",border:"1px solid #ef4444",color:"#fca5a5",
             borderRadius:6,padding:"4px 12px",cursor:"pointer",fontSize:"0.75rem" }
         }, "\u2715 Close")
       )
     ),
     filtered.length === 0
       ? /*#__PURE__*/React.createElement("div", {
-          style: { flex:1,textAlign:"center",color:"#475569",padding:"50px 0",fontSize:"0.85rem" }
+          style: { flex:1,textAlign:"center",color:"#6b5038",padding:"50px 0",fontSize:"0.85rem" }
         }, "No animals yet \u2014 add some above!")
       : (function(){
           var a = filtered[safeKennelIdx];
@@ -15216,15 +15250,15 @@ function App() {
               disabled: disabled,
               style: { position:"absolute",top:8,left:dir<0?6:"auto",right:dir>0?6:"auto",
                 background:disabled?"rgba(15,23,42,0.3)":"rgba(15,23,42,0.85)",
-                border:"1px solid "+(disabled?"#1e293b":"#334155"),
-                color:disabled?"#1e3a5f":"#94a3b8",
+                border:"1px solid "+(disabled?"#211810":"#3a2a18"),
+                color:disabled?"#2e1e08":"#b09070",
                 borderRadius:8,width:38,height:38,cursor:disabled?"default":"pointer",
                 fontSize:"1.1rem",zIndex:10,display:"flex",alignItems:"center",justifyContent:"center" }
             }, dir<0?"\u25C4":"\u25BA");
           };
           return /*#__PURE__*/React.createElement("div", { style: { flex:1,display:"flex",flexDirection:"column",overflow:"hidden" } },
             /*#__PURE__*/React.createElement("div", {
-              style: { color:"#475569",fontSize:"0.72rem",padding:"6px 0",textAlign:"center",flexShrink:0 }
+              style: { color:"#6b5038",fontSize:"0.72rem",padding:"6px 0",textAlign:"center",flexShrink:0 }
             }, safeKennelIdx+1, " of ", filtered.length),
             /*#__PURE__*/React.createElement("div", { style: { position:"relative",flex:1,display:"flex",flexDirection:"column",overflow:"hidden" } },
               arrowBtn(-1, safeKennelIdx===0),
@@ -15259,14 +15293,14 @@ function App() {
     }
   }, /*#__PURE__*/React.createElement("div", {
     style: {
-      background: "#1e293b",
-      border: "1px solid #334155",
+      background: "#211810",
+      border: "1px solid #3a2a18",
       borderRadius: 10,
       padding: 14
     }
   }, /*#__PURE__*/React.createElement("div", {
     style: {
-      color: "#38bdf8",
+      color: "#d4942a",
       fontSize: "0.82rem",
       fontWeight: "bold",
       textTransform: "uppercase",
@@ -15277,21 +15311,21 @@ function App() {
     isSelected: true
   }) : /*#__PURE__*/React.createElement("div", {
     style: {
-      color: "#475569",
+      color: "#6b5038",
       textAlign: "center",
       padding: "30px 0",
       fontSize: "0.85rem"
     }
   }, "Go to Kennel \u2192 click a male")), /*#__PURE__*/React.createElement("div", {
     style: {
-      background: "#1e293b",
-      border: "1px solid #334155",
+      background: "#211810",
+      border: "1px solid #3a2a18",
       borderRadius: 10,
       padding: 14
     }
   }, /*#__PURE__*/React.createElement("div", {
     style: {
-      color: "#a78bfa",
+      color: "#c4956a",
       fontSize: "0.82rem",
       fontWeight: "bold",
       textTransform: "uppercase",
@@ -15302,14 +15336,14 @@ function App() {
     isSelected: true
   }) : /*#__PURE__*/React.createElement("div", {
     style: {
-      color: "#475569",
+      color: "#6b5038",
       textAlign: "center",
       padding: "30px 0",
       fontSize: "0.85rem"
     }
   }, "Go to Kennel \u2192 click a female"))), sire && dam && (((_sire$genome$coat$M = sire.genome.coat.M) === null || _sire$genome$coat$M === void 0 ? void 0 : _sire$genome$coat$M[0]) === "M" || ((_sire$genome$coat$M2 = sire.genome.coat.M) === null || _sire$genome$coat$M2 === void 0 ? void 0 : _sire$genome$coat$M2[1]) === "M") && (((_dam$genome$coat$M = dam.genome.coat.M) === null || _dam$genome$coat$M === void 0 ? void 0 : _dam$genome$coat$M[0]) === "M" || ((_dam$genome$coat$M2 = dam.genome.coat.M) === null || _dam$genome$coat$M2 === void 0 ? void 0 : _dam$genome$coat$M2[1]) === "M") && /*#__PURE__*/React.createElement("div", {
     style: {
-      background: "#3b0f0f",
+      background: "#3a1008",
       border: "1px solid #ef4444",
       borderRadius: 8,
       padding: "10px 14px",
@@ -15330,8 +15364,8 @@ function App() {
     if (warnings.length === 0) return null;
     return /*#__PURE__*/React.createElement("div", {
       style: {
-        background: "#2d1a00", border: "1px solid #f59e0b", borderRadius: 8,
-        padding: "10px 14px", marginBottom: 12, fontSize: "0.82rem", color: "#fcd34d"
+        background: "#2d1a00", border: "1px solid #d4860a", borderRadius: 8,
+        padding: "10px 14px", marginBottom: 12, fontSize: "0.82rem", color: "#f0c040"
       }
     }, warnings.map(function(w, i) {
       return /*#__PURE__*/React.createElement("div", { key: i }, w);
@@ -15341,9 +15375,9 @@ function App() {
     disabled: !sire || !dam || !!(sire && breedingIneligibleReason(sire)) || !!(dam && breedingIneligibleReason(dam)) || (sire && dam && sire.id === dam.id) || (sire && dam && sire.sex === dam.sex),
     style: {
       width: "100%",
-      background: sire && dam ? "linear-gradient(135deg,#1e3a5f,#2d1e4f)" : "#1e293b",
-      border: "2px solid ".concat(sire && dam ? "#38bdf8" : "#334155"),
-      color: sire && dam ? "#e2e8f0" : "#475569",
+      background: sire && dam ? "linear-gradient(135deg,#2e1e08,#2a1a08)" : "#211810",
+      border: "2px solid ".concat(sire && dam ? "#d4942a" : "#3a2a18"),
+      color: sire && dam ? "#f0e6d3" : "#6b5038",
       borderRadius: 8,
       padding: 12,
       cursor: (sire && dam) ? "pointer" : "not-allowed",
@@ -15353,12 +15387,12 @@ function App() {
     }
   }, sire && dam ? "🧬 BREED SELECTED PAIR" : "Select a sire ♂ and dam ♀ to breed")), tab === "litter" && /*#__PURE__*/React.createElement("div", null,
     litter.length === 0
-      ? /*#__PURE__*/React.createElement("div", { style: { textAlign:"center", color:"#475569", padding:"60px 0" } }, "No litter yet \u2014 go to the Breed tab!")
+      ? /*#__PURE__*/React.createElement("div", { style: { textAlign:"center", color:"#6b5038", padding:"60px 0" } }, "No litter yet \u2014 go to the Breed tab!")
       : /*#__PURE__*/React.createElement(React.Fragment, null,
           /*#__PURE__*/React.createElement("div", {
-            style: { background:"#1a1200", border:"1px solid #f59e0b", borderRadius:8, padding:"10px 14px", marginBottom:12, fontSize:"0.8rem", color:"#fcd34d" }
+            style: { background:"#1a1208", border:"1px solid #d4860a", borderRadius:8, padding:"10px 14px", marginBottom:12, fontSize:"0.8rem", color:"#f0c040" }
           }, "\uD83D\uDC3E Litter of ", litter.length, " \u00B7 ",
-            /*#__PURE__*/React.createElement("span", { style:{color:"#64748b"} }, (litter[0]||{}).sireBreed, " \xD7 ", (litter[0]||{}).damBreed),
+            /*#__PURE__*/React.createElement("span", { style:{color:"#8a7055"} }, (litter[0]||{}).sireBreed, " \xD7 ", (litter[0]||{}).damBreed),
             " \u00B7 No Whelping Kennel \u2014 select 1 pup to keep"
           ),
           /*#__PURE__*/React.createElement("div", { style: { display:"flex", flexWrap:"wrap", gap:10, marginBottom:14, maxHeight:"520px", overflowY:"auto", paddingRight:4 } },
@@ -15367,8 +15401,8 @@ function App() {
               return /*#__PURE__*/React.createElement("div", { key: pup.id, style:{ cursor:"pointer" }, onClick: function(){ toggleLitterSelect(pup.id); } },
                 /*#__PURE__*/React.createElement(Card, { animal: pup }),
                 /*#__PURE__*/React.createElement("div", {
-                  style: { background: sel?"#0f2d1e":"#1e293b", border:"1px solid "+(sel?"#22c55e":"#475569"),
-                    color: sel?"#22c55e":"#64748b", borderRadius:"0 0 8px 8px",
+                  style: { background: sel?"#1a1208":"#211810", border:"1px solid "+(sel?"#22c55e":"#6b5038"),
+                    color: sel?"#22c55e":"#8a7055", borderRadius:"0 0 8px 8px",
                     padding:"6px 0", textAlign:"center", fontSize:"0.78rem", fontWeight:"bold", marginTop:-2 }
                 }, sel ? "\u2713 Selected" : "Tap to Select")
               );
@@ -15384,7 +15418,7 @@ function App() {
 
   tab === "whelping" && /*#__PURE__*/React.createElement("div", null,
     /*#__PURE__*/React.createElement("div", { style:{ display:"flex", justifyContent:"space-between", alignItems:"center", marginBottom:12 } },
-      /*#__PURE__*/React.createElement("div", { style:{ color:"#f472b6", fontWeight:"bold", fontSize:"1rem" } }, "\uD83C\uDFE5 Whelping Kennel"),
+      /*#__PURE__*/React.createElement("div", { style:{ color:"#e870a0", fontWeight:"bold", fontSize:"1rem" } }, "\uD83C\uDFE5 Whelping Kennel"),
       !hasWhelpingKennel && /*#__PURE__*/React.createElement("button", {
         onClick: function(){
           if (money < WHELPING_COST) { alert("Not enough funds!\nWhelping Kennel costs " + formatMoney(WHELPING_COST) + ", you have " + formatMoney(money) + "."); return; }
@@ -15394,38 +15428,38 @@ function App() {
             setLog(function(lg){ return [{ id:Date.now(), type:"financial", name:"Purchased Whelping Kennel", amount: -WHELPING_COST, date: new Date().toLocaleString() }].concat(_toConsumableArray(lg)); });
           }
         },
-        style: { background:"#1a1a2a", border:"1px solid #f472b6", color:"#f472b6", borderRadius:6, padding:"6px 14px", cursor:"pointer", fontSize:"0.8rem" }
+        style: { background:"#211810", border:"1px solid #e870a0", color:"#e870a0", borderRadius:6, padding:"6px 14px", cursor:"pointer", fontSize:"0.8rem" }
       }, "\uD83D\uDED2 Purchase Whelping Kennel (placeholder)")
     ),
     !hasWhelpingKennel
-      ? /*#__PURE__*/React.createElement("div", { style:{ textAlign:"center", color:"#475569", padding:"40px 0", fontSize:"0.85rem" } },
+      ? /*#__PURE__*/React.createElement("div", { style:{ textAlign:"center", color:"#6b5038", padding:"40px 0", fontSize:"0.85rem" } },
           "\uD83C\uDFE5 You don't have a Whelping Kennel yet.", /*#__PURE__*/React.createElement("br", null),
           "Purchase one to house up to 4 litters and keep 2 pups per breeding.")
       : whelpingLitters.length === 0
-        ? /*#__PURE__*/React.createElement("div", { style:{ textAlign:"center", color:"#475569", padding:"40px 0" } }, "Whelping Kennel is empty \u2014 breed a pair to use it.")
+        ? /*#__PURE__*/React.createElement("div", { style:{ textAlign:"center", color:"#6b5038", padding:"40px 0" } }, "Whelping Kennel is empty \u2014 breed a pair to use it.")
         : whelpingLitters.map(function(lit) {
             var ageDays = Math.floor((Date.now()-lit.bornDate)/(1000*60*60*24));
             var canWean = ageDays >= 3;
             return /*#__PURE__*/React.createElement("div", { key: lit.litterId,
-              style:{ background:"#1e1a2e", border:"1px solid #6d28d9", borderRadius:10, padding:14, marginBottom:14 }
+              style:{ background:"#211810", border:"1px solid #6d28d9", borderRadius:10, padding:14, marginBottom:14 }
             },
               /*#__PURE__*/React.createElement("div", { style:{ display:"flex", justifyContent:"space-between", alignItems:"center", marginBottom:8 } },
                 /*#__PURE__*/React.createElement("div", null,
-                  /*#__PURE__*/React.createElement("span", { style:{color:"#a78bfa",fontWeight:"bold"} }, lit.dam.name),
-                  /*#__PURE__*/React.createElement("span", { style:{color:"#64748b",fontSize:"0.75rem",marginLeft:8} }, lit.dam.breed, " \u00B7 ", lit.pups.length, " pups \u00B7 Day ", ageDays, "/3")
+                  /*#__PURE__*/React.createElement("span", { style:{color:"#c4956a",fontWeight:"bold"} }, lit.dam.name),
+                  /*#__PURE__*/React.createElement("span", { style:{color:"#8a7055",fontSize:"0.75rem",marginLeft:8} }, lit.dam.breed, " \u00B7 ", lit.pups.length, " pups \u00B7 Day ", ageDays, "/3")
                 ),
-                /*#__PURE__*/React.createElement("span", { style:{fontSize:"0.75rem", color: canWean?"#22c55e":"#f59e0b"} },
+                /*#__PURE__*/React.createElement("span", { style:{fontSize:"0.75rem", color: canWean?"#22c55e":"#d4860a"} },
                   canWean ? "\u2705 Ready to wean" : "\u23F3 "+(3-ageDays)+" day(s) left")
               ),
-              /*#__PURE__*/React.createElement("div", { style:{fontSize:"0.72rem",color:"#64748b",marginBottom:8} }, "Select up to 2 pups \u00B7 ", lit.selectedIds.length, "/2 selected"),
+              /*#__PURE__*/React.createElement("div", { style:{fontSize:"0.72rem",color:"#8a7055",marginBottom:8} }, "Select up to 2 pups \u00B7 ", lit.selectedIds.length, "/2 selected"),
               /*#__PURE__*/React.createElement("div", { style:{ display:"flex", flexWrap:"wrap", gap:8, marginBottom:10, maxHeight:"520px", overflowY:"auto", paddingRight:4 } },
                 lit.pups.map(function(pup) {
                   var sel = lit.selectedIds.includes(pup.id);
                   return /*#__PURE__*/React.createElement("div", { key:pup.id, style:{cursor:"pointer"}, onClick:function(){ toggleWhelpSelect(lit.litterId, pup.id); } },
                     /*#__PURE__*/React.createElement(Card, { animal:pup }),
                     /*#__PURE__*/React.createElement("div", {
-                      style:{ background:sel?"#0f2d1e":"#1e293b", border:"1px solid "+(sel?"#22c55e":"#475569"),
-                        color:sel?"#22c55e":"#64748b", borderRadius:"0 0 8px 8px",
+                      style:{ background:sel?"#1a1208":"#211810", border:"1px solid "+(sel?"#22c55e":"#6b5038"),
+                        color:sel?"#22c55e":"#8a7055", borderRadius:"0 0 8px 8px",
                         padding:"5px 0", textAlign:"center", fontSize:"0.75rem", fontWeight:"bold", marginTop:-2 }
                     }, sel?"\u2713 Keep":"Tap to Keep")
                   );
@@ -15433,7 +15467,7 @@ function App() {
               ),
               canWean && /*#__PURE__*/React.createElement("button", {
                 onClick: function(){ finalizeWhelpingLitter(lit.litterId); },
-                style:{ width:"100%", background:"#0a1a2a", border:"2px solid #38bdf8", color:"#38bdf8",
+                style:{ width:"100%", background:"#211810", border:"2px solid #d4942a", color:"#d4942a",
                   borderRadius:8, padding:"8px 0", fontSize:"0.85rem", fontWeight:"bold", cursor:"pointer" }
               }, "\uD83C\uDFE0 Wean Litter \u2014 Keep ", lit.selectedIds.length, ", Rehome ", lit.pups.length-lit.selectedIds.length)
             );
@@ -15442,15 +15476,15 @@ function App() {
 
   tab === "holding" && /*#__PURE__*/React.createElement("div", null,
     /*#__PURE__*/React.createElement("div", { style:{color:"#22c55e",fontWeight:"bold",fontSize:"1rem",marginBottom:10} }, "\uD83D\uDC3E Temporary Holding"),
-    /*#__PURE__*/React.createElement("div", { style:{fontSize:"0.78rem",color:"#64748b",marginBottom:12} }, "Pups here are aging. Move them to a kennel before they grow up unused!"),
+    /*#__PURE__*/React.createElement("div", { style:{fontSize:"0.78rem",color:"#8a7055",marginBottom:12} }, "Pups here are aging. Move them to a kennel before they grow up unused!"),
     holdingPups.length === 0
-      ? /*#__PURE__*/React.createElement("div", { style:{textAlign:"center",color:"#475569",padding:"40px 0"} }, "No pups in holding.")
+      ? /*#__PURE__*/React.createElement("div", { style:{textAlign:"center",color:"#6b5038",padding:"40px 0"} }, "No pups in holding.")
       : /*#__PURE__*/React.createElement("div", { style:{display:"flex",flexWrap:"wrap",gap:12} },
           holdingPups.map(function(pup) {
             var days = Math.floor((Date.now()-(pup.heldSince||Date.now()))/(1000*60*60*24));
             return /*#__PURE__*/React.createElement("div", { key:pup.id },
               /*#__PURE__*/React.createElement(Card, { animal:pup }),
-              /*#__PURE__*/React.createElement("div", { style:{fontSize:"0.7rem",color:"#64748b",textAlign:"center",margin:"2px 0 4px"} }, "In holding: ", days, " day", days!==1?"s":""),
+              /*#__PURE__*/React.createElement("div", { style:{fontSize:"0.7rem",color:"#8a7055",textAlign:"center",margin:"2px 0 4px"} }, "In holding: ", days, " day", days!==1?"s":""),
               /*#__PURE__*/React.createElement("div", { style:{display:"flex",gap:4} },
                 /*#__PURE__*/React.createElement("button", {
                   onClick: function(){ placeHoldingPup(pup.id); },
@@ -15458,7 +15492,7 @@ function App() {
                 }, "\u2192 Move to Kennel"),
                 /*#__PURE__*/React.createElement("button", {
                   onClick: function(){ rehomeHoldingPup(pup.id); },
-                  style:{background:"#1a0a2a",border:"1px solid #6d28d9",color:"#a78bfa",borderRadius:6,padding:"5px 8px",cursor:"pointer",fontSize:"0.75rem"}
+                  style:{background:"#2a1a08",border:"1px solid #6d28d9",color:"#c4956a",borderRadius:6,padding:"5px 8px",cursor:"pointer",fontSize:"0.75rem"}
                 }, "\uD83D\uDE90")
               )
             );
@@ -15467,27 +15501,27 @@ function App() {
   ),
 
   tab === "stud" && /*#__PURE__*/React.createElement("div", null,
-    /*#__PURE__*/React.createElement("div", { style:{ color:"#22c55e", fontWeight:"bold", fontSize:"1.05rem", marginBottom:14 } }, "\uD83D\uDC3E Stud Roster"),
+    /*#__PURE__*/React.createElement("div", { style:{ color:"#5aaa30", fontWeight:"bold", fontSize:"1.05rem", marginBottom:16, paddingBottom:10, borderBottom:"1px solid #3a2a18", letterSpacing:"0.03em" } }, "\uD83D\uDC3E Stud Roster"),
     (function(){
       var studs = animals.filter(function(a){ return !a.retired && a.sex==="M"; });
-      if (studs.length === 0) return /*#__PURE__*/React.createElement("div", { style:{ color:"#475569", textAlign:"center", padding:40 } }, "No males in your kennel yet.");
+      if (studs.length === 0) return /*#__PURE__*/React.createElement("div", { style:{ color:"#6b5038", textAlign:"center", padding:40 } }, "No males in your kennel yet.");
       return /*#__PURE__*/React.createElement("div", { style:{ display:"flex", flexDirection:"column", gap:10 } },
         studs.map(function(a){
           return /*#__PURE__*/React.createElement("div", { key:a.id, style:{
-            background: a.isStud ? "#0a1f0a" : "#0f172a",
-            border: "1px solid " + (a.isStud ? "#22c55e" : "#1e293b"),
+            background: a.isStud ? "#0a1f0a" : "#100d08",
+            border: "1px solid " + (a.isStud ? "#22c55e" : "#211810"),
             borderRadius:10, padding:"12px 16px", display:"flex", alignItems:"center", gap:12
           }},
             /*#__PURE__*/React.createElement("div", { style:{ flex:1 } },
-              /*#__PURE__*/React.createElement("div", { style:{ fontWeight:"bold", fontSize:"0.95rem", color:"#e2e8f0" } }, a.name),
-              /*#__PURE__*/React.createElement("div", { style:{ fontSize:"0.78rem", color:"#64748b", marginTop:2 } },
+              /*#__PURE__*/React.createElement("div", { style:{ fontWeight:"bold", fontSize:"0.95rem", color:"#f0e6d3" } }, a.name),
+              /*#__PURE__*/React.createElement("div", { style:{ fontSize:"0.78rem", color:"#8a7055", marginTop:2 } },
                 a.breed, " \u00B7 ", a.size, " \u00B7 ",
                 Math.round((a.ageMonths||0)/12*10)/10, " yrs"
               ),
               a.isStud && /*#__PURE__*/React.createElement("div", { style:{ fontSize:"0.8rem", color:"#22c55e", marginTop:4 } },
                 "Stud Fee: $", (a.studFee||0).toLocaleString(),
                 " \u00B7 ",
-                /*#__PURE__*/React.createElement("span", { style:{ color:"#94a3b8", fontSize:"0.75rem" } }, "One breeding per payment \u00B7 Auto-delists after use")
+                /*#__PURE__*/React.createElement("span", { style:{ color:"#b09070", fontSize:"0.75rem" } }, "One breeding per payment \u00B7 Auto-delists after use")
               )
             ),
             /*#__PURE__*/React.createElement("div", { style:{ display:"flex", flexDirection:"column", gap:6, alignItems:"flex-end" } },
@@ -15498,12 +15532,12 @@ function App() {
                     setAnimals(function(prev){ return prev.map(function(x){ return x.id===a.id ? Object.assign({},x,{studFee:Number(fee)}) : x; }); });
                   }
                 },
-                style:{ background:"#0f2d1e", border:"1px solid #22c55e", color:"#22c55e",
+                style:{ background:"#1a1208", border:"1px solid #22c55e", color:"#22c55e",
                   borderRadius:6, padding:"4px 12px", cursor:"pointer", fontSize:"0.75rem" }
               }, "Edit Fee"),
               /*#__PURE__*/React.createElement("button", {
                 onClick: function(){ toggleStud(a.id); },
-                style:{ background: a.isStud?"#3b0f0f":"#0f2d1e",
+                style:{ background: a.isStud?"#3a1008":"#1a1208",
                   border:"1px solid "+(a.isStud?"#ef4444":"#22c55e"),
                   color: a.isStud?"#fca5a5":"#22c55e",
                   borderRadius:6, padding:"4px 12px", cursor:"pointer", fontSize:"0.75rem", fontWeight:"bold" }
@@ -15516,29 +15550,32 @@ function App() {
   ),
   tab === "log" && /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
     style: {
-      color: "#38bdf8",
+      color: "#e8a020",
       fontWeight: "bold",
       fontSize: "1.05rem",
-      marginBottom: 14
+      marginBottom: 16,
+      paddingBottom: 10,
+      borderBottom: "1px solid #3a2a18",
+      letterSpacing: "0.03em"
     }
   }, "\uD83D\uDCD3 Activity Journal"),
   log.length === 0
     ? /*#__PURE__*/React.createElement("div", {
-        style: { textAlign: "center", color: "#475569", padding: "60px 0", fontSize: "0.85rem" }
+        style: { textAlign: "center", color: "#6b5038", padding: "60px 0", fontSize: "0.85rem" }
       }, "No activity yet \u2014 your kennel journal will appear here.")
-    : /*#__PURE__*/React.createElement("div", null,
-        log.map(function(e) {
+    : /*#__PURE__*/React.createElement("div", { style: { maxHeight: "calc(100vh - 220px)", overflowY: "auto", paddingRight: 4 } },
+        log.slice(0, 50).map(function(e) {
           // ── Entry config by type ──────────────────────────────────────
           var cfg = {
-            breed:         { icon:"\uD83E\uDEC2", border:"#1e3a5f", bg:"#0d1e35", label:"Breeding" },
-            rehome:        { icon:"\uD83D\uDE90", border:"#6d28d9", bg:"#1a1a2a", label:"Rehomed" },
-            retire_player: { icon:"\uD83C\uDFE1", border:"#4ade80", bg:"#0f2d1e", label:"Retired" },
-            retire_age:    { icon:"\uD83D\uDC74", border:"#eab308", bg:"#1f1a00", label:"Retired (Age)" },
-            whelping:      { icon:"\uD83D\uDC23", border:"#f472b6", bg:"#2a0f1a", label:"Whelping" },
+            breed:         { icon:"\uD83E\uDEC2", border:"#2e1e08", bg:"#211810", label:"Breeding" },
+            rehome:        { icon:"\uD83D\uDE90", border:"#6d28d9", bg:"#211810", label:"Rehomed" },
+            retire_player: { icon:"\uD83C\uDFE1", border:"#5aaa30", bg:"#1a1208", label:"Retired" },
+            retire_age:    { icon:"\uD83D\uDC74", border:"#d4960a", bg:"#1a1208", label:"Retired (Age)" },
+            whelping:      { icon:"\uD83D\uDC23", border:"#e870a0", bg:"#2a1008", label:"Whelping" },
             pups_holding:  { icon:"\uD83D\uDC36", border:"#22c55e", bg:"#0a2a15", label:"Pups to Holding" },
-            financial:     { icon:"\uD83D\uDCB0", border:"#fbbf24", bg:"#1f1500", label:"Financial" },
-            incident:      { icon:"\u26A0\uFE0F",  border:"#ef4444", bg:"#2a0a0a", label:"Incident" }
-          }[e.type] || { icon:"\uD83D\uDCCB", border:"#334155", bg:"#1e293b", label:"Event" };
+            financial:     { icon:"\uD83D\uDCB0", border:"#e8a020", bg:"#1a1208", label:"Financial" },
+            incident:      { icon:"\u26A0\uFE0F",  border:"#ef4444", bg:"#2a1008", label:"Incident" }
+          }[e.type] || { icon:"\uD83D\uDCCB", border:"#3a2a18", bg:"#211810", label:"Event" };
 
           return /*#__PURE__*/React.createElement("div", {
             key: e.id,
@@ -15558,9 +15595,9 @@ function App() {
               // BREED entry
               e.type === "breed" && /*#__PURE__*/React.createElement("div", null,
                 /*#__PURE__*/React.createElement("div", { style: { fontSize:"0.9rem", marginBottom:2 } },
-                  /*#__PURE__*/React.createElement("span", { style: { color:"#38bdf8", fontWeight:"bold" } }, e.sire),
+                  /*#__PURE__*/React.createElement("span", { style: { color:"#d4942a", fontWeight:"bold" } }, e.sire),
                   " \xD7 ",
-                  /*#__PURE__*/React.createElement("span", { style: { color:"#a78bfa", fontWeight:"bold" } }, e.dam)
+                  /*#__PURE__*/React.createElement("span", { style: { color:"#c4956a", fontWeight:"bold" } }, e.dam)
                 ),
                 /*#__PURE__*/React.createElement("div", { style: { display:"flex", gap:12, flexWrap:"wrap", marginTop:4 } },
                   /*#__PURE__*/React.createElement("span", { style: { color:"#22c55e", fontSize:"0.8rem" } }, "\uD83D\uDC36 " + e.count + " pups"),
@@ -15571,40 +15608,40 @@ function App() {
               // REHOME entry
               e.type === "rehome" && /*#__PURE__*/React.createElement("div", null,
                 /*#__PURE__*/React.createElement("div", { style: { fontSize:"0.9rem" } },
-                  /*#__PURE__*/React.createElement("span", { style: { color:"#a78bfa", fontWeight:"bold" } }, e.name),
+                  /*#__PURE__*/React.createElement("span", { style: { color:"#c4956a", fontWeight:"bold" } }, e.name),
                   " placed in a new home"
                 ),
-                /*#__PURE__*/React.createElement("div", { style: { color:"#64748b", fontSize:"0.75rem", marginTop:2 } }, e.breed)
+                /*#__PURE__*/React.createElement("div", { style: { color:"#8a7055", fontSize:"0.75rem", marginTop:2 } }, e.breed)
               ),
               // RETIRE PLAYER entry
               e.type === "retire_player" && /*#__PURE__*/React.createElement("div", null,
                 /*#__PURE__*/React.createElement("div", { style: { fontSize:"0.9rem" } },
-                  /*#__PURE__*/React.createElement("span", { style: { color:"#4ade80", fontWeight:"bold" } }, e.name),
+                  /*#__PURE__*/React.createElement("span", { style: { color:"#5aaa30", fontWeight:"bold" } }, e.name),
                   " retired by owner"
                 ),
-                /*#__PURE__*/React.createElement("div", { style: { color:"#64748b", fontSize:"0.75rem", marginTop:2 } }, e.breed + " \u00B7 " + Math.floor((e.ageMonths||0)/12) + " yrs old")
+                /*#__PURE__*/React.createElement("div", { style: { color:"#8a7055", fontSize:"0.75rem", marginTop:2 } }, e.breed + " \u00B7 " + Math.floor((e.ageMonths||0)/12) + " yrs old")
               ),
               // RETIRE AGE entry
               e.type === "retire_age" && /*#__PURE__*/React.createElement("div", null,
                 /*#__PURE__*/React.createElement("div", { style: { fontSize:"0.9rem" } },
-                  /*#__PURE__*/React.createElement("span", { style: { color:"#eab308", fontWeight:"bold" } }, e.name),
+                  /*#__PURE__*/React.createElement("span", { style: { color:"#d4960a", fontWeight:"bold" } }, e.name),
                   " retired \u2014 end of working life"
                 ),
-                /*#__PURE__*/React.createElement("div", { style: { color:"#64748b", fontSize:"0.75rem", marginTop:2 } }, e.breed + " \u00B7 " + Math.floor((e.ageMonths||0)/12) + " yrs old")
+                /*#__PURE__*/React.createElement("div", { style: { color:"#8a7055", fontSize:"0.75rem", marginTop:2 } }, e.breed + " \u00B7 " + Math.floor((e.ageMonths||0)/12) + " yrs old")
               ),
               // STUB entries
               (e.type === "whelping" || e.type === "pups_holding" || e.type === "financial" || e.type === "incident" || e.type === "whelp") && /*#__PURE__*/React.createElement("div", null,
-                /*#__PURE__*/React.createElement("div", { style: { fontSize:"0.85rem", color: e.type==="incident" ? "#fca5a5" : e.type==="financial" ? "#fcd34d" : "#94a3b8" } },
+                /*#__PURE__*/React.createElement("div", { style: { fontSize:"0.85rem", color: e.type==="incident" ? "#fca5a5" : e.type==="financial" ? "#f0c040" : "#b09070" } },
                   e.type==="financial" ? (e.name + (e.amount ? "  " + (e.amount > 0 ? "+" : "") + formatMoney(e.amount) : "")) :
                   e.type==="incident" ? ("\u26A0\uFE0F " + e.name + (e.fine ? "  Fine: " + formatMoney(e.fine) : "")) :
                   e.type==="pups_holding" ? (e.count + " pup" + (e.count!==1?"s":"") + " moved to temporary holding") :
                   e.type==="whelp" ? (e.name + " \u2014 " + (e.note||"Whelping event")) :
                   (e.note || cfg.label + " event")
                 ),
-                e.detail && /*#__PURE__*/React.createElement("div", { style: { color:"#64748b", fontSize:"0.75rem", marginTop:2 } }, e.detail)
+                e.detail && /*#__PURE__*/React.createElement("div", { style: { color:"#8a7055", fontSize:"0.75rem", marginTop:2 } }, e.detail)
               ),
               // Timestamp
-              /*#__PURE__*/React.createElement("div", { style: { color:"#334155", fontSize:"0.65rem", marginTop:4 } }, e.date)
+              /*#__PURE__*/React.createElement("div", { style: { color:"#3a2a18", fontSize:"0.65rem", marginTop:4 } }, e.date)
             )
           );
         })
@@ -15615,45 +15652,49 @@ function App() {
       bottom: 0,
       left: 0,
       right: 0,
-      background: "#0f172a",
-      borderTop: "1px solid #1e293b",
-      padding: "7px 22px",
+      background: "linear-gradient(90deg,#0c0a08,#1a1008)",
+      borderTop: "1px solid #3a2a18",
+      padding: "6px 22px",
       display: "flex",
       gap: 16,
       alignItems: "center",
       fontSize: "0.74rem",
-      zIndex: 100
+      zIndex: 100,
+      boxShadow: "0 -2px 12px rgba(0,0,0,0.4)"
     }
   }, sire && /*#__PURE__*/React.createElement("span", {
     style: {
-      color: "#38bdf8"
+      color: "#d4942a", background: "#2e1e08", border: "1px solid #3a2a18",
+      borderRadius: 4, padding: "2px 8px"
     }
   }, "\u2642 Sire: ", sire.name), dam && /*#__PURE__*/React.createElement("span", {
     style: {
-      color: "#a78bfa"
+      color: "#c4956a", background: "#211810", border: "1px solid #3a2a18",
+      borderRadius: 4, padding: "2px 8px"
     }
   }, "\u2640 Dam: ", dam.name), sire && dam && /*#__PURE__*/React.createElement("button", {
     onClick: function onClick() {
       return setTab("breed");
     },
     style: {
-      background: "#1e3a5f",
-      border: "1px solid #38bdf8",
-      color: "#38bdf8",
+      background: "#2e1e08",
+      border: "1px solid #d4942a",
+      color: "#e8a020",
       borderRadius: 4,
       padding: "2px 8px",
       cursor: "pointer",
-      fontSize: "0.72rem"
+      fontSize: "0.72rem",
+      fontWeight: "bold"
     }
   }, "\u2192 Go Breed"), /*#__PURE__*/React.createElement("div", {
     style: {
-      width:"100%", textAlign:"center", color:"#334155",
+      width:"100%", textAlign:"center", color:"#6b5038",
       fontSize:"0.65rem", padding:"4px 0", letterSpacing:"0.03em"
     }
   }, "\uD83E\uDDEC 8 coat loci \xB7 8 health loci \xB7 5 perf QTLs \xB7 0.5% mutation rate \xB7 COI tracking"),
   /*#__PURE__*/React.createElement(Clock, { gameStartDate: gameStartDate }),
   tab === "farm" && /*#__PURE__*/React.createElement("div", {
-    style: { position:"fixed", inset:0, background:"#0a0f1a", zIndex:50, overflow:"hidden", display:"flex", alignItems:"center", justifyContent:"center" }
+    style: { position:"fixed", inset:0, background:"#0c0a08", zIndex:50, overflow:"hidden", display:"flex", alignItems:"center", justifyContent:"center" }
   }, /*#__PURE__*/React.createElement(FarmView, {
     facilitiesOwned: facilitiesOwned,
     kennels: kennels,
@@ -15876,23 +15917,23 @@ function Facilities(_ref) {
     style:{position:"fixed",top:0,left:0,right:0,bottom:0,background:"rgba(0,0,0,0.88)",
       zIndex:1000,display:"flex",alignItems:"center",justifyContent:"center"}},
     /*#__PURE__*/React.createElement("div",{
-      style:{background:"#0a0f1e",border:"1px solid #334155",borderRadius:14,
+      style:{background:"#0a0f1e",border:"1px solid #3a2a18",borderRadius:14,
         width:"min(860px,95vw)",maxHeight:"88vh",display:"flex",flexDirection:"column",
         overflow:"hidden",boxShadow:"0 20px 60px rgba(0,0,0,0.9)"}},
 
       // Header
       /*#__PURE__*/React.createElement("div",{
         style:{display:"flex",alignItems:"center",padding:"14px 18px",
-          borderBottom:"1px solid #1e293b",gap:12}},
-        /*#__PURE__*/React.createElement("div",{style:{fontSize:"1.1rem",fontWeight:"bold",color:"#e2e8f0",flex:1}},
+          borderBottom:"1px solid #211810",gap:12}},
+        /*#__PURE__*/React.createElement("div",{style:{fontSize:"1.1rem",fontWeight:"bold",color:"#f0e6d3",flex:1}},
           "\uD83C\uDFD7 Facilities"),
-        /*#__PURE__*/React.createElement("div",{style:{fontSize:"0.78rem",color:"#475569"}},
+        /*#__PURE__*/React.createElement("div",{style:{fontSize:"0.78rem",color:"#6b5038"}},
           "Balance: "),
         /*#__PURE__*/React.createElement("div",{style:{fontSize:"0.88rem",fontWeight:"bold",
-          color:money>=500?"#22c55e":money>=0?"#f59e0b":"#ef4444"}},
+          color:money>=500?"#22c55e":money>=0?"#d4860a":"#ef4444"}},
           "$"+money.toLocaleString()),
         /*#__PURE__*/React.createElement("button",{onClick:onClose,
-          style:{background:"transparent",border:"1px solid #334155",color:"#94a3b8",
+          style:{background:"transparent",border:"1px solid #3a2a18",color:"#b09070",
             borderRadius:6,padding:"4px 10px",cursor:"pointer",fontSize:"0.8rem",marginLeft:8}},
           "\u2715 Close")
       ),
@@ -15910,31 +15951,31 @@ function Facilities(_ref) {
             var isMaxed=owned&&(owned.tier+1)>=fac.tiers.length;
 
             return /*#__PURE__*/React.createElement("div",{key:key,
-              style:{background: owned?"#0a1a0a":"#0f172a",
-                border:"1px solid "+(owned?"#22c55e":"#1e293b"),
+              style:{background: owned?"#0a1a0a":"#100d08",
+                border:"1px solid "+(owned?"#22c55e":"#211810"),
                 borderRadius:10,padding:"14px",display:"flex",flexDirection:"column",gap:8}},
 
               // Title row
               /*#__PURE__*/React.createElement("div",{style:{display:"flex",alignItems:"center",gap:8}},
                 /*#__PURE__*/React.createElement("span",{style:{fontSize:"1.4rem"}},fac.icon),
                 /*#__PURE__*/React.createElement("div",{style:{flex:1}},
-                  /*#__PURE__*/React.createElement("div",{style:{fontWeight:"bold",color:"#e2e8f0",fontSize:"0.88rem"}},
+                  /*#__PURE__*/React.createElement("div",{style:{fontWeight:"bold",color:"#f0e6d3",fontSize:"0.88rem"}},
                     fac.label),
                   owned
                     ?/*#__PURE__*/React.createElement("div",{style:{fontSize:"0.72rem",color:"#22c55e"}},
                         currentTier.name+" \u00B7 Capacity: "+currentTier.capacity+
                         (isMaxed?" \u00B7 \u2605 Maxed":""))
-                    :/*#__PURE__*/React.createElement("div",{style:{fontSize:"0.72rem",color:"#475569"}},
+                    :/*#__PURE__*/React.createElement("div",{style:{fontSize:"0.72rem",color:"#6b5038"}},
                         "Not built")
                 )
               ),
 
               // Description
-              /*#__PURE__*/React.createElement("div",{style:{fontSize:"0.72rem",color:"#64748b",lineHeight:1.4}},
+              /*#__PURE__*/React.createElement("div",{style:{fontSize:"0.72rem",color:"#8a7055",lineHeight:1.4}},
                 fac.desc),
 
               // Upkeep if owned
-              owned&&/*#__PURE__*/React.createElement("div",{style:{fontSize:"0.72rem",color:"#94a3b8"}},
+              owned&&/*#__PURE__*/React.createElement("div",{style:{fontSize:"0.72rem",color:"#b09070"}},
                 "Monthly upkeep: $"+currentTier.upkeep.toLocaleString()),
 
               // Action button
@@ -15949,7 +15990,7 @@ function Facilities(_ref) {
                         onBuy(key,firstTier.cost);
                       }
                     },
-                    style:{background:money>=firstTier.cost?"#0f2d1e":"#1a0a0a",
+                    style:{background:money>=firstTier.cost?"#1a1208":"#2a1008",
                       border:"1px solid "+(money>=firstTier.cost?"#22c55e":"#ef4444"),
                       color:money>=firstTier.cost?"#22c55e":"#ef4444",
                       borderRadius:6,padding:"6px 0",cursor:"pointer",fontSize:"0.78rem",fontWeight:"bold"}},
@@ -15970,9 +16011,9 @@ function Facilities(_ref) {
                           onUpgrade(key,nextTier.cost);
                         }
                       },
-                      style:{background:money>=nextTier.cost?"#0f1f3d":"#1a0a0a",
-                        border:"1px solid "+(money>=nextTier.cost?"#38bdf8":"#ef4444"),
-                        color:money>=nextTier.cost?"#38bdf8":"#ef4444",
+                      style:{background:money>=nextTier.cost?"#2e1e08":"#2a1008",
+                        border:"1px solid "+(money>=nextTier.cost?"#d4942a":"#ef4444"),
+                        color:money>=nextTier.cost?"#d4942a":"#ef4444",
                         borderRadius:6,padding:"6px 0",cursor:"pointer",fontSize:"0.78rem",fontWeight:"bold"}},
                       money>=nextTier.cost
                         ?"\u2191 Upgrade to "+nextTier.name+" \u2014 $"+nextTier.cost.toLocaleString()
