@@ -13243,7 +13243,17 @@ function Card(_ref0) {
       overflow: "auto",
       boxShadow: isSelected ? "0 0 14px rgba(212,148,42,0.25)" : "0 2px 6px rgba(0,0,0,0.4)"
     }
-  }, /*#__PURE__*/React.createElement(BreedPhoto, { animal: animal })),
+  },
+  /*#__PURE__*/React.createElement("div", {
+    style: { position:"relative", marginBottom:10 }
+  },
+    /*#__PURE__*/React.createElement("div", {
+      style: { width:"100%", height: fullHeight ? 180 : 120, borderRadius:8, overflow:"hidden" }
+    }, /*#__PURE__*/React.createElement(DogSilhouette, { animal: animal })),
+    /*#__PURE__*/React.createElement("div", {
+      style: { position:"absolute", top:6, right:6 }
+    }, /*#__PURE__*/React.createElement(BreedPhoto, { animal: animal }))
+  )),
   (onStud || onSell || onRetire) && /*#__PURE__*/React.createElement("div", {
     style: { display:"flex", gap:4, marginBottom:8 },
     onClick: function(e){ e.stopPropagation(); }
