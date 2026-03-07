@@ -13229,8 +13229,8 @@ function Card(_ref0) {
       return onSelect && onSelect(animal);
     },
     style: {
-      background: isSelected ? "#4a3418" : "#342618",
-      border: "1px solid " + (isSelected ? "#d4942a" : ineligibleReason && onSelect ? "#4a3a28" : "#52402a"),
+      background: isSelected ? "#6a4a28" : "#4a3820",
+      border: "1px solid " + (isSelected ? "#d4942a" : ineligibleReason && onSelect ? "#4a3a28" : "#6a5238"),
       borderRadius: 10,
       padding: 16,
       cursor: onSelect ? (ineligibleReason ? "not-allowed" : "pointer") : "default",
@@ -15164,7 +15164,7 @@ function App() {
   kennelOpen && /*#__PURE__*/React.createElement("div", {
     style: {
       position: "absolute", top: 0, left: 0, right: 0, bottom: 0,
-      background: "#241c14", zIndex: 20, display: "flex", flexDirection: "column",
+      background: "#2e2418", zIndex: 20, display: "flex", flexDirection: "column",
       borderRadius: 10, overflow: "hidden"
     }
   },
