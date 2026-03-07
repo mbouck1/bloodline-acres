@@ -13083,7 +13083,7 @@ function DogSilhouette(_ref_sil) {
   var merleEl = renderMerlePatches(palette, W, H);
 
   var svgStr =
-    '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 '+W+' '+H+'" width="100%" height="100%" preserveAspectRatio="xMidYMid meet" style="display:block;width:100%;height:100%">'+
+    '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 '+W+' '+H+'" width="'+W+'" height="'+H+'" style="display:block">'+
       brindlePattern+
       '<defs>'+
         '<clipPath id="'+clipId+'">'+
@@ -13108,7 +13108,7 @@ function DogSilhouette(_ref_sil) {
 
   return React.createElement("div", {
     dangerouslySetInnerHTML: { __html: svgStr },
-    style: { width:"100%", height:"100%", borderRadius:7, overflow:"hidden", display:"block" }
+    style: { display:"inline-block", borderRadius:7, overflow:"hidden" }
   });
 }
 
@@ -13244,11 +13244,9 @@ function Card(_ref0) {
     }
   },
   /*#__PURE__*/React.createElement("div", {
-    style: { position:"relative", marginBottom:10, width:"100%", height: fullHeight ? 220 : 140, borderRadius:8, overflow:"hidden" }
+    style: { position:"relative", marginBottom:10, display:"flex", justifyContent:"center", alignItems:"center", background:"#3a2a18", borderRadius:8, padding:"10px 0" }
   },
-    /*#__PURE__*/React.createElement("div", {
-      style: { width:"100%", height:"100%" }
-    }, /*#__PURE__*/React.createElement(DogSilhouette, { animal: animal })),
+    /*#__PURE__*/React.createElement(DogSilhouette, { animal: animal }),
     /*#__PURE__*/React.createElement("div", {
       style: { position:"absolute", top:6, right:6 }
     }, /*#__PURE__*/React.createElement(BreedPhoto, { animal: animal }))
