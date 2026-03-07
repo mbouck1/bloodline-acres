@@ -13083,13 +13083,14 @@ function DogSilhouette(_ref_sil) {
   var merleEl = renderMerlePatches(palette, W, H);
 
   var svgStr =
-    '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 '+W+' '+H+'" width="100%" height="100%" preserveAspectRatio="xMidYMid slice" style="display:block;width:100%;height:100%">'+
+    '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 '+W+' '+H+'" width="100%" height="100%" preserveAspectRatio="xMidYMid meet" style="display:block;width:100%;height:100%">'+
       brindlePattern+
       '<defs>'+
         '<clipPath id="'+clipId+'">'+
           '<path d="'+path+'"/>'+
         '</clipPath>'+
       '</defs>'+
+      '<rect width="'+W+'" height="'+H+'" fill="#3a2a18"/>'+
       // Base coat fill
       '<path d="'+path+'" fill="'+fillColor+'" stroke="'+darkenColor(palette.base,0.25)+'" stroke-width="1.5"/>'+
       // Clip group for all overlays
