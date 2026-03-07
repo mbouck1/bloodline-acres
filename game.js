@@ -13219,12 +13219,12 @@ function Card(_ref0) {
     if (nameVal.trim()) onRename && onRename(animal.id, nameVal.trim());
     setEditing(false);
   };
-  return /*#__PURE__*/React.createElement(React.Fragment, null, showDNA && /*#__PURE__*/React.createElement(DNAModal, {
+  return /*#__PURE__*/React.createElement(React.Fragment, null, showDNA && ReactDOM.createPortal(/*#__PURE__*/React.createElement(DNAModal, {
     animal: animal,
     onClose: function onClose() {
       return setShowDNA(false);
     }
-  }), /*#__PURE__*/React.createElement("div", {
+  }), document.body), /*#__PURE__*/React.createElement("div", {
     onClick: function onClick() {
       return onSelect && onSelect(animal);
     },
@@ -13456,11 +13456,12 @@ function Card(_ref0) {
     /*#__PURE__*/React.createElement("span", { style: { color: coiColor(animal.coi), fontWeight: "bold", fontSize: "0.95rem" } }, "COI ", animal.coi, "%")
   ),
   /*#__PURE__*/React.createElement("div", {
+    onClick: function(e){ e.stopPropagation(); setShowDNA(true); },
     style: { fontFamily: "monospace", fontSize: "0.78rem", color: "#38bdf8", background: "#0f172a",
       borderRadius: 4, padding: "5px 10px", marginBottom: 7, overflow: "hidden",
       textOverflow: "ellipsis", whiteSpace: "nowrap", fontWeight: "bold", letterSpacing: "0.04em",
-      border: "1px solid #1e3a5f" },
-    title: animal.vinStr
+      border: "1px solid #1e3a5f", cursor: "pointer" },
+    title: "Click to view Full DNA Panel"
   }, "\uD83E\uDDEC ", animal.vinStr),
   (function() {
     if (animal.sex !== "F" || animal.retired) return null;
@@ -13586,10 +13587,7 @@ function Card(_ref0) {
     )
   ),
 
-  /*#__PURE__*/React.createElement("button", {
-    onClick: function onClick(e) { e.stopPropagation(); setShowDNA(true); },
-    style: { width: "100%", background: "none", border: "1px solid #1e3a5f", color: "#38bdf8", borderRadius: 5, padding: "4px", cursor: "pointer", fontSize: "0.72rem" }
-  }, "View Full DNA Panel"));
+);
 }
 
 // ── MAIN APP ──────────────────────────────────────────────────
