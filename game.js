@@ -12438,8 +12438,8 @@ function DNAModal(_ref5) {
       return e.stopPropagation();
     },
     style: {
-      background: "#100d08",
-      border: "1px solid #3a2a18",
+      background: "#1a1410",
+      border: "1px solid #4a3a28",
       borderRadius: 12,
       width: "100%",
       maxWidth: 720,
@@ -12481,7 +12481,7 @@ function DNAModal(_ref5) {
     style: {
       fontFamily: "monospace",
       fontSize: "0.62rem",
-      background: "#211810",
+      background: "#443828",
       borderRadius: 6,
       padding: "8px 12px",
       marginBottom: 16,
@@ -12515,8 +12515,8 @@ function DNAModal(_ref5) {
     return /*#__PURE__*/React.createElement("div", {
       key: loc,
       style: {
-        background: warn ? "#3a1008" : "#211810",
-        border: "1px solid ".concat(warn ? "#ef4444" : "#3a2a18"),
+        background: warn ? "#481808" : "#443828",
+        border: "1px solid ".concat(warn ? "#ef4444" : "#4a3a28"),
         borderRadius: 6,
         padding: 8
       }
@@ -12579,8 +12579,8 @@ function DNAModal(_ref5) {
     return /*#__PURE__*/React.createElement("div", {
       key: loc,
       style: {
-        background: aff ? "#3a1008" : "#211810",
-        border: "1px solid ".concat(aff ? "#ef4444" : car ? "#ca8a04" : "#3a2a18"),
+        background: aff ? "#481808" : "#443828",
+        border: "1px solid ".concat(aff ? "#ef4444" : car ? "#ca8a04" : "#4a3a28"),
         borderRadius: 6,
         padding: 8
       }
@@ -12642,7 +12642,7 @@ function DNAModal(_ref5) {
       return /*#__PURE__*/React.createElement("div", {
         key: q,
         title: tipText,
-        style: { background: "#211810", border: "1px solid #3a2a18", borderRadius: 6, padding: 8, textAlign: "center", cursor: "help" }
+        style: { background: "#443828", border: "1px solid #4a3a28", borderRadius: 6, padding: 8, textAlign: "center", cursor: "help" }
       },
       /*#__PURE__*/React.createElement("div", { style: { color: "#c4956a", fontSize: "0.68rem", fontWeight: "bold", lineHeight: 1.15 } }, info.full),
       /*#__PURE__*/React.createElement("div", { style: { color: "#7c6fa8", fontSize: "0.58rem", marginBottom: 4, lineHeight: 1.1 } }, info.line2 || "\u00a0"),
@@ -12655,7 +12655,7 @@ function DNAModal(_ref5) {
         /*#__PURE__*/React.createElement("span", null, v[1])
       ),
       /*#__PURE__*/React.createElement("div", { style: { fontSize: "0.58rem", color: "#8a7055", marginBottom: 2 } }, "Avg score (1\u20135)"),
-      /*#__PURE__*/React.createElement("div", { style: { background: "#100d08", borderRadius: 3, height: 4, overflow: "hidden", marginBottom: 3 } },
+      /*#__PURE__*/React.createElement("div", { style: { background: "#1a1410", borderRadius: 3, height: 4, overflow: "hidden", marginBottom: 3 } },
         /*#__PURE__*/React.createElement("div", { style: { background: "#c4956a", width: "".concat(avg / 5 * 100, "%"), height: "100%" } })
       ),
       /*#__PURE__*/React.createElement("div", { style: { color: "#c4956a", fontSize: "0.72rem", fontWeight: "bold" } }, avg, "/5"));
@@ -12694,8 +12694,8 @@ function DNAModal(_ref5) {
     }, "(from ", m.src, ")"));
   })), /*#__PURE__*/React.createElement("div", {
     style: {
-      background: "#211810",
-      border: "1px solid #3a2a18",
+      background: "#443828",
+      border: "1px solid #4a3a28",
       borderRadius: 6,
       padding: 12
     }
@@ -12717,7 +12717,7 @@ function DNAModal(_ref5) {
     }
   }, animal.coi, "% \u2014 ", coiLabel(animal.coi))), /*#__PURE__*/React.createElement("div", {
     style: {
-      background: "#100d08",
+      background: "#1a1410",
       borderRadius: 4,
       height: 6,
       overflow: "hidden",
@@ -12732,10 +12732,10 @@ function DNAModal(_ref5) {
   })), /*#__PURE__*/React.createElement("div", {
     style: { display: "flex", gap: 4, marginTop: 8, flexWrap: "wrap" }
   },
-    /*#__PURE__*/React.createElement("span", { key: 0, title: "Outcross (0-3%): Minimal shared ancestry. Maximum genetic diversity. Ideal for hybrid vigor, reducing hereditary disease risk, and introducing new traits. Best for health-first breeding programs.", style: { fontSize: "0.62rem", color: "#22c55e", cursor: "help", background: "#100d08", border: "1px solid #22c55e", borderRadius: 3, padding: "2px 6px", whiteSpace: "nowrap" } }, "0-3% Outcross \u2139\uFE0F"),
-    /*#__PURE__*/React.createElement("span", { key: 1, title: "Moderate (3-10%): Some shared ancestors, common in established purebred lines. Acceptable for maintaining breed type. Watch for slight increases in recessive disease expression. Most kennel clubs consider this normal range.", style: { fontSize: "0.62rem", color: "#d4960a", cursor: "help", background: "#100d08", border: "1px solid #d4960a", borderRadius: 3, padding: "2px 6px", whiteSpace: "nowrap" } }, "3-10% Moderate \u2139\uFE0F"),
-    /*#__PURE__*/React.createElement("span", { key: 2, title: "High (10-25%): Significant inbreeding - equivalent to breeding half-siblings or double first cousins. Noticeably reduced immune function, smaller litters, higher puppy mortality. Recessive disorders become much more likely. Use only with strong justification.", style: { fontSize: "0.62rem", color: "#f97316", cursor: "help", background: "#100d08", border: "1px solid #f97316", borderRadius: 3, padding: "2px 6px", whiteSpace: "nowrap" } }, "10-25% High \u2139\uFE0F"),
-    /*#__PURE__*/React.createElement("span", { key: 3, title: "Very High (25%+): Equivalent to parent-offspring or full sibling breeding. Severe inbreeding depression - reduced fertility, immune collapse, elevated cancer risk, shorter lifespan, and high probability of expressing multiple recessive disorders. Avoid.", style: { fontSize: "0.62rem", color: "#ef4444", cursor: "help", background: "#100d08", border: "1px solid #ef4444", borderRadius: 3, padding: "2px 6px", whiteSpace: "nowrap" } }, "25%+ Very High \u2139\uFE0F")
+    /*#__PURE__*/React.createElement("span", { key: 0, title: "Outcross (0-3%): Minimal shared ancestry. Maximum genetic diversity. Ideal for hybrid vigor, reducing hereditary disease risk, and introducing new traits. Best for health-first breeding programs.", style: { fontSize: "0.62rem", color: "#22c55e", cursor: "help", background: "#1a1410", border: "1px solid #22c55e", borderRadius: 3, padding: "2px 6px", whiteSpace: "nowrap" } }, "0-3% Outcross \u2139\uFE0F"),
+    /*#__PURE__*/React.createElement("span", { key: 1, title: "Moderate (3-10%): Some shared ancestors, common in established purebred lines. Acceptable for maintaining breed type. Watch for slight increases in recessive disease expression. Most kennel clubs consider this normal range.", style: { fontSize: "0.62rem", color: "#d4960a", cursor: "help", background: "#1a1410", border: "1px solid #d4960a", borderRadius: 3, padding: "2px 6px", whiteSpace: "nowrap" } }, "3-10% Moderate \u2139\uFE0F"),
+    /*#__PURE__*/React.createElement("span", { key: 2, title: "High (10-25%): Significant inbreeding - equivalent to breeding half-siblings or double first cousins. Noticeably reduced immune function, smaller litters, higher puppy mortality. Recessive disorders become much more likely. Use only with strong justification.", style: { fontSize: "0.62rem", color: "#f97316", cursor: "help", background: "#1a1410", border: "1px solid #f97316", borderRadius: 3, padding: "2px 6px", whiteSpace: "nowrap" } }, "10-25% High \u2139\uFE0F"),
+    /*#__PURE__*/React.createElement("span", { key: 3, title: "Very High (25%+): Equivalent to parent-offspring or full sibling breeding. Severe inbreeding depression - reduced fertility, immune collapse, elevated cancer risk, shorter lifespan, and high probability of expressing multiple recessive disorders. Avoid.", style: { fontSize: "0.62rem", color: "#ef4444", cursor: "help", background: "#1a1410", border: "1px solid #ef4444", borderRadius: 3, padding: "2px 6px", whiteSpace: "nowrap" } }, "25%+ Very High \u2139\uFE0F")
   ))));
 }
 
@@ -13140,8 +13140,8 @@ function BreedPhotoModal(_ref_bpm) {
     ),
     /*#__PURE__*/React.createElement("button", {
       onClick: onClose,
-      style: { position:"fixed", top:16, right:16, background:"#211810",
-        border:"1px solid #3a2a18", color:"#f0e6d3", borderRadius:"50%",
+      style: { position:"fixed", top:16, right:16, background:"#443828",
+        border:"1px solid #4a3a28", color:"#f0e6d3", borderRadius:"50%",
         width:36, height:36, fontSize:"1.1rem", cursor:"pointer",
         display:"flex", alignItems:"center", justifyContent:"center" }
     }, "✕")
@@ -13181,7 +13181,7 @@ function BreedPhoto(_ref_bp) {
     }, /*#__PURE__*/React.createElement("button", {
       onClick: function(e){ e.stopPropagation(); setShowModal(true); },
       title: "View " + breedName + " photo",
-      style: { background:"#100d08", border:"1px solid #3a2a18",
+      style: { background:"#1a1410", border:"1px solid #4a3a28",
         borderRadius:6, padding:"3px 8px", cursor:"pointer",
         color:"#b09070", fontSize:"0.75rem", display:"flex",
         alignItems:"center", gap:4 }
@@ -13229,8 +13229,8 @@ function Card(_ref0) {
       return onSelect && onSelect(animal);
     },
     style: {
-      background: isSelected ? "#2e1e08" : "#1a1208",
-      border: "1px solid " + (isSelected ? "#d4942a" : ineligibleReason && onSelect ? "#3a2a18" : "#3a2a18"),
+      background: isSelected ? "#4a3418" : "#342618",
+      border: "1px solid " + (isSelected ? "#d4942a" : ineligibleReason && onSelect ? "#4a3a28" : "#52402a"),
       borderRadius: 10,
       padding: 16,
       cursor: onSelect ? (ineligibleReason ? "not-allowed" : "pointer") : "default",
@@ -13241,7 +13241,7 @@ function Card(_ref0) {
       height: fullHeight ? "100%" : "auto",
       boxSizing: "border-box",
       overflow: "auto",
-      boxShadow: isSelected ? "0 0 12px rgba(212,148,42,0.2)" : "0 1px 4px rgba(0,0,0,0.3)"
+      boxShadow: isSelected ? "0 0 14px rgba(212,148,42,0.25)" : "0 2px 6px rgba(0,0,0,0.4)"
     }
   }, /*#__PURE__*/React.createElement(BreedPhoto, { animal: animal })),
   (onStud || onSell || onRetire) && /*#__PURE__*/React.createElement("div", {
@@ -13250,17 +13250,17 @@ function Card(_ref0) {
   },
     animal.sex === "M" && onStud && /*#__PURE__*/React.createElement("button", {
       onClick: function(e){ e.stopPropagation(); onStud(animal); },
-      style: { flex:1, background: animal.isStud?"#1a1208":"#0c0a08", border:"1px solid "+(animal.isStud?"#22c55e":"#3a2a18"),
+      style: { flex:1, background: animal.isStud?"#2a1e14":"#141008", border:"1px solid "+(animal.isStud?"#22c55e":"#4a3a28"),
         color: animal.isStud?"#22c55e":"#8a7055", borderRadius:5, padding:"5px 0", cursor:"pointer", fontSize:"0.8rem", fontWeight:"bold" }
     }, animal.isStud ? "\uD83D\uDC3E Stud \u2713" : "\uD83D\uDC3E Stud"),
     onSell && /*#__PURE__*/React.createElement("button", {
       onClick: function(e){ e.stopPropagation(); onSell(animal); },
-      style: { flex:1, background: animal.forSale?"#1a1208":"#0c0a08", border:"1px solid "+(animal.forSale?"#d4860a":"#3a2a18"),
+      style: { flex:1, background: animal.forSale?"#2a1e14":"#141008", border:"1px solid "+(animal.forSale?"#d4860a":"#4a3a28"),
         color: animal.forSale?"#d4860a":"#8a7055", borderRadius:5, padding:"5px 0", cursor:"pointer", fontSize:"0.8rem", fontWeight:"bold" }
     }, animal.forSale ? "\uD83D\uDCB0 Listed" : "\uD83D\uDCB0 Sell"),
     onRetire && /*#__PURE__*/React.createElement("button", {
       onClick: function(e){ e.stopPropagation(); onRetire(animal); },
-      style: { flex:1, background:"#0c0a08", border:"1px solid #3a2a18", color:"#8a7055",
+      style: { flex:1, background:"#141008", border:"1px solid #4a3a28", color:"#8a7055",
         borderRadius:5, padding:"3px 0", cursor:"pointer", fontSize:"0.68rem", fontWeight:"bold" }
     }, "\uD83C\uDFE1 Retire")
   ),
@@ -13298,7 +13298,7 @@ function Card(_ref0) {
     },
     autoFocus: true,
     style: {
-      background: "#100d08",
+      background: "#1a1410",
       border: "1px solid #d4942a",
       color: "#f1f5f9",
       borderRadius: 4,
@@ -13310,7 +13310,7 @@ function Card(_ref0) {
   }), /*#__PURE__*/React.createElement("button", {
     onClick: submitRename,
     style: {
-      background: "#2e1e08",
+      background: "#3a2810",
       border: "1px solid #d4942a",
       color: "#d4942a",
       borderRadius: 4,
@@ -13386,8 +13386,8 @@ function Card(_ref0) {
   }, "\u2715"))), /*#__PURE__*/React.createElement("div", {
     style: {
       display: "inline-block",
-      background: "#100d08",
-      border: "1px solid #2e1e08",
+      background: "#1a1410",
+      border: "1px solid #3a2810",
       borderRadius: 4,
       padding: "2px 8px",
       fontSize: "0.72rem",
@@ -13396,11 +13396,11 @@ function Card(_ref0) {
     }
   },
     /*#__PURE__*/React.createElement("span", {
-      style: { display:"inline-block", background:"#100d08", border:"1px solid #2e1e08",
+      style: { display:"inline-block", background:"#1a1410", border:"1px solid #3a2810",
         borderRadius:4, padding:"3px 10px", fontSize:"0.82rem", color:"#b09070", marginRight:4 }
     }, animal.coatColor ? animal.coatColor.split(" \xB7 ")[0] : "Unknown"),
     animal.coatColor && animal.coatColor.includes(" \xB7 ") && /*#__PURE__*/React.createElement("span", {
-      style: { display:"inline-block", background:"#100d08", border:"1px solid #3a2a18",
+      style: { display:"inline-block", background:"#1a1410", border:"1px solid #4a3a28",
         borderRadius:4, padding:"3px 10px", fontSize:"0.82rem", color:"#f0e6d3" }
     }, animal.coatColor.split(" \xB7 ").slice(1).join(" \xB7 "))
   ), (function() {
@@ -13412,7 +13412,7 @@ function Card(_ref0) {
     },
       /*#__PURE__*/React.createElement("span", {
         style: {
-          display: "inline-block", background: "#100d08", border: "1px solid " + stage.color,
+          display: "inline-block", background: "#1a1410", border: "1px solid " + stage.color,
           borderRadius: 4, padding: "3px 10px", fontSize: "0.82rem", color: stage.color, fontWeight: "bold"
         }
       }, stage.label),
@@ -13421,7 +13421,7 @@ function Card(_ref0) {
       }, ageYrs + " / " + lifespanYrs + " yrs"),
       animal.retired && /*#__PURE__*/React.createElement("span", {
         style: {
-          display: "inline-block", background: "#3a1008", border: "1px solid #ef4444",
+          display: "inline-block", background: "#481808", border: "1px solid #ef4444",
           borderRadius: 4, padding: "3px 10px", fontSize: "0.8rem", color: "#fca5a5"
         }
       }, "\uD83C\uDFF4 Retired"),
@@ -13448,20 +13448,20 @@ function Card(_ref0) {
   // Condensed stats row
   /*#__PURE__*/React.createElement("div", {
     style: { display: "flex", alignItems: "center", gap: 10, marginBottom: 6,
-      background: "#100d08", borderRadius: 5, padding: "5px 8px" }
+      background: "#1a1410", borderRadius: 5, padding: "5px 8px" }
   },
     /*#__PURE__*/React.createElement("span", { style: { color: healthColor(animal.healthScore), fontWeight: "bold", fontSize: "0.95rem" } }, "\u2764\uFE0F ", animal.healthScore),
-    /*#__PURE__*/React.createElement("span", { style: { color: "#3a2a18" } }, "|"),
+    /*#__PURE__*/React.createElement("span", { style: { color: "#4a3a28" } }, "|"),
     /*#__PURE__*/React.createElement("span", { style: { color: "#c4956a", fontWeight: "bold", fontSize: "0.95rem" } }, "\u26A1 ", animal.perfScore),
-    /*#__PURE__*/React.createElement("span", { style: { color: "#3a2a18" } }, "|"),
+    /*#__PURE__*/React.createElement("span", { style: { color: "#4a3a28" } }, "|"),
     /*#__PURE__*/React.createElement("span", { style: { color: coiColor(animal.coi), fontWeight: "bold", fontSize: "0.95rem" } }, "COI ", animal.coi, "%")
   ),
   /*#__PURE__*/React.createElement("div", {
     onClick: function(e){ e.stopPropagation(); setShowDNA(true); },
-    style: { fontFamily: "monospace", fontSize: "0.78rem", color: "#d4942a", background: "#100d08",
+    style: { fontFamily: "monospace", fontSize: "0.78rem", color: "#d4942a", background: "#1a1410",
       borderRadius: 4, padding: "5px 10px", marginBottom: 7, overflow: "hidden",
       textOverflow: "ellipsis", whiteSpace: "nowrap", fontWeight: "bold", letterSpacing: "0.04em",
-      border: "1px solid #2e1e08", cursor: "pointer" },
+      border: "1px solid #3a2810", cursor: "pointer" },
     title: "Click to view Full DNA Panel"
   }, "\uD83E\uDDEC ", animal.vinStr),
   (function() {
@@ -13477,12 +13477,12 @@ function Card(_ref0) {
     }
     if (hs.status === "too_young") {
       return /*#__PURE__*/React.createElement("div", {
-        style: { display: "inline-block", background: "#100d08", border: "1px solid #3a2a18",
+        style: { display: "inline-block", background: "#1a1410", border: "1px solid #4a3a28",
           borderRadius: 4, padding: "3px 10px", fontSize: "0.82rem", color: "#6b5038", marginBottom: 6 }
       }, "\uD83D\uDCC5 First heat in ", hs.daysUntilHeat, hs.daysUntilHeat === 1 ? " day" : " days");
     }
     return /*#__PURE__*/React.createElement("div", {
-      style: { display: "inline-block", background: "#100d08", border: "1px solid #2e1e08",
+      style: { display: "inline-block", background: "#1a1410", border: "1px solid #3a2810",
         borderRadius: 4, padding: "3px 10px", fontSize: "0.82rem", color: "#8a7055", marginBottom: 6 }
     }, "\uD83D\uDCC5 Next heat in ", hs.daysUntilHeat, hs.daysUntilHeat === 1 ? " day" : " days");
   })()),
@@ -13493,7 +13493,7 @@ function Card(_ref0) {
       key: i,
       style: {
         display: "inline-block",
-        background: "#3a1008",
+        background: "#481808",
         color: "#fca5a5",
         fontSize: "0.62rem",
         borderRadius: 3,
@@ -13507,7 +13507,7 @@ function Card(_ref0) {
       key: i,
       style: {
         display: "inline-block",
-        background: "#3a1008",
+        background: "#481808",
         color: "#fca5a5",
         fontSize: "0.62rem",
         borderRadius: 3,
@@ -13542,8 +13542,8 @@ function Card(_ref0) {
           "Herding":["#1a9a40","#1a3a1a"],"Tracking":["#0891b2","#164e63"],"FieldTrials":["#ca8a04","#713f12"],
           "Agility":["#7c3aed","#3b0764"],"Obedience":["#0284c7","#0c4a6e"],"Rally-O":["#0284c7","#0c4a6e"],
           "Flyball":["#ea580c","#7c2d12"],"DockDiving":["#0891b2","#164e63"],"LureCoursing":["#a83060","#500724"],
-          "Racing":["#a83060","#500724"],"Draft":["#78716c","#211810"],"SledRacing":["#6b7280","#211810"],
-          "Earthdog":["#92400e","#451a03"],"Therapy":["#a83060","#500724"],"Conformation":["#6b5038","#211810"]
+          "Racing":["#a83060","#500724"],"Draft":["#78716c","#443828"],"SledRacing":["#6b7280","#443828"],
+          "Earthdog":["#92400e","#451a03"],"Therapy":["#a83060","#500724"],"Conformation":["#6b5038","#443828"]
         };
         var APT_LABELS = {
           "LGD":"\uD83D\uDC11 LGD","Schutzhund":"\uD83D\uDEE1\uFE0F Schutzhund","IPO":"\uD83D\uDEE1\uFE0F IPO",
@@ -13554,7 +13554,7 @@ function Card(_ref0) {
           "Racing":"\uD83C\uDFC1 Racing","Draft":"\uD83D\uDC02 Draft","SledRacing":"\uD83D\uDEF7 Sled",
           "Earthdog":"\uD83D\uDD73\uFE0F Earthdog","Therapy":"\u2764\uFE0F Therapy","Conformation":"\uD83C\uDFC6 Show"
         };
-        var cols = APT_COLORS[apt] || ["#6b5038","#211810"];
+        var cols = APT_COLORS[apt] || ["#6b5038","#443828"];
         return /*#__PURE__*/React.createElement("span", {
           key: i,
           style: { background: cols[1], border: "1px solid " + cols[0], color: cols[0], borderRadius: 4, padding: "2px 7px", fontSize: "0.78rem", fontWeight: "bold", whiteSpace: "nowrap" }
@@ -13580,7 +13580,7 @@ function Card(_ref0) {
             /*#__PURE__*/React.createElement("span", { style: { fontSize: "0.75rem", color: "#b09070" } }, label),
             /*#__PURE__*/React.createElement("span", { style: { fontSize: "0.75rem", color: color, fontWeight: "bold" } }, val, "/10")
           ),
-          /*#__PURE__*/React.createElement("div", { style: { background: "#100d08", borderRadius: 2, height: 3 } },
+          /*#__PURE__*/React.createElement("div", { style: { background: "#1a1410", borderRadius: 2, height: 3 } },
             /*#__PURE__*/React.createElement("div", { style: { background: color, width: (val/10*100) + "%", height: "100%", borderRadius: 2 } })
           )
         );
@@ -13590,7 +13590,7 @@ function Card(_ref0) {
 
   /*#__PURE__*/React.createElement("button", {
     onClick: function onClick(e) { e.stopPropagation(); setShowDNA(true); },
-    style: { width: "100%", background: "none", border: "1px solid #2e1e08", color: "#d4942a", borderRadius: 5, padding: "4px", cursor: "pointer", fontSize: "0.72rem" }
+    style: { width: "100%", background: "none", border: "1px solid #3a2810", color: "#d4942a", borderRadius: 5, padding: "4px", cursor: "pointer", fontSize: "0.72rem" }
   }, "View Full DNA Panel"));
 }
 
@@ -13619,23 +13619,23 @@ function ShearingModal(_ref) {
     style:{position:"fixed",top:0,left:0,right:0,bottom:0,background:"rgba(0,0,0,0.85)",
       zIndex:1000,display:"flex",alignItems:"center",justifyContent:"center"}},
     React.createElement("div", {
-      style:{background:"#0a0f1e",border:"1px solid #3a2a18",borderRadius:14,
+      style:{background:"#0a0f1e",border:"1px solid #4a3a28",borderRadius:14,
         width:"min(600px,95vw)",maxHeight:"85vh",display:"flex",flexDirection:"column",
         overflow:"hidden",boxShadow:"0 20px 60px rgba(0,0,0,0.8)"}},
 
       // Header
       React.createElement("div",{style:{display:"flex",alignItems:"center",padding:"14px 18px",
-        borderBottom:"1px solid #211810",gap:12}},
+        borderBottom:"1px solid #2e2218",gap:12}},
         React.createElement("div",{style:{fontSize:"1.1rem",fontWeight:"bold",color:"#f0e6d3",flex:1}},
           "\uD83D\uDC11 Shearing Shed"),
         React.createElement("button",{onClick:onClose,
-          style:{background:"transparent",border:"1px solid #3a2a18",color:"#b09070",
+          style:{background:"transparent",border:"1px solid #4a3a28",color:"#b09070",
             borderRadius:6,padding:"4px 10px",cursor:"pointer",fontSize:"0.8rem"}},"\u2715 Close")
       ),
 
       // Status bar
-      React.createElement("div",{style:{padding:"10px 18px",borderBottom:"1px solid #211810",
-        background: win.isOpen ? "#0a1f0a" : "#2a1008"}},
+      React.createElement("div",{style:{padding:"10px 18px",borderBottom:"1px solid #2e2218",
+        background: win.isOpen ? "#0a1f0a" : "#381808"}},
         win.isOpen
           ? React.createElement("div",{style:{color:"#5aaa30",fontSize:"0.82rem",fontWeight:"bold"}},
               "\uD83D\uDFE2 Shearing window OPEN \u2014 " + win.season + " \u2014 " + win.daysLeft + " day" + (win.daysLeft!==1?"s":"") + " remaining")
@@ -13645,13 +13645,13 @@ function ShearingModal(_ref) {
 
       // Shear All button
       win.isOpen && unshearedCount > 0 && React.createElement("div",{
-        style:{padding:"10px 18px",borderBottom:"1px solid #211810",display:"flex",
+        style:{padding:"10px 18px",borderBottom:"1px solid #2e2218",display:"flex",
           alignItems:"center",justifyContent:"space-between"}},
         React.createElement("span",{style:{color:"#b09070",fontSize:"0.78rem"}},
           unshearedCount + " sheep ready to shear"),
         React.createElement("button",{
           onClick:function(){ onShearAll && onShearAll(sheep.filter(function(a){return !isSheared(a);}), win.seasonKey); },
-          style:{background:"#1a2010",border:"1px solid #5aaa30",color:"#5aaa30",
+          style:{background:"#1e2a12",border:"1px solid #5aaa30",color:"#5aaa30",
             borderRadius:6,padding:"6px 16px",cursor:"pointer",fontSize:"0.82rem",fontWeight:"bold"}},
           "\u2702\uFE0F Shear All (" + unshearedCount + ")")
       ),
@@ -13666,8 +13666,8 @@ function ShearingModal(_ref) {
               var yieldLbs = a.shearYield || (Math.floor(Math.random()*4)+7);
               return React.createElement("div",{key:a.id,
                 style:{display:"flex",alignItems:"center",gap:10,padding:"8px 10px",
-                  background: sheared ? "#0a1a0a" : "#100d08",
-                  borderRadius:6,border:"1px solid "+(sheared?"#1a7a2a":"#211810"),marginBottom:5}},
+                  background: sheared ? "#0a1a0a" : "#1a1410",
+                  borderRadius:6,border:"1px solid "+(sheared?"#1a7a2a":"#443828"),marginBottom:5}},
                 React.createElement("div",{style:{flex:1,fontSize:"0.8rem",color: sheared?"#5aaa30":"#f0e6d3"}},
                   (a.breed||"Sheep") + " \u2014 \u2640 Female"),
                 React.createElement("div",{style:{fontSize:"0.72rem",color:"#8a7055",minWidth:80,textAlign:"right"}},
@@ -13760,16 +13760,16 @@ function Clock(_ref) {
   return React.createElement('div', {
     style: {
       display: 'flex', alignItems: 'center', gap: 10,
-      background: '#1a1208', border: '1px solid #3a2a18',
+      background: '#2a1e14', border: '1px solid #4a3a28',
       borderRadius: 6, padding: '4px 12px', fontSize: '0.72rem',
       boxShadow: 'inset 0 1px 3px rgba(0,0,0,0.3)'
     }
   },
     React.createElement('span', {style: {color: seasonColor, fontWeight:'bold'}},
       gd.season.emoji + ' ' + gd.season.name + ' \u2014 ' + gd.month),
-    React.createElement('span', {style: {color: '#3a2a18'}},'|'),
+    React.createElement('span', {style: {color: '#4a3a28'}},'|'),
     React.createElement('span', {style: {color: '#d4942a'}}, '\uD83D\uDD50 ' + estTime + ' EST'),
-    React.createElement('span', {style: {color: '#3a2a18'}},'|'),
+    React.createElement('span', {style: {color: '#4a3a28'}},'|'),
     React.createElement('span', {style: {color: '#d4960a'}}, '\u23F1 Reset: ' + pad(hh) + ':' + pad(mm) + ':' + pad(ss))
   );
 }
@@ -13915,7 +13915,7 @@ function FarmView(_ref) {
     return {
       position:"absolute", left:COLS[col], top:ROWS[row],
       width:TILE_W, height:TILE_H, borderRadius:6, overflow:"hidden",
-      background: bg || "#0c1a0d", border:"1.5px solid "+(border||"#1a2010"),
+      background: bg || "#0c1a0d", border:"1.5px solid "+(border||"#1e2a12"),
       cursor:"pointer", transition:"transform 0.12s, filter 0.12s", zIndex:2
     };
   }
@@ -13929,14 +13929,14 @@ function FarmView(_ref) {
     },
       /*#__PURE__*/React.createElement("svg", { width:TILE_W, height:TILE_H, viewBox:"0 0 110 110" },
         React.createElement("rect",{x:0,y:0,width:110,height:110,fill:"#0c1a0d",rx:4}),
-        React.createElement("line",{x1:0,y1:37,x2:110,y2:37,stroke:"#1a2010",strokeWidth:0.5}),
-        React.createElement("line",{x1:0,y1:73,x2:110,y2:73,stroke:"#1a2010",strokeWidth:0.5}),
-        React.createElement("line",{x1:37,y1:0,x2:37,y2:110,stroke:"#1a2010",strokeWidth:0.5}),
-        React.createElement("line",{x1:73,y1:0,x2:73,y2:110,stroke:"#1a2010",strokeWidth:0.5}),
-        React.createElement("line",{x1:45,y1:55,x2:65,y2:55,stroke:"#1a2010",strokeWidth:3,strokeLinecap:"round"}),
-        React.createElement("line",{x1:55,y1:45,x2:55,y2:65,stroke:"#1a2010",strokeWidth:3,strokeLinecap:"round"})
+        React.createElement("line",{x1:0,y1:37,x2:110,y2:37,stroke:"#1e2a12",strokeWidth:0.5}),
+        React.createElement("line",{x1:0,y1:73,x2:110,y2:73,stroke:"#1e2a12",strokeWidth:0.5}),
+        React.createElement("line",{x1:37,y1:0,x2:37,y2:110,stroke:"#1e2a12",strokeWidth:0.5}),
+        React.createElement("line",{x1:73,y1:0,x2:73,y2:110,stroke:"#1e2a12",strokeWidth:0.5}),
+        React.createElement("line",{x1:45,y1:55,x2:65,y2:55,stroke:"#1e2a12",strokeWidth:3,strokeLinecap:"round"}),
+        React.createElement("line",{x1:55,y1:45,x2:55,y2:65,stroke:"#1e2a12",strokeWidth:3,strokeLinecap:"round"})
       ),
-      /*#__PURE__*/React.createElement("span", { style:{position:"absolute",bottom:5,left:0,right:0,textAlign:"center",fontSize:"0.55rem",color:"#1a2010",letterSpacing:"0.05em",textTransform:"uppercase",fontWeight:"bold"} }, "Build Here")
+      /*#__PURE__*/React.createElement("span", { style:{position:"absolute",bottom:5,left:0,right:0,textAlign:"center",fontSize:"0.55rem",color:"#1e2a12",letterSpacing:"0.05em",textTransform:"uppercase",fontWeight:"bold"} }, "Build Here")
     );
   }
 
@@ -13958,30 +13958,30 @@ function FarmView(_ref) {
 
   // SVG inner strings for each building
   var SVG = {
-    pigPen: '<rect x="0" y="0" width="110" height="110" fill="#221218" rx="4"/><rect x="4" y="4" width="102" height="102" fill="#2a1008" rx="4"/><line x1="55" y1="4" x2="55" y2="106" stroke="#a83060" stroke-width="2"/><line x1="4" y1="55" x2="106" y2="55" stroke="#a83060" stroke-width="2"/><rect x="4" y="4" width="102" height="102" fill="none" stroke="#a83060" stroke-width="3" rx="4"/><rect x="7" y="7" width="30" height="22" fill="#501828" rx="2"/><rect x="58" y="7" width="30" height="22" fill="#501828" rx="2"/><rect x="7" y="58" width="30" height="22" fill="#501828" rx="2"/><rect x="58" y="58" width="44" height="44" fill="#3e1422" rx="2" stroke="#a83060" stroke-width="1"/>',
-    slaughter: '<rect x="0" y="0" width="110" height="110" fill="#120808" rx="4"/><rect x="10" y="28" width="78" height="66" fill="#2a1008" rx="2"/><polygon points="49,10 88,30 10,30" fill="#3d1414"/><polygon points="49,10 72,22 26,22" fill="#5a1a1a" opacity="0.9"/><rect x="36" y="60" width="26" height="34" fill="#1a0e06" rx="1"/><rect x="12" y="40" width="16" height="12" fill="#2a1008" rx="1" stroke="#cc2a1a" stroke-width="0.8"/><rect x="70" y="40" width="16" height="12" fill="#2a1008" rx="1" stroke="#cc2a1a" stroke-width="0.8"/><rect x="82" y="14" width="10" height="44" fill="#1a0e06" rx="3"/><ellipse cx="87" cy="14" rx="5" ry="3" fill="#2a1008"/><line x1="20" y1="38" x2="80" y2="38" stroke="#7a2010" stroke-width="1.5" opacity="0.6"/><line x1="35" y1="34" x2="35" y2="42" stroke="#cc2a1a" stroke-width="1" opacity="0.5"/><line x1="55" y1="34" x2="55" y2="42" stroke="#cc2a1a" stroke-width="1" opacity="0.5"/>',
-    chickCoop: '<rect x="0" y="0" width="110" height="110" fill="#101d0a" rx="4"/><rect x="8" y="24" width="62" height="42" fill="#2a3810" rx="3"/><polygon points="39,8 74,26 4,26" fill="#4a7a22"/><rect x="70" y="28" width="30" height="38" fill="#2a3810" rx="2"/><line x1="70" y1="47" x2="100" y2="47" stroke="#1a2e0a" stroke-width="1.5"/><rect x="72" y="30" width="12" height="16" fill="#1a2e0a" rx="1"/><rect x="86" y="30" width="12" height="16" fill="#1a2e0a" rx="1"/><rect x="8" y="66" width="92" height="36" fill="#1a1208" rx="2"/><line x1="28" y1="66" x2="28" y2="102" stroke="#4a6a18" stroke-width="2"/><line x1="48" y1="66" x2="48" y2="102" stroke="#4a6a18" stroke-width="2"/><line x1="68" y1="66" x2="68" y2="102" stroke="#4a6a18" stroke-width="2"/><line x1="88" y1="66" x2="88" y2="102" stroke="#4a6a18" stroke-width="2"/>',
-    grazing: '<rect x="0" y="0" width="110" height="110" fill="#091e0a" rx="4"/><rect x="4" y="4" width="102" height="102" fill="#1a1208" rx="3"/><line x1="4" y1="22" x2="106" y2="22" stroke="#1a2010" stroke-width="0.8"/><line x1="4" y1="40" x2="106" y2="40" stroke="#1a2010" stroke-width="0.8"/><line x1="4" y1="58" x2="106" y2="58" stroke="#1a2010" stroke-width="0.8"/><line x1="4" y1="76" x2="106" y2="76" stroke="#1a2010" stroke-width="0.8"/><line x1="4" y1="94" x2="106" y2="94" stroke="#1a2010" stroke-width="0.8"/><line x1="22" y1="4" x2="22" y2="106" stroke="#1a2010" stroke-width="0.8"/><line x1="40" y1="4" x2="40" y2="106" stroke="#1a2010" stroke-width="0.8"/><line x1="58" y1="4" x2="58" y2="106" stroke="#1a2010" stroke-width="0.8"/><line x1="76" y1="4" x2="76" y2="106" stroke="#1a2010" stroke-width="0.8"/><line x1="94" y1="4" x2="94" y2="106" stroke="#1a2010" stroke-width="0.8"/><rect x="4" y="4" width="102" height="102" fill="none" stroke="#1a7a2a" stroke-width="2" rx="3"/><rect x="6" y="6" width="28" height="20" fill="#1a1208" rx="2"/><rect x="40" y="46" width="20" height="8" fill="#2e1e08" rx="3" stroke="#d4942a" stroke-width="0.5"/><rect x="42" y="2" width="26" height="4" fill="#1a7a2a" rx="1"/>',
-    barn: '<rect x="0" y="0" width="110" height="110" fill="#1c0808" rx="4"/><rect x="8" y="30" width="80" height="66" fill="#561414" rx="2"/><polygon points="48,10 88,32 8,32" fill="#7a1919"/><polygon points="48,10 74,24 22,24" fill="#b91c1c" opacity="0.9"/><rect x="36" y="60" width="24" height="36" fill="#1a0e06" rx="1"/><rect x="10" y="42" width="16" height="12" fill="#211810" rx="1" stroke="#ef4444" stroke-width="0.5"/><rect x="62" y="42" width="16" height="12" fill="#211810" rx="1" stroke="#ef4444" stroke-width="0.5"/><rect x="90" y="18" width="12" height="60" fill="#2d0a0a" rx="4"/><ellipse cx="96" cy="18" rx="6" ry="3.5" fill="#3d0f0f"/>',
-    milkBarn: '<rect x="0" y="0" width="110" height="110" fill="#0e1828" rx="4"/><rect x="8" y="28" width="84" height="66" fill="#211810" rx="2"/><polygon points="50,8 92,30 8,30" fill="#2e1e08"/><polygon points="50,8 76,22 24,22" fill="#c4801a" opacity="0.8"/><rect x="36" y="58" width="30" height="36" fill="#100d08" rx="1"/><rect x="10" y="40" width="18" height="14" fill="#0d1f35" rx="1" stroke="#60a5fa" stroke-width="0.5"/><rect x="72" y="40" width="18" height="14" fill="#0d1f35" rx="1" stroke="#60a5fa" stroke-width="0.5"/><rect x="10" y="58" width="22" height="12" fill="#162840" rx="2" stroke="#c4801a" stroke-width="0.5"/><rect x="78" y="58" width="22" height="12" fill="#162840" rx="2" stroke="#c4801a" stroke-width="0.5"/><rect x="86" y="44" width="20" height="40" fill="#211810" rx="2" stroke="#c4801a" stroke-width="0.5"/>',
-    apiary: '<rect x="0" y="0" width="110" height="110" fill="#1a1208" rx="4"/><ellipse cx="28" cy="72" rx="14" ry="18" fill="#8b6914"/><ellipse cx="28" cy="68" rx="12" ry="14" fill="#a07820"/><line x1="16" y1="66" x2="40" y2="66" stroke="#8a6a20" stroke-width="1.5"/><line x1="18" y1="60" x2="38" y2="60" stroke="#8a6a20" stroke-width="1.5"/><ellipse cx="28" cy="90" rx="16" ry="4" fill="#8a6a20"/><ellipse cx="55" cy="68" rx="14" ry="18" fill="#8b6914"/><ellipse cx="55" cy="64" rx="12" ry="14" fill="#a07820"/><line x1="43" y1="62" x2="67" y2="62" stroke="#8a6a20" stroke-width="1.5"/><line x1="45" y1="56" x2="65" y2="56" stroke="#8a6a20" stroke-width="1.5"/><ellipse cx="55" cy="86" rx="16" ry="4" fill="#8a6a20"/><ellipse cx="82" cy="72" rx="14" ry="18" fill="#8b6914"/><ellipse cx="82" cy="68" rx="12" ry="14" fill="#a07820"/><line x1="70" y1="66" x2="94" y2="66" stroke="#8a6a20" stroke-width="1.5"/><line x1="72" y1="60" x2="92" y2="60" stroke="#8a6a20" stroke-width="1.5"/><ellipse cx="82" cy="90" rx="16" ry="4" fill="#8a6a20"/><ellipse cx="20" cy="38" rx="4" ry="2.5" fill="#e8a020" opacity="0.9"/><ellipse cx="68" cy="28" rx="4" ry="2.5" fill="#e8a020" opacity="0.9"/><ellipse cx="90" cy="40" rx="4" ry="2.5" fill="#e8a020" opacity="0.9"/><circle cx="40" cy="22" r="2.5" fill="#e870a0" opacity="0.6"/><circle cx="62" cy="14" r="3" fill="#e8a020" opacity="0.5"/>',
-    pond: '<rect x="0" y="0" width="110" height="110" fill="#0c0a08" rx="4"/><ellipse cx="55" cy="60" rx="50" ry="42" fill="#2e1e08"/><ellipse cx="55" cy="60" rx="46" ry="38" fill="#2e1e08"/><ellipse cx="55" cy="60" rx="38" ry="30" fill="none" stroke="#8a5a1a" stroke-width="1" opacity="0.6"/><ellipse cx="55" cy="60" rx="50" ry="42" fill="none" stroke="#0369a1" stroke-width="3"/><line x1="12" y1="72" x2="12" y2="44" stroke="#365314" stroke-width="2"/><ellipse cx="12" cy="43" rx="4" ry="7" fill="#4a7c1a" opacity="0.8"/><line x1="96" y1="68" x2="96" y2="46" stroke="#365314" stroke-width="2"/><rect x="48" y="16" width="6" height="22" fill="#4a3010" rx="1"/><rect x="38" y="16" width="26" height="6" fill="#5a3c14" rx="1"/><ellipse cx="42" cy="52" rx="6" ry="4" fill="#f0e6d3" opacity="0.9"/><circle cx="46" cy="50" r="4" fill="#f0e6d3" opacity="0.9"/><polygon points="49,49 53,50 49,51" fill="#e8a020"/><ellipse cx="64" cy="66" rx="5" ry="3.5" fill="#f0e6d3" opacity="0.8"/><circle cx="68" cy="64" r="3.5" fill="#f0e6d3" opacity="0.8"/>',
-    storageBarn: '<rect x="0" y="0" width="110" height="110" fill="#0e1008" rx="4"/><rect x="8" y="28" width="80" height="68" fill="#242a10" rx="2"/><polygon points="48,10 88,30 8,30" fill="#2a3810"/><polygon points="48,10 72,22 24,22" fill="#4a6a18" opacity="0.9"/><rect x="32" y="58" width="32" height="38" fill="#0e1008" rx="1"/><line x1="48" y1="58" x2="48" y2="96" stroke="#242a10" stroke-width="1.5"/><rect x="10" y="40" width="16" height="12" fill="#1a2a0a" rx="1" stroke="#84cc16" stroke-width="0.5"/><rect x="62" y="40" width="16" height="12" fill="#1a2a0a" rx="1" stroke="#84cc16" stroke-width="0.5"/><rect x="10" y="60" width="18" height="14" fill="#1e2a0c" rx="1" stroke="#4a6a18" stroke-width="0.5"/><rect x="70" y="60" width="18" height="14" fill="#1e2a0c" rx="1" stroke="#4a6a18" stroke-width="0.5"/><rect x="90" y="20" width="14" height="62" fill="#1e2a0c" rx="4"/><ellipse cx="97" cy="20" rx="7" ry="4" fill="#2a3810"/>',
-    whelping: '<rect x="0" y="0" width="110" height="110" fill="#2a1a08" rx="4"/><rect x="14" y="26" width="82" height="68" fill="#2a1a08" rx="3"/><polygon points="55,10 96,28 14,28" fill="#2a1a08"/><polygon points="55,10 78,22 32,22" fill="#3d2270"/><rect x="20" y="38" width="20" height="16" fill="#2d1a4a" rx="2" stroke="#c4956a" stroke-width="0.8"/><rect x="70" y="38" width="20" height="16" fill="#2d1a4a" rx="2" stroke="#c4956a" stroke-width="0.8"/><rect x="21" y="39" width="18" height="14" fill="#4c1d95" opacity="0.4" rx="1"/><rect x="71" y="39" width="18" height="14" fill="#4c1d95" opacity="0.4" rx="1"/><rect x="44" y="64" width="22" height="30" fill="#2a1a08" rx="2"/>',
-    shearing: '<rect x="0" y="0" width="110" height="110" fill="#1a1408" rx="4"/><rect x="6" y="24" width="88" height="68" fill="#2a1e12" rx="2"/><polygon points="50,8 94,26 6,26" fill="#4e3214"/><rect x="34" y="60" width="32" height="32" fill="#1a0e06" rx="1"/><rect x="8" y="36" width="20" height="16" fill="#1a1808" rx="1" stroke="#c07010" stroke-width="0.5"/><rect x="74" y="36" width="20" height="16" fill="#1a1808" rx="1" stroke="#c07010" stroke-width="0.5"/><line x1="6" y1="60" x2="94" y2="60" stroke="#4e3214" stroke-width="1.5"/><rect x="8" y="72" width="22" height="18" fill="#241a08" rx="2" stroke="#c07010" stroke-width="0.5"/><rect x="72" y="72" width="22" height="18" fill="#241a08" rx="2" stroke="#c07010" stroke-width="0.5"/>',
-    kennel: '<rect x="0" y="0" width="110" height="110" fill="#1a0e06" rx="4"/><rect x="16" y="32" width="72" height="62" fill="#4a1212" rx="2"/><polygon points="52,14 88,34 16,34" fill="#6b1717"/><polygon points="52,14 76,26 28,26" fill="#991b1b" opacity="0.9"/><rect x="40" y="62" width="24" height="32" fill="#1a0e06" rx="1"/><rect x="18" y="44" width="14" height="10" fill="#211810" rx="1" stroke="#ef4444" stroke-width="0.5"/><rect x="72" y="44" width="14" height="10" fill="#211810" rx="1" stroke="#ef4444" stroke-width="0.5"/><rect x="90" y="22" width="14" height="58" fill="#2d0a0a" rx="4"/><ellipse cx="97" cy="22" rx="7" ry="4" fill="#3d0f0f"/>',
-    stable: '<rect x="0" y="0" width="110" height="110" fill="#180f06" rx="4"/><rect x="4" y="14" width="102" height="42" fill="#381e08" rx="2"/><rect x="4" y="60" width="102" height="42" fill="#381e08" rx="2"/><rect x="42" y="14" width="26" height="88" fill="#1a0e06" rx="1"/><polygon points="55,4 106,16 4,16" fill="#4a2a0a"/><line x1="20" y1="14" x2="20" y2="56" stroke="#1a0e06" stroke-width="1.5"/><line x1="30" y1="14" x2="30" y2="56" stroke="#1a0e06" stroke-width="1.5"/><line x1="70" y1="14" x2="70" y2="56" stroke="#1a0e06" stroke-width="1.5"/><line x1="80" y1="14" x2="80" y2="56" stroke="#1a0e06" stroke-width="1.5"/><line x1="20" y1="60" x2="20" y2="102" stroke="#1a0e06" stroke-width="1.5"/><line x1="30" y1="60" x2="30" y2="102" stroke="#1a0e06" stroke-width="1.5"/><line x1="70" y1="60" x2="70" y2="102" stroke="#1a0e06" stroke-width="1.5"/><line x1="80" y1="60" x2="80" y2="102" stroke="#1a0e06" stroke-width="1.5"/>'
+    pigPen: '<rect x="0" y="0" width="110" height="110" fill="#221218" rx="4"/><rect x="4" y="4" width="102" height="102" fill="#381808" rx="4"/><line x1="55" y1="4" x2="55" y2="106" stroke="#a83060" stroke-width="2"/><line x1="4" y1="55" x2="106" y2="55" stroke="#a83060" stroke-width="2"/><rect x="4" y="4" width="102" height="102" fill="none" stroke="#a83060" stroke-width="3" rx="4"/><rect x="7" y="7" width="30" height="22" fill="#501828" rx="2"/><rect x="58" y="7" width="30" height="22" fill="#501828" rx="2"/><rect x="7" y="58" width="30" height="22" fill="#501828" rx="2"/><rect x="58" y="58" width="44" height="44" fill="#3e1422" rx="2" stroke="#a83060" stroke-width="1"/>',
+    slaughter: '<rect x="0" y="0" width="110" height="110" fill="#120808" rx="4"/><rect x="10" y="28" width="78" height="66" fill="#381808" rx="2"/><polygon points="49,10 88,30 10,30" fill="#3d1414"/><polygon points="49,10 72,22 26,22" fill="#5a1a1a" opacity="0.9"/><rect x="36" y="60" width="26" height="34" fill="#241408" rx="1"/><rect x="12" y="40" width="16" height="12" fill="#381808" rx="1" stroke="#cc2a1a" stroke-width="0.8"/><rect x="70" y="40" width="16" height="12" fill="#381808" rx="1" stroke="#cc2a1a" stroke-width="0.8"/><rect x="82" y="14" width="10" height="44" fill="#241408" rx="3"/><ellipse cx="87" cy="14" rx="5" ry="3" fill="#381808"/><line x1="20" y1="38" x2="80" y2="38" stroke="#7a2010" stroke-width="1.5" opacity="0.6"/><line x1="35" y1="34" x2="35" y2="42" stroke="#cc2a1a" stroke-width="1" opacity="0.5"/><line x1="55" y1="34" x2="55" y2="42" stroke="#cc2a1a" stroke-width="1" opacity="0.5"/>',
+    chickCoop: '<rect x="0" y="0" width="110" height="110" fill="#101d0a" rx="4"/><rect x="8" y="24" width="62" height="42" fill="#303e14" rx="3"/><polygon points="39,8 74,26 4,26" fill="#4a7a22"/><rect x="70" y="28" width="30" height="38" fill="#303e14" rx="2"/><line x1="70" y1="47" x2="100" y2="47" stroke="#1a2e0a" stroke-width="1.5"/><rect x="72" y="30" width="12" height="16" fill="#1a2e0a" rx="1"/><rect x="86" y="30" width="12" height="16" fill="#1a2e0a" rx="1"/><rect x="8" y="66" width="92" height="36" fill="#2a1e14" rx="2"/><line x1="28" y1="66" x2="28" y2="102" stroke="#4a6a18" stroke-width="2"/><line x1="48" y1="66" x2="48" y2="102" stroke="#4a6a18" stroke-width="2"/><line x1="68" y1="66" x2="68" y2="102" stroke="#4a6a18" stroke-width="2"/><line x1="88" y1="66" x2="88" y2="102" stroke="#4a6a18" stroke-width="2"/>',
+    grazing: '<rect x="0" y="0" width="110" height="110" fill="#091e0a" rx="4"/><rect x="4" y="4" width="102" height="102" fill="#2a1e14" rx="3"/><line x1="4" y1="22" x2="106" y2="22" stroke="#1e2a12" stroke-width="0.8"/><line x1="4" y1="40" x2="106" y2="40" stroke="#1e2a12" stroke-width="0.8"/><line x1="4" y1="58" x2="106" y2="58" stroke="#1e2a12" stroke-width="0.8"/><line x1="4" y1="76" x2="106" y2="76" stroke="#1e2a12" stroke-width="0.8"/><line x1="4" y1="94" x2="106" y2="94" stroke="#1e2a12" stroke-width="0.8"/><line x1="22" y1="4" x2="22" y2="106" stroke="#1e2a12" stroke-width="0.8"/><line x1="40" y1="4" x2="40" y2="106" stroke="#1e2a12" stroke-width="0.8"/><line x1="58" y1="4" x2="58" y2="106" stroke="#1e2a12" stroke-width="0.8"/><line x1="76" y1="4" x2="76" y2="106" stroke="#1e2a12" stroke-width="0.8"/><line x1="94" y1="4" x2="94" y2="106" stroke="#1e2a12" stroke-width="0.8"/><rect x="4" y="4" width="102" height="102" fill="none" stroke="#1a7a2a" stroke-width="2" rx="3"/><rect x="6" y="6" width="28" height="20" fill="#2a1e14" rx="2"/><rect x="40" y="46" width="20" height="8" fill="#3a2810" rx="3" stroke="#d4942a" stroke-width="0.5"/><rect x="42" y="2" width="26" height="4" fill="#1a7a2a" rx="1"/>',
+    barn: '<rect x="0" y="0" width="110" height="110" fill="#1c0808" rx="4"/><rect x="8" y="30" width="80" height="66" fill="#561414" rx="2"/><polygon points="48,10 88,32 8,32" fill="#7a1919"/><polygon points="48,10 74,24 22,24" fill="#b91c1c" opacity="0.9"/><rect x="36" y="60" width="24" height="36" fill="#241408" rx="1"/><rect x="10" y="42" width="16" height="12" fill="#443828" rx="1" stroke="#ef4444" stroke-width="0.5"/><rect x="62" y="42" width="16" height="12" fill="#443828" rx="1" stroke="#ef4444" stroke-width="0.5"/><rect x="90" y="18" width="12" height="60" fill="#2d0a0a" rx="4"/><ellipse cx="96" cy="18" rx="6" ry="3.5" fill="#3d0f0f"/>',
+    milkBarn: '<rect x="0" y="0" width="110" height="110" fill="#0e1828" rx="4"/><rect x="8" y="28" width="84" height="66" fill="#443828" rx="2"/><polygon points="50,8 92,30 8,30" fill="#3a2810"/><polygon points="50,8 76,22 24,22" fill="#c4801a" opacity="0.8"/><rect x="36" y="58" width="30" height="36" fill="#1a1410" rx="1"/><rect x="10" y="40" width="18" height="14" fill="#0d1f35" rx="1" stroke="#60a5fa" stroke-width="0.5"/><rect x="72" y="40" width="18" height="14" fill="#0d1f35" rx="1" stroke="#60a5fa" stroke-width="0.5"/><rect x="10" y="58" width="22" height="12" fill="#162840" rx="2" stroke="#c4801a" stroke-width="0.5"/><rect x="78" y="58" width="22" height="12" fill="#162840" rx="2" stroke="#c4801a" stroke-width="0.5"/><rect x="86" y="44" width="20" height="40" fill="#443828" rx="2" stroke="#c4801a" stroke-width="0.5"/>',
+    apiary: '<rect x="0" y="0" width="110" height="110" fill="#2a1e14" rx="4"/><ellipse cx="28" cy="72" rx="14" ry="18" fill="#8b6914"/><ellipse cx="28" cy="68" rx="12" ry="14" fill="#a07820"/><line x1="16" y1="66" x2="40" y2="66" stroke="#8a6a20" stroke-width="1.5"/><line x1="18" y1="60" x2="38" y2="60" stroke="#8a6a20" stroke-width="1.5"/><ellipse cx="28" cy="90" rx="16" ry="4" fill="#8a6a20"/><ellipse cx="55" cy="68" rx="14" ry="18" fill="#8b6914"/><ellipse cx="55" cy="64" rx="12" ry="14" fill="#a07820"/><line x1="43" y1="62" x2="67" y2="62" stroke="#8a6a20" stroke-width="1.5"/><line x1="45" y1="56" x2="65" y2="56" stroke="#8a6a20" stroke-width="1.5"/><ellipse cx="55" cy="86" rx="16" ry="4" fill="#8a6a20"/><ellipse cx="82" cy="72" rx="14" ry="18" fill="#8b6914"/><ellipse cx="82" cy="68" rx="12" ry="14" fill="#a07820"/><line x1="70" y1="66" x2="94" y2="66" stroke="#8a6a20" stroke-width="1.5"/><line x1="72" y1="60" x2="92" y2="60" stroke="#8a6a20" stroke-width="1.5"/><ellipse cx="82" cy="90" rx="16" ry="4" fill="#8a6a20"/><ellipse cx="20" cy="38" rx="4" ry="2.5" fill="#e8a020" opacity="0.9"/><ellipse cx="68" cy="28" rx="4" ry="2.5" fill="#e8a020" opacity="0.9"/><ellipse cx="90" cy="40" rx="4" ry="2.5" fill="#e8a020" opacity="0.9"/><circle cx="40" cy="22" r="2.5" fill="#e870a0" opacity="0.6"/><circle cx="62" cy="14" r="3" fill="#e8a020" opacity="0.5"/>',
+    pond: '<rect x="0" y="0" width="110" height="110" fill="#141008" rx="4"/><ellipse cx="55" cy="60" rx="50" ry="42" fill="#3a2810"/><ellipse cx="55" cy="60" rx="46" ry="38" fill="#3a2810"/><ellipse cx="55" cy="60" rx="38" ry="30" fill="none" stroke="#8a5a1a" stroke-width="1" opacity="0.6"/><ellipse cx="55" cy="60" rx="50" ry="42" fill="none" stroke="#0369a1" stroke-width="3"/><line x1="12" y1="72" x2="12" y2="44" stroke="#365314" stroke-width="2"/><ellipse cx="12" cy="43" rx="4" ry="7" fill="#4a7c1a" opacity="0.8"/><line x1="96" y1="68" x2="96" y2="46" stroke="#365314" stroke-width="2"/><rect x="48" y="16" width="6" height="22" fill="#4a3010" rx="1"/><rect x="38" y="16" width="26" height="6" fill="#5a3c14" rx="1"/><ellipse cx="42" cy="52" rx="6" ry="4" fill="#f0e6d3" opacity="0.9"/><circle cx="46" cy="50" r="4" fill="#f0e6d3" opacity="0.9"/><polygon points="49,49 53,50 49,51" fill="#e8a020"/><ellipse cx="64" cy="66" rx="5" ry="3.5" fill="#f0e6d3" opacity="0.8"/><circle cx="68" cy="64" r="3.5" fill="#f0e6d3" opacity="0.8"/>',
+    storageBarn: '<rect x="0" y="0" width="110" height="110" fill="#0e1008" rx="4"/><rect x="8" y="28" width="80" height="68" fill="#242a10" rx="2"/><polygon points="48,10 88,30 8,30" fill="#303e14"/><polygon points="48,10 72,22 24,22" fill="#4a6a18" opacity="0.9"/><rect x="32" y="58" width="32" height="38" fill="#0e1008" rx="1"/><line x1="48" y1="58" x2="48" y2="96" stroke="#242a10" stroke-width="1.5"/><rect x="10" y="40" width="16" height="12" fill="#1a2a0a" rx="1" stroke="#84cc16" stroke-width="0.5"/><rect x="62" y="40" width="16" height="12" fill="#1a2a0a" rx="1" stroke="#84cc16" stroke-width="0.5"/><rect x="10" y="60" width="18" height="14" fill="#1e2a0c" rx="1" stroke="#4a6a18" stroke-width="0.5"/><rect x="70" y="60" width="18" height="14" fill="#1e2a0c" rx="1" stroke="#4a6a18" stroke-width="0.5"/><rect x="90" y="20" width="14" height="62" fill="#1e2a0c" rx="4"/><ellipse cx="97" cy="20" rx="7" ry="4" fill="#303e14"/>',
+    whelping: '<rect x="0" y="0" width="110" height="110" fill="#442e18" rx="4"/><rect x="14" y="26" width="82" height="68" fill="#442e18" rx="3"/><polygon points="55,10 96,28 14,28" fill="#442e18"/><polygon points="55,10 78,22 32,22" fill="#3d2270"/><rect x="20" y="38" width="20" height="16" fill="#2d1a4a" rx="2" stroke="#c4956a" stroke-width="0.8"/><rect x="70" y="38" width="20" height="16" fill="#2d1a4a" rx="2" stroke="#c4956a" stroke-width="0.8"/><rect x="21" y="39" width="18" height="14" fill="#4c1d95" opacity="0.4" rx="1"/><rect x="71" y="39" width="18" height="14" fill="#4c1d95" opacity="0.4" rx="1"/><rect x="44" y="64" width="22" height="30" fill="#442e18" rx="2"/>',
+    shearing: '<rect x="0" y="0" width="110" height="110" fill="#1a1408" rx="4"/><rect x="6" y="24" width="88" height="68" fill="#362a18" rx="2"/><polygon points="50,8 94,26 6,26" fill="#4e3214"/><rect x="34" y="60" width="32" height="32" fill="#241408" rx="1"/><rect x="8" y="36" width="20" height="16" fill="#1a1808" rx="1" stroke="#c07010" stroke-width="0.5"/><rect x="74" y="36" width="20" height="16" fill="#1a1808" rx="1" stroke="#c07010" stroke-width="0.5"/><line x1="6" y1="60" x2="94" y2="60" stroke="#4e3214" stroke-width="1.5"/><rect x="8" y="72" width="22" height="18" fill="#241a08" rx="2" stroke="#c07010" stroke-width="0.5"/><rect x="72" y="72" width="22" height="18" fill="#241a08" rx="2" stroke="#c07010" stroke-width="0.5"/>',
+    kennel: '<rect x="0" y="0" width="110" height="110" fill="#241408" rx="4"/><rect x="16" y="32" width="72" height="62" fill="#4a1212" rx="2"/><polygon points="52,14 88,34 16,34" fill="#6b1717"/><polygon points="52,14 76,26 28,26" fill="#991b1b" opacity="0.9"/><rect x="40" y="62" width="24" height="32" fill="#241408" rx="1"/><rect x="18" y="44" width="14" height="10" fill="#443828" rx="1" stroke="#ef4444" stroke-width="0.5"/><rect x="72" y="44" width="14" height="10" fill="#443828" rx="1" stroke="#ef4444" stroke-width="0.5"/><rect x="90" y="22" width="14" height="58" fill="#2d0a0a" rx="4"/><ellipse cx="97" cy="22" rx="7" ry="4" fill="#3d0f0f"/>',
+    stable: '<rect x="0" y="0" width="110" height="110" fill="#180f06" rx="4"/><rect x="4" y="14" width="102" height="42" fill="#381e08" rx="2"/><rect x="4" y="60" width="102" height="42" fill="#381e08" rx="2"/><rect x="42" y="14" width="26" height="88" fill="#241408" rx="1"/><polygon points="55,4 106,16 4,16" fill="#4a2a0a"/><line x1="20" y1="14" x2="20" y2="56" stroke="#241408" stroke-width="1.5"/><line x1="30" y1="14" x2="30" y2="56" stroke="#241408" stroke-width="1.5"/><line x1="70" y1="14" x2="70" y2="56" stroke="#241408" stroke-width="1.5"/><line x1="80" y1="14" x2="80" y2="56" stroke="#241408" stroke-width="1.5"/><line x1="20" y1="60" x2="20" y2="102" stroke="#241408" stroke-width="1.5"/><line x1="30" y1="60" x2="30" y2="102" stroke="#241408" stroke-width="1.5"/><line x1="70" y1="60" x2="70" y2="102" stroke="#241408" stroke-width="1.5"/><line x1="80" y1="60" x2="80" y2="102" stroke="#241408" stroke-width="1.5"/>'
   };
 
   var lsCount = function(type) { return (ownedLivestock||[]).filter(function(a){ return a.type===type||a.species===type; }).length; };
 
   return /*#__PURE__*/React.createElement("div", {
-    style: { position:"relative", width:"100vw", height:"100vh", background:"#0c0a08", overflow:"hidden", display:"flex", flexDirection:"column" }
+    style: { position:"relative", width:"100vw", height:"100vh", background:"#141008", overflow:"hidden", display:"flex", flexDirection:"column" }
   },
     // Close button
     /*#__PURE__*/React.createElement("button", {
       onClick: onClose,
-      style: { position:"absolute", top:12, right:16, zIndex:100, background:"transparent", border:"1px solid #3a2a18", color:"#8a7055", borderRadius:6, padding:"5px 14px", cursor:"pointer", fontSize:"0.8rem" }
+      style: { position:"absolute", top:12, right:16, zIndex:100, background:"transparent", border:"1px solid #4a3a28", color:"#8a7055", borderRadius:6, padding:"5px 14px", cursor:"pointer", fontSize:"0.8rem" }
     }, "\u2715 Close"),
 
     // Title
@@ -13993,7 +13993,7 @@ function FarmView(_ref) {
     /*#__PURE__*/React.createElement("div", {
       style: { flex:1, display:"flex", alignItems:"center", justifyContent:"center" }
     }, /*#__PURE__*/React.createElement("div", {
-      style: { position:"relative", width:GRID_W, height:GRID_H, background:"#1a1208", borderRadius:12, border:"2px solid #1a1208",
+      style: { position:"relative", width:GRID_W, height:GRID_H, background:"#2a1e14", borderRadius:12, border:"2px solid #2a1e14",
         backgroundImage:"repeating-linear-gradient(0deg,transparent,transparent 19px,rgba(255,255,255,0.012) 20px),repeating-linear-gradient(90deg,transparent,transparent 19px,rgba(255,255,255,0.012) 20px)" }
     },
       // PATH LAYER
@@ -14002,14 +14002,14 @@ function FarmView(_ref) {
       },
         React.createElement("defs", null,
           React.createElement("pattern", {id:"fv-gravel",x:0,y:0,width:6,height:6,patternUnits:"userSpaceOnUse"},
-            React.createElement("rect",{width:6,height:6,fill:"#2a1e12"}),
+            React.createElement("rect",{width:6,height:6,fill:"#362a18"}),
             React.createElement("circle",{cx:1.5,cy:1.5,r:0.6,fill:"#3d3020",opacity:0.5}),
-            React.createElement("circle",{cx:3.5,cy:3.5,r:0.5,fill:"#2a1e12",opacity:0.6})
+            React.createElement("circle",{cx:3.5,cy:3.5,r:0.5,fill:"#362a18",opacity:0.6})
           ),
           React.createElement("pattern", {id:"fv-dirt",x:0,y:0,width:6,height:6,patternUnits:"userSpaceOnUse"},
-            React.createElement("rect",{width:6,height:6,fill:"#2a1e12"}),
-            React.createElement("circle",{cx:1,cy:1,r:0.5,fill:"#2a1e12",opacity:0.6}),
-            React.createElement("circle",{cx:4,cy:4,r:0.4,fill:"#18120a",opacity:0.5})
+            React.createElement("rect",{width:6,height:6,fill:"#362a18"}),
+            React.createElement("circle",{cx:1,cy:1,r:0.5,fill:"#362a18",opacity:0.6}),
+            React.createElement("circle",{cx:4,cy:4,r:0.4,fill:"#2e2418",opacity:0.5})
           )
         ),
         // Vertical spine
@@ -14036,10 +14036,10 @@ function FarmView(_ref) {
       React.createElement(Tile, { col:1, row:0, bg:"#120808", border:"#7a2010", svgInner:SVG.slaughter, label:"Slaughterhouse", color:"#fca5a5",
         badge:"A2", tip:"Slaughterhouse · Unlocks meat sales" }),
       // A3 Chicken Coop
-      React.createElement(Tile, { col:2, row:0, bg:"#1a1208", border:"#ca8a04", svgInner:SVG.apiary, label:"Apiary", color:"#f5d870",
+      React.createElement(Tile, { col:2, row:0, bg:"#2a1e14", border:"#ca8a04", svgInner:SVG.apiary, label:"Apiary", color:"#f5d870",
         badge:"A3", count: hasFac("apiary") ? (commodities.honey||0).toFixed(1)+"lb \uD83C\uDF6F" : null, tip:"Apiary · "+(hasFac("apiary") ? FACILITIES.apiary.tiers[facTier("apiary")].name : "Not built") }),
       // A4 Duck Pond
-      React.createElement(Tile, { col:3, row:0, bg:"#0c0a08", border:"#0369a1", svgInner:SVG.pond, label:"Duck Pond", color:"#7dd3fc",
+      React.createElement(Tile, { col:3, row:0, bg:"#141008", border:"#0369a1", svgInner:SVG.pond, label:"Duck Pond", color:"#7dd3fc",
         badge:"A4", count: hasFac("pond") ? lsCount("duck")+"/"+FACILITIES.pond.tiers[facTier("pond")].capacity : null,
         tip:"Duck Pond · "+(hasFac("pond") ? FACILITIES.pond.tiers[facTier("pond")].name : "Not built") }),
 
@@ -14067,7 +14067,7 @@ function FarmView(_ref) {
       React.createElement(Tile, { col:0, row:2, bg:"#091e0a", border:"#1a7a2a", svgInner:SVG.grazing, label:"Grazing Land", color:"#5aaa30",
         badge:"C1", tip:"Grazing Land · "+(hasFac("grazing_land") ? FACILITIES.grazing_land.tiers[facTier("grazing_land")].name : "Not built") }),
       // C2 Whelping
-      React.createElement(Tile, { col:1, row:2, bg:"#2a1a08", border:"#581c87", svgInner:SVG.whelping, label:"Whelping", color:"#d8b4fe",
+      React.createElement(Tile, { col:1, row:2, bg:"#442e18", border:"#581c87", svgInner:SVG.whelping, label:"Whelping", color:"#d8b4fe",
         badge:"C2", tip:"Whelping Kennel · "+(hasWhelpingKennel ? "Active" : "Not built") }),
       // C3 Shearing Shed
       React.createElement(Tile, { col:2, row:2, bg:"#1a1408", border:"#b45309", svgInner:SVG.shearing, label:"Shearing Shed", color:"#f5d870",
@@ -14106,7 +14106,7 @@ function FarmView(_ref) {
 
     // Tooltip
     tipText && /*#__PURE__*/React.createElement("div", {
-      style: { position:"fixed", left:tipPos.x+14, top:tipPos.y-32, background:"#100d08", border:"1px solid #3a2a18", borderRadius:6, padding:"6px 12px", fontSize:"0.72rem", color:"#f0e6d3", pointerEvents:"none", zIndex:9999, whiteSpace:"nowrap" }
+      style: { position:"fixed", left:tipPos.x+14, top:tipPos.y-32, background:"#1a1410", border:"1px solid #4a3a28", borderRadius:6, padding:"6px 12px", fontSize:"0.72rem", color:"#f0e6d3", pointerEvents:"none", zIndex:9999, whiteSpace:"nowrap" }
     }, tipText)
   );
 }
@@ -14832,11 +14832,11 @@ function App() {
   var tabS = function tabS(t) {
     return {
       padding: "9px 18px",
-      background: tab === t ? "#2e1e08" : "transparent",
+      background: tab === t ? "#3a2810" : "transparent",
       border: "1px solid " + (tab === t ? "#d4942a" : "transparent"),
       borderBottom: tab === t ? "2px solid #d4942a" : "2px solid transparent",
       borderRadius: "6px 6px 0 0",
-      color: tab === t ? "#e8a020" : "#8a7055",
+      color: tab === t ? "#e8a020" : "#b09070",
       cursor: "pointer",
       fontSize: "0.83rem",
       fontWeight: tab === t ? "bold" : "normal",
@@ -14850,7 +14850,7 @@ function App() {
       height: "100vh",
       display: "flex",
       flexDirection: "column",
-      background: "#100d08",
+      background: "#1a1410",
       fontFamily: "system-ui,sans-serif",
       color: "#f0e6d3",
       overflow: "hidden"
@@ -14863,7 +14863,7 @@ function App() {
     onClick: function(){ setActionModalId(null); }
   }, /*#__PURE__*/React.createElement("div", {
     style: {
-      background: "#211810", border: "2px solid #6b5038", borderRadius: 14,
+      background: "#443828", border: "2px solid #6b5038", borderRadius: 14,
       padding: "26px 28px", maxWidth: 380, width: "92%", textAlign: "center"
     },
     onClick: function(e){ e.stopPropagation(); }
@@ -14881,7 +14881,7 @@ function App() {
         setActionModalId(null);
       },
       style: {
-        background: "#1a2010", border: "2px solid #5aaa30", color: "#5aaa30",
+        background: "#1e2a12", border: "2px solid #5aaa30", color: "#5aaa30",
         borderRadius: 8, padding: "10px 16px", cursor: "pointer", fontSize: "0.88rem", fontWeight: "bold"
       }
     }, "🏡 Retire  —  stays in kennel, no longer breeding, doesn't count toward capacity"),
@@ -14891,7 +14891,7 @@ function App() {
         setActionModalId(null);
       },
       style: {
-        background: "#211810", border: "2px solid #c4956a", color: "#c4956a",
+        background: "#443828", border: "2px solid #c4956a", color: "#c4956a",
         borderRadius: 8, padding: "10px 16px", cursor: "pointer", fontSize: "0.88rem", fontWeight: "bold"
       }
     }, "🚐 Rehome  —  placed in a new home, logged, frees up a kennel slot"),
@@ -14901,7 +14901,7 @@ function App() {
         setActionModalId(null);
       },
       style: {
-        background: "#3a1008", border: "2px solid #ef4444", color: "#fca5a5",
+        background: "#481808", border: "2px solid #ef4444", color: "#fca5a5",
         borderRadius: 8, padding: "10px 16px", cursor: "pointer", fontSize: "0.88rem", fontWeight: "bold"
       }
     }, "🗑️ Remove  —  permanently delete this dog")
@@ -14909,13 +14909,13 @@ function App() {
   /*#__PURE__*/React.createElement("button", {
     onClick: function(){ setActionModalId(null); },
     style: {
-      background: "#100d08", border: "1px solid #3a2a18", color: "#8a7055",
+      background: "#1a1410", border: "1px solid #4a3a28", color: "#8a7055",
       borderRadius: 6, padding: "7px 24px", cursor: "pointer", fontSize: "0.85rem"
     }
   }, "Cancel"))), /*#__PURE__*/React.createElement("div", {
     style: {
-      background: "linear-gradient(135deg,#0c0a08 0%,#1e1208 50%,#2a1a08 100%)",
-      borderBottom: "2px solid #3a2a18",
+      background: "linear-gradient(135deg,#141008 0%,#1e1208 50%,#362210 100%)",
+      borderBottom: "2px solid #4a3a28",
       padding: "14px 22px",
       boxShadow: "0 2px 12px rgba(0,0,0,0.5)"
     }
@@ -14959,7 +14959,7 @@ function App() {
     }
   }), ))), fileError && /*#__PURE__*/React.createElement("div", {
     style: {
-      background: "#3a1008",
+      background: "#481808",
       borderBottom: "1px solid #ef4444",
       color: "#fca5a5",
       padding: "8px 22px",
@@ -14983,7 +14983,7 @@ function App() {
       gap: 4,
       marginBottom: 18,
       flexWrap: "wrap",
-      borderBottom: "2px solid #3a2a18",
+      borderBottom: "2px solid #4a3a28",
       paddingBottom: 0
     }
   }, /*#__PURE__*/React.createElement("button", {
@@ -15018,7 +15018,7 @@ function App() {
       title: hasWhelpingKennel ? "Whelping Kennel" : "Purchase a Whelping Kennel to unlock"
     }, "\uD83C\uDFE5 Whelping", whelpingLitters.length > 0 ? " ("+whelpingLitters.length+"/4)" : " (0/4)"),
     holdingPups.length > 0 && /*#__PURE__*/React.createElement("button", {
-      style: { background: tab==="holding"?"#1a1208":"transparent", border:"1px solid #22c55e", color:"#22c55e",
+      style: { background: tab==="holding"?"#2a1e14":"transparent", border:"1px solid #22c55e", color:"#22c55e",
         borderRadius:6, padding:"5px 14px", cursor:"pointer", fontSize:"0.82rem" },
       onClick: function(){ setTab("holding"); }
     }, "\uD83D\uDC3E Holding (", holdingPups.length, ")")
@@ -15046,8 +15046,8 @@ function App() {
           key: k.id,
           onClick: function(){ setActiveKennelId(k.id); },
           style: {
-            background: isActive ? "#211810" : "transparent",
-            border: "2px solid " + (isActive ? kt.color : "#3a2a18"),
+            background: isActive ? "#443828" : "transparent",
+            border: "2px solid " + (isActive ? kt.color : "#4a3a28"),
             color: isActive ? kt.color : "#8a7055",
             borderRadius: 8, padding: "4px 10px", cursor: "pointer", fontSize: "0.75rem",
             display: "flex", alignItems: "center", gap: 4
@@ -15056,7 +15056,7 @@ function App() {
           kt.icon + " " + k.name + " ",
           /*#__PURE__*/React.createElement("span", {
             style: {
-              background: isFull ? "#3a1008" : "#1a1208",
+              background: isFull ? "#481808" : "#2a1e14",
               color: isFull ? "#ef4444" : "#22c55e",
               borderRadius: 4, padding: "1px 5px", fontSize: "0.7rem", fontWeight: "bold"
             }
@@ -15066,8 +15066,8 @@ function App() {
       /*#__PURE__*/React.createElement("button", {
         onClick: function(){ setShowKennelMgr(function(v){ return !v; }); },
         style: {
-          background: showKennelMgr ? "#2e1e08" : "transparent",
-          border: "1px solid " + (showKennelMgr ? "#d4942a" : "#3a2a18"),
+          background: showKennelMgr ? "#3a2810" : "transparent",
+          border: "1px solid " + (showKennelMgr ? "#d4942a" : "#4a3a28"),
           color: showKennelMgr ? "#d4942a" : "#8a7055",
           borderRadius: 6, padding: "4px 10px", cursor: "pointer", fontSize: "0.72rem"
         }
@@ -15075,7 +15075,7 @@ function App() {
       /*#__PURE__*/React.createElement("button", {
         onClick: function(){ setShowMarket(true); },
         style: {
-          background: "transparent", border: "1px solid #3a2a18", color: "#8a7055",
+          background: "transparent", border: "1px solid #4a3a28", color: "#8a7055",
           borderRadius: 6, padding: "4px 10px", cursor: "pointer", fontSize: "0.72rem",
           marginLeft: 16
         }
@@ -15083,7 +15083,7 @@ function App() {
       /*#__PURE__*/React.createElement("button", {
         onClick: function(){ setShowCatLady(true); },
         style: {
-          background: "transparent", border: "1px solid #3a2a18", color: "#8a7055",
+          background: "transparent", border: "1px solid #4a3a28", color: "#8a7055",
           borderRadius: 6, padding: "4px 10px", cursor: "pointer", fontSize: "0.72rem",
           marginLeft: 8
         }
@@ -15091,7 +15091,7 @@ function App() {
       /*#__PURE__*/React.createElement("button", {
         onClick: function(){ setShowFacilities(true); },
         style: {
-          background: "transparent", border: "1px solid #3a2a18", color: "#8a7055",
+          background: "transparent", border: "1px solid #4a3a28", color: "#8a7055",
           borderRadius: 6, padding: "4px 10px", cursor: "pointer", fontSize: "0.72rem",
           marginLeft: "auto"
         }
@@ -15102,7 +15102,7 @@ function App() {
     ),
     showKennelMgr && /*#__PURE__*/React.createElement("div", {
       style: {
-        background: "#100d08", border: "1px solid #3a2a18", borderRadius: 10,
+        background: "#1a1410", border: "1px solid #4a3a28", borderRadius: 10,
         padding: "12px 14px", marginBottom: 8, display: "flex", flexWrap: "wrap", gap: 8, alignItems: "center"
       }
     },
@@ -15123,7 +15123,7 @@ function App() {
             }
           },
           style: {
-            background: "#211810", border: "1px solid " + kt.color, color: kt.color,
+            background: "#443828", border: "1px solid " + kt.color, color: kt.color,
             borderRadius: 6, padding: "5px 10px", cursor: "pointer", fontSize: "0.75rem"
           }
         }, kt.icon + " " + kt.label + " (" + kt.capacity + " dogs · " + formatMoney(kt.cost) + ")");
@@ -15141,22 +15141,22 @@ function App() {
           }
         },
         style: {
-          background: "#3a1008", border: "1px solid #ef4444", color: "#fca5a5",
+          background: "#481808", border: "1px solid #ef4444", color: "#fca5a5",
           borderRadius: 6, padding: "5px 10px", cursor: "pointer", fontSize: "0.72rem", marginLeft: "auto"
         }
       }, "\uD83D\uDDD1\uFE0F Delete Active Kennel")
     ),
     /*#__PURE__*/React.createElement("div", {
       style: {
-        flex: 1, background: "#100d08", borderRadius: 12, border: "1px solid #211810",
+        flex: 1, background: "#1a1410", borderRadius: 12, border: "1px solid #2e2218",
         display: "flex", alignItems: "center", justifyContent: "center",
         padding: 20
       }
     },
-      /*#__PURE__*/React.createElement("div", { style: { textAlign: "center", color: "#3a2a18" } },
+      /*#__PURE__*/React.createElement("div", { style: { textAlign: "center", color: "#4a3a28" } },
         /*#__PURE__*/React.createElement("div", { style: { fontSize: "3rem", marginBottom: 10 } }, "\uD83D\uDDFA\uFE0F"),
         /*#__PURE__*/React.createElement("div", { style: { fontSize: "0.9rem", color: "#6b5038", marginBottom: 6 } }, "Property Map"),
-        /*#__PURE__*/React.createElement("div", { style: { fontSize: "0.75rem", color: "#3a2a18" } }, "Coming soon \u2014 click \uD83C\uDFE0 Kennel to manage your dogs")
+        /*#__PURE__*/React.createElement("div", { style: { fontSize: "0.75rem", color: "#4a3a28" } }, "Coming soon \u2014 click \uD83C\uDFE0 Kennel to manage your dogs")
       )
     )
   ),
@@ -15164,12 +15164,12 @@ function App() {
   kennelOpen && /*#__PURE__*/React.createElement("div", {
     style: {
       position: "absolute", top: 0, left: 0, right: 0, bottom: 0,
-      background: "#100d08", zIndex: 20, display: "flex", flexDirection: "column",
+      background: "#241c14", zIndex: 20, display: "flex", flexDirection: "column",
       borderRadius: 10, overflow: "hidden"
     }
   },
     /*#__PURE__*/React.createElement("div", {
-      style: { background: "#211810", borderBottom: "1px solid #3a2a18", padding: "10px 14px",
+      style: { background: "#443828", borderBottom: "1px solid #4a3a28", padding: "10px 14px",
         display: "flex", gap: 8, flexWrap: "wrap", alignItems: "center", flexShrink: 0 }
     },
       /*#__PURE__*/React.createElement("div", { style: { color: "#8a7055", fontSize: "0.75rem", textTransform: "uppercase", letterSpacing: "0.05em" } },
@@ -15181,7 +15181,7 @@ function App() {
         }).reduce(function(acc,b){ var g=b.group||"Other"; if(!acc[g])acc[g]=[]; acc[g].push(b); return acc; }, {});
         var groupNames = Object.keys(groupMap).sort();
         var breedsInGroup = buyGroup ? (groupMap[buyGroup]||[]) : [];
-        var selDropStyle = { background:"#100d08", border:"1px solid #3a2a18", color:"#f0e6d3", borderRadius:6, padding:"6px 10px", fontSize:"0.82rem" };
+        var selDropStyle = { background:"#1a1410", border:"1px solid #4a3a28", color:"#f0e6d3", borderRadius:6, padding:"6px 10px", fontSize:"0.82rem" };
         return /*#__PURE__*/React.createElement(React.Fragment, null,
           /*#__PURE__*/React.createElement("select", {
             value: buyGroup,
@@ -15203,20 +15203,20 @@ function App() {
           /*#__PURE__*/React.createElement("button", {
             onClick: function(){ if(buyBreed) addAnimal(buyBreed,"M",addAge); },
             disabled: !buyBreed,
-            style: { background: buyBreed?"#2e1e08":"#18120a", border:"1px solid "+(buyBreed?"#d4942a":"#3a2a18"), color:buyBreed?"#e8a020":"#6b5038", borderRadius:6, padding:"6px 12px", cursor:buyBreed?"pointer":"not-allowed", fontSize:"0.82rem" }
+            style: { background: buyBreed?"#3a2810":"#2e2418", border:"1px solid "+(buyBreed?"#d4942a":"#4a3a28"), color:buyBreed?"#e8a020":"#6b5038", borderRadius:6, padding:"6px 12px", cursor:buyBreed?"pointer":"not-allowed", fontSize:"0.82rem" }
           }, "+ Male \u2642 (" + formatMoney(addAge <= 12 ? DOG_COST_PUPPY : DOG_COST_ADULT) + ")"),
           /*#__PURE__*/React.createElement("button", {
             onClick: function(){ if(buyBreed) addAnimal(buyBreed,"F",addAge); },
             disabled: !buyBreed,
-            style: { background: buyBreed?"#2a1a08":"#18120a", border:"1px solid "+(buyBreed?"#c4956a":"#3a2a18"), color:buyBreed?"#c4956a":"#6b5038", borderRadius:6, padding:"6px 12px", cursor:buyBreed?"pointer":"not-allowed", fontSize:"0.82rem" }
+            style: { background: buyBreed?"#442e18":"#2e2418", border:"1px solid "+(buyBreed?"#c4956a":"#4a3a28"), color:buyBreed?"#c4956a":"#6b5038", borderRadius:6, padding:"6px 12px", cursor:buyBreed?"pointer":"not-allowed", fontSize:"0.82rem" }
           }, "+ Female \u2640 (" + formatMoney(addAge <= 12 ? DOG_COST_PUPPY : DOG_COST_ADULT) + ")")
         );
       })(),
       [{ label:"\uD83D\uDC3E Puppy", age:12 }, { label:"\uD83D\uDC15 Adult", age:20 }].map(function(opt){
         return /*#__PURE__*/React.createElement("button", {
           key: opt.age, onClick: function(){ setAddAge(opt.age); },
-          style: { background: addAge===opt.age?"#2e1e08":"transparent",
-            border:"1px solid "+(addAge===opt.age?"#d4942a":"#3a2a18"),
+          style: { background: addAge===opt.age?"#3a2810":"transparent",
+            border:"1px solid "+(addAge===opt.age?"#d4942a":"#4a3a28"),
             color:addAge===opt.age?"#d4942a":"#8a7055",
             borderRadius:6,padding:"4px 10px",cursor:"pointer",fontSize:"0.75rem" }
         }, opt.label, " (", opt.age===12?"12mo":"20mo", ")");
@@ -15225,15 +15225,15 @@ function App() {
         ["All","M","F"].map(function(s){
           return /*#__PURE__*/React.createElement("button", {
             key:s, onClick:function(){ setFilterSex(s); },
-            style: { background:filterSex===s?"#2e1e08":"transparent",
-              border:"1px solid "+(filterSex===s?"#d4942a":"#3a2a18"),
+            style: { background:filterSex===s?"#3a2810":"transparent",
+              border:"1px solid "+(filterSex===s?"#d4942a":"#4a3a28"),
               color:filterSex===s?"#d4942a":"#8a7055",
               borderRadius:5,padding:"3px 10px",cursor:"pointer",fontSize:"0.75rem" }
           }, s==="All"?"All":s==="M"?"Males \u2642":"Females \u2640");
         }),
         /*#__PURE__*/React.createElement("button", {
           onClick: function(){ setKennelOpen(false); },
-          style: { background:"#3a1008",border:"1px solid #ef4444",color:"#fca5a5",
+          style: { background:"#481808",border:"1px solid #ef4444",color:"#fca5a5",
             borderRadius:6,padding:"4px 12px",cursor:"pointer",fontSize:"0.75rem" }
         }, "\u2715 Close")
       )
@@ -15250,8 +15250,8 @@ function App() {
               disabled: disabled,
               style: { position:"absolute",top:8,left:dir<0?6:"auto",right:dir>0?6:"auto",
                 background:disabled?"rgba(15,23,42,0.3)":"rgba(15,23,42,0.85)",
-                border:"1px solid "+(disabled?"#211810":"#3a2a18"),
-                color:disabled?"#2e1e08":"#b09070",
+                border:"1px solid "+(disabled?"#443828":"#4a3a28"),
+                color:disabled?"#3a2810":"#b09070",
                 borderRadius:8,width:38,height:38,cursor:disabled?"default":"pointer",
                 fontSize:"1.1rem",zIndex:10,display:"flex",alignItems:"center",justifyContent:"center" }
             }, dir<0?"\u25C4":"\u25BA");
@@ -15293,8 +15293,8 @@ function App() {
     }
   }, /*#__PURE__*/React.createElement("div", {
     style: {
-      background: "#211810",
-      border: "1px solid #3a2a18",
+      background: "#443828",
+      border: "1px solid #4a3a28",
       borderRadius: 10,
       padding: 14
     }
@@ -15318,8 +15318,8 @@ function App() {
     }
   }, "Go to Kennel \u2192 click a male")), /*#__PURE__*/React.createElement("div", {
     style: {
-      background: "#211810",
-      border: "1px solid #3a2a18",
+      background: "#443828",
+      border: "1px solid #4a3a28",
       borderRadius: 10,
       padding: 14
     }
@@ -15343,7 +15343,7 @@ function App() {
     }
   }, "Go to Kennel \u2192 click a female"))), sire && dam && (((_sire$genome$coat$M = sire.genome.coat.M) === null || _sire$genome$coat$M === void 0 ? void 0 : _sire$genome$coat$M[0]) === "M" || ((_sire$genome$coat$M2 = sire.genome.coat.M) === null || _sire$genome$coat$M2 === void 0 ? void 0 : _sire$genome$coat$M2[1]) === "M") && (((_dam$genome$coat$M = dam.genome.coat.M) === null || _dam$genome$coat$M === void 0 ? void 0 : _dam$genome$coat$M[0]) === "M" || ((_dam$genome$coat$M2 = dam.genome.coat.M) === null || _dam$genome$coat$M2 === void 0 ? void 0 : _dam$genome$coat$M2[1]) === "M") && /*#__PURE__*/React.createElement("div", {
     style: {
-      background: "#3a1008",
+      background: "#481808",
       border: "1px solid #ef4444",
       borderRadius: 8,
       padding: "10px 14px",
@@ -15375,8 +15375,8 @@ function App() {
     disabled: !sire || !dam || !!(sire && breedingIneligibleReason(sire)) || !!(dam && breedingIneligibleReason(dam)) || (sire && dam && sire.id === dam.id) || (sire && dam && sire.sex === dam.sex),
     style: {
       width: "100%",
-      background: sire && dam ? "linear-gradient(135deg,#2e1e08,#2a1a08)" : "#211810",
-      border: "2px solid ".concat(sire && dam ? "#d4942a" : "#3a2a18"),
+      background: sire && dam ? "linear-gradient(135deg,#3a2810,#362210)" : "#443828",
+      border: "2px solid ".concat(sire && dam ? "#d4942a" : "#4a3a28"),
       color: sire && dam ? "#f0e6d3" : "#6b5038",
       borderRadius: 8,
       padding: 12,
@@ -15390,7 +15390,7 @@ function App() {
       ? /*#__PURE__*/React.createElement("div", { style: { textAlign:"center", color:"#6b5038", padding:"60px 0" } }, "No litter yet \u2014 go to the Breed tab!")
       : /*#__PURE__*/React.createElement(React.Fragment, null,
           /*#__PURE__*/React.createElement("div", {
-            style: { background:"#1a1208", border:"1px solid #d4860a", borderRadius:8, padding:"10px 14px", marginBottom:12, fontSize:"0.8rem", color:"#f0c040" }
+            style: { background:"#2a1e14", border:"1px solid #d4860a", borderRadius:8, padding:"10px 14px", marginBottom:12, fontSize:"0.8rem", color:"#f0c040" }
           }, "\uD83D\uDC3E Litter of ", litter.length, " \u00B7 ",
             /*#__PURE__*/React.createElement("span", { style:{color:"#8a7055"} }, (litter[0]||{}).sireBreed, " \xD7 ", (litter[0]||{}).damBreed),
             " \u00B7 No Whelping Kennel \u2014 select 1 pup to keep"
@@ -15401,7 +15401,7 @@ function App() {
               return /*#__PURE__*/React.createElement("div", { key: pup.id, style:{ cursor:"pointer" }, onClick: function(){ toggleLitterSelect(pup.id); } },
                 /*#__PURE__*/React.createElement(Card, { animal: pup }),
                 /*#__PURE__*/React.createElement("div", {
-                  style: { background: sel?"#1a1208":"#211810", border:"1px solid "+(sel?"#22c55e":"#6b5038"),
+                  style: { background: sel?"#2a1e14":"#443828", border:"1px solid "+(sel?"#22c55e":"#6b5038"),
                     color: sel?"#22c55e":"#8a7055", borderRadius:"0 0 8px 8px",
                     padding:"6px 0", textAlign:"center", fontSize:"0.78rem", fontWeight:"bold", marginTop:-2 }
                 }, sel ? "\u2713 Selected" : "Tap to Select")
@@ -15428,7 +15428,7 @@ function App() {
             setLog(function(lg){ return [{ id:Date.now(), type:"financial", name:"Purchased Whelping Kennel", amount: -WHELPING_COST, date: new Date().toLocaleString() }].concat(_toConsumableArray(lg)); });
           }
         },
-        style: { background:"#211810", border:"1px solid #e870a0", color:"#e870a0", borderRadius:6, padding:"6px 14px", cursor:"pointer", fontSize:"0.8rem" }
+        style: { background:"#443828", border:"1px solid #e870a0", color:"#e870a0", borderRadius:6, padding:"6px 14px", cursor:"pointer", fontSize:"0.8rem" }
       }, "\uD83D\uDED2 Purchase Whelping Kennel (placeholder)")
     ),
     !hasWhelpingKennel
@@ -15441,7 +15441,7 @@ function App() {
             var ageDays = Math.floor((Date.now()-lit.bornDate)/(1000*60*60*24));
             var canWean = ageDays >= 3;
             return /*#__PURE__*/React.createElement("div", { key: lit.litterId,
-              style:{ background:"#211810", border:"1px solid #6d28d9", borderRadius:10, padding:14, marginBottom:14 }
+              style:{ background:"#443828", border:"1px solid #6d28d9", borderRadius:10, padding:14, marginBottom:14 }
             },
               /*#__PURE__*/React.createElement("div", { style:{ display:"flex", justifyContent:"space-between", alignItems:"center", marginBottom:8 } },
                 /*#__PURE__*/React.createElement("div", null,
@@ -15458,7 +15458,7 @@ function App() {
                   return /*#__PURE__*/React.createElement("div", { key:pup.id, style:{cursor:"pointer"}, onClick:function(){ toggleWhelpSelect(lit.litterId, pup.id); } },
                     /*#__PURE__*/React.createElement(Card, { animal:pup }),
                     /*#__PURE__*/React.createElement("div", {
-                      style:{ background:sel?"#1a1208":"#211810", border:"1px solid "+(sel?"#22c55e":"#6b5038"),
+                      style:{ background:sel?"#2a1e14":"#443828", border:"1px solid "+(sel?"#22c55e":"#6b5038"),
                         color:sel?"#22c55e":"#8a7055", borderRadius:"0 0 8px 8px",
                         padding:"5px 0", textAlign:"center", fontSize:"0.75rem", fontWeight:"bold", marginTop:-2 }
                     }, sel?"\u2713 Keep":"Tap to Keep")
@@ -15467,7 +15467,7 @@ function App() {
               ),
               canWean && /*#__PURE__*/React.createElement("button", {
                 onClick: function(){ finalizeWhelpingLitter(lit.litterId); },
-                style:{ width:"100%", background:"#211810", border:"2px solid #d4942a", color:"#d4942a",
+                style:{ width:"100%", background:"#443828", border:"2px solid #d4942a", color:"#d4942a",
                   borderRadius:8, padding:"8px 0", fontSize:"0.85rem", fontWeight:"bold", cursor:"pointer" }
               }, "\uD83C\uDFE0 Wean Litter \u2014 Keep ", lit.selectedIds.length, ", Rehome ", lit.pups.length-lit.selectedIds.length)
             );
@@ -15492,7 +15492,7 @@ function App() {
                 }, "\u2192 Move to Kennel"),
                 /*#__PURE__*/React.createElement("button", {
                   onClick: function(){ rehomeHoldingPup(pup.id); },
-                  style:{background:"#2a1a08",border:"1px solid #6d28d9",color:"#c4956a",borderRadius:6,padding:"5px 8px",cursor:"pointer",fontSize:"0.75rem"}
+                  style:{background:"#442e18",border:"1px solid #6d28d9",color:"#c4956a",borderRadius:6,padding:"5px 8px",cursor:"pointer",fontSize:"0.75rem"}
                 }, "\uD83D\uDE90")
               )
             );
@@ -15501,15 +15501,15 @@ function App() {
   ),
 
   tab === "stud" && /*#__PURE__*/React.createElement("div", null,
-    /*#__PURE__*/React.createElement("div", { style:{ color:"#5aaa30", fontWeight:"bold", fontSize:"1.05rem", marginBottom:16, paddingBottom:10, borderBottom:"1px solid #3a2a18", letterSpacing:"0.03em" } }, "\uD83D\uDC3E Stud Roster"),
+    /*#__PURE__*/React.createElement("div", { style:{ color:"#5aaa30", fontWeight:"bold", fontSize:"1.05rem", marginBottom:16, paddingBottom:10, borderBottom:"1px solid #4a3a28", letterSpacing:"0.03em" } }, "\uD83D\uDC3E Stud Roster"),
     (function(){
       var studs = animals.filter(function(a){ return !a.retired && a.sex==="M"; });
       if (studs.length === 0) return /*#__PURE__*/React.createElement("div", { style:{ color:"#6b5038", textAlign:"center", padding:40 } }, "No males in your kennel yet.");
       return /*#__PURE__*/React.createElement("div", { style:{ display:"flex", flexDirection:"column", gap:10 } },
         studs.map(function(a){
           return /*#__PURE__*/React.createElement("div", { key:a.id, style:{
-            background: a.isStud ? "#0a1f0a" : "#100d08",
-            border: "1px solid " + (a.isStud ? "#22c55e" : "#211810"),
+            background: a.isStud ? "#0a1f0a" : "#1a1410",
+            border: "1px solid " + (a.isStud ? "#22c55e" : "#443828"),
             borderRadius:10, padding:"12px 16px", display:"flex", alignItems:"center", gap:12
           }},
             /*#__PURE__*/React.createElement("div", { style:{ flex:1 } },
@@ -15532,12 +15532,12 @@ function App() {
                     setAnimals(function(prev){ return prev.map(function(x){ return x.id===a.id ? Object.assign({},x,{studFee:Number(fee)}) : x; }); });
                   }
                 },
-                style:{ background:"#1a1208", border:"1px solid #22c55e", color:"#22c55e",
+                style:{ background:"#2a1e14", border:"1px solid #22c55e", color:"#22c55e",
                   borderRadius:6, padding:"4px 12px", cursor:"pointer", fontSize:"0.75rem" }
               }, "Edit Fee"),
               /*#__PURE__*/React.createElement("button", {
                 onClick: function(){ toggleStud(a.id); },
-                style:{ background: a.isStud?"#3a1008":"#1a1208",
+                style:{ background: a.isStud?"#481808":"#2a1e14",
                   border:"1px solid "+(a.isStud?"#ef4444":"#22c55e"),
                   color: a.isStud?"#fca5a5":"#22c55e",
                   borderRadius:6, padding:"4px 12px", cursor:"pointer", fontSize:"0.75rem", fontWeight:"bold" }
@@ -15555,7 +15555,7 @@ function App() {
       fontSize: "1.05rem",
       marginBottom: 16,
       paddingBottom: 10,
-      borderBottom: "1px solid #3a2a18",
+      borderBottom: "1px solid #4a3a28",
       letterSpacing: "0.03em"
     }
   }, "\uD83D\uDCD3 Activity Journal"),
@@ -15567,15 +15567,15 @@ function App() {
         log.slice(0, 50).map(function(e) {
           // ── Entry config by type ──────────────────────────────────────
           var cfg = {
-            breed:         { icon:"\uD83E\uDEC2", border:"#2e1e08", bg:"#211810", label:"Breeding" },
-            rehome:        { icon:"\uD83D\uDE90", border:"#6d28d9", bg:"#211810", label:"Rehomed" },
-            retire_player: { icon:"\uD83C\uDFE1", border:"#5aaa30", bg:"#1a1208", label:"Retired" },
-            retire_age:    { icon:"\uD83D\uDC74", border:"#d4960a", bg:"#1a1208", label:"Retired (Age)" },
-            whelping:      { icon:"\uD83D\uDC23", border:"#e870a0", bg:"#2a1008", label:"Whelping" },
+            breed:         { icon:"\uD83E\uDEC2", border:"#3a2810", bg:"#443828", label:"Breeding" },
+            rehome:        { icon:"\uD83D\uDE90", border:"#6d28d9", bg:"#443828", label:"Rehomed" },
+            retire_player: { icon:"\uD83C\uDFE1", border:"#5aaa30", bg:"#2a1e14", label:"Retired" },
+            retire_age:    { icon:"\uD83D\uDC74", border:"#d4960a", bg:"#2a1e14", label:"Retired (Age)" },
+            whelping:      { icon:"\uD83D\uDC23", border:"#e870a0", bg:"#381808", label:"Whelping" },
             pups_holding:  { icon:"\uD83D\uDC36", border:"#22c55e", bg:"#0a2a15", label:"Pups to Holding" },
-            financial:     { icon:"\uD83D\uDCB0", border:"#e8a020", bg:"#1a1208", label:"Financial" },
-            incident:      { icon:"\u26A0\uFE0F",  border:"#ef4444", bg:"#2a1008", label:"Incident" }
-          }[e.type] || { icon:"\uD83D\uDCCB", border:"#3a2a18", bg:"#211810", label:"Event" };
+            financial:     { icon:"\uD83D\uDCB0", border:"#e8a020", bg:"#2a1e14", label:"Financial" },
+            incident:      { icon:"\u26A0\uFE0F",  border:"#ef4444", bg:"#381808", label:"Incident" }
+          }[e.type] || { icon:"\uD83D\uDCCB", border:"#4a3a28", bg:"#443828", label:"Event" };
 
           return /*#__PURE__*/React.createElement("div", {
             key: e.id,
@@ -15641,7 +15641,7 @@ function App() {
                 e.detail && /*#__PURE__*/React.createElement("div", { style: { color:"#8a7055", fontSize:"0.75rem", marginTop:2 } }, e.detail)
               ),
               // Timestamp
-              /*#__PURE__*/React.createElement("div", { style: { color:"#3a2a18", fontSize:"0.65rem", marginTop:4 } }, e.date)
+              /*#__PURE__*/React.createElement("div", { style: { color:"#4a3a28", fontSize:"0.65rem", marginTop:4 } }, e.date)
             )
           );
         })
@@ -15652,8 +15652,8 @@ function App() {
       bottom: 0,
       left: 0,
       right: 0,
-      background: "linear-gradient(90deg,#0c0a08,#1a1008)",
-      borderTop: "1px solid #3a2a18",
+      background: "linear-gradient(90deg,#141008,#1a1008)",
+      borderTop: "1px solid #4a3a28",
       padding: "6px 22px",
       display: "flex",
       gap: 16,
@@ -15664,12 +15664,12 @@ function App() {
     }
   }, sire && /*#__PURE__*/React.createElement("span", {
     style: {
-      color: "#d4942a", background: "#2e1e08", border: "1px solid #3a2a18",
+      color: "#d4942a", background: "#3a2810", border: "1px solid #4a3a28",
       borderRadius: 4, padding: "2px 8px"
     }
   }, "\u2642 Sire: ", sire.name), dam && /*#__PURE__*/React.createElement("span", {
     style: {
-      color: "#c4956a", background: "#211810", border: "1px solid #3a2a18",
+      color: "#c4956a", background: "#443828", border: "1px solid #4a3a28",
       borderRadius: 4, padding: "2px 8px"
     }
   }, "\u2640 Dam: ", dam.name), sire && dam && /*#__PURE__*/React.createElement("button", {
@@ -15677,7 +15677,7 @@ function App() {
       return setTab("breed");
     },
     style: {
-      background: "#2e1e08",
+      background: "#3a2810",
       border: "1px solid #d4942a",
       color: "#e8a020",
       borderRadius: 4,
@@ -15694,7 +15694,7 @@ function App() {
   }, "\uD83E\uDDEC 8 coat loci \xB7 8 health loci \xB7 5 perf QTLs \xB7 0.5% mutation rate \xB7 COI tracking"),
   /*#__PURE__*/React.createElement(Clock, { gameStartDate: gameStartDate }),
   tab === "farm" && /*#__PURE__*/React.createElement("div", {
-    style: { position:"fixed", inset:0, background:"#0c0a08", zIndex:50, overflow:"hidden", display:"flex", alignItems:"center", justifyContent:"center" }
+    style: { position:"fixed", inset:0, background:"#141008", zIndex:50, overflow:"hidden", display:"flex", alignItems:"center", justifyContent:"center" }
   }, /*#__PURE__*/React.createElement(FarmView, {
     facilitiesOwned: facilitiesOwned,
     kennels: kennels,
@@ -15917,14 +15917,14 @@ function Facilities(_ref) {
     style:{position:"fixed",top:0,left:0,right:0,bottom:0,background:"rgba(0,0,0,0.88)",
       zIndex:1000,display:"flex",alignItems:"center",justifyContent:"center"}},
     /*#__PURE__*/React.createElement("div",{
-      style:{background:"#0a0f1e",border:"1px solid #3a2a18",borderRadius:14,
+      style:{background:"#0a0f1e",border:"1px solid #4a3a28",borderRadius:14,
         width:"min(860px,95vw)",maxHeight:"88vh",display:"flex",flexDirection:"column",
         overflow:"hidden",boxShadow:"0 20px 60px rgba(0,0,0,0.9)"}},
 
       // Header
       /*#__PURE__*/React.createElement("div",{
         style:{display:"flex",alignItems:"center",padding:"14px 18px",
-          borderBottom:"1px solid #211810",gap:12}},
+          borderBottom:"1px solid #2e2218",gap:12}},
         /*#__PURE__*/React.createElement("div",{style:{fontSize:"1.1rem",fontWeight:"bold",color:"#f0e6d3",flex:1}},
           "\uD83C\uDFD7 Facilities"),
         /*#__PURE__*/React.createElement("div",{style:{fontSize:"0.78rem",color:"#6b5038"}},
@@ -15933,7 +15933,7 @@ function Facilities(_ref) {
           color:money>=500?"#22c55e":money>=0?"#d4860a":"#ef4444"}},
           "$"+money.toLocaleString()),
         /*#__PURE__*/React.createElement("button",{onClick:onClose,
-          style:{background:"transparent",border:"1px solid #3a2a18",color:"#b09070",
+          style:{background:"transparent",border:"1px solid #4a3a28",color:"#b09070",
             borderRadius:6,padding:"4px 10px",cursor:"pointer",fontSize:"0.8rem",marginLeft:8}},
           "\u2715 Close")
       ),
@@ -15951,8 +15951,8 @@ function Facilities(_ref) {
             var isMaxed=owned&&(owned.tier+1)>=fac.tiers.length;
 
             return /*#__PURE__*/React.createElement("div",{key:key,
-              style:{background: owned?"#0a1a0a":"#100d08",
-                border:"1px solid "+(owned?"#22c55e":"#211810"),
+              style:{background: owned?"#0a1a0a":"#1a1410",
+                border:"1px solid "+(owned?"#22c55e":"#443828"),
                 borderRadius:10,padding:"14px",display:"flex",flexDirection:"column",gap:8}},
 
               // Title row
@@ -15990,7 +15990,7 @@ function Facilities(_ref) {
                         onBuy(key,firstTier.cost);
                       }
                     },
-                    style:{background:money>=firstTier.cost?"#1a1208":"#2a1008",
+                    style:{background:money>=firstTier.cost?"#2a1e14":"#381808",
                       border:"1px solid "+(money>=firstTier.cost?"#22c55e":"#ef4444"),
                       color:money>=firstTier.cost?"#22c55e":"#ef4444",
                       borderRadius:6,padding:"6px 0",cursor:"pointer",fontSize:"0.78rem",fontWeight:"bold"}},
@@ -16011,7 +16011,7 @@ function Facilities(_ref) {
                           onUpgrade(key,nextTier.cost);
                         }
                       },
-                      style:{background:money>=nextTier.cost?"#2e1e08":"#2a1008",
+                      style:{background:money>=nextTier.cost?"#3a2810":"#381808",
                         border:"1px solid "+(money>=nextTier.cost?"#d4942a":"#ef4444"),
                         color:money>=nextTier.cost?"#d4942a":"#ef4444",
                         borderRadius:6,padding:"6px 0",cursor:"pointer",fontSize:"0.78rem",fontWeight:"bold"}},
