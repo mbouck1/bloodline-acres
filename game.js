@@ -13244,12 +13244,24 @@ function Card(_ref0) {
     }
   },
   /*#__PURE__*/React.createElement("div", {
-    style: { position:"relative", marginBottom:10, display:"flex", justifyContent:"center", alignItems:"center", background:"#3a2a18", borderRadius:8, padding:"10px 0" }
+    style: { display:"flex", justifyContent:"space-between", alignItems:"flex-start", marginBottom:8 }
   },
-    /*#__PURE__*/React.createElement(DogSilhouette, { animal: animal }),
-    /*#__PURE__*/React.createElement("div", {
-      style: { position:"absolute", top:6, right:6 }
-    }, /*#__PURE__*/React.createElement(BreedPhoto, { animal: animal }))
+    /*#__PURE__*/React.createElement("div", { style: { display:"flex", alignItems:"center", gap:8 } },
+      /*#__PURE__*/React.createElement("div", {
+        style: { fontSize:"2rem", lineHeight:1 }
+      }, animal.sex === "M" ? "🐕" : "🐩"),
+      /*#__PURE__*/React.createElement(BreedPhoto, { animal: animal })
+    ),
+    onSelect && /*#__PURE__*/React.createElement("button", {
+      onClick: function(e){ e.stopPropagation(); onSelect && onSelect(animal); },
+      style: {
+        background: isSelected ? "#d4942a" : "#2e1e08",
+        border: "2px solid " + (isSelected ? "#d4942a" : "#6a5238"),
+        color: isSelected ? "#100d08" : "#8a7055",
+        borderRadius: 6, padding: "4px 12px", cursor: "pointer",
+        fontSize: "0.78rem", fontWeight: "bold"
+      }
+    }, isSelected ? "✓ Selected" : "Select")
   )),
   (onStud || onSell || onRetire) && /*#__PURE__*/React.createElement("div", {
     style: { display:"flex", gap:4, marginBottom:8 },
