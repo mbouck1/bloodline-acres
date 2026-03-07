@@ -13090,8 +13090,6 @@ function DogSilhouette(_ref_sil) {
           '<path d="'+path+'"/>'+
         '</clipPath>'+
       '</defs>'+
-      // Background
-      '<rect width="'+W+'" height="'+H+'" fill="'+bgColor+'" rx="7"/>'+
       // Base coat fill
       '<path d="'+path+'" fill="'+fillColor+'" stroke="'+darkenColor(palette.base,0.25)+'" stroke-width="1.5"/>'+
       // Clip group for all overlays
