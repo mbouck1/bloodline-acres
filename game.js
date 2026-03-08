@@ -14920,9 +14920,9 @@ function App() {
     }
     return null;
   };
-  var selectAnimal = function selectAnimal(a) {
+  var selectAnimal = function selectAnimal(a, forceSelect) {
     var reason = breedingIneligibleReason(a);
-    if (reason) return; // silently block — card will show why
+    if (reason && !forceSelect) return; // silently block — card will show why
     if (a.sex === "M") setSire(function (p) {
       return (p === null || p === void 0 ? void 0 : p.id) === a.id ? null : a;
     });else setDam(function (p) {
@@ -15586,7 +15586,16 @@ function App() {
                   onStud:function(a){ toggleStud(a.id); },
                   onSell:function(a){ handleSellListing(a.id); },
                   onRetire:function(a){ retireAnimal(a.id); }
-                })
+                }),
+                (function(){
+                  var r = breedingIneligibleReason(a);
+                  if (!r || !r.includes("heat")) return null;
+                  return /*#__PURE__*/React.createElement("button", {
+                    onClick: function(e){ e.stopPropagation(); selectAnimal(a, true); },
+                    style: { width:"100%", marginTop:4, background:"#1a0a2e", border:"1px dashed #7c3aed",
+                      color:"#a78bfa", borderRadius:6, padding:"4px 0", cursor:"pointer", fontSize:"0.72rem" }
+                  }, "\uD83E\uDDEA DEV: Select anyway");
+                })()
               ),
               arrowBtn(1, safeKennelIdx>=filtered.length-1)
             )
@@ -15699,7 +15708,17 @@ function App() {
       fontWeight: "bold",
       letterSpacing: "0.03em"
     }
-  }, sire && dam ? "🧬 BREED SELECTED PAIR" : "Select a sire ♂ and dam ♀ to breed")), tab === "litter" && /*#__PURE__*/React.createElement("div", null,
+  }, sire && dam ? "🧬 BREED SELECTED PAIR" : "Select a sire ♂ and dam ♀ to breed"),
+  sire && dam && sire.sex !== dam.sex && sire.id !== dam.id && /*#__PURE__*/React.createElement("button", {
+    onClick: doBreed,
+    title: "DEV MODE: Bypasses heat cycle and eligibility checks",
+    style: {
+      width: "100%", marginTop: 6,
+      background: "#1a0a2e", border: "2px dashed #7c3aed",
+      color: "#a78bfa", borderRadius: 8, padding: "8px 12px",
+      cursor: "pointer", fontSize: "0.78rem", fontWeight: "bold", letterSpacing: "0.03em"
+    }
+  }, "\uD83E\uDDEA DEV: Force Breed (bypasses heat check)")), tab === "litter" && /*#__PURE__*/React.createElement("div", null,
     litter.length === 0
       ? /*#__PURE__*/React.createElement("div", { style: { textAlign:"center", color:"#6b5038", padding:"60px 0" } }, "No litter yet \u2014 go to the Breed tab!")
       : /*#__PURE__*/React.createElement(React.Fragment, null,
