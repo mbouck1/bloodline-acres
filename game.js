@@ -15842,7 +15842,7 @@ function App() {
                 otherKennels.map(function(k){
                   var cnt = animals.filter(function(x){ return !x.retired && x.kennelId===k.id; }).length;
                   var cap = (KENNEL_TYPES[k.type]||{capacity:10}).capacity;
-                  return /*#__PURE__*/React.createElement("option", { key: k.id, value: k.id, disabled: cnt >= cap },
+                  return /*#__PURE__*/React.createElement("option", { key: k.id, value: String(k.id), disabled: cnt >= cap },
                     k.name + " (" + cnt + "/" + cap + ")" + (cnt >= cap ? " FULL" : "")
                   );
                 })
@@ -15850,7 +15850,7 @@ function App() {
               /*#__PURE__*/React.createElement("button", {
                 onClick: function() {
                   if (!kennelMoveTarget) { alert("Pick a destination kennel first!"); return; }
-                  var dest = kennels.find(function(k){ return k.id === kennelMoveTarget; });
+                  var dest = kennels.find(function(k){ return String(k.id) === String(kennelMoveTarget); });
                   if (!dest) return;
                   var destCap = (KENNEL_TYPES[dest.type]||{capacity:10}).capacity;
                   var destCount = animals.filter(function(x){ return !x.retired && x.kennelId===dest.id; }).length;
