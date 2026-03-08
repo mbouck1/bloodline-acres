@@ -4368,9 +4368,9 @@ function App() {
     var pupCOI = calcCOI(sire.id, dam.id, animals);
     pups = pups.map(function(p){ return Object.assign({}, p, { coi: pupCOI }); });
     var now = Date.now();
-    var useWhelping = hasWhelpingKennel && whelpingLitters.length < 4;
+    var useWhelping = hasWhelpingKennel && whelpingLitters.length < 2;
     if (hasWhelpingKennel && !useWhelping) {
-      alert("\u26A0\uFE0F Whelping Kennel is full (4/4)! You may only keep 1 pup from this litter.");
+      alert("\u26A0\uFE0F Whelping Kennel is full (2/2)! You may only keep 1 pup from this litter.");
     }
     if (useWhelping) {
       setWhelpingLitters(function(prev) {
@@ -4781,7 +4781,7 @@ function App() {
       style: _objectSpread(_objectSpread({}, tabS("whelping")), {}, { opacity: hasWhelpingKennel ? 1 : 0.4 }),
       onClick: function(){ setTab("whelping"); },
       title: hasWhelpingKennel ? "Whelping Kennel" : "Purchase a Whelping Kennel to unlock"
-    }, "\uD83C\uDFE5 Whelping", whelpingLitters.length > 0 ? " ("+whelpingLitters.length+"/4)" : " (0/4)"),
+    }, "\uD83C\uDFE5 Whelping", whelpingLitters.length > 0 ? " ("+whelpingLitters.length+"/2)" : " (0/2)"),
     holdingPups.length > 0 && /*#__PURE__*/React.createElement("button", {
       style: { background: tab==="holding"?"#2a1e14":"transparent", border:"1px solid #22c55e", color:"#22c55e",
         borderRadius:6, padding:"5px 14px", cursor:"pointer", fontSize:"0.82rem" },
@@ -5272,7 +5272,7 @@ function App() {
       color: "#4ade80", borderRadius: 8, padding: "8px 12px",
       cursor: "pointer", fontSize: "0.78rem", fontWeight: "bold", letterSpacing: "0.03em"
     }
-  }, "\uD83D\uDCC5 DEV: Force +1 Day (ages dogs & litters)"), tab === "litter" && /*#__PURE__*/React.createElement("div", { style: { position: "relative" } },
+  }, "\uD83D\uDCC5 DEV: Force +1 Day (ages dogs & litters)"), tab === "litter" && /*#__PURE__*/React.createElement("div", { style: { position: "relative", overflowY: "auto", maxHeight: "calc(100vh - 130px)" } },
     litter.length === 0 && whelpingLitters.length === 0
       ? /*#__PURE__*/React.createElement("div", { style: { textAlign:"center", color:"#6b5038", padding:"60px 0" } }, "No litter yet \u2014 go to the Breed tab!")
       : /*#__PURE__*/React.createElement(React.Fragment, null,
