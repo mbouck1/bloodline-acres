@@ -7,10 +7,10 @@ var DEMO_BREEDS = [{
   "group": "Herding",
   "size": "M",
   "coat": "medium",
-  "colors": ["black & white", "red & white", "blue merle", "sable"],
+  "colors": ["black & white", "red & white", "blue merle & white", "sable & white", "tricolor", "gold & white", "slate & white"],
   "species": "dog",
   "sizeAvg": 40,
-  "sizeRange": [28, 55],
+  "sizeRange": [27, 55],
   "litterSize": "M",
   "traits": {
     "intelligence": 10,
@@ -30,16 +30,19 @@ var DEMO_BREEDS = [{
     "heart": 92,
     "joints": 82
   },
-  "aptitudes": ["Agility", "Herding", "Flyball", "Obedience"]
+  "aptitudes": ["Agility", "Herding", "Flyball", "Obedience"],
+  "founderCOI": 5.5,
+  "coatFreqs": {"E": [["E", 0.85], ["e", 0.15]], "K": [["KB", 0.05], ["kbr", 0], ["ky", 0.95]], "A": [["Ay", 0.2], ["aw", 0.15], ["at", 0.55], ["a", 0.1]], "B": [["B", 0.8], ["b", 0.2]], "M": [["M", 0.15], ["m", 0.85]], "S": [["S", 0.2], ["sp", 0.65], ["sw", 0.15]]},
+  "healthFlags": ["hips", "eyes", "epilepsy", "MDR1"]
 }, {
   "name": "Rough Collie",
   "group": "Herding",
   "size": "L",
   "coat": "long",
-  "colors": ["sable", "tricolor", "blue merle"],
+  "colors": ["sable & white", "tricolor", "blue merle", "white"],
   "species": "dog",
-  "sizeAvg": 65,
-  "sizeRange": [55, 85],
+  "sizeAvg": 60,
+  "sizeRange": [50, 75],
   "litterSize": "L",
   "traits": {
     "intelligence": 8,
@@ -59,16 +62,19 @@ var DEMO_BREEDS = [{
     "heart": 88,
     "joints": 80
   },
-  "aptitudes": ["Herding", "Conformation", "Obedience"]
+  "aptitudes": ["Herding", "Conformation", "Obedience"],
+  "founderCOI": 6.5,
+  "coatFreqs": {"E": [["E", 0.85], ["e", 0.15]], "K": [["KB", 0.05], ["kbr", 0], ["ky", 0.95]], "A": [["Ay", 0.55], ["aw", 0.05], ["at", 0.35], ["a", 0.05]], "M": [["M", 0.15], ["m", 0.85]], "S": [["S", 0.15], ["sp", 0.55], ["sw", 0.3]]},
+  "healthFlags": ["eyes", "MDR1", "hips"]
 }, {
   "name": "Smooth Collie",
   "group": "Herding",
   "size": "L",
   "coat": "short",
-  "colors": ["sable", "tricolor", "blue merle"],
+  "colors": ["sable & white", "tricolor", "blue merle", "white"],
   "species": "dog",
-  "sizeAvg": 65,
-  "sizeRange": [55, 85],
+  "sizeAvg": 55,
+  "sizeRange": [45, 70],
   "litterSize": "L",
   "traits": {
     "intelligence": 8,
@@ -88,16 +94,19 @@ var DEMO_BREEDS = [{
     "heart": 88,
     "joints": 82
   },
-  "aptitudes": ["Herding", "Obedience", "Agility"]
+  "aptitudes": ["Herding", "Obedience", "Agility"],
+  "founderCOI": 6.0,
+  "coatFreqs": {"E": [["E", 0.85], ["e", 0.15]], "K": [["KB", 0.05], ["kbr", 0], ["ky", 0.95]], "A": [["Ay", 0.55], ["aw", 0.05], ["at", 0.35], ["a", 0.05]], "M": [["M", 0.15], ["m", 0.85]], "S": [["S", 0.15], ["sp", 0.55], ["sw", 0.3]]},
+  "healthFlags": ["eyes", "MDR1", "hips"]
 }, {
   "name": "Shetland Sheepdog",
   "group": "Herding",
   "size": "S",
   "coat": "long",
-  "colors": ["sable", "tricolor", "blue merle", "black & white"],
+  "colors": ["sable & white", "tricolor", "blue merle", "black & white", "black & tan", "double merle (fault)"],
   "species": "dog",
   "sizeAvg": 20,
-  "sizeRange": [12, 28],
+  "sizeRange": [14, 27],
   "litterSize": "S",
   "traits": {
     "intelligence": 9,
@@ -117,16 +126,19 @@ var DEMO_BREEDS = [{
     "heart": 88,
     "joints": 82
   },
-  "aptitudes": ["Agility", "Obedience", "Rally-O"]
+  "aptitudes": ["Agility", "Obedience", "Rally-O"],
+  "founderCOI": 7.0,
+  "coatFreqs": {"E": [["E", 0.85], ["e", 0.15]], "K": [["KB", 0.05], ["kbr", 0], ["ky", 0.95]], "A": [["Ay", 0.5], ["aw", 0.05], ["at", 0.4], ["a", 0.05]], "M": [["M", 0.2], ["m", 0.8]], "S": [["S", 0.15], ["sp", 0.55], ["sw", 0.3]]},
+  "healthFlags": ["eyes", "MDR1", "hips", "epilepsy"]
 }, {
   "name": "Pembroke Welsh Corgi",
   "group": "Herding",
   "size": "S",
   "coat": "medium",
-  "colors": ["red", "sable", "tricolor", "black & tan"],
+  "colors": ["red", "sable", "fawn", "black & tan", "red & white", "sable & white"],
   "species": "dog",
-  "sizeAvg": 20,
-  "sizeRange": [12, 28],
+  "sizeAvg": 28,
+  "sizeRange": [22, 35],
   "litterSize": "S",
   "traits": {
     "intelligence": 8,
@@ -146,16 +158,19 @@ var DEMO_BREEDS = [{
     "heart": 88,
     "joints": 80
   },
-  "aptitudes": ["Herding", "Agility", "Conformation"]
+  "aptitudes": ["Herding", "Agility", "Conformation"],
+  "founderCOI": 6.5,
+  "coatFreqs": {"E": [["E", 0.8], ["e", 0.2]], "K": [["KB", 0.05], ["kbr", 0], ["ky", 0.95]], "A": [["Ay", 0.65], ["aw", 0.1], ["at", 0.2], ["a", 0.05]], "S": [["S", 0.4], ["sp", 0.5], ["sw", 0.1]]},
+  "healthFlags": ["hips", "eyes", "spine", "heart"]
 }, {
   "name": "Cardigan Welsh Corgi",
   "group": "Herding",
   "size": "S",
   "coat": "medium",
-  "colors": ["red", "sable", "brindle", "blue merle"],
+  "colors": ["red & white", "sable & white", "brindle & white", "blue merle & white", "black & white", "black & tan & white"],
   "species": "dog",
-  "sizeAvg": 20,
-  "sizeRange": [12, 28],
+  "sizeAvg": 32,
+  "sizeRange": [25, 40],
   "litterSize": "S",
   "traits": {
     "intelligence": 8,
@@ -175,16 +190,19 @@ var DEMO_BREEDS = [{
     "heart": 88,
     "joints": 78
   },
-  "aptitudes": ["Herding", "Agility", "Rally-O"]
+  "aptitudes": ["Herding", "Agility", "Rally-O"],
+  "founderCOI": 6.5,
+  "coatFreqs": {"E": [["E", 0.8], ["e", 0.2]], "K": [["KB", 0.05], ["kbr", 0.15], ["ky", 0.8]], "A": [["Ay", 0.55], ["aw", 0.1], ["at", 0.25], ["a", 0.1]], "M": [["M", 0.15], ["m", 0.85]], "S": [["S", 0.2], ["sp", 0.55], ["sw", 0.25]]},
+  "healthFlags": ["hips", "eyes", "spine"]
 }, {
   "name": "Bearded Collie",
   "group": "Herding",
   "size": "M",
   "coat": "long",
-  "colors": ["black", "brown", "blue", "fawn"],
+  "colors": ["black & white", "brown & white", "blue & white", "fawn & white"],
   "species": "dog",
-  "sizeAvg": 40,
-  "sizeRange": [28, 55],
+  "sizeAvg": 52,
+  "sizeRange": [40, 65],
   "litterSize": "M",
   "traits": {
     "intelligence": 8,
@@ -204,16 +222,19 @@ var DEMO_BREEDS = [{
     "heart": 85,
     "joints": 78
   },
-  "aptitudes": ["Herding", "Agility", "Conformation"]
+  "aptitudes": ["Herding", "Agility", "Conformation"],
+  "founderCOI": 6.0,
+  "coatFreqs": {"E": [["E", 0.85], ["e", 0.15]], "K": [["KB", 0.05], ["kbr", 0], ["ky", 0.95]], "A": [["Ay", 0.25], ["aw", 0.15], ["at", 0.45], ["a", 0.15]], "B": [["B", 0.7], ["b", 0.3]], "D": [["D", 0.75], ["d", 0.25]], "S": [["S", 0.25], ["sp", 0.55], ["sw", 0.2]]},
+  "healthFlags": ["hips", "eyes", "thyroid", "Addisons"]
 }, {
   "name": "Old English Sheepdog",
   "group": "Herding",
   "size": "L",
   "coat": "long",
-  "colors": ["gray & white", "blue & white", "grizzle & white"],
+  "colors": ["gray & white", "grizzle & white", "blue & white", "blue gray & white"],
   "species": "dog",
-  "sizeAvg": 65,
-  "sizeRange": [55, 85],
+  "sizeAvg": 70,
+  "sizeRange": [55, 90],
   "litterSize": "L",
   "traits": {
     "intelligence": 7,
@@ -233,16 +254,19 @@ var DEMO_BREEDS = [{
     "heart": 80,
     "joints": 72
   },
-  "aptitudes": ["Herding", "Conformation", "Agility"]
+  "aptitudes": ["Herding", "Conformation", "Agility"],
+  "founderCOI": 6.5,
+  "coatFreqs": {"E": [["E", 0.85], ["e", 0.15]], "K": [["KB", 0.05], ["kbr", 0], ["ky", 0.95]], "A": [["Ay", 0.1], ["aw", 0.6], ["at", 0.2], ["a", 0.1]], "D": [["D", 0.75], ["d", 0.25]], "S": [["S", 0.1], ["sp", 0.45], ["sw", 0.45]]},
+  "healthFlags": ["hips", "eyes", "heart", "thyroid", "cancer"]
 }, {
   "name": "German Shepherd",
   "group": "Herding",
   "size": "L",
   "coat": "medium",
-  "colors": ["sable", "black", "black & tan", "white"],
+  "colors": ["black & tan", "black & red", "black & cream", "sable", "solid black", "bicolor"],
   "species": "dog",
-  "sizeAvg": 65,
-  "sizeRange": [55, 85],
+  "sizeAvg": 75,
+  "sizeRange": [55, 95],
   "litterSize": "L",
   "traits": {
     "intelligence": 9,
@@ -262,16 +286,19 @@ var DEMO_BREEDS = [{
     "heart": 85,
     "joints": 70
   },
-  "aptitudes": ["Schutzhund", "Obedience", "Tracking"]
+  "aptitudes": ["Schutzhund", "Obedience", "Tracking"],
+  "founderCOI": 6.5,
+  "coatFreqs": {"E": [["E", 0.9], ["e", 0.1]], "K": [["KB", 0.25], ["kbr", 0], ["ky", 0.75]], "A": [["Ay", 0.3], ["aw", 0.3], ["at", 0.35], ["a", 0.05]], "As": [["N", 0.65], ["n", 0.35]]},
+  "healthFlags": ["hips", "spine", "bloat", "eyes", "cancer", "heart"]
 }, {
   "name": "Dutch Shepherd",
   "group": "Herding",
   "size": "L",
   "coat": "wire",
-  "colors": ["gold brindle", "silver brindle"],
+  "colors": ["brindle (gold brindle, silver brindle)"],
   "species": "dog",
   "sizeAvg": 65,
-  "sizeRange": [55, 85],
+  "sizeRange": [50, 80],
   "litterSize": "L",
   "traits": {
     "intelligence": 9,
@@ -291,16 +318,19 @@ var DEMO_BREEDS = [{
     "heart": 88,
     "joints": 80
   },
-  "aptitudes": ["Schutzhund", "Agility", "Obedience"]
+  "aptitudes": ["Schutzhund", "Agility", "Obedience"],
+  "founderCOI": 5.5,
+  "coatFreqs": {"E": [["E", 1.0], ["e", 0.0]], "K": [["KB", 0.05], ["kbr", 0.9], ["ky", 0.05]], "A": [["Ay", 0.8], ["aw", 0.1], ["at", 0.1], ["a", 0]]},
+  "healthFlags": ["hips", "eyes", "MDR1"]
 }, {
   "name": "Schapendoes",
   "group": "Herding",
   "size": "M",
   "coat": "long",
-  "colors": ["black", "gray", "brown", "fawn", "blue"],
+  "colors": ["any color, blue gray preferred", "black", "brown", "multi-color"],
   "species": "dog",
-  "sizeAvg": 40,
-  "sizeRange": [28, 55],
+  "sizeAvg": 33,
+  "sizeRange": [26, 40],
   "litterSize": "M",
   "traits": {
     "intelligence": 8,
@@ -320,16 +350,19 @@ var DEMO_BREEDS = [{
     "heart": 85,
     "joints": 80
   },
-  "aptitudes": ["Herding", "Agility", "Conformation"]
+  "aptitudes": ["Herding", "Agility", "Conformation"],
+  "founderCOI": 5.0,
+  "coatFreqs": {"E": [["E", 0.8], ["e", 0.2]], "K": [["KB", 0.1], ["kbr", 0.1], ["ky", 0.8]], "A": [["Ay", 0.3], ["aw", 0.3], ["at", 0.25], ["a", 0.15]], "D": [["D", 0.75], ["d", 0.25]]},
+  "healthFlags": ["hips", "eyes", "MDR1"]
 }, {
   "name": "Belgian Malinois",
   "group": "Herding",
   "size": "L",
   "coat": "short",
-  "colors": ["fawn", "mahogany", "red"],
+  "colors": ["fawn with black mask", "mahogany with black mask", "red with black mask"],
   "species": "dog",
   "sizeAvg": 65,
-  "sizeRange": [55, 85],
+  "sizeRange": [40, 80],
   "litterSize": "L",
   "traits": {
     "intelligence": 9,
@@ -349,16 +382,19 @@ var DEMO_BREEDS = [{
     "heart": 90,
     "joints": 82
   },
-  "aptitudes": ["Schutzhund", "Agility", "Tracking"]
+  "aptitudes": ["Schutzhund", "Agility", "Tracking"],
+  "founderCOI": 5.5,
+  "coatFreqs": {"E": [["E", 1.0], ["e", 0.0]], "K": [["KB", 0.05], ["kbr", 0], ["ky", 0.95]], "A": [["Ay", 0.9], ["aw", 0.05], ["at", 0.05], ["a", 0]]},
+  "healthFlags": ["hips", "eyes", "epilepsy"]
 }, {
   "name": "Belgian Tervuren",
   "group": "Herding",
   "size": "L",
   "coat": "long",
-  "colors": ["fawn & black", "mahogany & black", "gray & black"],
+  "colors": ["mahogany & black", "fawn & black", "gray & black"],
   "species": "dog",
-  "sizeAvg": 65,
-  "sizeRange": [55, 85],
+  "sizeAvg": 60,
+  "sizeRange": [40, 75],
   "litterSize": "L",
   "traits": {
     "intelligence": 9,
@@ -378,16 +414,19 @@ var DEMO_BREEDS = [{
     "heart": 88,
     "joints": 82
   },
-  "aptitudes": ["Schutzhund", "Agility", "Obedience"]
+  "aptitudes": ["Schutzhund", "Agility", "Obedience"],
+  "founderCOI": 5.5,
+  "coatFreqs": {"E": [["E", 1.0], ["e", 0.0]], "K": [["KB", 0.05], ["kbr", 0], ["ky", 0.95]], "A": [["Ay", 0.8], ["aw", 0.1], ["at", 0.1], ["a", 0]]},
+  "healthFlags": ["hips", "eyes", "epilepsy"]
 }, {
   "name": "Belgian Groenendael",
   "group": "Herding",
   "size": "L",
   "coat": "long",
-  "colors": ["black"],
+  "colors": ["black", "black & white"],
   "species": "dog",
-  "sizeAvg": 65,
-  "sizeRange": [55, 85],
+  "sizeAvg": 60,
+  "sizeRange": [40, 75],
   "litterSize": "L",
   "traits": {
     "intelligence": 9,
@@ -407,16 +446,19 @@ var DEMO_BREEDS = [{
     "heart": 88,
     "joints": 82
   },
-  "aptitudes": ["Schutzhund", "Obedience", "Tracking"]
+  "aptitudes": ["Schutzhund", "Obedience", "Tracking"],
+  "founderCOI": 5.5,
+  "coatFreqs": {"E": [["E", 1.0], ["e", 0.0]], "K": [["KB", 0.9], ["kbr", 0], ["ky", 0.1]], "A": [["Ay", 0], ["aw", 0], ["at", 0.2], ["a", 0.8]]},
+  "healthFlags": ["hips", "eyes", "epilepsy"]
 }, {
   "name": "Belgian Laekenois",
   "group": "Herding",
   "size": "L",
   "coat": "wire",
-  "colors": ["fawn", "red", "gray"],
+  "colors": ["fawn with black shading", "reddish fawn with black traces"],
   "species": "dog",
-  "sizeAvg": 65,
-  "sizeRange": [55, 85],
+  "sizeAvg": 60,
+  "sizeRange": [40, 75],
   "litterSize": "L",
   "traits": {
     "intelligence": 9,
@@ -436,16 +478,19 @@ var DEMO_BREEDS = [{
     "heart": 88,
     "joints": 82
   },
-  "aptitudes": ["Schutzhund", "Obedience", "Conformation"]
+  "aptitudes": ["Schutzhund", "Obedience", "Conformation"],
+  "founderCOI": 5.5,
+  "coatFreqs": {"E": [["E", 1.0], ["e", 0.0]], "K": [["KB", 0.05], ["kbr", 0], ["ky", 0.95]], "A": [["Ay", 0.85], ["aw", 0.1], ["at", 0.05], ["a", 0]], "W": [["W", 0.8], ["w", 0.2]]},
+  "healthFlags": ["hips", "eyes", "epilepsy"]
 }, {
   "name": "Berger Picard",
   "group": "Herding",
   "size": "M",
   "coat": "wire",
-  "colors": ["fawn", "brindle", "gray"],
+  "colors": ["fawn", "brindle", "gray", "gray brindle"],
   "species": "dog",
-  "sizeAvg": 40,
-  "sizeRange": [28, 55],
+  "sizeAvg": 55,
+  "sizeRange": [40, 70],
   "litterSize": "M",
   "traits": {
     "intelligence": 8,
@@ -465,16 +510,19 @@ var DEMO_BREEDS = [{
     "heart": 85,
     "joints": 80
   },
-  "aptitudes": ["Herding", "Agility", "Conformation"]
+  "aptitudes": ["Herding", "Agility", "Conformation"],
+  "founderCOI": 5.0,
+  "coatFreqs": {"E": [["E", 0.85], ["e", 0.15]], "K": [["KB", 0.05], ["kbr", 0.35], ["ky", 0.6]], "A": [["Ay", 0.6], ["aw", 0.2], ["at", 0.15], ["a", 0.05]]},
+  "healthFlags": ["hips", "eyes"]
 }, {
   "name": "Pyrenean Shepherd",
   "group": "Herding",
   "size": "S",
   "coat": "medium",
-  "colors": ["fawn", "brindle", "gray", "merle"],
+  "colors": ["fawn", "gray", "brindle", "black", "blue merle", "black & white"],
   "species": "dog",
-  "sizeAvg": 20,
-  "sizeRange": [12, 28],
+  "sizeAvg": 30,
+  "sizeRange": [15, 40],
   "litterSize": "S",
   "traits": {
     "intelligence": 9,
@@ -494,16 +542,19 @@ var DEMO_BREEDS = [{
     "heart": 88,
     "joints": 82
   },
-  "aptitudes": ["Herding", "Agility", "Flyball"]
+  "aptitudes": ["Herding", "Agility", "Flyball"],
+  "founderCOI": 5.5,
+  "coatFreqs": {"E": [["E", 0.85], ["e", 0.15]], "K": [["KB", 0.05], ["kbr", 0.15], ["ky", 0.8]], "A": [["Ay", 0.4], ["aw", 0.2], ["at", 0.25], ["a", 0.15]], "M": [["M", 0.1], ["m", 0.9]]},
+  "healthFlags": ["hips", "eyes", "epilepsy"]
 }, {
   "name": "Beauceron",
   "group": "Herding",
   "size": "L",
   "coat": "short",
-  "colors": ["black & tan", "harlequin"],
+  "colors": ["black & tan (bas rouge)", "harlequin (black, gray & tan)"],
   "species": "dog",
-  "sizeAvg": 65,
-  "sizeRange": [55, 85],
+  "sizeAvg": 75,
+  "sizeRange": [65, 95],
   "litterSize": "L",
   "traits": {
     "intelligence": 8,
@@ -523,16 +574,19 @@ var DEMO_BREEDS = [{
     "heart": 85,
     "joints": 78
   },
-  "aptitudes": ["Schutzhund", "Herding", "Obedience"]
+  "aptitudes": ["Schutzhund", "Herding", "Obedience"],
+  "founderCOI": 5.5,
+  "coatFreqs": {"E": [["E", 1.0], ["e", 0.0]], "K": [["KB", 0.85], ["kbr", 0], ["ky", 0.15]], "A": [["Ay", 0], ["aw", 0], ["at", 0.95], ["a", 0.05]], "M": [["M", 0.1], ["m", 0.9]]},
+  "healthFlags": ["hips", "bloat", "heart"]
 }, {
   "name": "Briard",
   "group": "Herding",
   "size": "L",
   "coat": "long",
-  "colors": ["black", "fawn", "gray"],
+  "colors": ["fawn", "black", "gray", "tawny"],
   "species": "dog",
-  "sizeAvg": 65,
-  "sizeRange": [55, 85],
+  "sizeAvg": 75,
+  "sizeRange": [55, 100],
   "litterSize": "L",
   "traits": {
     "intelligence": 8,
@@ -552,16 +606,19 @@ var DEMO_BREEDS = [{
     "heart": 82,
     "joints": 75
   },
-  "aptitudes": ["Herding", "Schutzhund", "Conformation"]
+  "aptitudes": ["Herding", "Schutzhund", "Conformation"],
+  "founderCOI": 5.5,
+  "coatFreqs": {"E": [["E", 0.85], ["e", 0.15]], "K": [["KB", 0.3], ["kbr", 0], ["ky", 0.7]], "A": [["Ay", 0.5], ["aw", 0.15], ["at", 0.25], ["a", 0.1]], "B": [["B", 0.8], ["b", 0.2]]},
+  "healthFlags": ["hips", "eyes", "bloat", "heart"]
 }, {
   "name": "Bouvier des Flandres",
   "group": "Herding",
   "size": "L",
   "coat": "wire",
-  "colors": ["fawn", "black", "gray brindle"],
+  "colors": ["fawn", "black", "gray", "brindle", "salt & pepper"],
   "species": "dog",
-  "sizeAvg": 65,
-  "sizeRange": [55, 85],
+  "sizeAvg": 80,
+  "sizeRange": [60, 100],
   "litterSize": "L",
   "traits": {
     "intelligence": 8,
@@ -581,16 +638,19 @@ var DEMO_BREEDS = [{
     "heart": 80,
     "joints": 75
   },
-  "aptitudes": ["Schutzhund", "Herding", "Obedience"]
+  "aptitudes": ["Schutzhund", "Herding", "Obedience"],
+  "founderCOI": 5.5,
+  "coatFreqs": {"E": [["E", 0.85], ["e", 0.15]], "K": [["KB", 0.25], ["kbr", 0.4], ["ky", 0.35]], "A": [["Ay", 0.4], ["aw", 0.25], ["at", 0.25], ["a", 0.1]], "B": [["B", 0.85], ["b", 0.15]]},
+  "healthFlags": ["hips", "eyes", "bloat", "heart", "cancer"]
 }, {
   "name": "Australian Shepherd",
   "group": "Herding",
   "size": "M",
   "coat": "medium",
-  "colors": ["merle", "black", "red", "blue merle"],
+  "colors": ["blue merle", "red merle", "black tricolor", "red tricolor", "black bicolor", "red bicolor"],
   "species": "dog",
-  "sizeAvg": 40,
-  "sizeRange": [28, 55],
+  "sizeAvg": 55,
+  "sizeRange": [40, 70],
   "litterSize": "M",
   "traits": {
     "intelligence": 9,
@@ -610,16 +670,19 @@ var DEMO_BREEDS = [{
     "heart": 90,
     "joints": 80
   },
-  "aptitudes": ["Agility", "Herding", "Obedience"]
+  "aptitudes": ["Agility", "Herding", "Obedience"],
+  "founderCOI": 5.5,
+  "coatFreqs": {"E": [["E", 0.85], ["e", 0.15]], "K": [["KB", 0.05], ["kbr", 0], ["ky", 0.95]], "A": [["Ay", 0.1], ["aw", 0.05], ["at", 0.8], ["a", 0.05]], "B": [["B", 0.65], ["b", 0.35]], "M": [["M", 0.3], ["m", 0.7]], "S": [["S", 0.2], ["sp", 0.55], ["sw", 0.25]]},
+  "healthFlags": ["eyes", "MDR1", "hips", "epilepsy", "cancer"]
 }, {
   "name": "Miniature American Shepherd",
   "group": "Herding",
   "size": "S",
   "coat": "medium",
-  "colors": ["blue merle", "black", "red merle", "red"],
+  "colors": ["blue merle", "red merle", "black tricolor", "red tricolor"],
   "species": "dog",
-  "sizeAvg": 20,
-  "sizeRange": [12, 28],
+  "sizeAvg": 30,
+  "sizeRange": [20, 40],
   "litterSize": "S",
   "traits": {
     "intelligence": 9,
@@ -639,16 +702,19 @@ var DEMO_BREEDS = [{
     "heart": 90,
     "joints": 82
   },
-  "aptitudes": ["Agility", "Herding", "Rally-O"]
+  "aptitudes": ["Agility", "Herding", "Rally-O"],
+  "founderCOI": 5.5,
+  "coatFreqs": {"E": [["E", 0.85], ["e", 0.15]], "K": [["KB", 0.05], ["kbr", 0], ["ky", 0.95]], "A": [["Ay", 0.1], ["aw", 0.05], ["at", 0.8], ["a", 0.05]], "B": [["B", 0.65], ["b", 0.35]], "M": [["M", 0.3], ["m", 0.7]], "S": [["S", 0.2], ["sp", 0.55], ["sw", 0.25]]},
+  "healthFlags": ["eyes", "MDR1", "hips", "epilepsy"]
 }, {
   "name": "Australian Cattle Dog",
   "group": "Herding",
   "size": "M",
   "coat": "short",
-  "colors": ["blue", "red speckle", "blue speckle"],
+  "colors": ["blue", "blue mottled", "blue speckled", "red", "red mottled", "red speckled"],
   "species": "dog",
-  "sizeAvg": 40,
-  "sizeRange": [28, 55],
+  "sizeAvg": 42,
+  "sizeRange": [30, 55],
   "litterSize": "M",
   "traits": {
     "intelligence": 9,
@@ -668,16 +734,19 @@ var DEMO_BREEDS = [{
     "heart": 92,
     "joints": 85
   },
-  "aptitudes": ["Herding", "Agility", "Flyball"]
+  "aptitudes": ["Herding", "Agility", "Flyball"],
+  "founderCOI": 5.0,
+  "coatFreqs": {"E": [["E", 0.85], ["e", 0.15]], "K": [["KB", 0.05], ["kbr", 0], ["ky", 0.95]], "A": [["Ay", 0.1], ["aw", 0.3], ["at", 0.5], ["a", 0.1]], "B": [["B", 0.7], ["b", 0.3]], "D": [["D", 0.65], ["d", 0.35]], "T": [["TR", 0.7], ["T", 0.2], ["t", 0.1]]},
+  "healthFlags": ["hips", "eyes", "deafness"]
 }, {
   "name": "Australian Kelpie",
   "group": "Herding",
   "size": "M",
   "coat": "short",
-  "colors": ["black", "red", "fawn", "chocolate", "blue"],
+  "colors": ["black", "black & tan", "red", "red & tan", "fawn", "chocolate", "smoke blue"],
   "species": "dog",
   "sizeAvg": 40,
-  "sizeRange": [28, 55],
+  "sizeRange": [25, 55],
   "litterSize": "M",
   "traits": {
     "intelligence": 9,
@@ -697,16 +766,19 @@ var DEMO_BREEDS = [{
     "heart": 90,
     "joints": 85
   },
-  "aptitudes": ["Herding", "Agility", "Obedience"]
+  "aptitudes": ["Herding", "Agility", "Obedience"],
+  "founderCOI": 4.5,
+  "coatFreqs": {"E": [["E", 0.85], ["e", 0.15]], "K": [["KB", 0.2], ["kbr", 0], ["ky", 0.8]], "A": [["Ay", 0.3], ["aw", 0.15], ["at", 0.45], ["a", 0.1]], "B": [["B", 0.75], ["b", 0.25]], "D": [["D", 0.75], ["d", 0.25]]},
+  "healthFlags": ["hips", "eyes", "MDR1"]
 }, {
   "name": "Australian Stumpy Tail Cattle Dog",
   "group": "Herding",
   "size": "M",
   "coat": "short",
-  "colors": ["blue speckle", "red speckle"],
+  "colors": ["blue", "blue mottled", "red", "red speckled"],
   "species": "dog",
   "sizeAvg": 40,
-  "sizeRange": [28, 55],
+  "sizeRange": [30, 52],
   "litterSize": "M",
   "traits": {
     "intelligence": 9,
@@ -726,16 +798,19 @@ var DEMO_BREEDS = [{
     "heart": 90,
     "joints": 85
   },
-  "aptitudes": ["Herding", "Agility"]
+  "aptitudes": ["Herding", "Agility"],
+  "founderCOI": 5.0,
+  "coatFreqs": {"E": [["E", 0.85], ["e", 0.15]], "K": [["KB", 0.05], ["kbr", 0], ["ky", 0.95]], "A": [["Ay", 0.1], ["aw", 0.3], ["at", 0.5], ["a", 0.1]], "D": [["D", 0.65], ["d", 0.35]], "T": [["TR", 0.6], ["T", 0.25], ["t", 0.15]]},
+  "healthFlags": ["hips", "eyes", "deafness"]
 }, {
   "name": "Puli",
   "group": "Herding",
   "size": "M",
   "coat": "corded",
-  "colors": ["black", "white", "gray", "cream"],
+  "colors": ["black", "rusty black", "gray", "white"],
   "species": "dog",
-  "sizeAvg": 40,
-  "sizeRange": [28, 55],
+  "sizeAvg": 28,
+  "sizeRange": [20, 38],
   "litterSize": "M",
   "traits": {
     "intelligence": 8,
@@ -755,16 +830,19 @@ var DEMO_BREEDS = [{
     "heart": 88,
     "joints": 82
   },
-  "aptitudes": ["Herding", "Agility", "Conformation"]
+  "aptitudes": ["Herding", "Agility", "Conformation"],
+  "founderCOI": 6.5,
+  "coatFreqs": {"E": [["E", 0.85], ["e", 0.15]], "K": [["KB", 0.6], ["kbr", 0], ["ky", 0.4]], "A": [["Ay", 0.1], ["aw", 0.15], ["at", 0.2], ["a", 0.55]], "D": [["D", 0.7], ["d", 0.3]], "Cu": [["Cu", 0.9], ["cu", 0.1]]},
+  "healthFlags": ["hips", "eyes", "MDR1"]
 }, {
   "name": "Pumi",
   "group": "Herding",
   "size": "S",
   "coat": "curly",
-  "colors": ["black", "white", "gray", "fawn"],
+  "colors": ["gray", "black", "fawn", "white"],
   "species": "dog",
-  "sizeAvg": 20,
-  "sizeRange": [12, 28],
+  "sizeAvg": 22,
+  "sizeRange": [17, 30],
   "litterSize": "S",
   "traits": {
     "intelligence": 9,
@@ -784,16 +862,19 @@ var DEMO_BREEDS = [{
     "heart": 88,
     "joints": 82
   },
-  "aptitudes": ["Herding", "Agility", "Obedience"]
+  "aptitudes": ["Herding", "Agility", "Obedience"],
+  "founderCOI": 6.0,
+  "coatFreqs": {"E": [["E", 0.85], ["e", 0.15]], "K": [["KB", 0.3], ["kbr", 0], ["ky", 0.7]], "A": [["Ay", 0.2], ["aw", 0.25], ["at", 0.3], ["a", 0.25]], "D": [["D", 0.7], ["d", 0.3]]},
+  "healthFlags": ["hips", "eyes"]
 }, {
   "name": "Mudi",
   "group": "Herding",
   "size": "M",
   "coat": "wavy",
-  "colors": ["black", "white", "fawn", "gray", "merle"],
+  "colors": ["black", "white", "gray", "brown", "fawn", "merle", "cifra (gray with black spots)"],
   "species": "dog",
-  "sizeAvg": 40,
-  "sizeRange": [28, 55],
+  "sizeAvg": 25,
+  "sizeRange": [18, 33],
   "litterSize": "M",
   "traits": {
     "intelligence": 9,
@@ -813,7 +894,10 @@ var DEMO_BREEDS = [{
     "heart": 88,
     "joints": 82
   },
-  "aptitudes": ["Agility", "Herding", "Flyball"]
+  "aptitudes": ["Agility", "Herding", "Flyball"],
+  "founderCOI": 5.5,
+  "coatFreqs": {"E": [["E", 0.8], ["e", 0.2]], "K": [["KB", 0.3], ["kbr", 0], ["ky", 0.7]], "A": [["Ay", 0.2], ["aw", 0.2], ["at", 0.3], ["a", 0.3]], "M": [["M", 0.15], ["m", 0.85]]},
+  "healthFlags": ["hips", "eyes"]
 }, {
   "name": "Komondor",
   "group": "Herding",
@@ -821,8 +905,8 @@ var DEMO_BREEDS = [{
   "coat": "corded",
   "colors": ["white"],
   "species": "dog",
-  "sizeAvg": 100,
-  "sizeRange": [80, 130],
+  "sizeAvg": 95,
+  "sizeRange": [70, 130],
   "litterSize": "L",
   "traits": {
     "intelligence": 7,
@@ -842,15 +926,18 @@ var DEMO_BREEDS = [{
     "heart": 78,
     "joints": 72
   },
-  "aptitudes": ["Herding", "Conformation", "LGD"]
+  "aptitudes": ["Herding", "Conformation", "LGD"],
+  "founderCOI": 6.5,
+  "coatFreqs": {"E": [["E", 0.4], ["e", 0.6]], "K": [["KB", 0.05], ["kbr", 0], ["ky", 0.95]], "A": [["Ay", 0.7], ["aw", 0.2], ["at", 0.05], ["a", 0.05]], "Cu": [["Cu", 0.95], ["cu", 0.05]]},
+  "healthFlags": ["hips", "bloat", "skin"]
 }, {
   "name": "Bergamasco Sheepdog",
   "group": "Herding",
   "size": "L",
   "coat": "corded",
-  "colors": ["black", "gray", "silver"],
+  "colors": ["gray", "black", "isabella (fawn)", "merle"],
   "species": "dog",
-  "sizeAvg": 65,
+  "sizeAvg": 68,
   "sizeRange": [55, 85],
   "litterSize": "L",
   "traits": {
@@ -871,16 +958,19 @@ var DEMO_BREEDS = [{
     "heart": 82,
     "joints": 78
   },
-  "aptitudes": ["Herding", "Conformation"]
+  "aptitudes": ["Herding", "Conformation"],
+  "founderCOI": 5.5,
+  "coatFreqs": {"E": [["E", 0.85], ["e", 0.15]], "K": [["KB", 0.15], ["kbr", 0], ["ky", 0.85]], "A": [["Ay", 0.25], ["aw", 0.35], ["at", 0.25], ["a", 0.15]], "M": [["M", 0.1], ["m", 0.9]]},
+  "healthFlags": ["hips", "eyes"]
 }, {
   "name": "Catalan Sheepdog",
   "group": "Herding",
   "size": "M",
   "coat": "long",
-  "colors": ["fawn", "sable", "gray", "black"],
+  "colors": ["fawn", "sable", "gray", "black", "black & tan"],
   "species": "dog",
-  "sizeAvg": 40,
-  "sizeRange": [28, 55],
+  "sizeAvg": 42,
+  "sizeRange": [30, 55],
   "litterSize": "M",
   "traits": {
     "intelligence": 8,
@@ -900,16 +990,19 @@ var DEMO_BREEDS = [{
     "heart": 85,
     "joints": 80
   },
-  "aptitudes": ["Herding", "Agility", "Conformation"]
+  "aptitudes": ["Herding", "Agility", "Conformation"],
+  "founderCOI": 5.0,
+  "coatFreqs": {"E": [["E", 0.85], ["e", 0.15]], "K": [["KB", 0.1], ["kbr", 0], ["ky", 0.9]], "A": [["Ay", 0.4], ["aw", 0.25], ["at", 0.25], ["a", 0.1]]},
+  "healthFlags": ["hips", "eyes"]
 }, {
   "name": "Portuguese Sheepdog",
   "group": "Herding",
   "size": "M",
   "coat": "long",
-  "colors": ["yellow", "cinnamon", "gray", "black"],
+  "colors": ["yellow", "cinnamon", "gray", "fawn", "chestnut", "wolf gray", "black & tan", "black"],
   "species": "dog",
-  "sizeAvg": 40,
-  "sizeRange": [28, 55],
+  "sizeAvg": 38,
+  "sizeRange": [26, 52],
   "litterSize": "M",
   "traits": {
     "intelligence": 8,
@@ -929,16 +1022,19 @@ var DEMO_BREEDS = [{
     "heart": 85,
     "joints": 80
   },
-  "aptitudes": ["Herding", "Conformation", "LGD"]
+  "aptitudes": ["Herding", "Conformation", "LGD"],
+  "founderCOI": 5.0,
+  "coatFreqs": {"E": [["E", 0.85], ["e", 0.15]], "K": [["KB", 0.15], ["kbr", 0], ["ky", 0.85]], "A": [["Ay", 0.4], ["aw", 0.25], ["at", 0.25], ["a", 0.1]], "B": [["B", 0.8], ["b", 0.2]]},
+  "healthFlags": ["hips", "eyes"]
 }, {
   "name": "Croatian Sheepdog",
   "group": "Herding",
   "size": "M",
   "coat": "curly",
-  "colors": ["black"],
+  "colors": ["black", "black with small white markings"],
   "species": "dog",
-  "sizeAvg": 40,
-  "sizeRange": [28, 55],
+  "sizeAvg": 38,
+  "sizeRange": [26, 50],
   "litterSize": "M",
   "traits": {
     "intelligence": 9,
@@ -958,16 +1054,19 @@ var DEMO_BREEDS = [{
     "heart": 88,
     "joints": 82
   },
-  "aptitudes": ["Herding", "Agility", "Obedience"]
+  "aptitudes": ["Herding", "Agility", "Obedience"],
+  "founderCOI": 5.0,
+  "coatFreqs": {"E": [["E", 1.0], ["e", 0.0]], "K": [["KB", 0.85], ["kbr", 0], ["ky", 0.15]], "A": [["Ay", 0], ["aw", 0.1], ["at", 0.2], ["a", 0.7]], "S": [["S", 0.85], ["sp", 0.12], ["sw", 0.03]]},
+  "healthFlags": ["hips", "eyes"]
 }, {
   "name": "Swedish Vallhund",
   "group": "Herding",
   "size": "S",
   "coat": "medium",
-  "colors": ["gray", "red", "gray-brown"],
+  "colors": ["gray", "gray-brown", "gray-yellow", "red-yellow (sable with dark back)"],
   "species": "dog",
-  "sizeAvg": 20,
-  "sizeRange": [12, 28],
+  "sizeAvg": 25,
+  "sizeRange": [17, 35],
   "litterSize": "S",
   "traits": {
     "intelligence": 8,
@@ -987,16 +1086,19 @@ var DEMO_BREEDS = [{
     "heart": 85,
     "joints": 82
   },
-  "aptitudes": ["Herding", "Agility", "Rally-O"]
+  "aptitudes": ["Herding", "Agility", "Rally-O"],
+  "founderCOI": 5.5,
+  "coatFreqs": {"E": [["E", 0.85], ["e", 0.15]], "K": [["KB", 0.05], ["kbr", 0], ["ky", 0.95]], "A": [["Ay", 0.5], ["aw", 0.3], ["at", 0.15], ["a", 0.05]], "As": [["N", 0.6], ["n", 0.4]]},
+  "healthFlags": ["hips", "eyes", "spine"]
 }, {
   "name": "Norwegian Buhund",
   "group": "Herding",
   "size": "M",
   "coat": "medium",
-  "colors": ["wheaten", "black", "red"],
+  "colors": ["wheaten (cream to bright orange)", "black"],
   "species": "dog",
-  "sizeAvg": 40,
-  "sizeRange": [28, 55],
+  "sizeAvg": 35,
+  "sizeRange": [26, 45],
   "litterSize": "M",
   "traits": {
     "intelligence": 8,
@@ -1016,16 +1118,19 @@ var DEMO_BREEDS = [{
     "heart": 88,
     "joints": 82
   },
-  "aptitudes": ["Herding", "Agility", "Obedience"]
+  "aptitudes": ["Herding", "Agility", "Obedience"],
+  "founderCOI": 5.0,
+  "coatFreqs": {"E": [["E", 0.75], ["e", 0.25]], "K": [["KB", 0.2], ["kbr", 0], ["ky", 0.8]], "A": [["Ay", 0.8], ["aw", 0.1], ["at", 0.05], ["a", 0.05]]},
+  "healthFlags": ["hips", "eyes"]
 }, {
   "name": "Icelandic Sheepdog",
   "group": "Herding",
   "size": "M",
   "coat": "long",
-  "colors": ["tan", "red", "chocolate", "black", "gray"],
+  "colors": ["tan with black tips", "golden", "red", "chocolate", "gray", "black — all with white markings"],
   "species": "dog",
-  "sizeAvg": 40,
-  "sizeRange": [28, 55],
+  "sizeAvg": 30,
+  "sizeRange": [20, 40],
   "litterSize": "M",
   "traits": {
     "intelligence": 8,
@@ -1045,16 +1150,19 @@ var DEMO_BREEDS = [{
     "heart": 90,
     "joints": 82
   },
-  "aptitudes": ["Herding", "Agility", "Conformation"]
+  "aptitudes": ["Herding", "Agility", "Conformation"],
+  "founderCOI": 5.5,
+  "coatFreqs": {"E": [["E", 0.8], ["e", 0.2]], "K": [["KB", 0.1], ["kbr", 0], ["ky", 0.9]], "A": [["Ay", 0.5], ["aw", 0.2], ["at", 0.25], ["a", 0.05]], "S": [["S", 0.2], ["sp", 0.6], ["sw", 0.2]]},
+  "healthFlags": ["hips", "eyes"]
 }, {
   "name": "Finnish Lapphund",
   "group": "Herding",
   "size": "M",
   "coat": "long",
-  "colors": ["black", "brown", "white", "sable", "wolf sable"],
+  "colors": ["any color with different colored head", "black", "brown", "red", "sable", "wolf sable"],
   "species": "dog",
-  "sizeAvg": 40,
-  "sizeRange": [28, 55],
+  "sizeAvg": 43,
+  "sizeRange": [33, 55],
   "litterSize": "M",
   "traits": {
     "intelligence": 8,
@@ -1074,16 +1182,19 @@ var DEMO_BREEDS = [{
     "heart": 88,
     "joints": 82
   },
-  "aptitudes": ["Herding", "Agility", "Rally-O"]
+  "aptitudes": ["Herding", "Agility", "Rally-O"],
+  "founderCOI": 5.0,
+  "coatFreqs": {"E": [["E", 0.8], ["e", 0.2]], "K": [["KB", 0.2], ["kbr", 0], ["ky", 0.8]], "A": [["Ay", 0.3], ["aw", 0.3], ["at", 0.3], ["a", 0.1]], "B": [["B", 0.75], ["b", 0.25]]},
+  "healthFlags": ["hips", "eyes", "MDR1"]
 }, {
   "name": "Swedish Lapphund",
   "group": "Herding",
   "size": "M",
   "coat": "long",
-  "colors": ["black", "brown", "bear brown"],
+  "colors": ["black", "bear brown"],
   "species": "dog",
-  "sizeAvg": 40,
-  "sizeRange": [28, 55],
+  "sizeAvg": 43,
+  "sizeRange": [33, 55],
   "litterSize": "M",
   "traits": {
     "intelligence": 8,
@@ -1103,16 +1214,19 @@ var DEMO_BREEDS = [{
     "heart": 88,
     "joints": 82
   },
-  "aptitudes": ["Herding", "Conformation"]
+  "aptitudes": ["Herding", "Conformation"],
+  "founderCOI": 5.5,
+  "coatFreqs": {"E": [["E", 1.0], ["e", 0.0]], "K": [["KB", 0.75], ["kbr", 0], ["ky", 0.25]], "A": [["Ay", 0], ["aw", 0], ["at", 0.2], ["a", 0.8]], "B": [["B", 0.7], ["b", 0.3]]},
+  "healthFlags": ["hips", "eyes"]
 }, {
   "name": "Lapponian Herder",
   "group": "Herding",
   "size": "M",
   "coat": "medium",
-  "colors": ["black", "brown", "gray"],
+  "colors": ["black", "dark gray", "dark brown — with lighter markings"],
   "species": "dog",
-  "sizeAvg": 40,
-  "sizeRange": [28, 55],
+  "sizeAvg": 60,
+  "sizeRange": [50, 75],
   "litterSize": "M",
   "traits": {
     "intelligence": 8,
@@ -1132,16 +1246,19 @@ var DEMO_BREEDS = [{
     "heart": 88,
     "joints": 82
   },
-  "aptitudes": ["Herding", "Agility"]
+  "aptitudes": ["Herding", "Agility"],
+  "founderCOI": 5.0,
+  "coatFreqs": {"E": [["E", 1.0], ["e", 0.0]], "K": [["KB", 0.65], ["kbr", 0], ["ky", 0.35]], "A": [["Ay", 0], ["aw", 0.1], ["at", 0.6], ["a", 0.3]], "B": [["B", 0.8], ["b", 0.2]]},
+  "healthFlags": ["hips", "eyes"]
 }, {
   "name": "Polish Lowland Sheepdog",
   "group": "Herding",
   "size": "M",
   "coat": "long",
-  "colors": ["white & black", "white & gray", "white & brown"],
+  "colors": ["all colors accepted", "white", "gray", "chocolate with white"],
   "species": "dog",
-  "sizeAvg": 40,
-  "sizeRange": [28, 55],
+  "sizeAvg": 43,
+  "sizeRange": [30, 55],
   "litterSize": "M",
   "traits": {
     "intelligence": 8,
@@ -1161,7 +1278,10 @@ var DEMO_BREEDS = [{
     "heart": 82,
     "joints": 78
   },
-  "aptitudes": ["Herding", "Conformation", "Agility"]
+  "aptitudes": ["Herding", "Conformation", "Agility"],
+  "founderCOI": 5.5,
+  "coatFreqs": {"E": [["E", 0.8], ["e", 0.2]], "K": [["KB", 0.1], ["kbr", 0], ["ky", 0.9]], "A": [["Ay", 0.25], ["aw", 0.25], ["at", 0.3], ["a", 0.2]], "S": [["S", 0.2], ["sp", 0.45], ["sw", 0.35]]},
+  "healthFlags": ["hips", "eyes", "MDR1"]
 }, {
   "name": "Polish Tatra Sheepdog",
   "group": "Herding",
@@ -1170,7 +1290,7 @@ var DEMO_BREEDS = [{
   "colors": ["white"],
   "species": "dog",
   "sizeAvg": 100,
-  "sizeRange": [80, 130],
+  "sizeRange": [80, 125],
   "litterSize": "L",
   "traits": {
     "intelligence": 7,
@@ -1190,7 +1310,10 @@ var DEMO_BREEDS = [{
     "heart": 78,
     "joints": 72
   },
-  "aptitudes": ["Herding", "Conformation", "LGD"]
+  "aptitudes": ["Herding", "Conformation", "LGD"],
+  "founderCOI": 5.0,
+  "coatFreqs": {"E": [["E", 0.4], ["e", 0.6]], "K": [["KB", 0.05], ["kbr", 0], ["ky", 0.95]], "A": [["Ay", 0.7], ["aw", 0.2], ["at", 0.05], ["a", 0.05]], "S": [["S", 0.05], ["sp", 0.1], ["sw", 0.85]]},
+  "healthFlags": ["hips", "joints", "bloat"]
 }, {
   "name": "Karst Shepherd",
   "group": "Herding",
@@ -1198,8 +1321,8 @@ var DEMO_BREEDS = [{
   "coat": "long",
   "colors": ["iron gray"],
   "species": "dog",
-  "sizeAvg": 65,
-  "sizeRange": [55, 85],
+  "sizeAvg": 80,
+  "sizeRange": [60, 100],
   "litterSize": "L",
   "traits": {
     "intelligence": 7,
@@ -1219,16 +1342,19 @@ var DEMO_BREEDS = [{
     "heart": 78,
     "joints": 72
   },
-  "aptitudes": ["Herding", "Conformation"]
+  "aptitudes": ["Herding", "Conformation"],
+  "founderCOI": 5.0,
+  "coatFreqs": {"E": [["E", 0.85], ["e", 0.15]], "K": [["KB", 0.1], ["kbr", 0], ["ky", 0.9]], "A": [["Ay", 0.1], ["aw", 0.65], ["at", 0.2], ["a", 0.05]], "D": [["D", 0.75], ["d", 0.25]]},
+  "healthFlags": ["hips", "joints", "bloat"]
 }, {
   "name": "Greyhound",
   "group": "Hound",
   "size": "L",
   "coat": "short",
-  "colors": ["fawn", "black", "blue", "red", "brindle", "white"],
+  "colors": ["black", "white", "red", "blue", "fawn", "brindle", "any color or combination"],
   "species": "dog",
   "sizeAvg": 65,
-  "sizeRange": [55, 85],
+  "sizeRange": [55, 88],
   "litterSize": "L",
   "traits": {
     "intelligence": 6,
@@ -1248,16 +1374,19 @@ var DEMO_BREEDS = [{
     "heart": 90,
     "joints": 82
   },
-  "aptitudes": ["Lure Coursing", "Racing", "Conformation"]
+  "aptitudes": ["Lure Coursing", "Racing", "Conformation"],
+  "founderCOI": 5.5,
+  "coatFreqs": {"E": [["E", 0.8], ["e", 0.2]], "K": [["KB", 0.15], ["kbr", 0.35], ["ky", 0.5]], "A": [["Ay", 0.5], ["aw", 0.1], ["at", 0.2], ["a", 0.2]], "B": [["B", 0.75], ["b", 0.25]], "D": [["D", 0.75], ["d", 0.25]], "S": [["S", 0.5], ["sp", 0.35], ["sw", 0.15]]},
+  "healthFlags": ["heart", "skin", "bloat", "cancer"]
 }, {
   "name": "Whippet",
   "group": "Hound",
   "size": "M",
   "coat": "short",
-  "colors": ["fawn", "brindle", "blue", "black", "white"],
+  "colors": ["any color or combination", "fawn", "brindle", "black", "white", "blue", "red"],
   "species": "dog",
-  "sizeAvg": 40,
-  "sizeRange": [28, 55],
+  "sizeAvg": 28,
+  "sizeRange": [18, 42],
   "litterSize": "M",
   "traits": {
     "intelligence": 7,
@@ -1277,16 +1406,19 @@ var DEMO_BREEDS = [{
     "heart": 92,
     "joints": 88
   },
-  "aptitudes": ["Lure Coursing", "Agility", "Conformation"]
+  "aptitudes": ["Lure Coursing", "Agility", "Conformation"],
+  "founderCOI": 5.5,
+  "coatFreqs": {"E": [["E", 0.8], ["e", 0.2]], "K": [["KB", 0.15], ["kbr", 0.35], ["ky", 0.5]], "A": [["Ay", 0.5], ["aw", 0.1], ["at", 0.2], ["a", 0.2]], "B": [["B", 0.8], ["b", 0.2]], "D": [["D", 0.75], ["d", 0.25]], "S": [["S", 0.4], ["sp", 0.4], ["sw", 0.2]]},
+  "healthFlags": ["heart", "skin", "eyes"]
 }, {
   "name": "Italian Greyhound",
   "group": "Hound",
   "size": "XS",
   "coat": "short",
-  "colors": ["fawn", "blue", "black", "cream"],
+  "colors": ["fawn", "cream", "blue", "black", "red", "sable — white markings allowed"],
   "species": "dog",
-  "sizeAvg": 8,
-  "sizeRange": [4, 12],
+  "sizeAvg": 10,
+  "sizeRange": [7, 14],
   "litterSize": "S",
   "traits": {
     "intelligence": 6,
@@ -1306,16 +1438,19 @@ var DEMO_BREEDS = [{
     "heart": 90,
     "joints": 82
   },
-  "aptitudes": ["Lure Coursing", "Agility", "Conformation"]
+  "aptitudes": ["Lure Coursing", "Agility", "Conformation"],
+  "founderCOI": 6.0,
+  "coatFreqs": {"E": [["E", 0.75], ["e", 0.25]], "K": [["KB", 0.2], ["kbr", 0], ["ky", 0.8]], "A": [["Ay", 0.6], ["aw", 0.1], ["at", 0.2], ["a", 0.1]], "D": [["D", 0.7], ["d", 0.3]], "S": [["S", 0.45], ["sp", 0.4], ["sw", 0.15]]},
+  "healthFlags": ["teeth", "fractures", "epilepsy", "heart", "skin"]
 }, {
   "name": "Afghan Hound",
   "group": "Hound",
   "size": "L",
   "coat": "long",
-  "colors": ["cream", "black", "red", "brindle", "blue"],
+  "colors": ["any color", "black", "cream", "red", "blue", "black & tan", "brindle"],
   "species": "dog",
-  "sizeAvg": 65,
-  "sizeRange": [55, 85],
+  "sizeAvg": 58,
+  "sizeRange": [44, 70],
   "litterSize": "L",
   "traits": {
     "intelligence": 5,
@@ -1335,16 +1470,19 @@ var DEMO_BREEDS = [{
     "heart": 88,
     "joints": 82
   },
-  "aptitudes": ["Lure Coursing", "Conformation"]
+  "aptitudes": ["Lure Coursing", "Conformation"],
+  "founderCOI": 5.5,
+  "coatFreqs": {"E": [["E", 0.8], ["e", 0.2]], "K": [["KB", 0.1], ["kbr", 0.15], ["ky", 0.75]], "A": [["Ay", 0.5], ["aw", 0.2], ["at", 0.2], ["a", 0.1]], "B": [["B", 0.75], ["b", 0.25]], "D": [["D", 0.8], ["d", 0.2]]},
+  "healthFlags": ["hips", "cancer", "eyes", "thyroid"]
 }, {
   "name": "Borzoi",
   "group": "Hound",
   "size": "L",
   "coat": "long",
-  "colors": ["white", "white & tan", "white & brindle", "golden"],
+  "colors": ["any color or combination", "white", "gold", "brindle", "black"],
   "species": "dog",
-  "sizeAvg": 65,
-  "sizeRange": [55, 85],
+  "sizeAvg": 80,
+  "sizeRange": [60, 105],
   "litterSize": "L",
   "traits": {
     "intelligence": 6,
@@ -1364,16 +1502,19 @@ var DEMO_BREEDS = [{
     "heart": 85,
     "joints": 80
   },
-  "aptitudes": ["Lure Coursing", "Conformation"]
+  "aptitudes": ["Lure Coursing", "Conformation"],
+  "founderCOI": 6.0,
+  "coatFreqs": {"E": [["E", 0.75], ["e", 0.25]], "K": [["KB", 0.1], ["kbr", 0.2], ["ky", 0.7]], "A": [["Ay", 0.55], ["aw", 0.15], ["at", 0.2], ["a", 0.1]], "S": [["S", 0.3], ["sp", 0.5], ["sw", 0.2]]},
+  "healthFlags": ["bloat", "heart", "cancer", "hips"]
 }, {
   "name": "Irish Wolfhound",
   "group": "Hound",
   "size": "XL",
   "coat": "wire",
-  "colors": ["gray", "brindle", "red", "black", "white"],
+  "colors": ["gray", "brindle", "red", "black", "white", "fawn"],
   "species": "dog",
-  "sizeAvg": 100,
-  "sizeRange": [80, 130],
+  "sizeAvg": 140,
+  "sizeRange": [105, 180],
   "litterSize": "L",
   "traits": {
     "intelligence": 6,
@@ -1393,16 +1534,19 @@ var DEMO_BREEDS = [{
     "heart": 58,
     "joints": 65
   },
-  "aptitudes": ["Lure Coursing", "Conformation"]
+  "aptitudes": ["Lure Coursing", "Conformation"],
+  "founderCOI": 7.0,
+  "coatFreqs": {"E": [["E", 0.85], ["e", 0.15]], "K": [["KB", 0.1], ["kbr", 0.4], ["ky", 0.5]], "A": [["Ay", 0.3], ["aw", 0.4], ["at", 0.2], ["a", 0.1]], "B": [["B", 0.8], ["b", 0.2]], "D": [["D", 0.75], ["d", 0.25]]},
+  "healthFlags": ["heart", "bloat", "cancer", "bones", "hips", "joints"]
 }, {
   "name": "Scottish Deerhound",
   "group": "Hound",
   "size": "XL",
   "coat": "wire",
-  "colors": ["dark blue gray", "gray", "brindle", "fawn"],
+  "colors": ["dark gray", "gray brindle", "yellow", "sandy red", "red fawn"],
   "species": "dog",
   "sizeAvg": 100,
-  "sizeRange": [80, 130],
+  "sizeRange": [75, 130],
   "litterSize": "L",
   "traits": {
     "intelligence": 6,
@@ -1422,16 +1566,19 @@ var DEMO_BREEDS = [{
     "heart": 65,
     "joints": 72
   },
-  "aptitudes": ["Lure Coursing", "Conformation"]
+  "aptitudes": ["Lure Coursing", "Conformation"],
+  "founderCOI": 6.5,
+  "coatFreqs": {"E": [["E", 0.85], ["e", 0.15]], "K": [["KB", 0.05], ["kbr", 0.45], ["ky", 0.5]], "A": [["Ay", 0.3], ["aw", 0.45], ["at", 0.2], ["a", 0.05]], "D": [["D", 0.75], ["d", 0.25]]},
+  "healthFlags": ["heart", "bloat", "cancer", "hips"]
 }, {
   "name": "Saluki",
   "group": "Hound",
   "size": "L",
   "coat": "silky",
-  "colors": ["white", "cream", "fawn", "golden", "red", "grizzle", "tricolor"],
+  "colors": ["white", "cream", "fawn", "golden", "red", "grizzle & tan", "black & tan", "tricolor"],
   "species": "dog",
-  "sizeAvg": 65,
-  "sizeRange": [55, 85],
+  "sizeAvg": 55,
+  "sizeRange": [40, 70],
   "litterSize": "L",
   "traits": {
     "intelligence": 6,
@@ -1451,16 +1598,19 @@ var DEMO_BREEDS = [{
     "heart": 88,
     "joints": 82
   },
-  "aptitudes": ["Lure Coursing", "Racing", "Conformation"]
+  "aptitudes": ["Lure Coursing", "Racing", "Conformation"],
+  "founderCOI": 5.0,
+  "coatFreqs": {"E": [["E", 0.8], ["e", 0.2]], "K": [["KB", 0.05], ["kbr", 0], ["ky", 0.95]], "A": [["Ay", 0.5], ["aw", 0.2], ["at", 0.2], ["a", 0.1]], "B": [["B", 0.85], ["b", 0.15]], "S": [["S", 0.35], ["sp", 0.45], ["sw", 0.2]]},
+  "healthFlags": ["heart", "cancer", "eyes", "hips"]
 }, {
   "name": "Sloughi",
   "group": "Hound",
   "size": "L",
   "coat": "short",
-  "colors": ["sandy", "fawn", "brindle"],
+  "colors": ["sand", "sandy brindle", "fawn", "red brindle — with or without black mask"],
   "species": "dog",
-  "sizeAvg": 65,
-  "sizeRange": [55, 85],
+  "sizeAvg": 55,
+  "sizeRange": [40, 65],
   "litterSize": "L",
   "traits": {
     "intelligence": 6,
@@ -1480,16 +1630,19 @@ var DEMO_BREEDS = [{
     "heart": 88,
     "joints": 82
   },
-  "aptitudes": ["Lure Coursing", "Racing", "Conformation"]
+  "aptitudes": ["Lure Coursing", "Racing", "Conformation"],
+  "founderCOI": 5.0,
+  "coatFreqs": {"E": [["E", 0.85], ["e", 0.15]], "K": [["KB", 0.05], ["kbr", 0.3], ["ky", 0.65]], "A": [["Ay", 0.8], ["aw", 0.1], ["at", 0.07], ["a", 0.03]], "S": [["S", 0.9], ["sp", 0.08], ["sw", 0.02]]},
+  "healthFlags": ["heart", "eyes"]
 }, {
   "name": "Azawakh",
   "group": "Hound",
   "size": "L",
   "coat": "short",
-  "colors": ["fawn", "sand", "red", "brindle", "particolored"],
+  "colors": ["fawn", "sand", "red", "brindle", "parti-color (black)", "blue fawn"],
   "species": "dog",
-  "sizeAvg": 65,
-  "sizeRange": [55, 85],
+  "sizeAvg": 44,
+  "sizeRange": [33, 55],
   "litterSize": "L",
   "traits": {
     "intelligence": 6,
@@ -1509,16 +1662,19 @@ var DEMO_BREEDS = [{
     "heart": 90,
     "joints": 85
   },
-  "aptitudes": ["Lure Coursing", "Conformation"]
+  "aptitudes": ["Lure Coursing", "Conformation"],
+  "founderCOI": 4.5,
+  "coatFreqs": {"E": [["E", 0.85], ["e", 0.15]], "K": [["KB", 0.05], ["kbr", 0.25], ["ky", 0.7]], "A": [["Ay", 0.75], ["aw", 0.1], ["at", 0.1], ["a", 0.05]], "S": [["S", 0.5], ["sp", 0.35], ["sw", 0.15]]},
+  "healthFlags": ["heart", "epilepsy", "skin"]
 }, {
   "name": "Tazy",
   "group": "Hound",
   "size": "L",
   "coat": "short",
-  "colors": ["fawn", "cream", "white", "gray", "black"],
+  "colors": ["white", "cream", "fawn", "red", "gray", "black"],
   "species": "dog",
-  "sizeAvg": 65,
-  "sizeRange": [55, 85],
+  "sizeAvg": 45,
+  "sizeRange": [33, 60],
   "litterSize": "L",
   "traits": {
     "intelligence": 6,
@@ -1538,16 +1694,19 @@ var DEMO_BREEDS = [{
     "heart": 90,
     "joints": 85
   },
-  "aptitudes": ["Lure Coursing", "Conformation"]
+  "aptitudes": ["Lure Coursing", "Conformation"],
+  "founderCOI": 4.0,
+  "coatFreqs": {"E": [["E", 0.8], ["e", 0.2]], "K": [["KB", 0.05], ["kbr", 0], ["ky", 0.95]], "A": [["Ay", 0.55], ["aw", 0.2], ["at", 0.15], ["a", 0.1]]},
+  "healthFlags": ["heart", "hips"]
 }, {
   "name": "Taigan",
   "group": "Hound",
   "size": "L",
   "coat": "silky",
-  "colors": ["black", "gray", "red", "cream", "white"],
+  "colors": ["white", "cream", "fawn", "gray", "black", "spotted"],
   "species": "dog",
-  "sizeAvg": 65,
-  "sizeRange": [55, 85],
+  "sizeAvg": 55,
+  "sizeRange": [40, 70],
   "litterSize": "L",
   "traits": {
     "intelligence": 6,
@@ -1567,16 +1726,19 @@ var DEMO_BREEDS = [{
     "heart": 88,
     "joints": 82
   },
-  "aptitudes": ["Lure Coursing", "Conformation"]
+  "aptitudes": ["Lure Coursing", "Conformation"],
+  "founderCOI": 4.0,
+  "coatFreqs": {"E": [["E", 0.8], ["e", 0.2]], "K": [["KB", 0.05], ["kbr", 0], ["ky", 0.95]], "A": [["Ay", 0.5], ["aw", 0.2], ["at", 0.2], ["a", 0.1]]},
+  "healthFlags": ["heart", "hips"]
 }, {
   "name": "Hungarian Greyhound",
   "group": "Hound",
   "size": "L",
   "coat": "short",
-  "colors": ["fawn", "brindle", "white", "black"],
+  "colors": ["all colors and combinations", "brindle", "fawn", "white", "black"],
   "species": "dog",
-  "sizeAvg": 65,
-  "sizeRange": [55, 85],
+  "sizeAvg": 55,
+  "sizeRange": [44, 68],
   "litterSize": "L",
   "traits": {
     "intelligence": 7,
@@ -1596,16 +1758,19 @@ var DEMO_BREEDS = [{
     "heart": 90,
     "joints": 85
   },
-  "aptitudes": ["Lure Coursing", "Racing", "Conformation"]
+  "aptitudes": ["Lure Coursing", "Racing", "Conformation"],
+  "founderCOI": 5.5,
+  "coatFreqs": {"E": [["E", 0.8], ["e", 0.2]], "K": [["KB", 0.1], ["kbr", 0.3], ["ky", 0.6]], "A": [["Ay", 0.5], ["aw", 0.15], ["at", 0.2], ["a", 0.15]], "S": [["S", 0.55], ["sp", 0.35], ["sw", 0.1]]},
+  "healthFlags": ["heart", "hips", "bloat"]
 }, {
   "name": "Spanish Greyhound",
   "group": "Hound",
   "size": "L",
   "coat": "short",
-  "colors": ["cinnamon", "brindle", "white", "black"],
+  "colors": ["any color", "brindle", "black", "cinnamon", "yellow", "white"],
   "species": "dog",
-  "sizeAvg": 65,
-  "sizeRange": [55, 85],
+  "sizeAvg": 55,
+  "sizeRange": [40, 70],
   "litterSize": "L",
   "traits": {
     "intelligence": 6,
@@ -1625,16 +1790,19 @@ var DEMO_BREEDS = [{
     "heart": 90,
     "joints": 85
   },
-  "aptitudes": ["Lure Coursing", "Racing", "Conformation"]
+  "aptitudes": ["Lure Coursing", "Racing", "Conformation"],
+  "founderCOI": 5.0,
+  "coatFreqs": {"E": [["E", 0.8], ["e", 0.2]], "K": [["KB", 0.1], ["kbr", 0.35], ["ky", 0.55]], "A": [["Ay", 0.5], ["aw", 0.15], ["at", 0.2], ["a", 0.15]], "S": [["S", 0.55], ["sp", 0.35], ["sw", 0.1]]},
+  "healthFlags": ["heart", "hips", "bloat"]
 }, {
   "name": "Basenji",
   "group": "Hound",
   "size": "M",
   "coat": "short",
-  "colors": ["red & white", "black & white", "tricolor", "brindle"],
+  "colors": ["red & white", "black & white", "black tan & white", "brindle & white"],
   "species": "dog",
-  "sizeAvg": 40,
-  "sizeRange": [28, 55],
+  "sizeAvg": 24,
+  "sizeRange": [17, 30],
   "litterSize": "M",
   "traits": {
     "intelligence": 7,
@@ -1654,16 +1822,19 @@ var DEMO_BREEDS = [{
     "heart": 90,
     "joints": 88
   },
-  "aptitudes": ["Lure Coursing", "Agility", "Conformation"]
+  "aptitudes": ["Lure Coursing", "Agility", "Conformation"],
+  "founderCOI": 5.5,
+  "coatFreqs": {"E": [["E", 0.85], ["e", 0.15]], "K": [["KB", 0.05], ["kbr", 0.3], ["ky", 0.65]], "A": [["Ay", 0.55], ["aw", 0], ["at", 0.35], ["a", 0.1]], "S": [["S", 0.25], ["sp", 0.6], ["sw", 0.15]]},
+  "healthFlags": ["eyes", "kidney (Fanconi)", "hips"]
 }, {
   "name": "Pharaoh Hound",
   "group": "Hound",
   "size": "L",
   "coat": "short",
-  "colors": ["tan", "rich tan", "chestnut"],
+  "colors": ["tan", "rich tan", "chestnut — with white markings"],
   "species": "dog",
-  "sizeAvg": 65,
-  "sizeRange": [55, 85],
+  "sizeAvg": 48,
+  "sizeRange": [40, 60],
   "litterSize": "L",
   "traits": {
     "intelligence": 7,
@@ -1683,16 +1854,19 @@ var DEMO_BREEDS = [{
     "heart": 90,
     "joints": 85
   },
-  "aptitudes": ["Lure Coursing", "Agility", "Conformation"]
+  "aptitudes": ["Lure Coursing", "Agility", "Conformation"],
+  "founderCOI": 6.5,
+  "coatFreqs": {"E": [["E", 0.85], ["e", 0.15]], "K": [["KB", 0.05], ["kbr", 0], ["ky", 0.95]], "A": [["Ay", 0.9], ["aw", 0.05], ["at", 0.05], ["a", 0]], "S": [["S", 0.4], ["sp", 0.45], ["sw", 0.15]]},
+  "healthFlags": ["hips", "eyes", "joints"]
 }, {
   "name": "Ibizan Hound",
   "group": "Hound",
   "size": "L",
   "coat": "short",
-  "colors": ["white", "red", "white & red"],
+  "colors": ["white", "red", "white & red", "lion (fawn)"],
   "species": "dog",
-  "sizeAvg": 65,
-  "sizeRange": [55, 85],
+  "sizeAvg": 48,
+  "sizeRange": [38, 60],
   "litterSize": "L",
   "traits": {
     "intelligence": 7,
@@ -1712,16 +1886,19 @@ var DEMO_BREEDS = [{
     "heart": 90,
     "joints": 85
   },
-  "aptitudes": ["Lure Coursing", "Agility", "Conformation"]
+  "aptitudes": ["Lure Coursing", "Agility", "Conformation"],
+  "founderCOI": 5.5,
+  "coatFreqs": {"E": [["E", 0.85], ["e", 0.15]], "K": [["KB", 0.05], ["kbr", 0], ["ky", 0.95]], "A": [["Ay", 0.8], ["aw", 0.05], ["at", 0.1], ["a", 0.05]], "S": [["S", 0.3], ["sp", 0.45], ["sw", 0.25]]},
+  "healthFlags": ["hips", "eyes", "deafness"]
 }, {
   "name": "Cirneco dell'Etna",
   "group": "Hound",
   "size": "M",
   "coat": "short",
-  "colors": ["tan", "tan & white"],
+  "colors": ["tan", "light fawn", "white with tan patches", "white with fawn"],
   "species": "dog",
-  "sizeAvg": 40,
-  "sizeRange": [28, 55],
+  "sizeAvg": 22,
+  "sizeRange": [17, 28],
   "litterSize": "M",
   "traits": {
     "intelligence": 6,
@@ -1741,16 +1918,19 @@ var DEMO_BREEDS = [{
     "heart": 90,
     "joints": 85
   },
-  "aptitudes": ["Lure Coursing", "Agility", "Conformation"]
+  "aptitudes": ["Lure Coursing", "Agility", "Conformation"],
+  "founderCOI": 5.5,
+  "coatFreqs": {"E": [["E", 0.85], ["e", 0.15]], "K": [["KB", 0.05], ["kbr", 0], ["ky", 0.95]], "A": [["Ay", 0.85], ["aw", 0.05], ["at", 0.07], ["a", 0.03]], "S": [["S", 0.45], ["sp", 0.4], ["sw", 0.15]]},
+  "healthFlags": ["hips", "eyes"]
 }, {
   "name": "Podengo Portugu\xEAs",
   "group": "Hound",
   "size": "M",
   "coat": "short",
-  "colors": ["yellow", "fawn", "black", "white"],
+  "colors": ["yellow", "fawn", "black", "black & tan", "white with colored patches"],
   "species": "dog",
-  "sizeAvg": 40,
-  "sizeRange": [28, 55],
+  "sizeAvg": 20,
+  "sizeRange": [9, 44],
   "litterSize": "M",
   "traits": {
     "intelligence": 7,
@@ -1770,16 +1950,19 @@ var DEMO_BREEDS = [{
     "heart": 90,
     "joints": 85
   },
-  "aptitudes": ["Lure Coursing", "Agility", "Conformation"]
+  "aptitudes": ["Lure Coursing", "Agility", "Conformation"],
+  "founderCOI": 5.0,
+  "coatFreqs": {"E": [["E", 0.8], ["e", 0.2]], "K": [["KB", 0.15], ["kbr", 0], ["ky", 0.85]], "A": [["Ay", 0.6], ["aw", 0.1], ["at", 0.2], ["a", 0.1]], "S": [["S", 0.5], ["sp", 0.35], ["sw", 0.15]]},
+  "healthFlags": ["hips", "eyes", "teeth"]
 }, {
   "name": "Podenco Canario",
   "group": "Hound",
   "size": "L",
   "coat": "short",
-  "colors": ["red", "fawn", "white & red"],
+  "colors": ["red & white", "white & red", "white", "red"],
   "species": "dog",
-  "sizeAvg": 65,
-  "sizeRange": [55, 85],
+  "sizeAvg": 45,
+  "sizeRange": [35, 58],
   "litterSize": "L",
   "traits": {
     "intelligence": 7,
@@ -1799,7 +1982,10 @@ var DEMO_BREEDS = [{
     "heart": 90,
     "joints": 85
   },
-  "aptitudes": ["Lure Coursing", "Conformation"]
+  "aptitudes": ["Lure Coursing", "Conformation"],
+  "founderCOI": 5.0,
+  "coatFreqs": {"E": [["E", 0.85], ["e", 0.15]], "K": [["KB", 0.05], ["kbr", 0], ["ky", 0.95]], "A": [["Ay", 0.8], ["aw", 0.05], ["at", 0.1], ["a", 0.05]], "S": [["S", 0.35], ["sp", 0.45], ["sw", 0.2]]},
+  "healthFlags": ["hips", "eyes"]
 }, {
   "name": "Thai Ridgeback",
   "group": "Hound",
@@ -1807,8 +1993,8 @@ var DEMO_BREEDS = [{
   "coat": "short",
   "colors": ["blue", "black", "red", "fawn"],
   "species": "dog",
-  "sizeAvg": 65,
-  "sizeRange": [55, 85],
+  "sizeAvg": 50,
+  "sizeRange": [35, 65],
   "litterSize": "L",
   "traits": {
     "intelligence": 7,
@@ -1828,7 +2014,10 @@ var DEMO_BREEDS = [{
     "heart": 88,
     "joints": 82
   },
-  "aptitudes": ["Lure Coursing", "Conformation"]
+  "aptitudes": ["Lure Coursing", "Conformation"],
+  "founderCOI": 4.5,
+  "coatFreqs": {"E": [["E", 0.85], ["e", 0.15]], "K": [["KB", 0.55], ["kbr", 0], ["ky", 0.45]], "A": [["Ay", 0.5], ["aw", 0.1], ["at", 0.25], ["a", 0.15]], "D": [["D", 0.7], ["d", 0.3]]},
+  "healthFlags": ["hips", "dermoid sinus"]
 }, {
   "name": "Rhodesian Ridgeback",
   "group": "Hound",
@@ -1836,8 +2025,8 @@ var DEMO_BREEDS = [{
   "coat": "short",
   "colors": ["wheaten", "light wheaten", "red wheaten"],
   "species": "dog",
-  "sizeAvg": 65,
-  "sizeRange": [55, 85],
+  "sizeAvg": 80,
+  "sizeRange": [65, 90],
   "litterSize": "L",
   "traits": {
     "intelligence": 7,
@@ -1859,16 +2048,17 @@ var DEMO_BREEDS = [{
   },
   "aptitudes": ["Tracking", "Lure Coursing", "Conformation"],
   "coatFreqs": {"E": [["E", 0.8], ["e", 0.2]], "K": [["KB", 0], ["kbr", 0], ["ky", 1.0]], "A": [["Ay", 1.0], ["aw", 0], ["at", 0], ["a", 0]], "B": [["B", 0.9], ["b", 0.1]], "S": [["S", 0.95], ["sp", 0.05], ["sw", 0.0]]},
-  "healthFlags": ["hips", "cancer", "thyroid", "dermoid sinus"]
+  "healthFlags": ["hips", "cancer", "thyroid", "dermoid sinus"],
+  "founderCOI": 5.0
 }, {
   "name": "Peruvian Inca Orchid",
   "group": "Hound",
   "size": "M",
   "coat": "hairless",
-  "colors": ["pink", "brown", "gray"],
+  "colors": ["elephant (dark gray)", "copper", "chocolate", "mottled — any color"],
   "species": "dog",
-  "sizeAvg": 40,
-  "sizeRange": [28, 55],
+  "sizeAvg": 26,
+  "sizeRange": [8, 55],
   "litterSize": "M",
   "traits": {
     "intelligence": 7,
@@ -1888,16 +2078,19 @@ var DEMO_BREEDS = [{
     "heart": 88,
     "joints": 82
   },
-  "aptitudes": ["Lure Coursing", "Agility", "Conformation"]
+  "aptitudes": ["Lure Coursing", "Agility", "Conformation"],
+  "founderCOI": 5.5,
+  "coatFreqs": {"E": [["E", 0.8], ["e", 0.2]], "K": [["KB", 0.15], ["kbr", 0], ["ky", 0.85]], "A": [["Ay", 0.4], ["aw", 0.2], ["at", 0.25], ["a", 0.15]], "Hr": [["H", 0.5], ["h", 0.5]]},
+  "healthFlags": ["skin", "teeth", "epilepsy"]
 }, {
   "name": "Bloodhound",
   "group": "Hound",
   "size": "L",
   "coat": "short",
-  "colors": ["black & tan", "red & tan", "liver & tan"],
+  "colors": ["black & tan", "liver & tan", "red"],
   "species": "dog",
-  "sizeAvg": 65,
-  "sizeRange": [55, 85],
+  "sizeAvg": 100,
+  "sizeRange": [80, 130],
   "litterSize": "L",
   "traits": {
     "intelligence": 6,
@@ -1917,16 +2110,19 @@ var DEMO_BREEDS = [{
     "heart": 72,
     "joints": 65
   },
-  "aptitudes": ["Tracking", "Field Trials", "Conformation"]
+  "aptitudes": ["Tracking", "Field Trials", "Conformation"],
+  "founderCOI": 6.5,
+  "coatFreqs": {"E": [["E", 1.0], ["e", 0.0]], "K": [["KB", 0.05], ["kbr", 0], ["ky", 0.95]], "A": [["Ay", 0.7], ["aw", 0], ["at", 0.25], ["a", 0.05]], "B": [["B", 0.65], ["b", 0.35]], "S": [["S", 0.85], ["sp", 0.12], ["sw", 0.03]]},
+  "healthFlags": ["hips", "bloat", "skin", "eyes", "heart", "cancer"]
 }, {
   "name": "Beagle",
   "group": "Hound",
   "size": "S",
   "coat": "short",
-  "colors": ["tricolor", "red & white", "lemon & white"],
+  "colors": ["tricolor", "red & white", "lemon & white", "blue tricolor", "black & tan", "tan & white"],
   "species": "dog",
-  "sizeAvg": 20,
-  "sizeRange": [12, 28],
+  "sizeAvg": 22,
+  "sizeRange": [15, 30],
   "litterSize": "S",
   "traits": {
     "intelligence": 6,
@@ -1946,7 +2142,10 @@ var DEMO_BREEDS = [{
     "heart": 85,
     "joints": 80
   },
-  "aptitudes": ["Field Trials", "Tracking", "Conformation"]
+  "aptitudes": ["Field Trials", "Tracking", "Conformation"],
+  "founderCOI": 5.5,
+  "coatFreqs": {"E": [["E", 0.85], ["e", 0.15]], "K": [["KB", 0.05], ["kbr", 0.3], ["ky", 0.65]], "A": [["Ay", 0.25], ["aw", 0.05], ["at", 0.6], ["a", 0.1]], "B": [["B", 0.8], ["b", 0.2]], "S": [["S", 0.15], ["sp", 0.55], ["sw", 0.3]]},
+  "healthFlags": ["hips", "eyes", "epilepsy", "heart", "thyroid"]
 }, {
   "name": "Coonhound (Black & Tan)",
   "group": "Hound",
@@ -1954,8 +2153,8 @@ var DEMO_BREEDS = [{
   "coat": "short",
   "colors": ["black & tan"],
   "species": "dog",
-  "sizeAvg": 65,
-  "sizeRange": [55, 85],
+  "sizeAvg": 70,
+  "sizeRange": [55, 88],
   "litterSize": "L",
   "traits": {
     "intelligence": 6,
@@ -1975,16 +2174,19 @@ var DEMO_BREEDS = [{
     "heart": 82,
     "joints": 78
   },
-  "aptitudes": ["Field Trials", "Tracking"]
+  "aptitudes": ["Field Trials", "Tracking"],
+  "founderCOI": 5.5,
+  "coatFreqs": {"E": [["E", 1.0], ["e", 0.0]], "K": [["KB", 0.05], ["kbr", 0], ["ky", 0.95]], "A": [["Ay", 0], ["aw", 0], ["at", 1.0], ["a", 0]], "B": [["B", 1.0], ["b", 0.0]]},
+  "healthFlags": ["hips", "eyes", "ears", "bloat"]
 }, {
   "name": "Redbone Coonhound",
   "group": "Hound",
   "size": "L",
   "coat": "short",
-  "colors": ["red", "red & white"],
+  "colors": ["red", "red with dark muzzle"],
   "species": "dog",
   "sizeAvg": 65,
-  "sizeRange": [55, 85],
+  "sizeRange": [45, 80],
   "litterSize": "L",
   "traits": {
     "intelligence": 6,
@@ -2004,16 +2206,19 @@ var DEMO_BREEDS = [{
     "heart": 82,
     "joints": 78
   },
-  "aptitudes": ["Field Trials", "Tracking"]
+  "aptitudes": ["Field Trials", "Tracking"],
+  "founderCOI": 5.0,
+  "coatFreqs": {"E": [["E", 1.0], ["e", 0.0]], "K": [["KB", 0.05], ["kbr", 0], ["ky", 0.95]], "A": [["Ay", 0.9], ["aw", 0], ["at", 0.08], ["a", 0.02]], "B": [["B", 0.6], ["b", 0.4]], "S": [["S", 0.85], ["sp", 0.12], ["sw", 0.03]]},
+  "healthFlags": ["hips", "eyes", "ears", "bloat"]
 }, {
   "name": "Treeing Walker Coonhound",
   "group": "Hound",
   "size": "L",
   "coat": "short",
-  "colors": ["tricolor", "bicolor"],
+  "colors": ["tricolor (black, white & tan)", "bicolor (white & black)", "bicolor (white & tan)"],
   "species": "dog",
-  "sizeAvg": 65,
-  "sizeRange": [55, 85],
+  "sizeAvg": 60,
+  "sizeRange": [45, 78],
   "litterSize": "L",
   "traits": {
     "intelligence": 6,
@@ -2033,16 +2238,19 @@ var DEMO_BREEDS = [{
     "heart": 82,
     "joints": 78
   },
-  "aptitudes": ["Field Trials", "Tracking"]
+  "aptitudes": ["Field Trials", "Tracking"],
+  "founderCOI": 5.0,
+  "coatFreqs": {"E": [["E", 1.0], ["e", 0.0]], "K": [["KB", 0.05], ["kbr", 0.1], ["ky", 0.85]], "A": [["Ay", 0.3], ["aw", 0], ["at", 0.65], ["a", 0.05]], "S": [["S", 0.2], ["sp", 0.55], ["sw", 0.25]]},
+  "healthFlags": ["hips", "eyes", "ears", "bloat"]
 }, {
   "name": "Plott Hound",
   "group": "Hound",
   "size": "M",
   "coat": "short",
-  "colors": ["brindle", "black brindle"],
+  "colors": ["brindle (all shades)", "black brindle", "blue brindle", "buckskin"],
   "species": "dog",
-  "sizeAvg": 40,
-  "sizeRange": [28, 55],
+  "sizeAvg": 55,
+  "sizeRange": [40, 75],
   "litterSize": "M",
   "traits": {
     "intelligence": 7,
@@ -2062,16 +2270,19 @@ var DEMO_BREEDS = [{
     "heart": 88,
     "joints": 82
   },
-  "aptitudes": ["Field Trials", "Tracking", "Conformation"]
+  "aptitudes": ["Field Trials", "Tracking", "Conformation"],
+  "founderCOI": 5.0,
+  "coatFreqs": {"E": [["E", 1.0], ["e", 0.0]], "K": [["KB", 0.05], ["kbr", 0.85], ["ky", 0.1]], "A": [["Ay", 0.75], ["aw", 0], ["at", 0.2], ["a", 0.05]], "B": [["B", 0.8], ["b", 0.2]], "D": [["D", 0.8], ["d", 0.2]]},
+  "healthFlags": ["hips", "bloat", "ears"]
 }, {
   "name": "American Foxhound",
   "group": "Hound",
   "size": "L",
   "coat": "short",
-  "colors": ["tricolor", "white & tan", "bicolor"],
+  "colors": ["tricolor", "bicolor — any hound color"],
   "species": "dog",
   "sizeAvg": 65,
-  "sizeRange": [55, 85],
+  "sizeRange": [45, 80],
   "litterSize": "L",
   "traits": {
     "intelligence": 6,
@@ -2091,16 +2302,19 @@ var DEMO_BREEDS = [{
     "heart": 85,
     "joints": 80
   },
-  "aptitudes": ["Field Trials", "Tracking"]
+  "aptitudes": ["Field Trials", "Tracking"],
+  "founderCOI": 4.5,
+  "coatFreqs": {"E": [["E", 0.85], ["e", 0.15]], "K": [["KB", 0.05], ["kbr", 0.15], ["ky", 0.8]], "A": [["Ay", 0.3], ["aw", 0], ["at", 0.6], ["a", 0.1]], "S": [["S", 0.2], ["sp", 0.55], ["sw", 0.25]]},
+  "healthFlags": ["hips", "ears", "bloat"]
 }, {
   "name": "Harrier",
   "group": "Hound",
   "size": "M",
   "coat": "short",
-  "colors": ["tricolor", "red & white"],
+  "colors": ["tricolor", "red & white", "lemon & white — any hound color"],
   "species": "dog",
-  "sizeAvg": 40,
-  "sizeRange": [28, 55],
+  "sizeAvg": 48,
+  "sizeRange": [38, 60],
   "litterSize": "M",
   "traits": {
     "intelligence": 6,
@@ -2120,16 +2334,19 @@ var DEMO_BREEDS = [{
     "heart": 85,
     "joints": 80
   },
-  "aptitudes": ["Field Trials", "Conformation"]
+  "aptitudes": ["Field Trials", "Conformation"],
+  "founderCOI": 5.0,
+  "coatFreqs": {"E": [["E", 0.85], ["e", 0.15]], "K": [["KB", 0.05], ["kbr", 0.2], ["ky", 0.75]], "A": [["Ay", 0.3], ["aw", 0], ["at", 0.6], ["a", 0.1]], "S": [["S", 0.2], ["sp", 0.55], ["sw", 0.25]]},
+  "healthFlags": ["hips", "eyes", "ears"]
 }, {
   "name": "Foxhound",
   "group": "Hound",
   "size": "L",
   "coat": "short",
-  "colors": ["tricolor", "white & tan"],
+  "colors": ["tricolor", "bicolor — any hound color"],
   "species": "dog",
   "sizeAvg": 65,
-  "sizeRange": [55, 85],
+  "sizeRange": [50, 80],
   "litterSize": "L",
   "traits": {
     "intelligence": 6,
@@ -2149,16 +2366,19 @@ var DEMO_BREEDS = [{
     "heart": 85,
     "joints": 80
   },
-  "aptitudes": ["Field Trials", "Conformation"]
+  "aptitudes": ["Field Trials", "Conformation"],
+  "founderCOI": 5.0,
+  "coatFreqs": {"E": [["E", 0.85], ["e", 0.15]], "K": [["KB", 0.05], ["kbr", 0.2], ["ky", 0.75]], "A": [["Ay", 0.3], ["aw", 0], ["at", 0.6], ["a", 0.1]], "S": [["S", 0.2], ["sp", 0.55], ["sw", 0.25]]},
+  "healthFlags": ["hips", "ears", "bloat"]
 }, {
   "name": "Otterhound",
   "group": "Hound",
   "size": "L",
   "coat": "wire",
-  "colors": ["grizzle", "black & tan", "blue & cream"],
+  "colors": ["grizzle & tan", "black & tan", "tricolor", "liver & tan — any hound color"],
   "species": "dog",
-  "sizeAvg": 65,
-  "sizeRange": [55, 85],
+  "sizeAvg": 100,
+  "sizeRange": [80, 130],
   "litterSize": "L",
   "traits": {
     "intelligence": 6,
@@ -2178,16 +2398,19 @@ var DEMO_BREEDS = [{
     "heart": 78,
     "joints": 72
   },
-  "aptitudes": ["Field Trials", "Conformation"]
+  "aptitudes": ["Field Trials", "Conformation"],
+  "founderCOI": 7.5,
+  "coatFreqs": {"E": [["E", 0.85], ["e", 0.15]], "K": [["KB", 0.05], ["kbr", 0.25], ["ky", 0.7]], "A": [["Ay", 0.25], ["aw", 0.35], ["at", 0.3], ["a", 0.1]], "W": [["W", 0.6], ["w", 0.4]]},
+  "healthFlags": ["hips", "bloat", "bleeding (Glanzmann)", "cancer"]
 }, {
   "name": "Basset Hound",
   "group": "Hound",
   "size": "M",
   "coat": "short",
-  "colors": ["tricolor", "lemon & white", "red & white"],
+  "colors": ["tricolor", "bicolor (lemon & white)", "bicolor (red & white)", "any recognized hound color"],
   "species": "dog",
-  "sizeAvg": 40,
-  "sizeRange": [28, 55],
+  "sizeAvg": 55,
+  "sizeRange": [40, 70],
   "litterSize": "M",
   "traits": {
     "intelligence": 5,
@@ -2207,16 +2430,19 @@ var DEMO_BREEDS = [{
     "heart": 75,
     "joints": 68
   },
-  "aptitudes": ["Field Trials", "Tracking", "Conformation"]
+  "aptitudes": ["Field Trials", "Tracking", "Conformation"],
+  "founderCOI": 7.0,
+  "coatFreqs": {"E": [["E", 0.85], ["e", 0.15]], "K": [["KB", 0.05], ["kbr", 0.25], ["ky", 0.7]], "A": [["Ay", 0.3], ["aw", 0], ["at", 0.6], ["a", 0.1]], "S": [["S", 0.2], ["sp", 0.55], ["sw", 0.25]]},
+  "healthFlags": ["hips", "eyes", "ears", "spine", "bloat", "skin"]
 }, {
   "name": "Dachshund",
   "group": "Hound",
   "size": "XS",
   "coat": "short",
-  "colors": ["red", "black & tan", "dapple", "chocolate & tan"],
+  "colors": ["red", "cream", "black & tan", "chocolate & tan", "blue & tan", "Isabella & tan", "dapple", "piebald", "brindle"],
   "species": "dog",
-  "sizeAvg": 8,
-  "sizeRange": [4, 12],
+  "sizeAvg": 16,
+  "sizeRange": [8, 32],
   "litterSize": "S",
   "traits": {
     "intelligence": 6,
@@ -2236,16 +2462,19 @@ var DEMO_BREEDS = [{
     "heart": 78,
     "joints": 50
   },
-  "aptitudes": ["Earthdog", "Conformation", "Field Trials"]
+  "aptitudes": ["Earthdog", "Conformation", "Field Trials"],
+  "founderCOI": 6.5,
+  "coatFreqs": {"E": [["E", 0.8], ["e", 0.2]], "K": [["KB", 0.1], ["kbr", 0.2], ["ky", 0.7]], "A": [["Ay", 0.4], ["aw", 0], ["at", 0.5], ["a", 0.1]], "B": [["B", 0.65], ["b", 0.35]], "D": [["D", 0.65], ["d", 0.35]], "M": [["M", 0.15], ["m", 0.85]], "S": [["S", 0.6], ["sp", 0.25], ["sw", 0.15]]},
+  "healthFlags": ["spine", "eyes", "teeth", "heart", "diabetes"]
 }, {
   "name": "Bavarian Mountain Hound",
   "group": "Hound",
   "size": "M",
   "coat": "short",
-  "colors": ["red", "tan", "fawn brindle"],
+  "colors": ["tan", "red", "reddish brown — with black saddle or overlay"],
   "species": "dog",
-  "sizeAvg": 40,
-  "sizeRange": [28, 55],
+  "sizeAvg": 48,
+  "sizeRange": [38, 60],
   "litterSize": "M",
   "traits": {
     "intelligence": 7,
@@ -2265,16 +2494,19 @@ var DEMO_BREEDS = [{
     "heart": 82,
     "joints": 78
   },
-  "aptitudes": ["Tracking", "Field Trials"]
+  "aptitudes": ["Tracking", "Field Trials"],
+  "founderCOI": 5.5,
+  "coatFreqs": {"E": [["E", 1.0], ["e", 0.0]], "K": [["KB", 0.05], ["kbr", 0], ["ky", 0.95]], "A": [["Ay", 0.7], ["aw", 0.1], ["at", 0.15], ["a", 0.05]], "As": [["N", 0.65], ["n", 0.35]]},
+  "healthFlags": ["hips", "eyes", "ears"]
 }, {
   "name": "Hanover Hound",
   "group": "Hound",
   "size": "L",
   "coat": "short",
-  "colors": ["red", "tan", "brindle"],
+  "colors": ["red", "reddish brown", "tan — with darker saddle"],
   "species": "dog",
   "sizeAvg": 65,
-  "sizeRange": [55, 85],
+  "sizeRange": [55, 80],
   "litterSize": "L",
   "traits": {
     "intelligence": 7,
@@ -2294,16 +2526,19 @@ var DEMO_BREEDS = [{
     "heart": 82,
     "joints": 78
   },
-  "aptitudes": ["Tracking", "Field Trials"]
+  "aptitudes": ["Tracking", "Field Trials"],
+  "founderCOI": 5.5,
+  "coatFreqs": {"E": [["E", 1.0], ["e", 0.0]], "K": [["KB", 0.05], ["kbr", 0], ["ky", 0.95]], "A": [["Ay", 0.6], ["aw", 0.15], ["at", 0.2], ["a", 0.05]], "As": [["N", 0.6], ["n", 0.4]]},
+  "healthFlags": ["hips", "ears", "bloat"]
 }, {
   "name": "Hamiltonst\xF6vare",
   "group": "Hound",
   "size": "L",
   "coat": "short",
-  "colors": ["tricolor"],
+  "colors": ["tricolor (black, white & brown)"],
   "species": "dog",
-  "sizeAvg": 65,
-  "sizeRange": [55, 85],
+  "sizeAvg": 55,
+  "sizeRange": [44, 68],
   "litterSize": "L",
   "traits": {
     "intelligence": 7,
@@ -2323,16 +2558,19 @@ var DEMO_BREEDS = [{
     "heart": 85,
     "joints": 80
   },
-  "aptitudes": ["Field Trials", "Conformation"]
+  "aptitudes": ["Field Trials", "Conformation"],
+  "founderCOI": 5.5,
+  "coatFreqs": {"E": [["E", 1.0], ["e", 0.0]], "K": [["KB", 0.05], ["kbr", 0], ["ky", 0.95]], "A": [["Ay", 0.3], ["aw", 0], ["at", 0.65], ["a", 0.05]], "S": [["S", 0.2], ["sp", 0.6], ["sw", 0.2]]},
+  "healthFlags": ["hips", "ears", "eyes"]
 }, {
   "name": "Hygenhund",
   "group": "Hound",
   "size": "M",
   "coat": "short",
-  "colors": ["red", "red & white", "black & white"],
+  "colors": ["tan", "red", "red & white", "black & tan", "black tan & white"],
   "species": "dog",
-  "sizeAvg": 40,
-  "sizeRange": [28, 55],
+  "sizeAvg": 48,
+  "sizeRange": [38, 60],
   "litterSize": "M",
   "traits": {
     "intelligence": 7,
@@ -2352,16 +2590,19 @@ var DEMO_BREEDS = [{
     "heart": 85,
     "joints": 80
   },
-  "aptitudes": ["Field Trials", "Conformation"]
+  "aptitudes": ["Field Trials", "Conformation"],
+  "founderCOI": 5.5,
+  "coatFreqs": {"E": [["E", 0.85], ["e", 0.15]], "K": [["KB", 0.05], ["kbr", 0], ["ky", 0.95]], "A": [["Ay", 0.5], ["aw", 0], ["at", 0.4], ["a", 0.1]], "S": [["S", 0.45], ["sp", 0.4], ["sw", 0.15]]},
+  "healthFlags": ["hips", "ears"]
 }, {
   "name": "Dunker",
   "group": "Hound",
   "size": "M",
   "coat": "short",
-  "colors": ["black & white", "merle"],
+  "colors": ["blue (merle)", "black — with tan and white markings"],
   "species": "dog",
-  "sizeAvg": 40,
-  "sizeRange": [28, 55],
+  "sizeAvg": 48,
+  "sizeRange": [35, 60],
   "litterSize": "M",
   "traits": {
     "intelligence": 7,
@@ -2381,16 +2622,19 @@ var DEMO_BREEDS = [{
     "heart": 85,
     "joints": 80
   },
-  "aptitudes": ["Field Trials", "Conformation"]
+  "aptitudes": ["Field Trials", "Conformation"],
+  "founderCOI": 5.5,
+  "coatFreqs": {"E": [["E", 1.0], ["e", 0.0]], "K": [["KB", 0.05], ["kbr", 0], ["ky", 0.95]], "A": [["Ay", 0.2], ["aw", 0], ["at", 0.75], ["a", 0.05]], "M": [["M", 0.4], ["m", 0.6]], "S": [["S", 0.2], ["sp", 0.55], ["sw", 0.25]]},
+  "healthFlags": ["hips", "ears", "eyes", "deafness"]
 }, {
   "name": "Segugio Italiano",
   "group": "Hound",
   "size": "M",
   "coat": "short",
-  "colors": ["fawn", "black & tan", "red"],
+  "colors": ["fawn (all shades)", "black & tan"],
   "species": "dog",
-  "sizeAvg": 40,
-  "sizeRange": [28, 55],
+  "sizeAvg": 48,
+  "sizeRange": [38, 62],
   "litterSize": "M",
   "traits": {
     "intelligence": 7,
@@ -2410,16 +2654,19 @@ var DEMO_BREEDS = [{
     "heart": 85,
     "joints": 80
   },
-  "aptitudes": ["Field Trials", "Tracking", "Conformation"]
+  "aptitudes": ["Field Trials", "Tracking", "Conformation"],
+  "founderCOI": 5.0,
+  "coatFreqs": {"E": [["E", 0.85], ["e", 0.15]], "K": [["KB", 0.05], ["kbr", 0], ["ky", 0.95]], "A": [["Ay", 0.6], ["aw", 0], ["at", 0.35], ["a", 0.05]], "S": [["S", 0.8], ["sp", 0.15], ["sw", 0.05]]},
+  "healthFlags": ["hips", "ears", "eyes"]
 }, {
   "name": "Posavac Hound",
   "group": "Hound",
   "size": "M",
   "coat": "short",
-  "colors": ["reddish wheaten & white"],
+  "colors": ["wheaten yellow", "reddish yellow — with or without white markings"],
   "species": "dog",
   "sizeAvg": 40,
-  "sizeRange": [28, 55],
+  "sizeRange": [30, 52],
   "litterSize": "M",
   "traits": {
     "intelligence": 7,
@@ -2439,7 +2686,10 @@ var DEMO_BREEDS = [{
     "heart": 85,
     "joints": 80
   },
-  "aptitudes": ["Field Trials", "Conformation"]
+  "aptitudes": ["Field Trials", "Conformation"],
+  "founderCOI": 5.0,
+  "coatFreqs": {"E": [["E", 0.85], ["e", 0.15]], "K": [["KB", 0.05], ["kbr", 0], ["ky", 0.95]], "A": [["Ay", 0.8], ["aw", 0.1], ["at", 0.07], ["a", 0.03]], "S": [["S", 0.55], ["sp", 0.35], ["sw", 0.1]]},
+  "healthFlags": ["hips", "ears"]
 }, {
   "name": "Hellenic Hound",
   "group": "Hound",
@@ -2447,8 +2697,8 @@ var DEMO_BREEDS = [{
   "coat": "short",
   "colors": ["black & tan"],
   "species": "dog",
-  "sizeAvg": 40,
-  "sizeRange": [28, 55],
+  "sizeAvg": 44,
+  "sizeRange": [33, 55],
   "litterSize": "M",
   "traits": {
     "intelligence": 7,
@@ -2468,16 +2718,19 @@ var DEMO_BREEDS = [{
     "heart": 86,
     "joints": 82
   },
-  "aptitudes": ["Field Trials", "Tracking"]
+  "aptitudes": ["Field Trials", "Tracking"],
+  "founderCOI": 4.5,
+  "coatFreqs": {"E": [["E", 1.0], ["e", 0.0]], "K": [["KB", 0.05], ["kbr", 0], ["ky", 0.95]], "A": [["Ay", 0], ["aw", 0], ["at", 1.0], ["a", 0]]},
+  "healthFlags": ["hips", "ears"]
 }, {
   "name": "Airedale Terrier",
   "group": "Terrier",
   "size": "L",
   "coat": "wire",
-  "colors": ["tan & black", "tan & grizzle"],
+  "colors": ["tan & black saddle", "tan & grizzle saddle"],
   "species": "dog",
-  "sizeAvg": 65,
-  "sizeRange": [55, 85],
+  "sizeAvg": 55,
+  "sizeRange": [40, 70],
   "litterSize": "L",
   "traits": {
     "intelligence": 7,
@@ -2497,16 +2750,19 @@ var DEMO_BREEDS = [{
     "heart": 85,
     "joints": 82
   },
-  "aptitudes": ["Earthdog", "Agility", "Obedience"]
+  "aptitudes": ["Earthdog", "Agility", "Obedience"],
+  "founderCOI": 5.5,
+  "coatFreqs": {"E": [["E", 1.0], ["e", 0.0]], "K": [["KB", 0.05], ["kbr", 0], ["ky", 0.95]], "A": [["Ay", 0], ["aw", 0.6], ["at", 0.35], ["a", 0.05]], "As": [["N", 0.8], ["n", 0.2]], "W": [["W", 0.9], ["w", 0.1]]},
+  "healthFlags": ["hips", "cancer", "heart", "thyroid"]
 }, {
   "name": "Border Terrier",
   "group": "Terrier",
   "size": "S",
   "coat": "wire",
-  "colors": ["grizzle & tan", "blue & tan", "red", "wheaten"],
+  "colors": ["red", "grizzle & tan", "blue & tan", "wheaten"],
   "species": "dog",
-  "sizeAvg": 20,
-  "sizeRange": [12, 28],
+  "sizeAvg": 13,
+  "sizeRange": [11, 16],
   "litterSize": "S",
   "traits": {
     "intelligence": 7,
@@ -2526,16 +2782,19 @@ var DEMO_BREEDS = [{
     "heart": 85,
     "joints": 82
   },
-  "aptitudes": ["Earthdog", "Agility", "Conformation"]
+  "aptitudes": ["Earthdog", "Agility", "Conformation"],
+  "founderCOI": 5.5,
+  "coatFreqs": {"E": [["E", 0.85], ["e", 0.15]], "K": [["KB", 0.05], ["kbr", 0], ["ky", 0.95]], "A": [["Ay", 0.3], ["aw", 0.35], ["at", 0.3], ["a", 0.05]], "D": [["D", 0.75], ["d", 0.25]], "W": [["W", 0.7], ["w", 0.3]]},
+  "healthFlags": ["hips", "heart", "spine", "epilepsy"]
 }, {
   "name": "Bull Terrier",
   "group": "Terrier",
   "size": "M",
   "coat": "short",
-  "colors": ["white", "brindle", "red", "fawn"],
+  "colors": ["white", "brindle", "red", "fawn", "black brindle", "tricolor"],
   "species": "dog",
-  "sizeAvg": 40,
-  "sizeRange": [28, 55],
+  "sizeAvg": 55,
+  "sizeRange": [35, 75],
   "litterSize": "M",
   "traits": {
     "intelligence": 6,
@@ -2555,16 +2814,19 @@ var DEMO_BREEDS = [{
     "heart": 75,
     "joints": 78
   },
-  "aptitudes": ["Conformation", "Obedience"]
+  "aptitudes": ["Conformation", "Obedience"],
+  "founderCOI": 7.0,
+  "coatFreqs": {"E": [["E", 0.8], ["e", 0.2]], "K": [["KB", 0.1], ["kbr", 0.4], ["ky", 0.5]], "A": [["Ay", 0.6], ["aw", 0], ["at", 0.3], ["a", 0.1]], "S": [["S", 0.3], ["sp", 0.3], ["sw", 0.4]]},
+  "healthFlags": ["deafness", "heart", "kidney", "skin", "compulsive"]
 }, {
   "name": "Miniature Bull Terrier",
   "group": "Terrier",
   "size": "S",
   "coat": "short",
-  "colors": ["white", "brindle", "red", "fawn"],
+  "colors": ["white", "brindle", "red", "fawn", "tricolor"],
   "species": "dog",
-  "sizeAvg": 20,
-  "sizeRange": [12, 28],
+  "sizeAvg": 28,
+  "sizeRange": [18, 38],
   "litterSize": "S",
   "traits": {
     "intelligence": 6,
@@ -2584,16 +2846,19 @@ var DEMO_BREEDS = [{
     "heart": 72,
     "joints": 78
   },
-  "aptitudes": ["Conformation", "Obedience"]
+  "aptitudes": ["Conformation", "Obedience"],
+  "founderCOI": 7.0,
+  "coatFreqs": {"E": [["E", 0.8], ["e", 0.2]], "K": [["KB", 0.1], ["kbr", 0.4], ["ky", 0.5]], "A": [["Ay", 0.6], ["aw", 0], ["at", 0.3], ["a", 0.1]], "S": [["S", 0.3], ["sp", 0.3], ["sw", 0.4]]},
+  "healthFlags": ["deafness", "heart", "kidney", "eyes"]
 }, {
   "name": "Cairn Terrier",
   "group": "Terrier",
   "size": "XS",
   "coat": "wire",
-  "colors": ["red", "brindle", "black", "gray", "cream"],
+  "colors": ["cream", "wheaten", "red", "sandy", "gray", "brindle — any but white or black"],
   "species": "dog",
-  "sizeAvg": 8,
-  "sizeRange": [4, 12],
+  "sizeAvg": 14,
+  "sizeRange": [12, 17],
   "litterSize": "S",
   "traits": {
     "intelligence": 7,
@@ -2613,7 +2878,10 @@ var DEMO_BREEDS = [{
     "heart": 85,
     "joints": 82
   },
-  "aptitudes": ["Earthdog", "Agility", "Conformation"]
+  "aptitudes": ["Earthdog", "Agility", "Conformation"],
+  "founderCOI": 6.0,
+  "coatFreqs": {"E": [["E", 0.85], ["e", 0.15]], "K": [["KB", 0.05], ["kbr", 0.35], ["ky", 0.6]], "A": [["Ay", 0.4], ["aw", 0.25], ["at", 0.25], ["a", 0.1]], "W": [["W", 0.7], ["w", 0.3]]},
+  "healthFlags": ["hips", "eyes", "liver (PKD)", "heart", "thyroid"]
 }, {
   "name": "Scottish Terrier",
   "group": "Terrier",
@@ -2621,8 +2889,8 @@ var DEMO_BREEDS = [{
   "coat": "wire",
   "colors": ["black", "wheaten", "brindle"],
   "species": "dog",
-  "sizeAvg": 8,
-  "sizeRange": [4, 12],
+  "sizeAvg": 20,
+  "sizeRange": [17, 23],
   "litterSize": "S",
   "traits": {
     "intelligence": 6,
@@ -2642,16 +2910,19 @@ var DEMO_BREEDS = [{
     "heart": 82,
     "joints": 80
   },
-  "aptitudes": ["Earthdog", "Conformation", "Agility"]
+  "aptitudes": ["Earthdog", "Conformation", "Agility"],
+  "founderCOI": 7.0,
+  "coatFreqs": {"E": [["E", 0.85], ["e", 0.15]], "K": [["KB", 0.3], ["kbr", 0.4], ["ky", 0.3]], "A": [["Ay", 0.25], ["aw", 0.25], ["at", 0.2], ["a", 0.3]], "W": [["W", 0.75], ["w", 0.25]]},
+  "healthFlags": ["cancer", "bleeding (vWD)", "spine", "eyes"]
 }, {
   "name": "West Highland White Terrier",
   "group": "Terrier",
   "size": "XS",
   "coat": "wire",
-  "colors": ["white"],
+  "colors": ["white only"],
   "species": "dog",
-  "sizeAvg": 8,
-  "sizeRange": [4, 12],
+  "sizeAvg": 17,
+  "sizeRange": [13, 22],
   "litterSize": "S",
   "traits": {
     "intelligence": 7,
@@ -2671,16 +2942,19 @@ var DEMO_BREEDS = [{
     "heart": 85,
     "joints": 78
   },
-  "aptitudes": ["Earthdog", "Agility", "Conformation"]
+  "aptitudes": ["Earthdog", "Agility", "Conformation"],
+  "founderCOI": 7.0,
+  "coatFreqs": {"E": [["E", 0.15], ["e", 0.85]], "K": [["KB", 0.05], ["kbr", 0], ["ky", 0.95]], "A": [["Ay", 0.8], ["aw", 0.15], ["at", 0.04], ["a", 0.01]], "W": [["W", 0.9], ["w", 0.1]]},
+  "healthFlags": ["skin", "hips", "heart", "lungs", "Addisons", "cancer"]
 }, {
   "name": "Skye Terrier",
   "group": "Terrier",
   "size": "S",
   "coat": "long",
-  "colors": ["black", "gray", "cream", "fawn"],
+  "colors": ["black", "dark gray", "silver", "fawn", "cream — with black points"],
   "species": "dog",
-  "sizeAvg": 20,
-  "sizeRange": [12, 28],
+  "sizeAvg": 35,
+  "sizeRange": [25, 45],
   "litterSize": "S",
   "traits": {
     "intelligence": 6,
@@ -2700,16 +2974,19 @@ var DEMO_BREEDS = [{
     "heart": 85,
     "joints": 78
   },
-  "aptitudes": ["Earthdog", "Conformation"]
+  "aptitudes": ["Earthdog", "Conformation"],
+  "founderCOI": 7.5,
+  "coatFreqs": {"E": [["E", 0.85], ["e", 0.15]], "K": [["KB", 0.3], ["kbr", 0], ["ky", 0.7]], "A": [["Ay", 0.25], ["aw", 0.3], ["at", 0.25], ["a", 0.2]], "D": [["D", 0.75], ["d", 0.25]]},
+  "healthFlags": ["spine", "heart", "cancer", "liver", "joints"]
 }, {
   "name": "Dandie Dinmont Terrier",
   "group": "Terrier",
   "size": "S",
   "coat": "wire",
-  "colors": ["pepper", "mustard"],
+  "colors": ["pepper (blue black to silver)", "mustard (red brown to pale fawn)"],
   "species": "dog",
   "sizeAvg": 20,
-  "sizeRange": [12, 28],
+  "sizeRange": [16, 24],
   "litterSize": "S",
   "traits": {
     "intelligence": 6,
@@ -2729,7 +3006,10 @@ var DEMO_BREEDS = [{
     "heart": 82,
     "joints": 72
   },
-  "aptitudes": ["Earthdog", "Conformation"]
+  "aptitudes": ["Earthdog", "Conformation"],
+  "founderCOI": 7.5,
+  "coatFreqs": {"E": [["E", 0.8], ["e", 0.2]], "K": [["KB", 0.05], ["kbr", 0], ["ky", 0.95]], "A": [["Ay", 0.45], ["aw", 0.3], ["at", 0.2], ["a", 0.05]], "D": [["D", 0.65], ["d", 0.35]], "W": [["W", 0.8], ["w", 0.2]]},
+  "healthFlags": ["spine", "glaucoma", "cancer", "thyroid"]
 }, {
   "name": "Norfolk Terrier",
   "group": "Terrier",
@@ -2737,8 +3017,8 @@ var DEMO_BREEDS = [{
   "coat": "wire",
   "colors": ["red", "wheaten", "black & tan", "grizzle"],
   "species": "dog",
-  "sizeAvg": 8,
-  "sizeRange": [4, 12],
+  "sizeAvg": 12,
+  "sizeRange": [9, 15],
   "litterSize": "S",
   "traits": {
     "intelligence": 7,
@@ -2758,7 +3038,10 @@ var DEMO_BREEDS = [{
     "heart": 85,
     "joints": 82
   },
-  "aptitudes": ["Earthdog", "Agility", "Conformation"]
+  "aptitudes": ["Earthdog", "Agility", "Conformation"],
+  "founderCOI": 6.5,
+  "coatFreqs": {"E": [["E", 0.85], ["e", 0.15]], "K": [["KB", 0.05], ["kbr", 0.2], ["ky", 0.75]], "A": [["Ay", 0.45], ["aw", 0.25], ["at", 0.25], ["a", 0.05]], "W": [["W", 0.6], ["w", 0.4]]},
+  "healthFlags": ["heart", "hips", "teeth", "spine"]
 }, {
   "name": "Norwich Terrier",
   "group": "Terrier",
@@ -2766,8 +3049,8 @@ var DEMO_BREEDS = [{
   "coat": "wire",
   "colors": ["red", "wheaten", "black & tan", "grizzle"],
   "species": "dog",
-  "sizeAvg": 8,
-  "sizeRange": [4, 12],
+  "sizeAvg": 12,
+  "sizeRange": [9, 15],
   "litterSize": "S",
   "traits": {
     "intelligence": 7,
@@ -2787,16 +3070,19 @@ var DEMO_BREEDS = [{
     "heart": 85,
     "joints": 82
   },
-  "aptitudes": ["Earthdog", "Agility", "Conformation"]
+  "aptitudes": ["Earthdog", "Agility", "Conformation"],
+  "founderCOI": 6.5,
+  "coatFreqs": {"E": [["E", 0.85], ["e", 0.15]], "K": [["KB", 0.05], ["kbr", 0.2], ["ky", 0.75]], "A": [["Ay", 0.45], ["aw", 0.25], ["at", 0.25], ["a", 0.05]], "W": [["W", 0.6], ["w", 0.4]]},
+  "healthFlags": ["heart", "hips", "teeth", "spine", "breathing"]
 }, {
   "name": "Sealyham Terrier",
   "group": "Terrier",
   "size": "S",
   "coat": "wire",
-  "colors": ["white", "white & lemon", "white & tan"],
+  "colors": ["white", "white with lemon markings", "white with tan markings", "white with badger markings"],
   "species": "dog",
-  "sizeAvg": 20,
-  "sizeRange": [12, 28],
+  "sizeAvg": 22,
+  "sizeRange": [16, 28],
   "litterSize": "S",
   "traits": {
     "intelligence": 6,
@@ -2816,16 +3102,19 @@ var DEMO_BREEDS = [{
     "heart": 82,
     "joints": 80
   },
-  "aptitudes": ["Earthdog", "Conformation", "Agility"]
+  "aptitudes": ["Earthdog", "Conformation", "Agility"],
+  "founderCOI": 7.5,
+  "coatFreqs": {"E": [["E", 0.7], ["e", 0.3]], "K": [["KB", 0.05], ["kbr", 0.15], ["ky", 0.8]], "A": [["Ay", 0.5], ["aw", 0.2], ["at", 0.25], ["a", 0.05]], "W": [["W", 0.85], ["w", 0.15]]},
+  "healthFlags": ["eyes", "spine", "cancer", "heart", "deafness"]
 }, {
   "name": "Lakeland Terrier",
   "group": "Terrier",
   "size": "S",
   "coat": "wire",
-  "colors": ["black & tan", "blue & tan", "red", "grizzle", "wheaten"],
+  "colors": ["black & tan", "blue & tan", "red", "red grizzle", "grizzle & tan", "liver", "liver & tan", "blue", "black", "wheaten"],
   "species": "dog",
-  "sizeAvg": 20,
-  "sizeRange": [12, 28],
+  "sizeAvg": 17,
+  "sizeRange": [13, 21],
   "litterSize": "S",
   "traits": {
     "intelligence": 7,
@@ -2845,16 +3134,19 @@ var DEMO_BREEDS = [{
     "heart": 85,
     "joints": 82
   },
-  "aptitudes": ["Earthdog", "Agility", "Conformation"]
+  "aptitudes": ["Earthdog", "Agility", "Conformation"],
+  "founderCOI": 6.0,
+  "coatFreqs": {"E": [["E", 0.85], ["e", 0.15]], "K": [["KB", 0.05], ["kbr", 0.3], ["ky", 0.65]], "A": [["Ay", 0.3], ["aw", 0.3], ["at", 0.3], ["a", 0.1]], "B": [["B", 0.75], ["b", 0.25]], "D": [["D", 0.75], ["d", 0.25]], "W": [["W", 0.75], ["w", 0.25]]},
+  "healthFlags": ["hips", "eyes", "Legg-Perthes", "spine"]
 }, {
   "name": "Manchester Terrier",
   "group": "Terrier",
   "size": "S",
   "coat": "short",
-  "colors": ["black & tan"],
+  "colors": ["black & tan only"],
   "species": "dog",
-  "sizeAvg": 20,
-  "sizeRange": [12, 28],
+  "sizeAvg": 16,
+  "sizeRange": [12, 22],
   "litterSize": "S",
   "traits": {
     "intelligence": 7,
@@ -2874,16 +3166,19 @@ var DEMO_BREEDS = [{
     "heart": 85,
     "joints": 82
   },
-  "aptitudes": ["Earthdog", "Agility", "Conformation"]
+  "aptitudes": ["Earthdog", "Agility", "Conformation"],
+  "founderCOI": 6.5,
+  "coatFreqs": {"E": [["E", 1.0], ["e", 0.0]], "K": [["KB", 0.05], ["kbr", 0], ["ky", 0.95]], "A": [["Ay", 0], ["aw", 0], ["at", 1.0], ["a", 0]]},
+  "healthFlags": ["hips", "eyes", "bleeding (vWD)", "heart", "thyroid"]
 }, {
   "name": "Bedlington Terrier",
   "group": "Terrier",
   "size": "S",
   "coat": "curly",
-  "colors": ["blue", "liver", "sandy"],
+  "colors": ["blue", "sandy", "liver", "blue & tan", "sandy & tan", "liver & tan"],
   "species": "dog",
   "sizeAvg": 20,
-  "sizeRange": [12, 28],
+  "sizeRange": [16, 24],
   "litterSize": "S",
   "traits": {
     "intelligence": 7,
@@ -2903,16 +3198,19 @@ var DEMO_BREEDS = [{
     "heart": 85,
     "joints": 82
   },
-  "aptitudes": ["Earthdog", "Agility", "Conformation"]
+  "aptitudes": ["Earthdog", "Agility", "Conformation"],
+  "founderCOI": 6.5,
+  "coatFreqs": {"E": [["E", 0.85], ["e", 0.15]], "K": [["KB", 0.05], ["kbr", 0], ["ky", 0.95]], "A": [["Ay", 0.3], ["aw", 0.25], ["at", 0.35], ["a", 0.1]], "B": [["B", 0.55], ["b", 0.45]], "D": [["D", 0.65], ["d", 0.35]], "Cu": [["Cu", 0.85], ["cu", 0.15]]},
+  "healthFlags": ["copper toxicosis", "eyes", "heart", "cancer"]
 }, {
   "name": "Welsh Terrier",
   "group": "Terrier",
   "size": "M",
   "coat": "wire",
-  "colors": ["tan & black", "tan & grizzle"],
+  "colors": ["black & tan grizzle", "black & tan"],
   "species": "dog",
-  "sizeAvg": 40,
-  "sizeRange": [28, 55],
+  "sizeAvg": 20,
+  "sizeRange": [16, 25],
   "litterSize": "M",
   "traits": {
     "intelligence": 7,
@@ -2932,16 +3230,19 @@ var DEMO_BREEDS = [{
     "heart": 85,
     "joints": 82
   },
-  "aptitudes": ["Earthdog", "Agility", "Conformation"]
+  "aptitudes": ["Earthdog", "Agility", "Conformation"],
+  "founderCOI": 6.0,
+  "coatFreqs": {"E": [["E", 1.0], ["e", 0.0]], "K": [["KB", 0.05], ["kbr", 0], ["ky", 0.95]], "A": [["Ay", 0], ["aw", 0.65], ["at", 0.3], ["a", 0.05]], "W": [["W", 0.85], ["w", 0.15]]},
+  "healthFlags": ["hips", "eyes", "Legg-Perthes", "skin"]
 }, {
   "name": "Kerry Blue Terrier",
   "group": "Terrier",
   "size": "M",
   "coat": "curly",
-  "colors": ["blue", "blue gray"],
+  "colors": ["blue (any shade from slate blue to light blue gray)"],
   "species": "dog",
-  "sizeAvg": 40,
-  "sizeRange": [28, 55],
+  "sizeAvg": 37,
+  "sizeRange": [29, 45],
   "litterSize": "M",
   "traits": {
     "intelligence": 7,
@@ -2961,16 +3262,19 @@ var DEMO_BREEDS = [{
     "heart": 82,
     "joints": 80
   },
-  "aptitudes": ["Earthdog", "Agility", "Herding"]
+  "aptitudes": ["Earthdog", "Agility", "Herding"],
+  "founderCOI": 6.5,
+  "coatFreqs": {"E": [["E", 1.0], ["e", 0.0]], "K": [["KB", 0.05], ["kbr", 0], ["ky", 0.95]], "A": [["Ay", 0], ["aw", 0.3], ["at", 0.4], ["a", 0.3]], "D": [["D", 0.3], ["d", 0.7]], "W": [["W", 0.8], ["w", 0.2]]},
+  "healthFlags": ["hips", "eyes", "bleeding", "skin", "cancer"]
 }, {
   "name": "Irish Terrier",
   "group": "Terrier",
   "size": "M",
   "coat": "wire",
-  "colors": ["red", "golden red", "wheaten"],
+  "colors": ["red", "golden red", "red wheaten", "wheaten"],
   "species": "dog",
-  "sizeAvg": 40,
-  "sizeRange": [28, 55],
+  "sizeAvg": 27,
+  "sizeRange": [22, 32],
   "litterSize": "M",
   "traits": {
     "intelligence": 7,
@@ -2990,7 +3294,10 @@ var DEMO_BREEDS = [{
     "heart": 85,
     "joints": 82
   },
-  "aptitudes": ["Earthdog", "Agility", "Conformation"]
+  "aptitudes": ["Earthdog", "Agility", "Conformation"],
+  "founderCOI": 5.5,
+  "coatFreqs": {"E": [["E", 0.85], ["e", 0.15]], "K": [["KB", 0.05], ["kbr", 0], ["ky", 0.95]], "A": [["Ay", 0.85], ["aw", 0.08], ["at", 0.07], ["a", 0]], "W": [["W", 0.85], ["w", 0.15]]},
+  "healthFlags": ["hips", "bladder stones", "eyes", "skin"]
 }, {
   "name": "Glen of Imaal Terrier",
   "group": "Terrier",
@@ -2998,8 +3305,8 @@ var DEMO_BREEDS = [{
   "coat": "wire",
   "colors": ["blue", "brindle", "wheaten"],
   "species": "dog",
-  "sizeAvg": 20,
-  "sizeRange": [12, 28],
+  "sizeAvg": 35,
+  "sizeRange": [26, 44],
   "litterSize": "S",
   "traits": {
     "intelligence": 6,
@@ -3019,16 +3326,19 @@ var DEMO_BREEDS = [{
     "heart": 85,
     "joints": 80
   },
-  "aptitudes": ["Earthdog", "Conformation"]
+  "aptitudes": ["Earthdog", "Conformation"],
+  "founderCOI": 6.5,
+  "coatFreqs": {"E": [["E", 0.85], ["e", 0.15]], "K": [["KB", 0.05], ["kbr", 0.4], ["ky", 0.55]], "A": [["Ay", 0.35], ["aw", 0.3], ["at", 0.25], ["a", 0.1]], "D": [["D", 0.7], ["d", 0.3]], "W": [["W", 0.8], ["w", 0.2]]},
+  "healthFlags": ["hips", "eyes (PRA)", "heart", "cancer"]
 }, {
   "name": "Soft Coated Wheaten Terrier",
   "group": "Terrier",
   "size": "M",
   "coat": "silky",
-  "colors": ["wheaten"],
+  "colors": ["wheaten (from pale beige to shining gold)"],
   "species": "dog",
-  "sizeAvg": 40,
-  "sizeRange": [28, 55],
+  "sizeAvg": 35,
+  "sizeRange": [26, 44],
   "litterSize": "M",
   "traits": {
     "intelligence": 7,
@@ -3048,16 +3358,19 @@ var DEMO_BREEDS = [{
     "heart": 82,
     "joints": 78
   },
-  "aptitudes": ["Agility", "Obedience", "Conformation"]
+  "aptitudes": ["Agility", "Obedience", "Conformation"],
+  "founderCOI": 6.0,
+  "coatFreqs": {"E": [["E", 0.35], ["e", 0.65]], "K": [["KB", 0.05], ["kbr", 0], ["ky", 0.95]], "A": [["Ay", 1.0], ["aw", 0], ["at", 0], ["a", 0]], "W": [["W", 0.8], ["w", 0.2]]},
+  "healthFlags": ["hips", "protein-losing nephropathy", "protein-losing enteropathy", "Addisons", "cancer"]
 }, {
   "name": "Jack Russell Terrier",
   "group": "Terrier",
   "size": "XS",
   "coat": "short",
-  "colors": ["white & tan", "white & black", "tricolor"],
+  "colors": ["white with tan markings", "white with black markings", "white with tan & black markings"],
   "species": "dog",
-  "sizeAvg": 8,
-  "sizeRange": [4, 12],
+  "sizeAvg": 14,
+  "sizeRange": [9, 18],
   "litterSize": "S",
   "traits": {
     "intelligence": 8,
@@ -3077,16 +3390,19 @@ var DEMO_BREEDS = [{
     "heart": 90,
     "joints": 88
   },
-  "aptitudes": ["Earthdog", "Agility", "Flyball"]
+  "aptitudes": ["Earthdog", "Agility", "Flyball"],
+  "founderCOI": 4.5,
+  "coatFreqs": {"E": [["E", 0.85], ["e", 0.15]], "K": [["KB", 0.05], ["kbr", 0.2], ["ky", 0.75]], "A": [["Ay", 0.5], ["aw", 0.1], ["at", 0.3], ["a", 0.1]], "S": [["S", 0.1], ["sp", 0.35], ["sw", 0.55]]},
+  "healthFlags": ["hips", "eyes", "Legg-Perthes", "deafness", "spine"]
 }, {
   "name": "Parson Russell Terrier",
   "group": "Terrier",
   "size": "S",
   "coat": "wire",
-  "colors": ["white & tan", "white & black", "tricolor"],
+  "colors": ["white", "white with tan markings", "white with black markings", "tricolor"],
   "species": "dog",
-  "sizeAvg": 20,
-  "sizeRange": [12, 28],
+  "sizeAvg": 15,
+  "sizeRange": [11, 18],
   "litterSize": "S",
   "traits": {
     "intelligence": 8,
@@ -3106,16 +3422,19 @@ var DEMO_BREEDS = [{
     "heart": 90,
     "joints": 88
   },
-  "aptitudes": ["Earthdog", "Agility", "Conformation"]
+  "aptitudes": ["Earthdog", "Agility", "Conformation"],
+  "founderCOI": 5.0,
+  "coatFreqs": {"E": [["E", 0.85], ["e", 0.15]], "K": [["KB", 0.05], ["kbr", 0.2], ["ky", 0.75]], "A": [["Ay", 0.5], ["aw", 0.1], ["at", 0.3], ["a", 0.1]], "S": [["S", 0.1], ["sp", 0.35], ["sw", 0.55]]},
+  "healthFlags": ["hips", "eyes", "Legg-Perthes", "deafness", "spine"]
 }, {
   "name": "Patterdale Terrier",
   "group": "Terrier",
   "size": "XS",
   "coat": "short",
-  "colors": ["black", "red", "chocolate", "grizzle", "black & tan"],
+  "colors": ["black", "red", "chocolate", "black & tan", "grizzle"],
   "species": "dog",
-  "sizeAvg": 8,
-  "sizeRange": [4, 12],
+  "sizeAvg": 12,
+  "sizeRange": [9, 15],
   "litterSize": "S",
   "traits": {
     "intelligence": 7,
@@ -3135,16 +3454,19 @@ var DEMO_BREEDS = [{
     "heart": 88,
     "joints": 85
   },
-  "aptitudes": ["Earthdog", "Field Trials"]
+  "aptitudes": ["Earthdog", "Field Trials"],
+  "founderCOI": 4.5,
+  "coatFreqs": {"E": [["E", 0.85], ["e", 0.15]], "K": [["KB", 0.5], ["kbr", 0.2], ["ky", 0.3]], "A": [["Ay", 0.3], ["aw", 0.15], ["at", 0.4], ["a", 0.15]], "B": [["B", 0.75], ["b", 0.25]]},
+  "healthFlags": ["hips", "eyes", "spine"]
 }, {
   "name": "Miniature Schnauzer",
   "group": "Terrier",
   "size": "S",
   "coat": "wire",
-  "colors": ["salt & pepper", "black", "black & silver"],
+  "colors": ["salt & pepper", "black & silver", "solid black", "white"],
   "species": "dog",
-  "sizeAvg": 20,
-  "sizeRange": [12, 28],
+  "sizeAvg": 14,
+  "sizeRange": [10, 18],
   "litterSize": "S",
   "traits": {
     "intelligence": 8,
@@ -3164,16 +3486,19 @@ var DEMO_BREEDS = [{
     "heart": 82,
     "joints": 84
   },
-  "aptitudes": ["Earthdog", "Obedience", "Agility"]
+  "aptitudes": ["Earthdog", "Obedience", "Agility"],
+  "founderCOI": 6.5,
+  "coatFreqs": {"E": [["E", 0.85], ["e", 0.15]], "K": [["KB", 0.5], ["kbr", 0], ["ky", 0.5]], "A": [["Ay", 0.2], ["aw", 0.45], ["at", 0.25], ["a", 0.1]], "W": [["W", 0.7], ["w", 0.3]]},
+  "healthFlags": ["eyes", "heart", "bladder stones", "pancreatitis", "liver", "thyroid"]
 }, {
   "name": "Staffordshire Bull Terrier",
   "group": "Terrier",
   "size": "M",
   "coat": "short",
-  "colors": ["brindle", "red", "fawn", "black", "blue"],
+  "colors": ["red", "fawn", "white", "black", "blue", "brindle — with or without white"],
   "species": "dog",
-  "sizeAvg": 40,
-  "sizeRange": [28, 55],
+  "sizeAvg": 30,
+  "sizeRange": [24, 38],
   "litterSize": "M",
   "traits": {
     "intelligence": 7,
@@ -3193,16 +3518,19 @@ var DEMO_BREEDS = [{
     "heart": 82,
     "joints": 80
   },
-  "aptitudes": ["Agility", "Conformation", "Obedience"]
+  "aptitudes": ["Agility", "Conformation", "Obedience"],
+  "founderCOI": 6.5,
+  "coatFreqs": {"E": [["E", 0.85], ["e", 0.15]], "K": [["KB", 0.1], ["kbr", 0.45], ["ky", 0.45]], "A": [["Ay", 0.55], ["aw", 0], ["at", 0.3], ["a", 0.15]], "B": [["B", 0.8], ["b", 0.2]], "D": [["D", 0.8], ["d", 0.2]], "S": [["S", 0.4], ["sp", 0.4], ["sw", 0.2]]},
+  "healthFlags": ["hips", "heart", "eyes", "cancer", "skin", "breathing"]
 }, {
   "name": "American Pit Bull Terrier",
   "group": "Terrier",
   "size": "M",
   "coat": "short",
-  "colors": ["red", "brindle", "fawn", "black", "blue", "white"],
+  "colors": ["any color except merle — including brindle", "fawn", "red", "black", "blue", "buckskin", "tricolor"],
   "species": "dog",
-  "sizeAvg": 40,
-  "sizeRange": [28, 55],
+  "sizeAvg": 52,
+  "sizeRange": [30, 75],
   "litterSize": "M",
   "traits": {
     "intelligence": 7,
@@ -3222,16 +3550,19 @@ var DEMO_BREEDS = [{
     "heart": 82,
     "joints": 78
   },
-  "aptitudes": ["Agility", "Obedience", "Conformation"]
+  "aptitudes": ["Agility", "Obedience", "Conformation"],
+  "founderCOI": 5.0,
+  "coatFreqs": {"E": [["E", 0.85], ["e", 0.15]], "K": [["KB", 0.1], ["kbr", 0.45], ["ky", 0.45]], "A": [["Ay", 0.5], ["aw", 0.1], ["at", 0.25], ["a", 0.15]], "B": [["B", 0.75], ["b", 0.25]], "D": [["D", 0.75], ["d", 0.25]], "S": [["S", 0.35], ["sp", 0.4], ["sw", 0.25]]},
+  "healthFlags": ["hips", "heart", "skin", "cancer", "joints"]
 }, {
   "name": "American Staffordshire Terrier",
   "group": "Terrier",
   "size": "M",
   "coat": "short",
-  "colors": ["brindle", "fawn", "red", "black", "blue"],
+  "colors": ["any color — solid, parti, or patched — except liver or more than 80% white"],
   "species": "dog",
-  "sizeAvg": 40,
-  "sizeRange": [28, 55],
+  "sizeAvg": 60,
+  "sizeRange": [40, 79],
   "litterSize": "M",
   "traits": {
     "intelligence": 7,
@@ -3251,16 +3582,19 @@ var DEMO_BREEDS = [{
     "heart": 80,
     "joints": 78
   },
-  "aptitudes": ["Agility", "Obedience", "Conformation"]
+  "aptitudes": ["Agility", "Obedience", "Conformation"],
+  "founderCOI": 6.0,
+  "coatFreqs": {"E": [["E", 0.85], ["e", 0.15]], "K": [["KB", 0.1], ["kbr", 0.4], ["ky", 0.5]], "A": [["Ay", 0.5], ["aw", 0.1], ["at", 0.25], ["a", 0.15]], "B": [["B", 0.75], ["b", 0.25]], "D": [["D", 0.75], ["d", 0.25]], "S": [["S", 0.35], ["sp", 0.4], ["sw", 0.25]]},
+  "healthFlags": ["hips", "heart", "skin", "cancer", "joints", "cerebellar"]
 }, {
   "name": "Rat Terrier",
   "group": "Terrier",
   "size": "S",
   "coat": "short",
-  "colors": ["tricolor", "black & tan", "white & black", "blue & white"],
+  "colors": ["bicolor", "tricolor — white base with patches of black, tan, red, apricot, blue, chocolate"],
   "species": "dog",
-  "sizeAvg": 20,
-  "sizeRange": [12, 28],
+  "sizeAvg": 17,
+  "sizeRange": [10, 25],
   "litterSize": "S",
   "traits": {
     "intelligence": 8,
@@ -3280,16 +3614,19 @@ var DEMO_BREEDS = [{
     "heart": 88,
     "joints": 85
   },
-  "aptitudes": ["Earthdog", "Agility", "Flyball"]
+  "aptitudes": ["Earthdog", "Agility", "Flyball"],
+  "founderCOI": 4.5,
+  "coatFreqs": {"E": [["E", 0.85], ["e", 0.15]], "K": [["KB", 0.05], ["kbr", 0.2], ["ky", 0.75]], "A": [["Ay", 0.35], ["aw", 0.1], ["at", 0.45], ["a", 0.1]], "S": [["S", 0.1], ["sp", 0.5], ["sw", 0.4]]},
+  "healthFlags": ["hips", "Legg-Perthes", "heart", "eyes"]
 }, {
   "name": "Fox Terrier (Smooth)",
   "group": "Terrier",
   "size": "S",
   "coat": "short",
-  "colors": ["white & black", "white & tan", "tricolor"],
+  "colors": ["white with black markings", "white with tan markings", "white with black & tan markings"],
   "species": "dog",
-  "sizeAvg": 20,
-  "sizeRange": [12, 28],
+  "sizeAvg": 17,
+  "sizeRange": [13, 20],
   "litterSize": "S",
   "traits": {
     "intelligence": 7,
@@ -3309,16 +3646,19 @@ var DEMO_BREEDS = [{
     "heart": 85,
     "joints": 82
   },
-  "aptitudes": ["Earthdog", "Agility", "Conformation"]
+  "aptitudes": ["Earthdog", "Agility", "Conformation"],
+  "founderCOI": 6.0,
+  "coatFreqs": {"E": [["E", 0.85], ["e", 0.15]], "K": [["KB", 0.05], ["kbr", 0.15], ["ky", 0.8]], "A": [["Ay", 0.4], ["aw", 0.1], ["at", 0.4], ["a", 0.1]], "S": [["S", 0.1], ["sp", 0.45], ["sw", 0.45]]},
+  "healthFlags": ["hips", "Legg-Perthes", "eyes", "spine", "deafness"]
 }, {
   "name": "Fox Terrier (Wire)",
   "group": "Terrier",
   "size": "S",
   "coat": "wire",
-  "colors": ["white & black", "white & tan", "tricolor"],
+  "colors": ["white with black markings", "white with tan markings", "white with black & tan markings"],
   "species": "dog",
-  "sizeAvg": 20,
-  "sizeRange": [12, 28],
+  "sizeAvg": 18,
+  "sizeRange": [13, 22],
   "litterSize": "S",
   "traits": {
     "intelligence": 7,
@@ -3338,16 +3678,19 @@ var DEMO_BREEDS = [{
     "heart": 85,
     "joints": 82
   },
-  "aptitudes": ["Earthdog", "Agility", "Conformation"]
+  "aptitudes": ["Earthdog", "Agility", "Conformation"],
+  "founderCOI": 6.0,
+  "coatFreqs": {"E": [["E", 0.85], ["e", 0.15]], "K": [["KB", 0.05], ["kbr", 0.15], ["ky", 0.8]], "A": [["Ay", 0.4], ["aw", 0.1], ["at", 0.4], ["a", 0.1]], "W": [["W", 0.85], ["w", 0.15]], "S": [["S", 0.1], ["sp", 0.45], ["sw", 0.45]]},
+  "healthFlags": ["hips", "Legg-Perthes", "eyes", "spine", "deafness"]
 }, {
   "name": "Cesky Terrier",
   "group": "Terrier",
   "size": "S",
   "coat": "wire",
-  "colors": ["gray-blue", "light coffee brown"],
+  "colors": ["gray blue", "light coffee brown"],
   "species": "dog",
-  "sizeAvg": 20,
-  "sizeRange": [12, 28],
+  "sizeAvg": 18,
+  "sizeRange": [13, 23],
   "litterSize": "S",
   "traits": {
     "intelligence": 7,
@@ -3367,16 +3710,19 @@ var DEMO_BREEDS = [{
     "heart": 85,
     "joints": 82
   },
-  "aptitudes": ["Earthdog", "Conformation", "Agility"]
+  "aptitudes": ["Earthdog", "Conformation", "Agility"],
+  "founderCOI": 7.5,
+  "coatFreqs": {"E": [["E", 1.0], ["e", 0.0]], "K": [["KB", 0.05], ["kbr", 0], ["ky", 0.95]], "A": [["Ay", 0.1], ["aw", 0.3], ["at", 0.4], ["a", 0.2]], "D": [["D", 0.55], ["d", 0.45]], "W": [["W", 0.85], ["w", 0.15]]},
+  "healthFlags": ["spine", "eyes", "cancer", "heart", "Scottie cramp"]
 }, {
   "name": "Jagdterrier",
   "group": "Terrier",
   "size": "S",
   "coat": "wire",
-  "colors": ["black & tan", "dark brown & tan"],
+  "colors": ["black & tan", "dark brown & tan", "grizzle & tan"],
   "species": "dog",
   "sizeAvg": 20,
-  "sizeRange": [12, 28],
+  "sizeRange": [16, 25],
   "litterSize": "S",
   "traits": {
     "intelligence": 7,
@@ -3396,7 +3742,10 @@ var DEMO_BREEDS = [{
     "heart": 88,
     "joints": 84
   },
-  "aptitudes": ["Earthdog", "Field Trials", "Tracking"]
+  "aptitudes": ["Earthdog", "Field Trials", "Tracking"],
+  "founderCOI": 5.5,
+  "coatFreqs": {"E": [["E", 1.0], ["e", 0.0]], "K": [["KB", 0.05], ["kbr", 0], ["ky", 0.95]], "A": [["Ay", 0], ["aw", 0.2], ["at", 0.75], ["a", 0.05]], "B": [["B", 0.75], ["b", 0.25]], "W": [["W", 0.7], ["w", 0.3]]},
+  "healthFlags": ["hips", "eyes", "spine"]
 }, {
   "name": "Australian Terrier",
   "group": "Terrier",
@@ -3404,8 +3753,8 @@ var DEMO_BREEDS = [{
   "coat": "wire",
   "colors": ["blue & tan", "sandy", "red"],
   "species": "dog",
-  "sizeAvg": 8,
-  "sizeRange": [4, 12],
+  "sizeAvg": 14,
+  "sizeRange": [11, 18],
   "litterSize": "S",
   "traits": {
     "intelligence": 7,
@@ -3425,7 +3774,10 @@ var DEMO_BREEDS = [{
     "heart": 85,
     "joints": 82
   },
-  "aptitudes": ["Earthdog", "Agility", "Conformation"]
+  "aptitudes": ["Earthdog", "Agility", "Conformation"],
+  "founderCOI": 6.0,
+  "coatFreqs": {"E": [["E", 0.85], ["e", 0.15]], "K": [["KB", 0.05], ["kbr", 0], ["ky", 0.95]], "A": [["Ay", 0.5], ["aw", 0.1], ["at", 0.35], ["a", 0.05]], "D": [["D", 0.75], ["d", 0.25]], "W": [["W", 0.75], ["w", 0.25]]},
+  "healthFlags": ["hips", "Legg-Perthes", "eyes", "diabetes", "thyroid"]
 }, {
   "name": "Boxer",
   "group": "Working",
@@ -4287,7 +4639,10 @@ var DEMO_BREEDS = [{
     "heart": 82,
     "joints": 78
   },
-  "aptitudes": ["Tracking", "Lure Coursing", "Conformation"]
+  "aptitudes": ["Tracking", "Lure Coursing", "Conformation"],
+  "founderCOI": 5.0,
+  "coatFreqs": {"E": [["E", 0.8], ["e", 0.2]], "K": [["KB", 0], ["kbr", 0], ["ky", 1.0]], "A": [["Ay", 1.0], ["aw", 0], ["at", 0], ["a", 0]], "B": [["B", 0.9], ["b", 0.1]], "S": [["S", 0.95], ["sp", 0.05], ["sw", 0.0]]},
+  "healthFlags": ["hips", "cancer", "thyroid", "dermoid sinus"]
 }, {
   "name": "Cimarron Uruguayo",
   "group": "Working",
@@ -4936,7 +5291,7 @@ var DEMO_BREEDS = [{
   "colors": ["black", "yellow", "chocolate"],
   "species": "dog",
   "sizeAvg": 65,
-  "sizeRange": [55, 85],
+  "sizeRange": [55, 80],
   "litterSize": "L",
   "traits": {
     "intelligence": 8,
@@ -4956,7 +5311,10 @@ var DEMO_BREEDS = [{
     "heart": 85,
     "joints": 72
   },
-  "aptitudes": ["Field Trials", "Dock Diving", "Obedience"]
+  "aptitudes": ["Field Trials", "Dock Diving", "Obedience"],
+  "founderCOI": 6.5,
+  "coatFreqs": {"E": [["E", 0.85], ["e", 0.15]], "K": [["KB", 0.6], ["kbr", 0], ["ky", 0.4]], "A": [["Ay", 0.4], ["aw", 0], ["at", 0.1], ["a", 0.5]], "B": [["B", 0.65], ["b", 0.35]]},
+  "healthFlags": ["hips", "eyes", "obesity", "heart", "cancer"]
 }, {
   "name": "Golden Retriever",
   "group": "Sporting",
@@ -4965,7 +5323,7 @@ var DEMO_BREEDS = [{
   "colors": ["light golden", "golden", "dark golden"],
   "species": "dog",
   "sizeAvg": 65,
-  "sizeRange": [55, 85],
+  "sizeRange": [55, 80],
   "litterSize": "L",
   "traits": {
     "intelligence": 8,
@@ -4985,7 +5343,10 @@ var DEMO_BREEDS = [{
     "heart": 75,
     "joints": 70
   },
-  "aptitudes": ["Field Trials", "Dock Diving", "Obedience"]
+  "aptitudes": ["Field Trials", "Dock Diving", "Obedience"],
+  "founderCOI": 6.5,
+  "coatFreqs": {"E": [["E", 0.1], ["e", 0.9]], "K": [["KB", 0.05], ["kbr", 0], ["ky", 0.95]], "A": [["Ay", 1.0], ["aw", 0], ["at", 0], ["a", 0]]},
+  "healthFlags": ["cancer", "hips", "heart", "eyes", "skin"]
 }, {
   "name": "Flat-Coated Retriever",
   "group": "Sporting",
@@ -4994,7 +5355,7 @@ var DEMO_BREEDS = [{
   "colors": ["black", "liver"],
   "species": "dog",
   "sizeAvg": 65,
-  "sizeRange": [55, 85],
+  "sizeRange": [55, 80],
   "litterSize": "L",
   "traits": {
     "intelligence": 8,
@@ -5014,7 +5375,10 @@ var DEMO_BREEDS = [{
     "heart": 82,
     "joints": 72
   },
-  "aptitudes": ["Field Trials", "Dock Diving", "Conformation"]
+  "aptitudes": ["Field Trials", "Dock Diving", "Conformation"],
+  "founderCOI": 6.5,
+  "coatFreqs": {"E": [["E", 1.0], ["e", 0.0]], "K": [["KB", 0.9], ["kbr", 0], ["ky", 0.1]], "A": [["Ay", 0], ["aw", 0], ["at", 0.1], ["a", 0.9]], "B": [["B", 0.6], ["b", 0.4]]},
+  "healthFlags": ["cancer", "hips", "heart", "joints"]
 }, {
   "name": "Curly-Coated Retriever",
   "group": "Sporting",
@@ -5022,8 +5386,8 @@ var DEMO_BREEDS = [{
   "coat": "curly",
   "colors": ["black", "liver"],
   "species": "dog",
-  "sizeAvg": 65,
-  "sizeRange": [55, 85],
+  "sizeAvg": 70,
+  "sizeRange": [55, 95],
   "litterSize": "L",
   "traits": {
     "intelligence": 8,
@@ -5043,16 +5407,19 @@ var DEMO_BREEDS = [{
     "heart": 82,
     "joints": 72
   },
-  "aptitudes": ["Field Trials", "Dock Diving", "Conformation"]
+  "aptitudes": ["Field Trials", "Dock Diving", "Conformation"],
+  "founderCOI": 6.0,
+  "coatFreqs": {"E": [["E", 1.0], ["e", 0.0]], "K": [["KB", 0.85], ["kbr", 0], ["ky", 0.15]], "A": [["Ay", 0], ["aw", 0], ["at", 0.1], ["a", 0.9]], "B": [["B", 0.6], ["b", 0.4]], "Cu": [["Cu", 0.9], ["cu", 0.1]]},
+  "healthFlags": ["cancer", "hips", "eyes", "heart"]
 }, {
   "name": "Chesapeake Bay Retriever",
   "group": "Sporting",
   "size": "L",
   "coat": "wavy",
-  "colors": ["brown", "sedge", "deadgrass"],
+  "colors": ["brown", "sedge (reddish gold)", "deadgrass (straw to bracken)"],
   "species": "dog",
-  "sizeAvg": 65,
-  "sizeRange": [55, 85],
+  "sizeAvg": 68,
+  "sizeRange": [55, 80],
   "litterSize": "L",
   "traits": {
     "intelligence": 7,
@@ -5072,16 +5439,19 @@ var DEMO_BREEDS = [{
     "heart": 82,
     "joints": 72
   },
-  "aptitudes": ["Field Trials", "Dock Diving", "Conformation"]
+  "aptitudes": ["Field Trials", "Dock Diving", "Conformation"],
+  "founderCOI": 6.0,
+  "coatFreqs": {"E": [["E", 0.85], ["e", 0.15]], "K": [["KB", 0.05], ["kbr", 0], ["ky", 0.95]], "A": [["Ay", 0.7], ["aw", 0.15], ["at", 0.1], ["a", 0.05]], "B": [["B", 0.45], ["b", 0.55]]},
+  "healthFlags": ["hips", "eyes", "cancer", "progressive retinal atrophy"]
 }, {
   "name": "Nova Scotia Duck Tolling Retriever",
   "group": "Sporting",
   "size": "M",
   "coat": "medium",
-  "colors": ["red", "orange", "red & white"],
+  "colors": ["red", "golden red — with white markings"],
   "species": "dog",
-  "sizeAvg": 40,
-  "sizeRange": [28, 55],
+  "sizeAvg": 45,
+  "sizeRange": [35, 55],
   "litterSize": "M",
   "traits": {
     "intelligence": 9,
@@ -5101,16 +5471,19 @@ var DEMO_BREEDS = [{
     "heart": 82,
     "joints": 78
   },
-  "aptitudes": ["Field Trials", "Agility", "Dock Diving"]
+  "aptitudes": ["Field Trials", "Agility", "Dock Diving"],
+  "founderCOI": 7.0,
+  "coatFreqs": {"E": [["E", 0.75], ["e", 0.25]], "K": [["KB", 0.05], ["kbr", 0], ["ky", 0.95]], "A": [["Ay", 0.9], ["aw", 0.05], ["at", 0.04], ["a", 0.01]], "S": [["S", 0.3], ["sp", 0.55], ["sw", 0.15]]},
+  "healthFlags": ["hips", "eyes", "thyroid", "Addisons", "immune"]
 }, {
   "name": "German Shorthaired Pointer",
   "group": "Sporting",
   "size": "L",
   "coat": "short",
-  "colors": ["liver", "liver & white", "black", "black & white"],
+  "colors": ["liver", "liver & white", "liver roan", "black (rare)", "black & white"],
   "species": "dog",
-  "sizeAvg": 65,
-  "sizeRange": [55, 85],
+  "sizeAvg": 60,
+  "sizeRange": [45, 75],
   "litterSize": "L",
   "traits": {
     "intelligence": 8,
@@ -5130,16 +5503,19 @@ var DEMO_BREEDS = [{
     "heart": 85,
     "joints": 78
   },
-  "aptitudes": ["Field Trials", "Agility", "Dock Diving"]
+  "aptitudes": ["Field Trials", "Agility", "Dock Diving"],
+  "founderCOI": 5.5,
+  "coatFreqs": {"E": [["E", 1.0], ["e", 0.0]], "K": [["KB", 0.15], ["kbr", 0], ["ky", 0.85]], "A": [["Ay", 0.5], ["aw", 0.2], ["at", 0.25], ["a", 0.05]], "B": [["B", 0.5], ["b", 0.5]], "T": [["TR", 0.5], ["T", 0.3], ["t", 0.2]]},
+  "healthFlags": ["hips", "heart", "bloat", "cancer", "eyes"]
 }, {
   "name": "German Wirehaired Pointer",
   "group": "Sporting",
   "size": "L",
   "coat": "wire",
-  "colors": ["liver", "liver & white", "roan"],
+  "colors": ["liver & white", "liver roan", "solid liver"],
   "species": "dog",
-  "sizeAvg": 65,
-  "sizeRange": [55, 85],
+  "sizeAvg": 60,
+  "sizeRange": [45, 75],
   "litterSize": "L",
   "traits": {
     "intelligence": 8,
@@ -5159,16 +5535,19 @@ var DEMO_BREEDS = [{
     "heart": 85,
     "joints": 78
   },
-  "aptitudes": ["Field Trials", "Tracking", "Conformation"]
+  "aptitudes": ["Field Trials", "Tracking", "Conformation"],
+  "founderCOI": 5.5,
+  "coatFreqs": {"E": [["E", 1.0], ["e", 0.0]], "K": [["KB", 0.1], ["kbr", 0.4], ["ky", 0.5]], "A": [["Ay", 0.5], ["aw", 0.2], ["at", 0.25], ["a", 0.05]], "B": [["B", 0.45], ["b", 0.55]], "W": [["W", 0.7], ["w", 0.3]], "T": [["TR", 0.5], ["T", 0.3], ["t", 0.2]]},
+  "healthFlags": ["hips", "heart", "bloat", "cancer", "eyes"]
 }, {
   "name": "German Longhaired Pointer",
   "group": "Sporting",
   "size": "L",
   "coat": "long",
-  "colors": ["brown", "brown & white"],
+  "colors": ["brown", "brown & white", "brown roan"],
   "species": "dog",
   "sizeAvg": 65,
-  "sizeRange": [55, 85],
+  "sizeRange": [55, 80],
   "litterSize": "L",
   "traits": {
     "intelligence": 8,
@@ -5188,16 +5567,19 @@ var DEMO_BREEDS = [{
     "heart": 85,
     "joints": 78
   },
-  "aptitudes": ["Field Trials", "Conformation"]
+  "aptitudes": ["Field Trials", "Conformation"],
+  "founderCOI": 5.5,
+  "coatFreqs": {"E": [["E", 1.0], ["e", 0.0]], "K": [["KB", 0.1], ["kbr", 0], ["ky", 0.9]], "A": [["Ay", 0.5], ["aw", 0.2], ["at", 0.25], ["a", 0.05]], "B": [["B", 0.45], ["b", 0.55]], "T": [["TR", 0.45], ["T", 0.35], ["t", 0.2]]},
+  "healthFlags": ["hips", "heart", "bloat", "cancer"]
 }, {
   "name": "Weimaraner",
   "group": "Sporting",
   "size": "L",
   "coat": "short",
-  "colors": ["silver gray", "mouse gray", "silver"],
+  "colors": ["gray", "silver gray", "mouse gray"],
   "species": "dog",
-  "sizeAvg": 65,
-  "sizeRange": [55, 85],
+  "sizeAvg": 70,
+  "sizeRange": [55, 90],
   "litterSize": "L",
   "traits": {
     "intelligence": 8,
@@ -5217,16 +5599,19 @@ var DEMO_BREEDS = [{
     "heart": 80,
     "joints": 75
   },
-  "aptitudes": ["Field Trials", "Tracking", "Agility"]
+  "aptitudes": ["Field Trials", "Tracking", "Agility"],
+  "founderCOI": 6.5,
+  "coatFreqs": {"E": [["E", 1.0], ["e", 0.0]], "K": [["KB", 0.05], ["kbr", 0], ["ky", 0.95]], "A": [["Ay", 0.8], ["aw", 0.1], ["at", 0.07], ["a", 0.03]], "B": [["B", 0.1], ["b", 0.9]], "D": [["D", 0.1], ["d", 0.9]]},
+  "healthFlags": ["hips", "bloat", "cancer", "heart", "spine"]
 }, {
   "name": "Vizsla",
   "group": "Sporting",
   "size": "L",
   "coat": "short",
-  "colors": ["golden rust", "dark sandy gold"],
+  "colors": ["golden rust", "russet gold"],
   "species": "dog",
-  "sizeAvg": 65,
-  "sizeRange": [55, 85],
+  "sizeAvg": 55,
+  "sizeRange": [44, 65],
   "litterSize": "L",
   "traits": {
     "intelligence": 8,
@@ -5246,16 +5631,19 @@ var DEMO_BREEDS = [{
     "heart": 85,
     "joints": 78
   },
-  "aptitudes": ["Field Trials", "Agility", "Conformation"]
+  "aptitudes": ["Field Trials", "Agility", "Conformation"],
+  "founderCOI": 6.5,
+  "coatFreqs": {"E": [["E", 0.8], ["e", 0.2]], "K": [["KB", 0.05], ["kbr", 0], ["ky", 0.95]], "A": [["Ay", 0.9], ["aw", 0.05], ["at", 0.04], ["a", 0.01]], "B": [["B", 0.4], ["b", 0.6]], "D": [["D", 0.4], ["d", 0.6]]},
+  "healthFlags": ["hips", "cancer", "epilepsy", "heart", "skin"]
 }, {
   "name": "Wirehaired Vizsla",
   "group": "Sporting",
   "size": "L",
   "coat": "wire",
-  "colors": ["golden rust"],
+  "colors": ["golden rust", "russet"],
   "species": "dog",
-  "sizeAvg": 65,
-  "sizeRange": [55, 85],
+  "sizeAvg": 55,
+  "sizeRange": [44, 68],
   "litterSize": "L",
   "traits": {
     "intelligence": 8,
@@ -5275,16 +5663,19 @@ var DEMO_BREEDS = [{
     "heart": 85,
     "joints": 78
   },
-  "aptitudes": ["Field Trials", "Tracking", "Conformation"]
+  "aptitudes": ["Field Trials", "Tracking", "Conformation"],
+  "founderCOI": 6.0,
+  "coatFreqs": {"E": [["E", 0.8], ["e", 0.2]], "K": [["KB", 0.05], ["kbr", 0], ["ky", 0.95]], "A": [["Ay", 0.9], ["aw", 0.05], ["at", 0.04], ["a", 0.01]], "B": [["B", 0.4], ["b", 0.6]], "D": [["D", 0.4], ["d", 0.6]], "W": [["W", 0.75], ["w", 0.25]]},
+  "healthFlags": ["hips", "cancer", "epilepsy", "heart"]
 }, {
   "name": "Pudelpointer",
   "group": "Sporting",
   "size": "L",
   "coat": "wire",
-  "colors": ["liver", "brown", "chestnut"],
+  "colors": ["liver", "liver & white", "chestnut", "black"],
   "species": "dog",
-  "sizeAvg": 65,
-  "sizeRange": [55, 85],
+  "sizeAvg": 55,
+  "sizeRange": [44, 68],
   "litterSize": "L",
   "traits": {
     "intelligence": 8,
@@ -5304,16 +5695,19 @@ var DEMO_BREEDS = [{
     "heart": 85,
     "joints": 78
   },
-  "aptitudes": ["Field Trials", "Tracking"]
+  "aptitudes": ["Field Trials", "Tracking"],
+  "founderCOI": 5.5,
+  "coatFreqs": {"E": [["E", 0.85], ["e", 0.15]], "K": [["KB", 0.1], ["kbr", 0.2], ["ky", 0.7]], "A": [["Ay", 0.4], ["aw", 0.2], ["at", 0.3], ["a", 0.1]], "B": [["B", 0.55], ["b", 0.45]], "Cu": [["Cu", 0.55], ["cu", 0.45]]},
+  "healthFlags": ["hips", "eyes", "heart"]
 }, {
   "name": "Bracco Italiano",
   "group": "Sporting",
   "size": "L",
   "coat": "short",
-  "colors": ["white & orange", "white & chestnut", "roan"],
+  "colors": ["white & chestnut", "white & orange", "chestnut roan", "orange roan"],
   "species": "dog",
-  "sizeAvg": 65,
-  "sizeRange": [55, 85],
+  "sizeAvg": 70,
+  "sizeRange": [55, 90],
   "litterSize": "L",
   "traits": {
     "intelligence": 8,
@@ -5333,16 +5727,19 @@ var DEMO_BREEDS = [{
     "heart": 80,
     "joints": 75
   },
-  "aptitudes": ["Field Trials", "Conformation"]
+  "aptitudes": ["Field Trials", "Conformation"],
+  "founderCOI": 6.0,
+  "coatFreqs": {"E": [["E", 0.85], ["e", 0.15]], "K": [["KB", 0.05], ["kbr", 0], ["ky", 0.95]], "A": [["Ay", 0.75], ["aw", 0.1], ["at", 0.12], ["a", 0.03]], "B": [["B", 0.55], ["b", 0.45]], "T": [["TR", 0.4], ["T", 0.35], ["t", 0.25]], "S": [["S", 0.25], ["sp", 0.55], ["sw", 0.2]]},
+  "healthFlags": ["hips", "heart", "eyes", "bloat", "kidney"]
 }, {
   "name": "Spinone Italiano",
   "group": "Sporting",
   "size": "L",
   "coat": "wire",
-  "colors": ["white", "white & orange", "white & brown roan"],
+  "colors": ["white", "white & orange", "orange roan", "white & chestnut", "chestnut roan"],
   "species": "dog",
-  "sizeAvg": 65,
-  "sizeRange": [55, 85],
+  "sizeAvg": 75,
+  "sizeRange": [62, 95],
   "litterSize": "L",
   "traits": {
     "intelligence": 7,
@@ -5362,16 +5759,19 @@ var DEMO_BREEDS = [{
     "heart": 80,
     "joints": 72
   },
-  "aptitudes": ["Field Trials", "Conformation"]
+  "aptitudes": ["Field Trials", "Conformation"],
+  "founderCOI": 6.0,
+  "coatFreqs": {"E": [["E", 0.85], ["e", 0.15]], "K": [["KB", 0.05], ["kbr", 0], ["ky", 0.95]], "A": [["Ay", 0.7], ["aw", 0.15], ["at", 0.12], ["a", 0.03]], "B": [["B", 0.55], ["b", 0.45]], "T": [["TR", 0.35], ["T", 0.4], ["t", 0.25]]},
+  "healthFlags": ["hips", "bloat", "cancer", "eyes", "cerebellar"]
 }, {
   "name": "Lagotto Romagnolo",
   "group": "Sporting",
   "size": "M",
   "coat": "curly",
-  "colors": ["white", "brown", "orange", "roan"],
+  "colors": ["brown", "brown roan", "off-white", "white & brown", "orange & white"],
   "species": "dog",
-  "sizeAvg": 40,
-  "sizeRange": [28, 55],
+  "sizeAvg": 32,
+  "sizeRange": [24, 42],
   "litterSize": "M",
   "traits": {
     "intelligence": 8,
@@ -5391,16 +5791,19 @@ var DEMO_BREEDS = [{
     "heart": 85,
     "joints": 80
   },
-  "aptitudes": ["Field Trials", "Agility", "Tracking"]
+  "aptitudes": ["Field Trials", "Agility", "Tracking"],
+  "founderCOI": 5.5,
+  "coatFreqs": {"E": [["E", 0.8], ["e", 0.2]], "K": [["KB", 0.1], ["kbr", 0], ["ky", 0.9]], "A": [["Ay", 0.5], ["aw", 0.2], ["at", 0.2], ["a", 0.1]], "B": [["B", 0.6], ["b", 0.4]], "Cu": [["Cu", 0.8], ["cu", 0.2]]},
+  "healthFlags": ["hips", "eyes", "storage disease", "epilepsy"]
 }, {
   "name": "Brittany Spaniel",
   "group": "Sporting",
   "size": "M",
   "coat": "medium",
-  "colors": ["orange & white", "liver & white", "black & white"],
+  "colors": ["orange & white", "liver & white", "black & white", "tricolor", "roan"],
   "species": "dog",
   "sizeAvg": 40,
-  "sizeRange": [28, 55],
+  "sizeRange": [30, 50],
   "litterSize": "M",
   "traits": {
     "intelligence": 8,
@@ -5420,16 +5823,19 @@ var DEMO_BREEDS = [{
     "heart": 85,
     "joints": 80
   },
-  "aptitudes": ["Field Trials", "Agility", "Conformation"]
+  "aptitudes": ["Field Trials", "Agility", "Conformation"],
+  "founderCOI": 5.5,
+  "coatFreqs": {"E": [["E", 0.85], ["e", 0.15]], "K": [["KB", 0.05], ["kbr", 0], ["ky", 0.95]], "A": [["Ay", 0.7], ["aw", 0.1], ["at", 0.15], ["a", 0.05]], "B": [["B", 0.7], ["b", 0.3]], "S": [["S", 0.2], ["sp", 0.55], ["sw", 0.25]]},
+  "healthFlags": ["hips", "eyes", "epilepsy", "heart"]
 }, {
   "name": "Wirehaired Pointing Griffon",
   "group": "Sporting",
   "size": "L",
   "coat": "wire",
-  "colors": ["steel gray & brown", "chestnut"],
+  "colors": ["steel gray & chestnut", "gray & chestnut", "white & chestnut", "chestnut"],
   "species": "dog",
-  "sizeAvg": 65,
-  "sizeRange": [55, 85],
+  "sizeAvg": 55,
+  "sizeRange": [44, 68],
   "litterSize": "L",
   "traits": {
     "intelligence": 8,
@@ -5449,16 +5855,19 @@ var DEMO_BREEDS = [{
     "heart": 85,
     "joints": 78
   },
-  "aptitudes": ["Field Trials", "Tracking", "Conformation"]
+  "aptitudes": ["Field Trials", "Tracking", "Conformation"],
+  "founderCOI": 5.5,
+  "coatFreqs": {"E": [["E", 0.85], ["e", 0.15]], "K": [["KB", 0.05], ["kbr", 0], ["ky", 0.95]], "A": [["Ay", 0.5], ["aw", 0.2], ["at", 0.25], ["a", 0.05]], "B": [["B", 0.55], ["b", 0.45]], "W": [["W", 0.8], ["w", 0.2]]},
+  "healthFlags": ["hips", "eyes", "heart"]
 }, {
   "name": "Barbet",
   "group": "Sporting",
   "size": "M",
   "coat": "curly",
-  "colors": ["black", "brown", "gray", "fawn", "white"],
+  "colors": ["black", "brown", "fawn", "gray", "white", "pied — various"],
   "species": "dog",
-  "sizeAvg": 40,
-  "sizeRange": [28, 55],
+  "sizeAvg": 42,
+  "sizeRange": [30, 55],
   "litterSize": "M",
   "traits": {
     "intelligence": 8,
@@ -5478,16 +5887,19 @@ var DEMO_BREEDS = [{
     "heart": 85,
     "joints": 80
   },
-  "aptitudes": ["Field Trials", "Dock Diving", "Agility"]
+  "aptitudes": ["Field Trials", "Dock Diving", "Agility"],
+  "founderCOI": 6.5,
+  "coatFreqs": {"E": [["E", 0.8], ["e", 0.2]], "K": [["KB", 0.3], ["kbr", 0], ["ky", 0.7]], "A": [["Ay", 0.3], ["aw", 0.2], ["at", 0.3], ["a", 0.2]], "B": [["B", 0.65], ["b", 0.35]], "Cu": [["Cu", 0.85], ["cu", 0.15]]},
+  "healthFlags": ["hips", "eyes"]
 }, {
   "name": "Drentsche Patrijshond",
   "group": "Sporting",
   "size": "L",
   "coat": "medium",
-  "colors": ["white & brown", "white & orange"],
+  "colors": ["white & brown", "white & orange — with or without ticking/roan"],
   "species": "dog",
-  "sizeAvg": 65,
-  "sizeRange": [55, 85],
+  "sizeAvg": 55,
+  "sizeRange": [44, 68],
   "litterSize": "L",
   "traits": {
     "intelligence": 8,
@@ -5507,16 +5919,19 @@ var DEMO_BREEDS = [{
     "heart": 85,
     "joints": 78
   },
-  "aptitudes": ["Field Trials", "Conformation"]
+  "aptitudes": ["Field Trials", "Conformation"],
+  "founderCOI": 5.5,
+  "coatFreqs": {"E": [["E", 0.85], ["e", 0.15]], "K": [["KB", 0.05], ["kbr", 0], ["ky", 0.95]], "A": [["Ay", 0.75], ["aw", 0.1], ["at", 0.12], ["a", 0.03]], "B": [["B", 0.55], ["b", 0.45]], "S": [["S", 0.2], ["sp", 0.6], ["sw", 0.2]]},
+  "healthFlags": ["hips", "eyes", "heart"]
 }, {
   "name": "Kooikerhondje",
   "group": "Sporting",
   "size": "S",
   "coat": "long",
-  "colors": ["orange & white"],
+  "colors": ["orange-red & white with black ear tips"],
   "species": "dog",
-  "sizeAvg": 20,
-  "sizeRange": [12, 28],
+  "sizeAvg": 24,
+  "sizeRange": [18, 30],
   "litterSize": "S",
   "traits": {
     "intelligence": 8,
@@ -5536,16 +5951,19 @@ var DEMO_BREEDS = [{
     "heart": 85,
     "joints": 80
   },
-  "aptitudes": ["Field Trials", "Agility", "Conformation"]
+  "aptitudes": ["Field Trials", "Agility", "Conformation"],
+  "founderCOI": 7.0,
+  "coatFreqs": {"E": [["E", 0.85], ["e", 0.15]], "K": [["KB", 0.05], ["kbr", 0], ["ky", 0.95]], "A": [["Ay", 0.9], ["aw", 0.05], ["at", 0.04], ["a", 0.01]], "S": [["S", 0.15], ["sp", 0.6], ["sw", 0.25]]},
+  "healthFlags": ["hips", "eyes", "bleeding (vWD)", "kidney", "epilepsy"]
 }, {
   "name": "English Setter",
   "group": "Sporting",
   "size": "L",
   "coat": "long",
-  "colors": ["blue belton", "orange belton", "lemon belton", "liver belton"],
+  "colors": ["blue belton", "orange belton", "lemon belton", "liver belton", "tricolor belton"],
   "species": "dog",
   "sizeAvg": 65,
-  "sizeRange": [55, 85],
+  "sizeRange": [45, 80],
   "litterSize": "L",
   "traits": {
     "intelligence": 7,
@@ -5565,16 +5983,19 @@ var DEMO_BREEDS = [{
     "heart": 80,
     "joints": 72
   },
-  "aptitudes": ["Field Trials", "Conformation"]
+  "aptitudes": ["Field Trials", "Conformation"],
+  "founderCOI": 6.0,
+  "coatFreqs": {"E": [["E", 0.85], ["e", 0.15]], "K": [["KB", 0.05], ["kbr", 0], ["ky", 0.95]], "A": [["Ay", 0.3], ["aw", 0], ["at", 0.55], ["a", 0.15]], "B": [["B", 0.65], ["b", 0.35]], "D": [["D", 0.7], ["d", 0.3]], "T": [["TR", 0.75], ["T", 0.15], ["t", 0.1]]},
+  "healthFlags": ["hips", "deafness", "cancer", "thyroid", "heart"]
 }, {
   "name": "Irish Setter",
   "group": "Sporting",
   "size": "L",
   "coat": "long",
-  "colors": ["mahogany", "chestnut"],
+  "colors": ["mahogany", "rich chestnut red"],
   "species": "dog",
   "sizeAvg": 65,
-  "sizeRange": [55, 85],
+  "sizeRange": [55, 75],
   "litterSize": "L",
   "traits": {
     "intelligence": 7,
@@ -5594,16 +6015,19 @@ var DEMO_BREEDS = [{
     "heart": 80,
     "joints": 72
   },
-  "aptitudes": ["Field Trials", "Agility", "Conformation"]
+  "aptitudes": ["Field Trials", "Agility", "Conformation"],
+  "founderCOI": 6.0,
+  "coatFreqs": {"E": [["E", 0.2], ["e", 0.8]], "K": [["KB", 0.05], ["kbr", 0], ["ky", 0.95]], "A": [["Ay", 1.0], ["aw", 0], ["at", 0], ["a", 0]], "B": [["B", 0.55], ["b", 0.45]]},
+  "healthFlags": ["hips", "cancer", "epilepsy", "bloat", "thyroid", "eyes"]
 }, {
   "name": "Irish Red & White Setter",
   "group": "Sporting",
   "size": "L",
   "coat": "long",
-  "colors": ["red & white"],
+  "colors": ["red & white", "red & white with flecking"],
   "species": "dog",
-  "sizeAvg": 65,
-  "sizeRange": [55, 85],
+  "sizeAvg": 60,
+  "sizeRange": [50, 75],
   "litterSize": "L",
   "traits": {
     "intelligence": 7,
@@ -5623,7 +6047,10 @@ var DEMO_BREEDS = [{
     "heart": 80,
     "joints": 72
   },
-  "aptitudes": ["Field Trials", "Conformation"]
+  "aptitudes": ["Field Trials", "Conformation"],
+  "founderCOI": 6.5,
+  "coatFreqs": {"E": [["E", 0.25], ["e", 0.75]], "K": [["KB", 0.05], ["kbr", 0], ["ky", 0.95]], "A": [["Ay", 1.0], ["aw", 0], ["at", 0], ["a", 0]], "B": [["B", 0.55], ["b", 0.45]], "S": [["S", 0.15], ["sp", 0.55], ["sw", 0.3]]},
+  "healthFlags": ["hips", "cancer", "eyes", "immune"]
 }, {
   "name": "Gordon Setter",
   "group": "Sporting",
@@ -5632,7 +6059,7 @@ var DEMO_BREEDS = [{
   "colors": ["black & tan"],
   "species": "dog",
   "sizeAvg": 65,
-  "sizeRange": [55, 85],
+  "sizeRange": [55, 80],
   "litterSize": "L",
   "traits": {
     "intelligence": 7,
@@ -5652,16 +6079,19 @@ var DEMO_BREEDS = [{
     "heart": 80,
     "joints": 72
   },
-  "aptitudes": ["Field Trials", "Conformation"]
+  "aptitudes": ["Field Trials", "Conformation"],
+  "founderCOI": 6.0,
+  "coatFreqs": {"E": [["E", 1.0], ["e", 0.0]], "K": [["KB", 0.05], ["kbr", 0], ["ky", 0.95]], "A": [["Ay", 0], ["aw", 0], ["at", 1.0], ["a", 0]], "B": [["B", 1.0], ["b", 0.0]]},
+  "healthFlags": ["hips", "cancer", "bloat", "eyes"]
 }, {
   "name": "English Pointer",
   "group": "Sporting",
   "size": "L",
   "coat": "short",
-  "colors": ["liver", "black", "orange", "lemon"],
+  "colors": ["liver & white", "lemon & white", "orange & white", "black & white", "solid colors"],
   "species": "dog",
-  "sizeAvg": 65,
-  "sizeRange": [55, 85],
+  "sizeAvg": 57,
+  "sizeRange": [44, 70],
   "litterSize": "L",
   "traits": {
     "intelligence": 7,
@@ -5681,16 +6111,19 @@ var DEMO_BREEDS = [{
     "heart": 85,
     "joints": 78
   },
-  "aptitudes": ["Field Trials", "Conformation"]
+  "aptitudes": ["Field Trials", "Conformation"],
+  "founderCOI": 5.5,
+  "coatFreqs": {"E": [["E", 0.85], ["e", 0.15]], "K": [["KB", 0.05], ["kbr", 0], ["ky", 0.95]], "A": [["Ay", 0.6], ["aw", 0.1], ["at", 0.2], ["a", 0.1]], "B": [["B", 0.65], ["b", 0.35]], "S": [["S", 0.25], ["sp", 0.55], ["sw", 0.2]]},
+  "healthFlags": ["hips", "heart", "cancer", "skin", "eyes"]
 }, {
   "name": "English Springer Spaniel",
   "group": "Sporting",
   "size": "M",
   "coat": "medium",
-  "colors": ["liver & white", "black & white", "tricolor"],
+  "colors": ["liver & white", "black & white", "liver white & tan", "black white & tan"],
   "species": "dog",
-  "sizeAvg": 40,
-  "sizeRange": [28, 55],
+  "sizeAvg": 48,
+  "sizeRange": [35, 60],
   "litterSize": "M",
   "traits": {
     "intelligence": 8,
@@ -5710,16 +6143,19 @@ var DEMO_BREEDS = [{
     "heart": 80,
     "joints": 75
   },
-  "aptitudes": ["Field Trials", "Agility", "Conformation"]
+  "aptitudes": ["Field Trials", "Agility", "Conformation"],
+  "founderCOI": 6.0,
+  "coatFreqs": {"E": [["E", 1.0], ["e", 0.0]], "K": [["KB", 0.05], ["kbr", 0.15], ["ky", 0.8]], "A": [["Ay", 0.3], ["aw", 0], ["at", 0.6], ["a", 0.1]], "B": [["B", 0.6], ["b", 0.4]], "S": [["S", 0.2], ["sp", 0.55], ["sw", 0.25]]},
+  "healthFlags": ["hips", "eyes", "ears", "cancer", "immune", "spine"]
 }, {
   "name": "English Cocker Spaniel",
   "group": "Sporting",
   "size": "M",
   "coat": "long",
-  "colors": ["black", "liver", "golden", "blue roan", "orange roan"],
+  "colors": ["black", "liver", "golden", "black & tan", "liver & tan", "blue roan", "liver roan", "orange roan", "lemon roan", "tricolor"],
   "species": "dog",
-  "sizeAvg": 40,
-  "sizeRange": [28, 55],
+  "sizeAvg": 30,
+  "sizeRange": [20, 40],
   "litterSize": "M",
   "traits": {
     "intelligence": 8,
@@ -5739,16 +6175,19 @@ var DEMO_BREEDS = [{
     "heart": 80,
     "joints": 75
   },
-  "aptitudes": ["Field Trials", "Agility", "Conformation"]
+  "aptitudes": ["Field Trials", "Agility", "Conformation"],
+  "founderCOI": 6.5,
+  "coatFreqs": {"E": [["E", 0.8], ["e", 0.2]], "K": [["KB", 0.3], ["kbr", 0], ["ky", 0.7]], "A": [["Ay", 0.4], ["aw", 0], ["at", 0.45], ["a", 0.15]], "B": [["B", 0.65], ["b", 0.35]], "T": [["TR", 0.45], ["T", 0.35], ["t", 0.2]]},
+  "healthFlags": ["hips", "eyes", "ears", "cancer", "kidney", "heart"]
 }, {
   "name": "American Cocker Spaniel",
   "group": "Sporting",
   "size": "S",
   "coat": "long",
-  "colors": ["black", "buff", "parti-color", "ASCOB"],
+  "colors": ["black", "ASCOB (any solid color other than black)", "parti-color", "black & tan", "sable"],
   "species": "dog",
-  "sizeAvg": 20,
-  "sizeRange": [12, 28],
+  "sizeAvg": 25,
+  "sizeRange": [18, 32],
   "litterSize": "S",
   "traits": {
     "intelligence": 7,
@@ -5768,16 +6207,19 @@ var DEMO_BREEDS = [{
     "heart": 78,
     "joints": 72
   },
-  "aptitudes": ["Field Trials", "Agility", "Conformation"]
+  "aptitudes": ["Field Trials", "Agility", "Conformation"],
+  "founderCOI": 7.0,
+  "coatFreqs": {"E": [["E", 0.8], ["e", 0.2]], "K": [["KB", 0.25], ["kbr", 0], ["ky", 0.75]], "A": [["Ay", 0.45], ["aw", 0], ["at", 0.4], ["a", 0.15]], "B": [["B", 0.65], ["b", 0.35]], "S": [["S", 0.4], ["sp", 0.4], ["sw", 0.2]]},
+  "healthFlags": ["hips", "eyes", "ears", "cancer", "heart", "immune", "bleeding"]
 }, {
   "name": "Welsh Springer Spaniel",
   "group": "Sporting",
   "size": "M",
   "coat": "long",
-  "colors": ["red & white"],
+  "colors": ["red & white only"],
   "species": "dog",
   "sizeAvg": 40,
-  "sizeRange": [28, 55],
+  "sizeRange": [30, 50],
   "litterSize": "M",
   "traits": {
     "intelligence": 7,
@@ -5797,16 +6239,19 @@ var DEMO_BREEDS = [{
     "heart": 82,
     "joints": 75
   },
-  "aptitudes": ["Field Trials", "Conformation", "Agility"]
+  "aptitudes": ["Field Trials", "Conformation", "Agility"],
+  "founderCOI": 6.0,
+  "coatFreqs": {"E": [["E", 0.5], ["e", 0.5]], "K": [["KB", 0.05], ["kbr", 0], ["ky", 0.95]], "A": [["Ay", 1.0], ["aw", 0], ["at", 0], ["a", 0]], "B": [["B", 0.55], ["b", 0.45]], "S": [["S", 0.2], ["sp", 0.55], ["sw", 0.25]]},
+  "healthFlags": ["hips", "eyes", "ears", "epilepsy", "heart"]
 }, {
   "name": "Sussex Spaniel",
   "group": "Sporting",
   "size": "M",
   "coat": "long",
-  "colors": ["golden liver"],
+  "colors": ["golden liver only"],
   "species": "dog",
-  "sizeAvg": 40,
-  "sizeRange": [28, 55],
+  "sizeAvg": 42,
+  "sizeRange": [35, 50],
   "litterSize": "M",
   "traits": {
     "intelligence": 7,
@@ -5826,16 +6271,19 @@ var DEMO_BREEDS = [{
     "heart": 72,
     "joints": 70
   },
-  "aptitudes": ["Field Trials", "Conformation"]
+  "aptitudes": ["Field Trials", "Conformation"],
+  "founderCOI": 7.5,
+  "coatFreqs": {"E": [["E", 0.6], ["e", 0.4]], "K": [["KB", 0.05], ["kbr", 0], ["ky", 0.95]], "A": [["Ay", 1.0], ["aw", 0], ["at", 0], ["a", 0]], "B": [["B", 0.35], ["b", 0.65]]},
+  "healthFlags": ["hips", "heart", "ears", "spine", "cancer"]
 }, {
   "name": "Clumber Spaniel",
   "group": "Sporting",
   "size": "L",
   "coat": "long",
-  "colors": ["white & lemon", "white & orange"],
+  "colors": ["white with lemon markings", "white with orange markings"],
   "species": "dog",
-  "sizeAvg": 65,
-  "sizeRange": [55, 85],
+  "sizeAvg": 75,
+  "sizeRange": [55, 88],
   "litterSize": "L",
   "traits": {
     "intelligence": 7,
@@ -5855,16 +6303,19 @@ var DEMO_BREEDS = [{
     "heart": 75,
     "joints": 68
   },
-  "aptitudes": ["Field Trials", "Conformation"]
+  "aptitudes": ["Field Trials", "Conformation"],
+  "founderCOI": 7.5,
+  "coatFreqs": {"E": [["E", 0.8], ["e", 0.2]], "K": [["KB", 0.05], ["kbr", 0], ["ky", 0.95]], "A": [["Ay", 0.8], ["aw", 0.1], ["at", 0.07], ["a", 0.03]], "B": [["B", 0.6], ["b", 0.4]], "S": [["S", 0.1], ["sp", 0.3], ["sw", 0.6]]},
+  "healthFlags": ["hips", "spine", "eyes", "immune", "bleeding", "cancer"]
 }, {
   "name": "Boykin Spaniel",
   "group": "Sporting",
   "size": "M",
   "coat": "medium",
-  "colors": ["liver", "brown"],
+  "colors": ["rich liver", "chocolate", "brown"],
   "species": "dog",
-  "sizeAvg": 40,
-  "sizeRange": [28, 55],
+  "sizeAvg": 35,
+  "sizeRange": [25, 45],
   "litterSize": "M",
   "traits": {
     "intelligence": 8,
@@ -5884,16 +6335,19 @@ var DEMO_BREEDS = [{
     "heart": 78,
     "joints": 75
   },
-  "aptitudes": ["Field Trials", "Dock Diving", "Conformation"]
+  "aptitudes": ["Field Trials", "Dock Diving", "Conformation"],
+  "founderCOI": 6.5,
+  "coatFreqs": {"E": [["E", 0.85], ["e", 0.15]], "K": [["KB", 0.1], ["kbr", 0], ["ky", 0.9]], "A": [["Ay", 0.5], ["aw", 0.15], ["at", 0.25], ["a", 0.1]], "B": [["B", 0.2], ["b", 0.8]]},
+  "healthFlags": ["hips", "eyes", "heart", "Addisons", "ear"]
 }, {
   "name": "American Water Spaniel",
   "group": "Sporting",
   "size": "M",
   "coat": "curly",
-  "colors": ["brown", "chocolate", "liver"],
+  "colors": ["chocolate", "liver", "brown"],
   "species": "dog",
-  "sizeAvg": 40,
-  "sizeRange": [28, 55],
+  "sizeAvg": 38,
+  "sizeRange": [25, 50],
   "litterSize": "M",
   "traits": {
     "intelligence": 7,
@@ -5913,16 +6367,19 @@ var DEMO_BREEDS = [{
     "heart": 80,
     "joints": 75
   },
-  "aptitudes": ["Field Trials", "Dock Diving", "Conformation"]
+  "aptitudes": ["Field Trials", "Dock Diving", "Conformation"],
+  "founderCOI": 6.0,
+  "coatFreqs": {"E": [["E", 0.85], ["e", 0.15]], "K": [["KB", 0.1], ["kbr", 0.15], ["ky", 0.75]], "A": [["Ay", 0.45], ["aw", 0.15], ["at", 0.3], ["a", 0.1]], "B": [["B", 0.3], ["b", 0.7]], "Cu": [["Cu", 0.7], ["cu", 0.3]]},
+  "healthFlags": ["hips", "eyes", "heart", "skin", "cancer"]
 }, {
   "name": "Chihuahua",
   "group": "Toy",
   "size": "XS",
   "coat": "short",
-  "colors": ["fawn", "black", "white", "chocolate"],
+  "colors": ["any color — solid", "marked", "splashed"],
   "species": "dog",
-  "sizeAvg": 8,
-  "sizeRange": [4, 12],
+  "sizeAvg": 5,
+  "sizeRange": [2, 7],
   "litterSize": "S",
   "traits": {
     "intelligence": 6,
@@ -5942,16 +6399,19 @@ var DEMO_BREEDS = [{
     "heart": 80,
     "joints": 84
   },
-  "aptitudes": ["Conformation", "Agility", "Rally-O"]
+  "aptitudes": ["Conformation", "Agility", "Rally-O"],
+  "founderCOI": 6.5,
+  "coatFreqs": {"E": [["E", 0.75], ["e", 0.25]], "K": [["KB", 0.15], ["kbr", 0.15], ["ky", 0.7]], "A": [["Ay", 0.4], ["aw", 0.15], ["at", 0.3], ["a", 0.15]], "B": [["B", 0.7], ["b", 0.3]], "D": [["D", 0.7], ["d", 0.3]], "M": [["M", 0.1], ["m", 0.9]], "S": [["S", 0.35], ["sp", 0.4], ["sw", 0.25]]},
+  "healthFlags": ["heart", "teeth", "hips (Legg-Perthes)", "hydrocephalus", "trachea", "eyes"]
 }, {
   "name": "Pomeranian",
   "group": "Toy",
   "size": "XS",
   "coat": "long",
-  "colors": ["orange", "black", "white", "cream"],
+  "colors": ["orange", "red", "cream", "sable", "black", "black & tan", "blue", "chocolate", "brindle", "white", "parti"],
   "species": "dog",
-  "sizeAvg": 8,
-  "sizeRange": [4, 12],
+  "sizeAvg": 6,
+  "sizeRange": [3, 8],
   "litterSize": "S",
   "traits": {
     "intelligence": 7,
@@ -5971,16 +6431,19 @@ var DEMO_BREEDS = [{
     "heart": 80,
     "joints": 82
   },
-  "aptitudes": ["Agility", "Conformation", "Rally-O"]
+  "aptitudes": ["Agility", "Conformation", "Rally-O"],
+  "founderCOI": 6.5,
+  "coatFreqs": {"E": [["E", 0.75], ["e", 0.25]], "K": [["KB", 0.1], ["kbr", 0.2], ["ky", 0.7]], "A": [["Ay", 0.55], ["aw", 0.15], ["at", 0.2], ["a", 0.1]], "B": [["B", 0.7], ["b", 0.3]], "D": [["D", 0.75], ["d", 0.25]], "S": [["S", 0.55], ["sp", 0.3], ["sw", 0.15]]},
+  "healthFlags": ["heart", "teeth", "trachea", "hips (Legg-Perthes)", "eyes", "thyroid", "hair loss (alopecia X)"]
 }, {
   "name": "Shih Tzu",
   "group": "Toy",
   "size": "XS",
   "coat": "long",
-  "colors": ["gold", "red", "black", "white", "brindle"],
+  "colors": ["any color or markings", "gold & white", "black & white", "red & white", "silver & white", "liver & white"],
   "species": "dog",
-  "sizeAvg": 8,
-  "sizeRange": [4, 12],
+  "sizeAvg": 12,
+  "sizeRange": [9, 16],
   "litterSize": "S",
   "traits": {
     "intelligence": 6,
@@ -6000,16 +6463,19 @@ var DEMO_BREEDS = [{
     "heart": 80,
     "joints": 80
   },
-  "aptitudes": ["Conformation", "Agility"]
+  "aptitudes": ["Conformation", "Agility"],
+  "founderCOI": 6.5,
+  "coatFreqs": {"E": [["E", 0.75], ["e", 0.25]], "K": [["KB", 0.15], ["kbr", 0], ["ky", 0.85]], "A": [["Ay", 0.5], ["aw", 0.15], ["at", 0.25], ["a", 0.1]], "B": [["B", 0.7], ["b", 0.3]], "S": [["S", 0.2], ["sp", 0.55], ["sw", 0.25]]},
+  "healthFlags": ["breathing", "eyes", "spine", "hips", "kidney", "heart"]
 }, {
   "name": "Yorkshire Terrier",
   "group": "Toy",
   "size": "XS",
   "coat": "long",
-  "colors": ["tan & blue", "tan & black"],
+  "colors": ["blue & tan (adults) — born black & tan"],
   "species": "dog",
-  "sizeAvg": 8,
-  "sizeRange": [4, 12],
+  "sizeAvg": 7,
+  "sizeRange": [4, 9],
   "litterSize": "S",
   "traits": {
     "intelligence": 7,
@@ -6029,7 +6495,10 @@ var DEMO_BREEDS = [{
     "heart": 80,
     "joints": 80
   },
-  "aptitudes": ["Conformation", "Agility", "Earthdog"]
+  "aptitudes": ["Conformation", "Agility", "Earthdog"],
+  "founderCOI": 7.0,
+  "coatFreqs": {"E": [["E", 1.0], ["e", 0.0]], "K": [["KB", 0.05], ["kbr", 0], ["ky", 0.95]], "A": [["Ay", 0], ["aw", 0], ["at", 1.0], ["a", 0]], "D": [["D", 0.35], ["d", 0.65]]},
+  "healthFlags": ["teeth", "trachea", "liver (portosystemic shunt)", "Legg-Perthes", "heart", "eyes", "spine"]
 }, {
   "name": "Pug",
   "group": "Toy",
@@ -6037,8 +6506,8 @@ var DEMO_BREEDS = [{
   "coat": "short",
   "colors": ["fawn", "black"],
   "species": "dog",
-  "sizeAvg": 8,
-  "sizeRange": [4, 12],
+  "sizeAvg": 17,
+  "sizeRange": [13, 22],
   "litterSize": "S",
   "traits": {
     "intelligence": 5,
@@ -6058,16 +6527,19 @@ var DEMO_BREEDS = [{
     "heart": 72,
     "joints": 72
   },
-  "aptitudes": ["Conformation", "Obedience"]
+  "aptitudes": ["Conformation", "Obedience"],
+  "founderCOI": 7.5,
+  "coatFreqs": {"E": [["E", 1.0], ["e", 0.0]], "K": [["KB", 0.55], ["kbr", 0], ["ky", 0.45]], "A": [["Ay", 0.7], ["aw", 0], ["at", 0.2], ["a", 0.1]]},
+  "healthFlags": ["breathing", "eyes", "hips", "spine", "cancer", "skin", "heart", "Pug dog encephalitis"]
 }, {
   "name": "Cavalier King Charles Spaniel",
   "group": "Toy",
   "size": "S",
   "coat": "long",
-  "colors": ["chestnut & white", "tricolor", "black & tan", "ruby"],
+  "colors": ["Blenheim (chestnut & white)", "tricolor", "black & tan", "ruby (solid red)"],
   "species": "dog",
-  "sizeAvg": 20,
-  "sizeRange": [12, 28],
+  "sizeAvg": 14,
+  "sizeRange": [11, 18],
   "litterSize": "S",
   "traits": {
     "intelligence": 7,
@@ -6087,16 +6559,19 @@ var DEMO_BREEDS = [{
     "heart": 65,
     "joints": 72
   },
-  "aptitudes": ["Conformation", "Agility", "Rally-O"]
+  "aptitudes": ["Conformation", "Agility", "Rally-O"],
+  "founderCOI": 8.0,
+  "coatFreqs": {"E": [["E", 0.8], ["e", 0.2]], "K": [["KB", 0.1], ["kbr", 0], ["ky", 0.9]], "A": [["Ay", 0.5], ["aw", 0], ["at", 0.45], ["a", 0.05]], "B": [["B", 0.7], ["b", 0.3]], "S": [["S", 0.3], ["sp", 0.5], ["sw", 0.2]]},
+  "healthFlags": ["heart (MVD)", "spine (syringomyelia)", "eyes", "hips", "epilepsy", "bleeding"]
 }, {
   "name": "Papillon",
   "group": "Toy",
   "size": "XS",
   "coat": "long",
-  "colors": ["white & sable", "white & black", "white & red"],
+  "colors": ["white with patches of any color — parti-color"],
   "species": "dog",
-  "sizeAvg": 8,
-  "sizeRange": [4, 12],
+  "sizeAvg": 9,
+  "sizeRange": [5, 12],
   "litterSize": "S",
   "traits": {
     "intelligence": 9,
@@ -6116,16 +6591,19 @@ var DEMO_BREEDS = [{
     "heart": 88,
     "joints": 86
   },
-  "aptitudes": ["Agility", "Obedience", "Rally-O"]
+  "aptitudes": ["Agility", "Obedience", "Rally-O"],
+  "founderCOI": 6.0,
+  "coatFreqs": {"E": [["E", 0.8], ["e", 0.2]], "K": [["KB", 0.05], ["kbr", 0], ["ky", 0.95]], "A": [["Ay", 0.45], ["aw", 0.1], ["at", 0.35], ["a", 0.1]], "B": [["B", 0.7], ["b", 0.3]], "S": [["S", 0.05], ["sp", 0.4], ["sw", 0.55]]},
+  "healthFlags": ["teeth", "hips (Legg-Perthes)", "heart", "bleeding (vWD)", "eyes"]
 }, {
   "name": "Phal\xE8ne",
   "group": "Toy",
   "size": "XS",
   "coat": "long",
-  "colors": ["white & sable", "white & black", "white & red"],
+  "colors": ["white with patches of any color — parti-color"],
   "species": "dog",
-  "sizeAvg": 8,
-  "sizeRange": [4, 12],
+  "sizeAvg": 9,
+  "sizeRange": [5, 12],
   "litterSize": "S",
   "traits": {
     "intelligence": 9,
@@ -6145,16 +6623,19 @@ var DEMO_BREEDS = [{
     "heart": 88,
     "joints": 86
   },
-  "aptitudes": ["Agility", "Obedience", "Conformation"]
+  "aptitudes": ["Agility", "Obedience", "Conformation"],
+  "founderCOI": 6.0,
+  "coatFreqs": {"E": [["E", 0.8], ["e", 0.2]], "K": [["KB", 0.05], ["kbr", 0], ["ky", 0.95]], "A": [["Ay", 0.45], ["aw", 0.1], ["at", 0.35], ["a", 0.1]], "B": [["B", 0.7], ["b", 0.3]], "S": [["S", 0.05], ["sp", 0.4], ["sw", 0.55]]},
+  "healthFlags": ["teeth", "hips (Legg-Perthes)", "heart", "eyes"]
 }, {
   "name": "Havanese",
   "group": "Toy",
   "size": "XS",
   "coat": "long",
-  "colors": ["cream", "gold", "black", "blue", "chocolate"],
+  "colors": ["any color or combination — chocolate", "black", "silver", "blue", "cream", "gold", "parti"],
   "species": "dog",
-  "sizeAvg": 8,
-  "sizeRange": [4, 12],
+  "sizeAvg": 10,
+  "sizeRange": [7, 13],
   "litterSize": "S",
   "traits": {
     "intelligence": 8,
@@ -6174,16 +6655,19 @@ var DEMO_BREEDS = [{
     "heart": 85,
     "joints": 84
   },
-  "aptitudes": ["Agility", "Conformation", "Rally-O"]
+  "aptitudes": ["Agility", "Conformation", "Rally-O"],
+  "founderCOI": 6.0,
+  "coatFreqs": {"E": [["E", 0.8], ["e", 0.2]], "K": [["KB", 0.15], ["kbr", 0], ["ky", 0.85]], "A": [["Ay", 0.45], ["aw", 0.15], ["at", 0.25], ["a", 0.15]], "B": [["B", 0.7], ["b", 0.3]], "D": [["D", 0.8], ["d", 0.2]], "S": [["S", 0.35], ["sp", 0.4], ["sw", 0.25]]},
+  "healthFlags": ["hips", "eyes", "heart", "deafness", "liver", "thyroid"]
 }, {
   "name": "Chinese Crested",
   "group": "Toy",
   "size": "XS",
   "coat": "hairless",
-  "colors": ["pink", "blue", "chocolate", "black"],
+  "colors": ["any color — solid", "marked", "spotted — pink skin common on hairless"],
   "species": "dog",
-  "sizeAvg": 8,
-  "sizeRange": [4, 12],
+  "sizeAvg": 10,
+  "sizeRange": [5, 13],
   "litterSize": "S",
   "traits": {
     "intelligence": 7,
@@ -6203,16 +6687,19 @@ var DEMO_BREEDS = [{
     "heart": 82,
     "joints": 82
   },
-  "aptitudes": ["Agility", "Conformation", "Rally-O"]
+  "aptitudes": ["Agility", "Conformation", "Rally-O"],
+  "founderCOI": 6.5,
+  "coatFreqs": {"E": [["E", 0.75], ["e", 0.25]], "K": [["KB", 0.1], ["kbr", 0], ["ky", 0.9]], "A": [["Ay", 0.4], ["aw", 0.15], ["at", 0.3], ["a", 0.15]], "Hr": [["H", 0.5], ["h", 0.5]]},
+  "healthFlags": ["teeth", "skin (hairless)", "eyes", "Legg-Perthes", "heart"]
 }, {
   "name": "Maltese",
   "group": "Toy",
   "size": "XS",
   "coat": "long",
-  "colors": ["white"],
+  "colors": ["white only"],
   "species": "dog",
-  "sizeAvg": 8,
-  "sizeRange": [4, 12],
+  "sizeAvg": 6,
+  "sizeRange": [4, 8],
   "litterSize": "S",
   "traits": {
     "intelligence": 7,
@@ -6232,16 +6719,19 @@ var DEMO_BREEDS = [{
     "heart": 82,
     "joints": 82
   },
-  "aptitudes": ["Agility", "Conformation", "Obedience"]
+  "aptitudes": ["Agility", "Conformation", "Obedience"],
+  "founderCOI": 7.0,
+  "coatFreqs": {"E": [["E", 0.15], ["e", 0.85]], "K": [["KB", 0.05], ["kbr", 0], ["ky", 0.95]], "A": [["Ay", 0.8], ["aw", 0.1], ["at", 0.05], ["a", 0.05]]},
+  "healthFlags": ["teeth", "heart", "liver (PSS)", "spine", "trachea", "eyes"]
 }, {
   "name": "Japanese Chin",
   "group": "Toy",
   "size": "XS",
   "coat": "long",
-  "colors": ["black & white", "red & white", "sable & white"],
+  "colors": ["black & white", "red & white", "sable & white", "lemon & white"],
   "species": "dog",
-  "sizeAvg": 8,
-  "sizeRange": [4, 12],
+  "sizeAvg": 9,
+  "sizeRange": [6, 13],
   "litterSize": "S",
   "traits": {
     "intelligence": 7,
@@ -6261,16 +6751,19 @@ var DEMO_BREEDS = [{
     "heart": 78,
     "joints": 82
   },
-  "aptitudes": ["Conformation", "Agility"]
+  "aptitudes": ["Conformation", "Agility"],
+  "founderCOI": 7.0,
+  "coatFreqs": {"E": [["E", 0.8], ["e", 0.2]], "K": [["KB", 0.05], ["kbr", 0], ["ky", 0.95]], "A": [["Ay", 0.4], ["aw", 0.05], ["at", 0.45], ["a", 0.1]], "S": [["S", 0.1], ["sp", 0.5], ["sw", 0.4]]},
+  "healthFlags": ["breathing", "heart", "eyes", "spine", "epilepsy"]
 }, {
   "name": "Pekingese",
   "group": "Toy",
   "size": "XS",
   "coat": "long",
-  "colors": ["red", "sable", "black & tan", "cream"],
+  "colors": ["any color — gold", "red", "sable", "black", "black & tan", "cream", "parti"],
   "species": "dog",
-  "sizeAvg": 8,
-  "sizeRange": [4, 12],
+  "sizeAvg": 10,
+  "sizeRange": [7, 14],
   "litterSize": "S",
   "traits": {
     "intelligence": 6,
@@ -6290,16 +6783,19 @@ var DEMO_BREEDS = [{
     "heart": 75,
     "joints": 78
   },
-  "aptitudes": ["Conformation"]
+  "aptitudes": ["Conformation"],
+  "founderCOI": 7.5,
+  "coatFreqs": {"E": [["E", 0.8], ["e", 0.2]], "K": [["KB", 0.1], ["kbr", 0.2], ["ky", 0.7]], "A": [["Ay", 0.55], ["aw", 0.15], ["at", 0.2], ["a", 0.1]], "As": [["N", 0.5], ["n", 0.5]]},
+  "healthFlags": ["breathing", "eyes", "spine", "hips", "heart", "skin", "teeth"]
 }, {
   "name": "Brussels Griffon",
   "group": "Toy",
   "size": "XS",
   "coat": "wire",
-  "colors": ["red", "black", "black & tan"],
+  "colors": ["red", "black", "black & tan", "belge (black & reddish brown)"],
   "species": "dog",
-  "sizeAvg": 8,
-  "sizeRange": [4, 12],
+  "sizeAvg": 9,
+  "sizeRange": [7, 12],
   "litterSize": "S",
   "traits": {
     "intelligence": 7,
@@ -6319,16 +6815,19 @@ var DEMO_BREEDS = [{
     "heart": 78,
     "joints": 80
   },
-  "aptitudes": ["Agility", "Conformation", "Obedience"]
+  "aptitudes": ["Agility", "Conformation", "Obedience"],
+  "founderCOI": 7.0,
+  "coatFreqs": {"E": [["E", 0.85], ["e", 0.15]], "K": [["KB", 0.3], ["kbr", 0], ["ky", 0.7]], "A": [["Ay", 0.5], ["aw", 0.05], ["at", 0.35], ["a", 0.1]], "B": [["B", 0.75], ["b", 0.25]]},
+  "healthFlags": ["breathing", "eyes", "spine", "teeth", "hips", "heart"]
 }, {
   "name": "Miniature Pinscher",
   "group": "Toy",
   "size": "XS",
   "coat": "short",
-  "colors": ["red", "black & tan", "chocolate & tan"],
+  "colors": ["red", "stag red", "black & rust", "chocolate & rust", "blue & rust"],
   "species": "dog",
-  "sizeAvg": 8,
-  "sizeRange": [4, 12],
+  "sizeAvg": 10,
+  "sizeRange": [8, 13],
   "litterSize": "S",
   "traits": {
     "intelligence": 7,
@@ -6348,16 +6847,19 @@ var DEMO_BREEDS = [{
     "heart": 82,
     "joints": 82
   },
-  "aptitudes": ["Agility", "Conformation", "Rally-O"]
+  "aptitudes": ["Agility", "Conformation", "Rally-O"],
+  "founderCOI": 6.5,
+  "coatFreqs": {"E": [["E", 0.85], ["e", 0.15]], "K": [["KB", 0.3], ["kbr", 0], ["ky", 0.7]], "A": [["Ay", 0.45], ["aw", 0], ["at", 0.45], ["a", 0.1]], "B": [["B", 0.75], ["b", 0.25]], "D": [["D", 0.75], ["d", 0.25]]},
+  "healthFlags": ["hips (Legg-Perthes)", "heart", "teeth", "eyes", "thyroid"]
 }, {
   "name": "Affenpinscher",
   "group": "Toy",
   "size": "XS",
   "coat": "wire",
-  "colors": ["black", "gray", "silver", "red", "belge"],
+  "colors": ["black", "gray", "silver", "red", "black & tan", "belge"],
   "species": "dog",
-  "sizeAvg": 8,
-  "sizeRange": [4, 12],
+  "sizeAvg": 9,
+  "sizeRange": [7, 12],
   "litterSize": "S",
   "traits": {
     "intelligence": 7,
@@ -6377,16 +6879,19 @@ var DEMO_BREEDS = [{
     "heart": 80,
     "joints": 82
   },
-  "aptitudes": ["Agility", "Conformation"]
+  "aptitudes": ["Agility", "Conformation"],
+  "founderCOI": 7.0,
+  "coatFreqs": {"E": [["E", 0.85], ["e", 0.15]], "K": [["KB", 0.5], ["kbr", 0], ["ky", 0.5]], "A": [["Ay", 0.25], ["aw", 0.25], ["at", 0.35], ["a", 0.15]], "B": [["B", 0.8], ["b", 0.2]]},
+  "healthFlags": ["breathing", "heart", "hips (Legg-Perthes)", "eyes", "teeth"]
 }, {
   "name": "Italian Greyhound",
   "group": "Toy",
   "size": "XS",
   "coat": "short",
-  "colors": ["fawn", "blue", "black", "cream"],
+  "colors": ["fawn", "cream", "blue", "black", "red", "sable — white markings allowed"],
   "species": "dog",
-  "sizeAvg": 8,
-  "sizeRange": [4, 12],
+  "sizeAvg": 10,
+  "sizeRange": [7, 14],
   "litterSize": "S",
   "traits": {
     "intelligence": 6,
@@ -6406,16 +6911,19 @@ var DEMO_BREEDS = [{
     "heart": 90,
     "joints": 82
   },
-  "aptitudes": ["Lure Coursing", "Agility", "Conformation"]
+  "aptitudes": ["Lure Coursing", "Agility", "Conformation"],
+  "founderCOI": 6.0,
+  "coatFreqs": {"E": [["E", 0.75], ["e", 0.25]], "K": [["KB", 0.2], ["kbr", 0], ["ky", 0.8]], "A": [["Ay", 0.6], ["aw", 0.1], ["at", 0.2], ["a", 0.1]], "D": [["D", 0.7], ["d", 0.3]], "S": [["S", 0.45], ["sp", 0.4], ["sw", 0.15]]},
+  "healthFlags": ["teeth", "fractures", "epilepsy", "heart", "skin"]
 }, {
   "name": "L\xF6wchen",
   "group": "Toy",
   "size": "XS",
   "coat": "long",
-  "colors": ["black", "white", "cream", "brown", "blue"],
+  "colors": ["any color or combination"],
   "species": "dog",
-  "sizeAvg": 8,
-  "sizeRange": [4, 12],
+  "sizeAvg": 13,
+  "sizeRange": [9, 17],
   "litterSize": "S",
   "traits": {
     "intelligence": 8,
@@ -6435,16 +6943,19 @@ var DEMO_BREEDS = [{
     "heart": 85,
     "joints": 84
   },
-  "aptitudes": ["Agility", "Conformation", "Obedience"]
+  "aptitudes": ["Agility", "Conformation", "Obedience"],
+  "founderCOI": 7.0,
+  "coatFreqs": {"E": [["E", 0.8], ["e", 0.2]], "K": [["KB", 0.2], ["kbr", 0], ["ky", 0.8]], "A": [["Ay", 0.4], ["aw", 0.2], ["at", 0.25], ["a", 0.15]], "B": [["B", 0.7], ["b", 0.3]], "S": [["S", 0.3], ["sp", 0.45], ["sw", 0.25]]},
+  "healthFlags": ["hips", "eyes", "heart", "teeth"]
 }, {
   "name": "Bolognese",
   "group": "Toy",
   "size": "XS",
   "coat": "long",
-  "colors": ["white"],
+  "colors": ["white only"],
   "species": "dog",
   "sizeAvg": 8,
-  "sizeRange": [4, 12],
+  "sizeRange": [5, 11],
   "litterSize": "S",
   "traits": {
     "intelligence": 7,
@@ -6464,16 +6975,19 @@ var DEMO_BREEDS = [{
     "heart": 85,
     "joints": 84
   },
-  "aptitudes": ["Conformation", "Agility"]
+  "aptitudes": ["Conformation", "Agility"],
+  "founderCOI": 6.5,
+  "coatFreqs": {"E": [["E", 0.15], ["e", 0.85]], "K": [["KB", 0.05], ["kbr", 0], ["ky", 0.95]], "A": [["Ay", 0.8], ["aw", 0.1], ["at", 0.05], ["a", 0.05]], "Cu": [["Cu", 0.9], ["cu", 0.1]]},
+  "healthFlags": ["teeth", "heart", "hips (Legg-Perthes)", "eyes"]
 }, {
   "name": "Coton de Tulear",
   "group": "Toy",
   "size": "XS",
   "coat": "long",
-  "colors": ["white", "white & black", "tricolor"],
+  "colors": ["white", "white with light tan patches", "white with light gray patches"],
   "species": "dog",
-  "sizeAvg": 8,
-  "sizeRange": [4, 12],
+  "sizeAvg": 11,
+  "sizeRange": [8, 15],
   "litterSize": "S",
   "traits": {
     "intelligence": 8,
@@ -6493,16 +7007,19 @@ var DEMO_BREEDS = [{
     "heart": 85,
     "joints": 84
   },
-  "aptitudes": ["Agility", "Conformation", "Rally-O"]
+  "aptitudes": ["Agility", "Conformation", "Rally-O"],
+  "founderCOI": 6.5,
+  "coatFreqs": {"E": [["E", 0.5], ["e", 0.5]], "K": [["KB", 0.05], ["kbr", 0], ["ky", 0.95]], "A": [["Ay", 0.7], ["aw", 0.15], ["at", 0.1], ["a", 0.05]], "S": [["S", 0.2], ["sp", 0.4], ["sw", 0.4]]},
+  "healthFlags": ["hips", "heart", "eyes", "spine", "teeth"]
 }, {
   "name": "Russkiy Toy",
   "group": "Toy",
   "size": "XS",
   "coat": "short",
-  "colors": ["black & tan", "brown & tan", "blue & tan", "lilac & tan"],
+  "colors": ["black & tan", "blue & tan", "brown & tan", "red — with or without black overlay"],
   "species": "dog",
-  "sizeAvg": 8,
-  "sizeRange": [4, 12],
+  "sizeAvg": 5,
+  "sizeRange": [3, 7],
   "litterSize": "S",
   "traits": {
     "intelligence": 7,
@@ -6522,16 +7039,19 @@ var DEMO_BREEDS = [{
     "heart": 82,
     "joints": 82
   },
-  "aptitudes": ["Agility", "Conformation"]
+  "aptitudes": ["Agility", "Conformation"],
+  "founderCOI": 6.5,
+  "coatFreqs": {"E": [["E", 0.85], ["e", 0.15]], "K": [["KB", 0.1], ["kbr", 0], ["ky", 0.9]], "A": [["Ay", 0.3], ["aw", 0.1], ["at", 0.55], ["a", 0.05]], "B": [["B", 0.7], ["b", 0.3]], "D": [["D", 0.75], ["d", 0.25]]},
+  "healthFlags": ["teeth", "hips (Legg-Perthes)", "heart", "spine", "fractures"]
 }, {
   "name": "Biewer Terrier",
   "group": "Toy",
   "size": "XS",
   "coat": "long",
-  "colors": ["tricolor (gold/white/black)", "tricolor (gold/white/blue)"],
+  "colors": ["black white & tan", "blue white & tan"],
   "species": "dog",
-  "sizeAvg": 8,
-  "sizeRange": [4, 12],
+  "sizeAvg": 7,
+  "sizeRange": [4, 9],
   "litterSize": "S",
   "traits": {
     "intelligence": 7,
@@ -6551,16 +7071,19 @@ var DEMO_BREEDS = [{
     "heart": 82,
     "joints": 82
   },
-  "aptitudes": ["Agility", "Conformation"]
+  "aptitudes": ["Agility", "Conformation"],
+  "founderCOI": 7.0,
+  "coatFreqs": {"E": [["E", 1.0], ["e", 0.0]], "K": [["KB", 0.05], ["kbr", 0], ["ky", 0.95]], "A": [["Ay", 0], ["aw", 0], ["at", 1.0], ["a", 0]], "D": [["D", 0.45], ["d", 0.55]], "S": [["S", 0.1], ["sp", 0.5], ["sw", 0.4]]},
+  "healthFlags": ["teeth", "liver (PSS)", "trachea", "heart", "spine"]
 }, {
   "name": "Silky Terrier",
   "group": "Toy",
   "size": "XS",
   "coat": "long",
-  "colors": ["blue & tan", "gray & tan"],
+  "colors": ["blue & tan", "grey & tan"],
   "species": "dog",
-  "sizeAvg": 8,
-  "sizeRange": [4, 12],
+  "sizeAvg": 10,
+  "sizeRange": [7, 12],
   "litterSize": "S",
   "traits": {
     "intelligence": 7,
@@ -6580,16 +7103,19 @@ var DEMO_BREEDS = [{
     "heart": 82,
     "joints": 82
   },
-  "aptitudes": ["Agility", "Conformation", "Earthdog"]
+  "aptitudes": ["Agility", "Conformation", "Earthdog"],
+  "founderCOI": 6.5,
+  "coatFreqs": {"E": [["E", 1.0], ["e", 0.0]], "K": [["KB", 0.05], ["kbr", 0], ["ky", 0.95]], "A": [["Ay", 0], ["aw", 0], ["at", 1.0], ["a", 0]], "D": [["D", 0.45], ["d", 0.55]]},
+  "healthFlags": ["hips (Legg-Perthes)", "trachea", "teeth", "liver", "eyes"]
 }, {
   "name": "Toy Fox Terrier",
   "group": "Toy",
   "size": "XS",
   "coat": "short",
-  "colors": ["tricolor", "white & black", "white & tan"],
+  "colors": ["tricolor (white, black & tan)", "bicolor white & black", "bicolor white & tan", "bicolor white & chocolate"],
   "species": "dog",
-  "sizeAvg": 8,
-  "sizeRange": [4, 12],
+  "sizeAvg": 5,
+  "sizeRange": [3.5, 7],
   "litterSize": "S",
   "traits": {
     "intelligence": 8,
@@ -6609,16 +7135,19 @@ var DEMO_BREEDS = [{
     "heart": 85,
     "joints": 84
   },
-  "aptitudes": ["Agility", "Conformation", "Earthdog"]
+  "aptitudes": ["Agility", "Conformation", "Earthdog"],
+  "founderCOI": 5.5,
+  "coatFreqs": {"E": [["E", 0.85], ["e", 0.15]], "K": [["KB", 0.05], ["kbr", 0.15], ["ky", 0.8]], "A": [["Ay", 0.35], ["aw", 0.05], ["at", 0.5], ["a", 0.1]], "S": [["S", 0.1], ["sp", 0.4], ["sw", 0.5]]},
+  "healthFlags": ["hips (Legg-Perthes)", "eyes", "teeth", "trachea", "heart", "skin"]
 }, {
   "name": "King Charles Spaniel",
   "group": "Toy",
   "size": "XS",
   "coat": "long",
-  "colors": ["blenheim", "tricolor", "black & tan", "ruby"],
+  "colors": ["Blenheim (chestnut & white)", "tricolor", "ruby (solid red)", "black & tan"],
   "species": "dog",
-  "sizeAvg": 8,
-  "sizeRange": [4, 12],
+  "sizeAvg": 12,
+  "sizeRange": [9, 15],
   "litterSize": "S",
   "traits": {
     "intelligence": 7,
@@ -6638,16 +7167,19 @@ var DEMO_BREEDS = [{
     "heart": 65,
     "joints": 72
   },
-  "aptitudes": ["Conformation"]
+  "aptitudes": ["Conformation"],
+  "founderCOI": 8.0,
+  "coatFreqs": {"E": [["E", 0.8], ["e", 0.2]], "K": [["KB", 0.1], ["kbr", 0], ["ky", 0.9]], "A": [["Ay", 0.5], ["aw", 0], ["at", 0.45], ["a", 0.05]], "B": [["B", 0.7], ["b", 0.3]], "S": [["S", 0.3], ["sp", 0.5], ["sw", 0.2]]},
+  "healthFlags": ["heart", "spine (syringomyelia)", "eyes", "breathing", "epilepsy"]
 }, {
   "name": "Tibetan Spaniel",
   "group": "Toy",
   "size": "XS",
   "coat": "long",
-  "colors": ["gold", "cream", "white", "black", "parti-color"],
+  "colors": ["any color or mixture — golden", "cream", "fawn", "red", "sable", "black", "black & tan", "white"],
   "species": "dog",
-  "sizeAvg": 8,
-  "sizeRange": [4, 12],
+  "sizeAvg": 12,
+  "sizeRange": [9, 15],
   "litterSize": "S",
   "traits": {
     "intelligence": 8,
@@ -6667,16 +7199,19 @@ var DEMO_BREEDS = [{
     "heart": 85,
     "joints": 82
   },
-  "aptitudes": ["Conformation", "Agility"]
+  "aptitudes": ["Conformation", "Agility"],
+  "founderCOI": 6.5,
+  "coatFreqs": {"E": [["E", 0.8], ["e", 0.2]], "K": [["KB", 0.1], ["kbr", 0], ["ky", 0.9]], "A": [["Ay", 0.5], ["aw", 0.15], ["at", 0.25], ["a", 0.1]], "B": [["B", 0.75], ["b", 0.25]], "As": [["N", 0.55], ["n", 0.45]]},
+  "healthFlags": ["eyes", "spine", "heart", "breathing"]
 }, {
   "name": "Lhasa Apso",
   "group": "Toy",
   "size": "XS",
   "coat": "long",
-  "colors": ["honey", "black", "white", "gray", "cream"],
+  "colors": ["honey", "golden", "sandy", "dark grizzle", "slate", "smoke", "multi-color", "black", "white", "brown"],
   "species": "dog",
-  "sizeAvg": 8,
-  "sizeRange": [4, 12],
+  "sizeAvg": 13,
+  "sizeRange": [10, 17],
   "litterSize": "S",
   "traits": {
     "intelligence": 6,
@@ -6696,16 +7231,19 @@ var DEMO_BREEDS = [{
     "heart": 82,
     "joints": 80
   },
-  "aptitudes": ["Conformation"]
+  "aptitudes": ["Conformation"],
+  "founderCOI": 6.5,
+  "coatFreqs": {"E": [["E", 0.8], ["e", 0.2]], "K": [["KB", 0.1], ["kbr", 0], ["ky", 0.9]], "A": [["Ay", 0.5], ["aw", 0.2], ["at", 0.2], ["a", 0.1]], "B": [["B", 0.75], ["b", 0.25]], "As": [["N", 0.5], ["n", 0.5]]},
+  "healthFlags": ["eyes", "hips", "kidney", "spine", "bleeding"]
 }, {
   "name": "Bulldog",
   "group": "Non-Sporting",
   "size": "M",
   "coat": "short",
-  "colors": ["brindle", "white", "fawn", "piebald"],
+  "colors": ["red brindle", "all other brindles", "solid white", "solid red", "fawn or fallow", "piebald", "inferior qualities"],
   "species": "dog",
-  "sizeAvg": 40,
-  "sizeRange": [28, 55],
+  "sizeAvg": 50,
+  "sizeRange": [40, 60],
   "litterSize": "M",
   "traits": {
     "intelligence": 5,
@@ -6725,16 +7263,19 @@ var DEMO_BREEDS = [{
     "heart": 65,
     "joints": 65
   },
-  "aptitudes": ["Conformation", "Obedience"]
+  "aptitudes": ["Conformation", "Obedience"],
+  "founderCOI": 8.0,
+  "coatFreqs": {"E": [["E", 0.85], ["e", 0.15]], "K": [["KB", 0.15], ["kbr", 0.5], ["ky", 0.35]], "A": [["Ay", 0.7], ["aw", 0], ["at", 0.2], ["a", 0.1]], "S": [["S", 0.4], ["sp", 0.4], ["sw", 0.2]]},
+  "healthFlags": ["breathing", "hips", "heart", "spine", "skin", "eyes", "joints", "heat"]
 }, {
   "name": "French Bulldog",
   "group": "Non-Sporting",
   "size": "S",
   "coat": "short",
-  "colors": ["brindle", "fawn", "white", "pied"],
+  "colors": ["brindle", "fawn", "white", "brindle & white", "cream"],
   "species": "dog",
-  "sizeAvg": 20,
-  "sizeRange": [12, 28],
+  "sizeAvg": 26,
+  "sizeRange": [16, 35],
   "litterSize": "S",
   "traits": {
     "intelligence": 6,
@@ -6754,16 +7295,19 @@ var DEMO_BREEDS = [{
     "heart": 68,
     "joints": 68
   },
-  "aptitudes": ["Conformation", "Agility"]
+  "aptitudes": ["Conformation", "Agility"],
+  "founderCOI": 8.0,
+  "coatFreqs": {"E": [["E", 0.8], ["e", 0.2]], "K": [["KB", 0.1], ["kbr", 0.55], ["ky", 0.35]], "A": [["Ay", 0.7], ["aw", 0], ["at", 0.2], ["a", 0.1]], "S": [["S", 0.55], ["sp", 0.3], ["sw", 0.15]]},
+  "healthFlags": ["breathing", "spine", "hips", "eyes", "skin", "heart", "joints", "heat"]
 }, {
   "name": "American Bulldog",
   "group": "Non-Sporting",
   "size": "L",
   "coat": "short",
-  "colors": ["white", "brindle & white", "fawn & white"],
+  "colors": ["white", "white & brindle", "white & tan", "white & fawn", "white & red", "solid (non-white)"],
   "species": "dog",
-  "sizeAvg": 65,
-  "sizeRange": [55, 85],
+  "sizeAvg": 85,
+  "sizeRange": [60, 130],
   "litterSize": "L",
   "traits": {
     "intelligence": 7,
@@ -6783,16 +7327,19 @@ var DEMO_BREEDS = [{
     "heart": 72,
     "joints": 68
   },
-  "aptitudes": ["Schutzhund", "Conformation", "Agility"]
+  "aptitudes": ["Schutzhund", "Conformation", "Agility"],
+  "founderCOI": 6.0,
+  "coatFreqs": {"E": [["E", 0.85], ["e", 0.15]], "K": [["KB", 0.1], ["kbr", 0.4], ["ky", 0.5]], "A": [["Ay", 0.55], ["aw", 0], ["at", 0.3], ["a", 0.15]], "S": [["S", 0.2], ["sp", 0.45], ["sw", 0.35]]},
+  "healthFlags": ["hips", "skin", "heart", "cancer", "joints", "breathing", "eyes"]
 }, {
   "name": "Standard Poodle",
   "group": "Non-Sporting",
   "size": "L",
   "coat": "curly",
-  "colors": ["black", "white", "apricot", "red", "silver", "blue"],
+  "colors": ["black", "white", "apricot", "red", "silver", "blue", "brown", "cream", "cafe au lait", "silver beige"],
   "species": "dog",
-  "sizeAvg": 65,
-  "sizeRange": [55, 85],
+  "sizeAvg": 55,
+  "sizeRange": [40, 70],
   "litterSize": "L",
   "traits": {
     "intelligence": 10,
@@ -6812,16 +7359,19 @@ var DEMO_BREEDS = [{
     "heart": 85,
     "joints": 82
   },
-  "aptitudes": ["Agility", "Obedience", "Rally-O", "Dock Diving"]
+  "aptitudes": ["Agility", "Obedience", "Rally-O", "Dock Diving"],
+  "founderCOI": 6.0,
+  "coatFreqs": {"E": [["E", 0.8], ["e", 0.2]], "K": [["KB", 0.75], ["kbr", 0], ["ky", 0.25]], "A": [["Ay", 0.3], ["aw", 0.05], ["at", 0.15], ["a", 0.5]], "B": [["B", 0.65], ["b", 0.35]], "D": [["D", 0.7], ["d", 0.3]], "Cu": [["Cu", 0.95], ["cu", 0.05]]},
+  "healthFlags": ["hips", "bloat", "eyes", "thyroid", "Addisons", "cancer", "skin", "epilepsy"]
 }, {
   "name": "Miniature Poodle",
   "group": "Non-Sporting",
   "size": "S",
   "coat": "curly",
-  "colors": ["black", "white", "apricot", "red", "silver"],
+  "colors": ["black", "white", "apricot", "red", "silver", "blue", "brown", "cream", "cafe au lait"],
   "species": "dog",
-  "sizeAvg": 20,
-  "sizeRange": [12, 28],
+  "sizeAvg": 18,
+  "sizeRange": [10, 25],
   "litterSize": "S",
   "traits": {
     "intelligence": 10,
@@ -6841,16 +7391,19 @@ var DEMO_BREEDS = [{
     "heart": 85,
     "joints": 82
   },
-  "aptitudes": ["Agility", "Obedience", "Rally-O"]
+  "aptitudes": ["Agility", "Obedience", "Rally-O"],
+  "founderCOI": 6.5,
+  "coatFreqs": {"E": [["E", 0.8], ["e", 0.2]], "K": [["KB", 0.75], ["kbr", 0], ["ky", 0.25]], "A": [["Ay", 0.3], ["aw", 0.05], ["at", 0.15], ["a", 0.5]], "B": [["B", 0.65], ["b", 0.35]], "D": [["D", 0.7], ["d", 0.3]], "Cu": [["Cu", 0.95], ["cu", 0.05]]},
+  "healthFlags": ["hips (Legg-Perthes)", "eyes", "epilepsy", "heart", "skin", "teeth", "thyroid"]
 }, {
   "name": "Dalmatian",
   "group": "Non-Sporting",
   "size": "L",
   "coat": "short",
-  "colors": ["white & black spots", "white & liver spots"],
+  "colors": ["white with black spots", "white with liver spots"],
   "species": "dog",
-  "sizeAvg": 65,
-  "sizeRange": [55, 85],
+  "sizeAvg": 55,
+  "sizeRange": [45, 70],
   "litterSize": "L",
   "traits": {
     "intelligence": 7,
@@ -6870,16 +7423,19 @@ var DEMO_BREEDS = [{
     "heart": 82,
     "joints": 78
   },
-  "aptitudes": ["Agility", "Conformation", "Obedience"]
+  "aptitudes": ["Agility", "Conformation", "Obedience"],
+  "founderCOI": 6.5,
+  "coatFreqs": {"E": [["E", 1.0], ["e", 0.0]], "K": [["KB", 0.05], ["kbr", 0], ["ky", 0.95]], "A": [["Ay", 0.3], ["aw", 0.05], ["at", 0.55], ["a", 0.1]], "B": [["B", 0.65], ["b", 0.35]], "T": [["TR", 0.9], ["T", 0.05], ["t", 0.05]], "S": [["S", 0.05], ["sp", 0.15], ["sw", 0.8]]},
+  "healthFlags": ["deafness", "bladder stones (urate)", "hips", "skin", "eyes", "cancer"]
 }, {
   "name": "Chow Chow",
   "group": "Non-Sporting",
   "size": "L",
   "coat": "long",
-  "colors": ["red", "black", "cinnamon", "cream", "blue"],
+  "colors": ["red", "black", "blue", "cinnamon", "cream"],
   "species": "dog",
   "sizeAvg": 65,
-  "sizeRange": [55, 85],
+  "sizeRange": [45, 80],
   "litterSize": "L",
   "traits": {
     "intelligence": 6,
@@ -6899,7 +7455,10 @@ var DEMO_BREEDS = [{
     "heart": 78,
     "joints": 75
   },
-  "aptitudes": ["Conformation"]
+  "aptitudes": ["Conformation"],
+  "founderCOI": 7.0,
+  "coatFreqs": {"E": [["E", 0.8], ["e", 0.2]], "K": [["KB", 0.55], ["kbr", 0], ["ky", 0.45]], "A": [["Ay", 0.45], ["aw", 0.15], ["at", 0.25], ["a", 0.15]], "B": [["B", 0.75], ["b", 0.25]], "D": [["D", 0.7], ["d", 0.3]]},
+  "healthFlags": ["hips", "eyes", "thyroid", "cancer", "skin", "bloat"]
 }, {
   "name": "Boston Terrier",
   "group": "Non-Sporting",
@@ -6907,8 +7466,8 @@ var DEMO_BREEDS = [{
   "coat": "short",
   "colors": ["black & white", "brindle & white", "seal & white"],
   "species": "dog",
-  "sizeAvg": 20,
-  "sizeRange": [12, 28],
+  "sizeAvg": 17,
+  "sizeRange": [12, 25],
   "litterSize": "S",
   "traits": {
     "intelligence": 7,
@@ -6928,7 +7487,10 @@ var DEMO_BREEDS = [{
     "heart": 78,
     "joints": 78
   },
-  "aptitudes": ["Agility", "Flyball", "Conformation"]
+  "aptitudes": ["Agility", "Flyball", "Conformation"],
+  "founderCOI": 7.0,
+  "coatFreqs": {"E": [["E", 0.85], ["e", 0.15]], "K": [["KB", 0.15], ["kbr", 0.5], ["ky", 0.35]], "A": [["Ay", 0.1], ["aw", 0], ["at", 0.6], ["a", 0.3]], "S": [["S", 0.15], ["sp", 0.55], ["sw", 0.3]]},
+  "healthFlags": ["breathing", "eyes", "hips", "spine", "epilepsy", "deafness", "heart", "cancer"]
 }, {
   "name": "Shiba Inu",
   "group": "Non-Sporting",
@@ -6936,8 +7498,8 @@ var DEMO_BREEDS = [{
   "coat": "medium",
   "colors": ["red", "black & tan", "sesame", "cream"],
   "species": "dog",
-  "sizeAvg": 40,
-  "sizeRange": [28, 55],
+  "sizeAvg": 20,
+  "sizeRange": [15, 25],
   "litterSize": "M",
   "traits": {
     "intelligence": 7,
@@ -6957,16 +7519,19 @@ var DEMO_BREEDS = [{
     "heart": 88,
     "joints": 85
   },
-  "aptitudes": ["Conformation", "Agility"]
+  "aptitudes": ["Conformation", "Agility"],
+  "founderCOI": 6.0,
+  "coatFreqs": {"E": [["E", 0.8], ["e", 0.2]], "K": [["KB", 0.15], ["kbr", 0], ["ky", 0.85]], "A": [["Ay", 0.55], ["aw", 0.05], ["at", 0.35], ["a", 0.05]], "S": [["S", 0.75], ["sp", 0.2], ["sw", 0.05]]},
+  "healthFlags": ["hips", "eyes", "skin (allergies)", "cancer", "thyroid"]
 }, {
   "name": "Bichon Fris\xE9",
   "group": "Non-Sporting",
   "size": "XS",
   "coat": "curly",
-  "colors": ["white"],
+  "colors": ["white", "white with cream shadings", "white with apricot shadings", "white with buff shadings"],
   "species": "dog",
-  "sizeAvg": 8,
-  "sizeRange": [4, 12],
+  "sizeAvg": 13,
+  "sizeRange": [10, 18],
   "litterSize": "S",
   "traits": {
     "intelligence": 7,
@@ -6986,16 +7551,19 @@ var DEMO_BREEDS = [{
     "heart": 85,
     "joints": 84
   },
-  "aptitudes": ["Agility", "Obedience", "Conformation"]
+  "aptitudes": ["Agility", "Obedience", "Conformation"],
+  "founderCOI": 6.5,
+  "coatFreqs": {"E": [["E", 0.25], ["e", 0.75]], "K": [["KB", 0.05], ["kbr", 0], ["ky", 0.95]], "A": [["Ay", 0.8], ["aw", 0.12], ["at", 0.05], ["a", 0.03]], "Cu": [["Cu", 0.85], ["cu", 0.15]]},
+  "healthFlags": ["hips", "skin (allergies)", "eyes", "teeth", "immune", "bleeding"]
 }, {
   "name": "Xoloitzcuintli",
   "group": "Non-Sporting",
   "size": "M",
   "coat": "hairless",
-  "colors": ["black", "gray", "bronze", "red"],
+  "colors": ["black", "slate", "gray", "bronze", "liver brindle — with or without spots"],
   "species": "dog",
-  "sizeAvg": 40,
-  "sizeRange": [28, 55],
+  "sizeAvg": 28,
+  "sizeRange": [10, 55],
   "litterSize": "M",
   "traits": {
     "intelligence": 7,
@@ -7015,16 +7583,19 @@ var DEMO_BREEDS = [{
     "heart": 88,
     "joints": 82
   },
-  "aptitudes": ["Conformation", "Agility"]
+  "aptitudes": ["Conformation", "Agility"],
+  "founderCOI": 5.5,
+  "coatFreqs": {"E": [["E", 0.85], ["e", 0.15]], "K": [["KB", 0.35], ["kbr", 0.2], ["ky", 0.45]], "A": [["Ay", 0.25], ["aw", 0.2], ["at", 0.3], ["a", 0.25]], "Hr": [["H", 0.5], ["h", 0.5]], "T": [["TR", 0.15], ["T", 0.4], ["t", 0.45]]},
+  "healthFlags": ["skin", "teeth", "epilepsy", "hips"]
 }, {
   "name": "Finnish Spitz",
   "group": "Non-Sporting",
   "size": "M",
   "coat": "medium",
-  "colors": ["red", "gold"],
+  "colors": ["golden red", "red gold — varying shades"],
   "species": "dog",
-  "sizeAvg": 40,
-  "sizeRange": [28, 55],
+  "sizeAvg": 28,
+  "sizeRange": [20, 36],
   "litterSize": "M",
   "traits": {
     "intelligence": 7,
@@ -7044,16 +7615,19 @@ var DEMO_BREEDS = [{
     "heart": 88,
     "joints": 82
   },
-  "aptitudes": ["Field Trials", "Conformation", "Agility"]
+  "aptitudes": ["Field Trials", "Conformation", "Agility"],
+  "founderCOI": 5.5,
+  "coatFreqs": {"E": [["E", 0.75], ["e", 0.25]], "K": [["KB", 0.05], ["kbr", 0], ["ky", 0.95]], "A": [["Ay", 0.9], ["aw", 0.06], ["at", 0.03], ["a", 0.01]], "As": [["N", 0.6], ["n", 0.4]]},
+  "healthFlags": ["hips", "eyes", "epilepsy"]
 }, {
   "name": "Norwegian Elkhound",
   "group": "Non-Sporting",
   "size": "M",
   "coat": "medium",
-  "colors": ["gray", "silver", "black"],
+  "colors": ["medium gray — various shades with black tipped guard hairs"],
   "species": "dog",
-  "sizeAvg": 40,
-  "sizeRange": [28, 55],
+  "sizeAvg": 50,
+  "sizeRange": [40, 60],
   "litterSize": "M",
   "traits": {
     "intelligence": 7,
@@ -7073,16 +7647,19 @@ var DEMO_BREEDS = [{
     "heart": 82,
     "joints": 78
   },
-  "aptitudes": ["Field Trials", "Tracking", "Conformation"]
+  "aptitudes": ["Field Trials", "Tracking", "Conformation"],
+  "founderCOI": 5.5,
+  "coatFreqs": {"E": [["E", 0.85], ["e", 0.15]], "K": [["KB", 0.05], ["kbr", 0], ["ky", 0.95]], "A": [["Ay", 0.1], ["aw", 0.7], ["at", 0.15], ["a", 0.05]], "As": [["N", 0.65], ["n", 0.35]]},
+  "healthFlags": ["hips", "eyes", "kidney", "thyroid", "cancer"]
 }, {
   "name": "Keeshond",
   "group": "Non-Sporting",
   "size": "M",
   "coat": "long",
-  "colors": ["wolf gray", "silver"],
+  "colors": ["gray & black — mix of gray black & cream with characteristic spectacles markings"],
   "species": "dog",
   "sizeAvg": 40,
-  "sizeRange": [28, 55],
+  "sizeRange": [30, 50],
   "litterSize": "M",
   "traits": {
     "intelligence": 8,
@@ -7102,16 +7679,19 @@ var DEMO_BREEDS = [{
     "heart": 80,
     "joints": 80
   },
-  "aptitudes": ["Agility", "Obedience", "Conformation"]
+  "aptitudes": ["Agility", "Obedience", "Conformation"],
+  "founderCOI": 6.0,
+  "coatFreqs": {"E": [["E", 0.85], ["e", 0.15]], "K": [["KB", 0.05], ["kbr", 0], ["ky", 0.95]], "A": [["Ay", 0.1], ["aw", 0.65], ["at", 0.2], ["a", 0.05]], "As": [["N", 0.7], ["n", 0.3]]},
+  "healthFlags": ["hips", "heart", "epilepsy", "thyroid", "skin", "cancer"]
 }, {
   "name": "American Eskimo Dog",
   "group": "Non-Sporting",
   "size": "M",
   "coat": "long",
-  "colors": ["white", "biscuit"],
+  "colors": ["white", "biscuit cream"],
   "species": "dog",
-  "sizeAvg": 40,
-  "sizeRange": [28, 55],
+  "sizeAvg": 22,
+  "sizeRange": [6, 40],
   "litterSize": "M",
   "traits": {
     "intelligence": 8,
@@ -7131,16 +7711,19 @@ var DEMO_BREEDS = [{
     "heart": 85,
     "joints": 82
   },
-  "aptitudes": ["Agility", "Obedience", "Conformation"]
+  "aptitudes": ["Agility", "Obedience", "Conformation"],
+  "founderCOI": 5.5,
+  "coatFreqs": {"E": [["E", 0.25], ["e", 0.75]], "K": [["KB", 0.05], ["kbr", 0], ["ky", 0.95]], "A": [["Ay", 0.75], ["aw", 0.15], ["at", 0.07], ["a", 0.03]]},
+  "healthFlags": ["hips", "eyes", "heart", "epilepsy", "teeth", "thyroid"]
 }, {
   "name": "Schipperke",
   "group": "Non-Sporting",
   "size": "XS",
   "coat": "medium",
-  "colors": ["black"],
+  "colors": ["black", "chocolate (rare)"],
   "species": "dog",
-  "sizeAvg": 8,
-  "sizeRange": [4, 12],
+  "sizeAvg": 13,
+  "sizeRange": [9, 18],
   "litterSize": "S",
   "traits": {
     "intelligence": 8,
@@ -7160,16 +7743,19 @@ var DEMO_BREEDS = [{
     "heart": 82,
     "joints": 82
   },
-  "aptitudes": ["Agility", "Obedience", "Conformation"]
+  "aptitudes": ["Agility", "Obedience", "Conformation"],
+  "founderCOI": 6.5,
+  "coatFreqs": {"E": [["E", 1.0], ["e", 0.0]], "K": [["KB", 0.85], ["kbr", 0], ["ky", 0.15]], "A": [["Ay", 0], ["aw", 0.1], ["at", 0.1], ["a", 0.8]], "B": [["B", 0.85], ["b", 0.15]]},
+  "healthFlags": ["hips", "eyes", "thyroid", "epilepsy", "MPS (storage disease)"]
 }, {
   "name": "Tibetan Terrier",
   "group": "Non-Sporting",
   "size": "M",
   "coat": "long",
-  "colors": ["white", "black", "cream", "gold", "piebald"],
+  "colors": ["any color — white", "golden", "cream", "gray", "black", "parti-color"],
   "species": "dog",
-  "sizeAvg": 40,
-  "sizeRange": [28, 55],
+  "sizeAvg": 25,
+  "sizeRange": [18, 33],
   "litterSize": "M",
   "traits": {
     "intelligence": 8,
@@ -7189,16 +7775,19 @@ var DEMO_BREEDS = [{
     "heart": 82,
     "joints": 80
   },
-  "aptitudes": ["Agility", "Conformation", "Rally-O"]
+  "aptitudes": ["Agility", "Conformation", "Rally-O"],
+  "founderCOI": 6.0,
+  "coatFreqs": {"E": [["E", 0.8], ["e", 0.2]], "K": [["KB", 0.15], ["kbr", 0], ["ky", 0.85]], "A": [["Ay", 0.45], ["aw", 0.2], ["at", 0.25], ["a", 0.1]], "S": [["S", 0.3], ["sp", 0.45], ["sw", 0.25]]},
+  "healthFlags": ["hips", "eyes", "lens luxation", "spine"]
 }, {
   "name": "Chow Chow (Smooth)",
   "group": "Non-Sporting",
   "size": "L",
   "coat": "short",
-  "colors": ["red", "black", "cinnamon", "cream", "blue"],
+  "colors": ["red", "black", "blue", "cinnamon", "cream"],
   "species": "dog",
   "sizeAvg": 65,
-  "sizeRange": [55, 85],
+  "sizeRange": [45, 80],
   "litterSize": "L",
   "traits": {
     "intelligence": 6,
@@ -7218,16 +7807,19 @@ var DEMO_BREEDS = [{
     "heart": 78,
     "joints": 75
   },
-  "aptitudes": ["Conformation"]
+  "aptitudes": ["Conformation"],
+  "founderCOI": 7.0,
+  "coatFreqs": {"E": [["E", 0.8], ["e", 0.2]], "K": [["KB", 0.55], ["kbr", 0], ["ky", 0.45]], "A": [["Ay", 0.45], ["aw", 0.15], ["at", 0.25], ["a", 0.15]], "B": [["B", 0.75], ["b", 0.25]], "D": [["D", 0.7], ["d", 0.3]]},
+  "healthFlags": ["hips", "eyes", "thyroid", "cancer", "skin", "bloat"]
 }, {
   "name": "Eurasier",
   "group": "Non-Sporting",
   "size": "M",
   "coat": "long",
-  "colors": ["fawn", "red", "wolf sable", "black", "black & tan"],
+  "colors": ["red", "fawn", "wolf sable", "black", "black & tan", "black & silver"],
   "species": "dog",
-  "sizeAvg": 40,
-  "sizeRange": [28, 55],
+  "sizeAvg": 55,
+  "sizeRange": [40, 70],
   "litterSize": "M",
   "traits": {
     "intelligence": 7,
@@ -7247,16 +7839,19 @@ var DEMO_BREEDS = [{
     "heart": 85,
     "joints": 80
   },
-  "aptitudes": ["Conformation", "Agility"]
+  "aptitudes": ["Conformation", "Agility"],
+  "founderCOI": 5.5,
+  "coatFreqs": {"E": [["E", 0.8], ["e", 0.2]], "K": [["KB", 0.2], ["kbr", 0], ["ky", 0.8]], "A": [["Ay", 0.4], ["aw", 0.25], ["at", 0.25], ["a", 0.1]], "As": [["N", 0.55], ["n", 0.45]]},
+  "healthFlags": ["hips", "eyes", "thyroid", "immune", "spine"]
 }, {
   "name": "Basenji",
   "group": "Non-Sporting",
   "size": "M",
   "coat": "short",
-  "colors": ["red & white", "black & white", "tricolor", "brindle"],
+  "colors": ["red & white", "black & white", "black tan & white", "brindle & white"],
   "species": "dog",
-  "sizeAvg": 40,
-  "sizeRange": [28, 55],
+  "sizeAvg": 24,
+  "sizeRange": [17, 30],
   "litterSize": "M",
   "traits": {
     "intelligence": 7,
@@ -7276,16 +7871,19 @@ var DEMO_BREEDS = [{
     "heart": 90,
     "joints": 88
   },
-  "aptitudes": ["Lure Coursing", "Agility", "Conformation"]
+  "aptitudes": ["Lure Coursing", "Agility", "Conformation"],
+  "founderCOI": 5.5,
+  "coatFreqs": {"E": [["E", 0.85], ["e", 0.15]], "K": [["KB", 0.05], ["kbr", 0.3], ["ky", 0.65]], "A": [["Ay", 0.55], ["aw", 0], ["at", 0.35], ["a", 0.1]], "S": [["S", 0.25], ["sp", 0.6], ["sw", 0.15]]},
+  "healthFlags": ["eyes", "kidney (Fanconi)", "hips"]
 }, {
   "name": "Canaan Dog",
   "group": "Non-Sporting",
   "size": "M",
   "coat": "short",
-  "colors": ["white & brown", "white & black", "sandy", "red"],
+  "colors": ["white with patches", "black", "brown", "sandy — with or without white"],
   "species": "dog",
-  "sizeAvg": 40,
-  "sizeRange": [28, 55],
+  "sizeAvg": 45,
+  "sizeRange": [35, 60],
   "litterSize": "M",
   "traits": {
     "intelligence": 8,
@@ -7305,16 +7903,19 @@ var DEMO_BREEDS = [{
     "heart": 88,
     "joints": 82
   },
-  "aptitudes": ["Conformation", "Agility", "Obedience"]
+  "aptitudes": ["Conformation", "Agility", "Obedience"],
+  "founderCOI": 4.5,
+  "coatFreqs": {"E": [["E", 0.8], ["e", 0.2]], "K": [["KB", 0.15], ["kbr", 0.15], ["ky", 0.7]], "A": [["Ay", 0.4], ["aw", 0.2], ["at", 0.25], ["a", 0.15]], "S": [["S", 0.4], ["sp", 0.4], ["sw", 0.2]]},
+  "healthFlags": ["hips", "eyes"]
 }, {
   "name": "Akita Inu (American)",
   "group": "Non-Sporting",
   "size": "XL",
   "coat": "medium",
-  "colors": ["fawn", "brindle", "white", "pinto"],
+  "colors": ["any color including white", "brindle", "pinto"],
   "species": "dog",
   "sizeAvg": 100,
-  "sizeRange": [80, 130],
+  "sizeRange": [70, 130],
   "litterSize": "L",
   "traits": {
     "intelligence": 7,
@@ -7334,7 +7935,10 @@ var DEMO_BREEDS = [{
     "heart": 80,
     "joints": 75
   },
-  "aptitudes": ["Conformation", "Obedience"]
+  "aptitudes": ["Conformation", "Obedience"],
+  "founderCOI": 5.5,
+  "coatFreqs": {"E": [["E", 0.8], ["e", 0.2]], "K": [["KB", 0.25], ["kbr", 0.3], ["ky", 0.45]], "A": [["Ay", 0.5], ["aw", 0.2], ["at", 0.2], ["a", 0.1]], "S": [["S", 0.4], ["sp", 0.5], ["sw", 0.1]]},
+  "healthFlags": ["hips", "eyes", "thyroid", "bloat", "cancer", "immune"]
 }, {
   "name": "Central Asian Shepherd",
   "group": "Working",
@@ -7660,10 +8264,10 @@ var DEMO_BREEDS = [{
   "group": "Herding",
   "size": "L",
   "coat": "medium",
-  "colors": ["sable", "black & tan", "black"],
+  "colors": ["black & tan", "black & red", "sable", "bicolor", "solid black"],
   "species": "dog",
-  "sizeAvg": 65,
-  "sizeRange": [55, 85],
+  "sizeAvg": 75,
+  "sizeRange": [55, 95],
   "litterSize": "L",
   "traits": {
     "intelligence": 9,
@@ -7683,16 +8287,19 @@ var DEMO_BREEDS = [{
     "heart": 85,
     "joints": 72
   },
-  "aptitudes": ["Schutzhund", "IPO", "Tracking", "Obedience", "Search & Rescue"]
+  "aptitudes": ["Schutzhund", "IPO", "Tracking", "Obedience", "Search & Rescue"],
+  "founderCOI": 6.5,
+  "coatFreqs": {"E": [["E", 0.9], ["e", 0.1]], "K": [["KB", 0.25], ["kbr", 0], ["ky", 0.75]], "A": [["Ay", 0.3], ["aw", 0.3], ["at", 0.35], ["a", 0.05]], "As": [["N", 0.65], ["n", 0.35]]},
+  "healthFlags": ["hips", "spine", "bloat", "cancer"]
 }, {
   "name": "GSD DDR East German",
   "group": "Herding",
   "size": "L",
   "coat": "medium",
-  "colors": ["dark sable", "black", "black & tan"],
+  "colors": ["dark sable", "black & tan", "bicolor", "solid black"],
   "species": "dog",
-  "sizeAvg": 65,
-  "sizeRange": [55, 85],
+  "sizeAvg": 80,
+  "sizeRange": [60, 95],
   "litterSize": "L",
   "traits": {
     "intelligence": 9,
@@ -7712,16 +8319,19 @@ var DEMO_BREEDS = [{
     "heart": 88,
     "joints": 82
   },
-  "aptitudes": ["Schutzhund", "IPO", "Tracking", "Police Work"]
+  "aptitudes": ["Schutzhund", "IPO", "Tracking", "Police Work"],
+  "founderCOI": 6.0,
+  "coatFreqs": {"E": [["E", 0.9], ["e", 0.1]], "K": [["KB", 0.2], ["kbr", 0], ["ky", 0.8]], "A": [["Ay", 0.2], ["aw", 0.4], ["at", 0.35], ["a", 0.05]], "As": [["N", 0.7], ["n", 0.3]]},
+  "healthFlags": ["hips", "spine", "bloat"]
 }, {
   "name": "GSD Czech Working",
   "group": "Herding",
   "size": "L",
   "coat": "medium",
-  "colors": ["dark sable", "black", "black & red"],
+  "colors": ["dark sable", "working sable", "black & tan"],
   "species": "dog",
-  "sizeAvg": 65,
-  "sizeRange": [55, 85],
+  "sizeAvg": 75,
+  "sizeRange": [55, 90],
   "litterSize": "L",
   "traits": {
     "intelligence": 9,
@@ -7741,16 +8351,19 @@ var DEMO_BREEDS = [{
     "heart": 88,
     "joints": 80
   },
-  "aptitudes": ["Schutzhund", "IPO", "Police Work", "Military", "Tracking"]
+  "aptitudes": ["Schutzhund", "IPO", "Police Work", "Military", "Tracking"],
+  "founderCOI": 6.0,
+  "coatFreqs": {"E": [["E", 0.9], ["e", 0.1]], "K": [["KB", 0.15], ["kbr", 0], ["ky", 0.85]], "A": [["Ay", 0.15], ["aw", 0.5], ["at", 0.3], ["a", 0.05]], "As": [["N", 0.7], ["n", 0.3]]},
+  "healthFlags": ["hips", "spine", "bloat"]
 }, {
   "name": "GSD West German Show",
   "group": "Herding",
   "size": "L",
   "coat": "medium",
-  "colors": ["black & tan", "sable", "black & red"],
+  "colors": ["black & tan", "black & red", "sable", "bicolor"],
   "species": "dog",
-  "sizeAvg": 65,
-  "sizeRange": [55, 85],
+  "sizeAvg": 72,
+  "sizeRange": [55, 90],
   "litterSize": "L",
   "traits": {
     "intelligence": 9,
@@ -7770,16 +8383,19 @@ var DEMO_BREEDS = [{
     "heart": 85,
     "joints": 68
   },
-  "aptitudes": ["Conformation", "Obedience", "Therapy"]
+  "aptitudes": ["Conformation", "Obedience", "Therapy"],
+  "founderCOI": 7.0,
+  "coatFreqs": {"E": [["E", 0.9], ["e", 0.1]], "K": [["KB", 0.15], ["kbr", 0], ["ky", 0.85]], "A": [["Ay", 0.4], ["aw", 0.2], ["at", 0.35], ["a", 0.05]], "As": [["N", 0.6], ["n", 0.4]]},
+  "healthFlags": ["hips", "spine", "bloat", "cancer"]
 }, {
   "name": "GSD American Show",
   "group": "Herding",
   "size": "L",
   "coat": "medium",
-  "colors": ["black & tan", "sable", "black & silver"],
+  "colors": ["black & tan", "black & cream", "sable", "bicolor", "solid black"],
   "species": "dog",
-  "sizeAvg": 65,
-  "sizeRange": [55, 85],
+  "sizeAvg": 70,
+  "sizeRange": [50, 90],
   "litterSize": "L",
   "traits": {
     "intelligence": 8,
@@ -7799,16 +8415,19 @@ var DEMO_BREEDS = [{
     "heart": 82,
     "joints": 62
   },
-  "aptitudes": ["Conformation", "Obedience", "Therapy"]
+  "aptitudes": ["Conformation", "Obedience", "Therapy"],
+  "founderCOI": 7.0,
+  "coatFreqs": {"E": [["E", 0.9], ["e", 0.1]], "K": [["KB", 0.15], ["kbr", 0], ["ky", 0.85]], "A": [["Ay", 0.4], ["aw", 0.15], ["at", 0.4], ["a", 0.05]], "As": [["N", 0.55], ["n", 0.45]]},
+  "healthFlags": ["hips", "spine", "cancer", "bloat"]
 }, {
   "name": "East European Shepherd",
   "group": "Herding",
   "size": "XL",
   "coat": "medium",
-  "colors": ["sable", "black & tan", "gray", "black"],
+  "colors": ["black & tan", "black & cream", "sable", "solid black", "gray"],
   "species": "dog",
-  "sizeAvg": 100,
-  "sizeRange": [80, 130],
+  "sizeAvg": 85,
+  "sizeRange": [65, 105],
   "litterSize": "L",
   "traits": {
     "intelligence": 9,
@@ -7828,7 +8447,10 @@ var DEMO_BREEDS = [{
     "heart": 85,
     "joints": 75
   },
-  "aptitudes": ["Schutzhund", "Police Work", "Military", "Obedience"]
+  "aptitudes": ["Schutzhund", "Police Work", "Military", "Obedience"],
+  "founderCOI": 6.0,
+  "coatFreqs": {"E": [["E", 0.9], ["e", 0.1]], "K": [["KB", 0.25], ["kbr", 0], ["ky", 0.75]], "A": [["Ay", 0.3], ["aw", 0.3], ["at", 0.35], ["a", 0.05]]},
+  "healthFlags": ["hips", "spine", "bloat"]
 }, {
   "name": "White Swiss Shepherd",
   "group": "Herding",
@@ -7836,8 +8458,8 @@ var DEMO_BREEDS = [{
   "coat": "medium",
   "colors": ["white"],
   "species": "dog",
-  "sizeAvg": 65,
-  "sizeRange": [55, 85],
+  "sizeAvg": 70,
+  "sizeRange": [55, 90],
   "litterSize": "L",
   "traits": {
     "intelligence": 9,
@@ -7857,16 +8479,19 @@ var DEMO_BREEDS = [{
     "heart": 86,
     "joints": 75
   },
-  "aptitudes": ["Obedience", "Agility", "Therapy", "Conformation"]
+  "aptitudes": ["Obedience", "Agility", "Therapy", "Conformation"],
+  "founderCOI": 6.5,
+  "coatFreqs": {"E": [["E", 0.4], ["e", 0.6]], "K": [["KB", 0.05], ["kbr", 0], ["ky", 0.95]], "A": [["Ay", 0.6], ["aw", 0.25], ["at", 0.1], ["a", 0.05]]},
+  "healthFlags": ["hips", "spine", "bloat", "skin"]
 }, {
   "name": "King Shepherd",
   "group": "Herding",
   "size": "XL",
   "coat": "long",
-  "colors": ["sable", "black & tan", "black & silver", "black"],
+  "colors": ["black & tan", "sable", "bicolor", "saddle pattern"],
   "species": "dog",
   "sizeAvg": 100,
-  "sizeRange": [80, 130],
+  "sizeRange": [75, 130],
   "litterSize": "L",
   "traits": {
     "intelligence": 9,
@@ -7886,15 +8511,18 @@ var DEMO_BREEDS = [{
     "heart": 85,
     "joints": 78
   },
-  "aptitudes": ["Obedience", "Therapy", "Conformation", "Search & Rescue"]
+  "aptitudes": ["Obedience", "Therapy", "Conformation", "Search & Rescue"],
+  "founderCOI": 6.0,
+  "coatFreqs": {"E": [["E", 0.9], ["e", 0.1]], "K": [["KB", 0.2], ["kbr", 0], ["ky", 0.8]], "A": [["Ay", 0.3], ["aw", 0.3], ["at", 0.35], ["a", 0.05]], "As": [["N", 0.65], ["n", 0.35]]},
+  "healthFlags": ["hips", "spine", "bloat", "cancer"]
 }, {
   "name": "Shiloh Shepherd",
   "group": "Herding",
   "size": "XL",
   "coat": "long",
-  "colors": ["black & tan", "sable", "golden", "charcoal", "red"],
+  "colors": ["black & tan", "sable", "dual coat patterns", "solid black"],
   "species": "dog",
-  "sizeAvg": 100,
+  "sizeAvg": 110,
   "sizeRange": [80, 130],
   "litterSize": "L",
   "traits": {
@@ -7915,16 +8543,19 @@ var DEMO_BREEDS = [{
     "heart": 86,
     "joints": 78
   },
-  "aptitudes": ["Obedience", "Therapy", "Search & Rescue", "Conformation"]
+  "aptitudes": ["Obedience", "Therapy", "Search & Rescue", "Conformation"],
+  "founderCOI": 6.5,
+  "coatFreqs": {"E": [["E", 0.9], ["e", 0.1]], "K": [["KB", 0.2], ["kbr", 0], ["ky", 0.8]], "A": [["Ay", 0.3], ["aw", 0.3], ["at", 0.35], ["a", 0.05]], "As": [["N", 0.6], ["n", 0.4]]},
+  "healthFlags": ["hips", "spine", "bloat", "cancer"]
 }, {
   "name": "Panda Shepherd",
   "group": "Herding",
   "size": "L",
   "coat": "medium",
-  "colors": ["black & white & tan"],
+  "colors": ["black & tan with white (unique piebald mutation)"],
   "species": "dog",
-  "sizeAvg": 65,
-  "sizeRange": [55, 85],
+  "sizeAvg": 75,
+  "sizeRange": [55, 95],
   "litterSize": "L",
   "traits": {
     "intelligence": 9,
@@ -7944,7 +8575,10 @@ var DEMO_BREEDS = [{
     "heart": 85,
     "joints": 70
   },
-  "aptitudes": ["Schutzhund", "Obedience", "Conformation"]
+  "aptitudes": ["Schutzhund", "Obedience", "Conformation"],
+  "founderCOI": 7.5,
+  "coatFreqs": {"E": [["E", 0.9], ["e", 0.1]], "K": [["KB", 0.2], ["kbr", 0], ["ky", 0.8]], "A": [["Ay", 0.3], ["aw", 0.25], ["at", 0.4], ["a", 0.05]], "S": [["S", 0.05], ["sp", 0.8], ["sw", 0.15]]},
+  "healthFlags": ["hips", "spine", "cancer"]
 }, {
   "name": "Bohemian Shepherd",
   "group": "Herding",
@@ -7952,8 +8586,8 @@ var DEMO_BREEDS = [{
   "coat": "long",
   "colors": ["black & tan"],
   "species": "dog",
-  "sizeAvg": 40,
-  "sizeRange": [28, 55],
+  "sizeAvg": 42,
+  "sizeRange": [33, 55],
   "litterSize": "M",
   "traits": {
     "intelligence": 9,
@@ -7973,16 +8607,19 @@ var DEMO_BREEDS = [{
     "heart": 86,
     "joints": 80
   },
-  "aptitudes": ["Herding", "Obedience", "Agility", "Conformation"]
+  "aptitudes": ["Herding", "Obedience", "Agility", "Conformation"],
+  "founderCOI": 5.5,
+  "coatFreqs": {"E": [["E", 1.0], ["e", 0.0]], "K": [["KB", 0.05], ["kbr", 0], ["ky", 0.95]], "A": [["Ay", 0], ["aw", 0], ["at", 1.0], ["a", 0]]},
+  "healthFlags": ["hips", "eyes"]
 }, {
   "name": "Kunming Dog",
   "group": "Herding",
   "size": "L",
   "coat": "short",
-  "colors": ["sable", "black & tan", "tan"],
+  "colors": ["black & tan", "sable", "tawny"],
   "species": "dog",
   "sizeAvg": 65,
-  "sizeRange": [55, 85],
+  "sizeRange": [55, 80],
   "litterSize": "L",
   "traits": {
     "intelligence": 8,
@@ -8002,7 +8639,10 @@ var DEMO_BREEDS = [{
     "heart": 84,
     "joints": 72
   },
-  "aptitudes": ["Police Work", "Military", "Tracking", "Obedience"]
+  "aptitudes": ["Police Work", "Military", "Tracking", "Obedience"],
+  "founderCOI": 5.5,
+  "coatFreqs": {"E": [["E", 0.9], ["e", 0.1]], "K": [["KB", 0.15], ["kbr", 0], ["ky", 0.85]], "A": [["Ay", 0.3], ["aw", 0.3], ["at", 0.35], ["a", 0.05]], "As": [["N", 0.6], ["n", 0.4]]},
+  "healthFlags": ["hips", "spine", "bloat"]
 }, {
   "name": "Kuvasz",
   "group": "Working",
@@ -8648,10 +9288,10 @@ var DEMO_BREEDS = [{
   "group": "Herding",
   "size": "L",
   "coat": "medium",
-  "colors": ["wolf gray", "tawny", "white"],
+  "colors": ["wolf gray", "wolf brown", "white"],
   "species": "dog",
-  "sizeAvg": 65,
-  "sizeRange": [55, 85],
+  "sizeAvg": 80,
+  "sizeRange": [65, 100],
   "litterSize": "L",
   "traits": {
     "intelligence": 7,
@@ -8671,16 +9311,19 @@ var DEMO_BREEDS = [{
     "heart": 85,
     "joints": 78
   },
-  "aptitudes": ["Conformation"]
+  "aptitudes": ["Conformation"],
+  "founderCOI": 6.5,
+  "coatFreqs": {"E": [["E", 0.85], ["e", 0.15]], "K": [["KB", 0.05], ["kbr", 0], ["ky", 0.95]], "A": [["Ay", 0.1], ["aw", 0.7], ["at", 0.15], ["a", 0.05]], "S": [["S", 0.7], ["sp", 0.2], ["sw", 0.1]]},
+  "healthFlags": ["hips", "eyes", "spine", "shyness"]
 }, {
   "name": "Czechoslovakian Wolfdog",
   "group": "Herding",
   "size": "L",
   "coat": "medium",
-  "colors": ["yellow gray", "silver gray"],
+  "colors": ["yellow-gray", "silver-gray"],
   "species": "dog",
-  "sizeAvg": 65,
-  "sizeRange": [55, 85],
+  "sizeAvg": 58,
+  "sizeRange": [44, 75],
   "litterSize": "L",
   "traits": {
     "intelligence": 8,
@@ -8700,7 +9343,10 @@ var DEMO_BREEDS = [{
     "heart": 85,
     "joints": 80
   },
-  "aptitudes": ["Schutzhund", "Tracking", "Conformation"]
+  "aptitudes": ["Schutzhund", "Tracking", "Conformation"],
+  "founderCOI": 6.5,
+  "coatFreqs": {"E": [["E", 0.85], ["e", 0.15]], "K": [["KB", 0.05], ["kbr", 0], ["ky", 0.95]], "A": [["Ay", 0.2], ["aw", 0.65], ["at", 0.1], ["a", 0.05]], "S": [["S", 0.85], ["sp", 0.12], ["sw", 0.03]]},
+  "healthFlags": ["hips", "eyes", "spine", "shyness"]
 }, {
   "name": "McNab",
   "group": "Herding",
@@ -8709,7 +9355,7 @@ var DEMO_BREEDS = [{
   "colors": ["black & white", "red & white"],
   "species": "dog",
   "sizeAvg": 40,
-  "sizeRange": [28, 55],
+  "sizeRange": [30, 55],
   "litterSize": "M",
   "traits": {
     "intelligence": 9,
@@ -8729,16 +9375,19 @@ var DEMO_BREEDS = [{
     "heart": 90,
     "joints": 85
   },
-  "aptitudes": ["Herding", "Agility", "Flyball"]
+  "aptitudes": ["Herding", "Agility", "Flyball"],
+  "founderCOI": 4.5,
+  "coatFreqs": {"E": [["E", 0.85], ["e", 0.15]], "K": [["KB", 0.05], ["kbr", 0], ["ky", 0.95]], "A": [["Ay", 0.1], ["aw", 0.1], ["at", 0.6], ["a", 0.2]], "B": [["B", 0.7], ["b", 0.3]], "S": [["S", 0.2], ["sp", 0.6], ["sw", 0.2]]},
+  "healthFlags": ["hips", "eyes", "MDR1"]
 }, {
   "name": "English Shepherd",
   "group": "Herding",
   "size": "M",
   "coat": "medium",
-  "colors": ["black & white", "sable & white", "tricolor"],
+  "colors": ["black & white", "black & tan", "sable & white", "tricolor"],
   "species": "dog",
-  "sizeAvg": 40,
-  "sizeRange": [28, 55],
+  "sizeAvg": 48,
+  "sizeRange": [35, 65],
   "litterSize": "M",
   "traits": {
     "intelligence": 8,
@@ -8758,16 +9407,19 @@ var DEMO_BREEDS = [{
     "heart": 88,
     "joints": 82
   },
-  "aptitudes": ["Herding", "Agility", "Obedience"]
+  "aptitudes": ["Herding", "Agility", "Obedience"],
+  "founderCOI": 4.5,
+  "coatFreqs": {"E": [["E", 0.85], ["e", 0.15]], "K": [["KB", 0.05], ["kbr", 0], ["ky", 0.95]], "A": [["Ay", 0.3], ["aw", 0.1], ["at", 0.5], ["a", 0.1]], "S": [["S", 0.25], ["sp", 0.55], ["sw", 0.2]]},
+  "healthFlags": ["hips", "eyes", "MDR1"]
 }, {
   "name": "Blue Lacy",
   "group": "Herding",
   "size": "M",
   "coat": "short",
-  "colors": ["blue", "red", "tricolor"],
+  "colors": ["blue (gray)", "red", "tricolor (blue & red)"],
   "species": "dog",
-  "sizeAvg": 40,
-  "sizeRange": [28, 55],
+  "sizeAvg": 38,
+  "sizeRange": [25, 55],
   "litterSize": "M",
   "traits": {
     "intelligence": 8,
@@ -8787,16 +9439,19 @@ var DEMO_BREEDS = [{
     "heart": 90,
     "joints": 85
   },
-  "aptitudes": ["Herding", "Tracking", "Field Trials"]
+  "aptitudes": ["Herding", "Tracking", "Field Trials"],
+  "founderCOI": 4.5,
+  "coatFreqs": {"E": [["E", 0.8], ["e", 0.2]], "K": [["KB", 0.05], ["kbr", 0], ["ky", 0.95]], "A": [["Ay", 0.4], ["aw", 0.2], ["at", 0.3], ["a", 0.1]], "D": [["D", 0.55], ["d", 0.45]]},
+  "healthFlags": ["hips", "skin", "eyes"]
 }, {
   "name": "Louisiana Catahoula Leopard",
   "group": "Herding",
   "size": "L",
   "coat": "short",
-  "colors": ["merle", "brindle", "solid", "tricolor"],
+  "colors": ["merle", "brindle", "solid", "patched — multiple color combinations"],
   "species": "dog",
   "sizeAvg": 65,
-  "sizeRange": [55, 85],
+  "sizeRange": [50, 95],
   "litterSize": "L",
   "traits": {
     "intelligence": 7,
@@ -8816,16 +9471,19 @@ var DEMO_BREEDS = [{
     "heart": 82,
     "joints": 78
   },
-  "aptitudes": ["Herding", "Tracking", "Field Trials"]
+  "aptitudes": ["Herding", "Tracking", "Field Trials"],
+  "founderCOI": 4.5,
+  "coatFreqs": {"E": [["E", 0.8], ["e", 0.2]], "K": [["KB", 0.1], ["kbr", 0.3], ["ky", 0.6]], "A": [["Ay", 0.35], ["aw", 0.2], ["at", 0.3], ["a", 0.15]], "M": [["M", 0.35], ["m", 0.65]], "S": [["S", 0.2], ["sp", 0.45], ["sw", 0.35]]},
+  "healthFlags": ["deafness", "hips", "eyes"]
 }, {
   "name": "C\xE3o da Serra de Aires",
   "group": "Herding",
   "size": "M",
   "coat": "long",
-  "colors": ["fawn", "gray", "yellow", "brown"],
+  "colors": ["yellow", "fawn", "chestnut", "gray", "black", "black & tan"],
   "species": "dog",
   "sizeAvg": 40,
-  "sizeRange": [28, 55],
+  "sizeRange": [26, 52],
   "litterSize": "M",
   "traits": {
     "intelligence": 8,
@@ -8845,16 +9503,19 @@ var DEMO_BREEDS = [{
     "heart": 85,
     "joints": 80
   },
-  "aptitudes": ["Herding", "Agility", "Conformation"]
+  "aptitudes": ["Herding", "Agility", "Conformation"],
+  "founderCOI": 5.0,
+  "coatFreqs": {"E": [["E", 0.8], ["e", 0.2]], "K": [["KB", 0.15], ["kbr", 0], ["ky", 0.85]], "A": [["Ay", 0.4], ["aw", 0.2], ["at", 0.25], ["a", 0.15]], "B": [["B", 0.8], ["b", 0.2]]},
+  "healthFlags": ["hips", "eyes"]
 }, {
   "name": "Basque Shepherd",
   "group": "Herding",
   "size": "M",
   "coat": "medium",
-  "colors": ["fawn", "black", "red"],
+  "colors": ["fawn", "red", "black & tan", "brindle"],
   "species": "dog",
-  "sizeAvg": 40,
-  "sizeRange": [28, 55],
+  "sizeAvg": 45,
+  "sizeRange": [33, 58],
   "litterSize": "M",
   "traits": {
     "intelligence": 8,
@@ -8874,16 +9535,19 @@ var DEMO_BREEDS = [{
     "heart": 85,
     "joints": 80
   },
-  "aptitudes": ["Herding", "Conformation"]
+  "aptitudes": ["Herding", "Conformation"],
+  "founderCOI": 5.0,
+  "coatFreqs": {"E": [["E", 0.85], ["e", 0.15]], "K": [["KB", 0.1], ["kbr", 0.2], ["ky", 0.7]], "A": [["Ay", 0.5], ["aw", 0.2], ["at", 0.2], ["a", 0.1]]},
+  "healthFlags": ["hips", "eyes"]
 }, {
   "name": "Majorca Shepherd",
   "group": "Herding",
   "size": "L",
   "coat": "short",
-  "colors": ["black", "black & tan"],
+  "colors": ["black", "brown", "black & tan", "fawn"],
   "species": "dog",
-  "sizeAvg": 65,
-  "sizeRange": [55, 85],
+  "sizeAvg": 75,
+  "sizeRange": [55, 95],
   "litterSize": "L",
   "traits": {
     "intelligence": 8,
@@ -8903,16 +9567,19 @@ var DEMO_BREEDS = [{
     "heart": 82,
     "joints": 78
   },
-  "aptitudes": ["Herding", "Conformation"]
+  "aptitudes": ["Herding", "Conformation"],
+  "founderCOI": 5.5,
+  "coatFreqs": {"E": [["E", 0.85], ["e", 0.15]], "K": [["KB", 0.4], ["kbr", 0], ["ky", 0.6]], "A": [["Ay", 0.2], ["aw", 0.15], ["at", 0.45], ["a", 0.2]], "B": [["B", 0.75], ["b", 0.25]]},
+  "healthFlags": ["hips", "eyes"]
 }, {
   "name": "Carea Leon\xE9s",
   "group": "Herding",
   "size": "M",
   "coat": "medium",
-  "colors": ["black", "black & tan", "merle"],
+  "colors": ["black & tan", "sable", "fawn", "brindle"],
   "species": "dog",
-  "sizeAvg": 40,
-  "sizeRange": [28, 55],
+  "sizeAvg": 42,
+  "sizeRange": [30, 55],
   "litterSize": "M",
   "traits": {
     "intelligence": 8,
@@ -8932,16 +9599,19 @@ var DEMO_BREEDS = [{
     "heart": 85,
     "joints": 80
   },
-  "aptitudes": ["Herding", "Agility"]
+  "aptitudes": ["Herding", "Agility"],
+  "founderCOI": 4.5,
+  "coatFreqs": {"E": [["E", 0.85], ["e", 0.15]], "K": [["KB", 0.1], ["kbr", 0.2], ["ky", 0.7]], "A": [["Ay", 0.4], ["aw", 0.2], ["at", 0.3], ["a", 0.1]]},
+  "healthFlags": ["hips", "eyes"]
 }, {
   "name": "Romanian Corb",
   "group": "Herding",
   "size": "L",
   "coat": "medium",
-  "colors": ["black", "black & tan"],
+  "colors": ["black", "black with tan points"],
   "species": "dog",
-  "sizeAvg": 65,
-  "sizeRange": [55, 85],
+  "sizeAvg": 75,
+  "sizeRange": [55, 95],
   "litterSize": "L",
   "traits": {
     "intelligence": 7,
@@ -8961,16 +9631,19 @@ var DEMO_BREEDS = [{
     "heart": 82,
     "joints": 78
   },
-  "aptitudes": ["Herding", "Conformation"]
+  "aptitudes": ["Herding", "Conformation"],
+  "founderCOI": 4.5,
+  "coatFreqs": {"E": [["E", 1.0], ["e", 0.0]], "K": [["KB", 0.8], ["kbr", 0], ["ky", 0.2]], "A": [["Ay", 0], ["aw", 0], ["at", 0.8], ["a", 0.2]]},
+  "healthFlags": ["hips", "joints", "bloat"]
 }, {
   "name": "Lupino del Gigante",
   "group": "Herding",
   "size": "L",
   "coat": "long",
-  "colors": ["gray", "wolf sable"],
+  "colors": ["gray wolf", "fawn", "white"],
   "species": "dog",
-  "sizeAvg": 65,
-  "sizeRange": [55, 85],
+  "sizeAvg": 85,
+  "sizeRange": [65, 110],
   "litterSize": "L",
   "traits": {
     "intelligence": 7,
@@ -8990,16 +9663,19 @@ var DEMO_BREEDS = [{
     "heart": 82,
     "joints": 78
   },
-  "aptitudes": ["Herding", "Conformation"]
+  "aptitudes": ["Herding", "Conformation"],
+  "founderCOI": 4.5,
+  "coatFreqs": {"E": [["E", 0.8], ["e", 0.2]], "K": [["KB", 0.05], ["kbr", 0], ["ky", 0.95]], "A": [["Ay", 0.2], ["aw", 0.55], ["at", 0.2], ["a", 0.05]], "S": [["S", 0.55], ["sp", 0.3], ["sw", 0.15]]},
+  "healthFlags": ["hips", "joints", "bloat"]
 }, {
   "name": "Pastore della Lessinia",
   "group": "Herding",
   "size": "L",
   "coat": "long",
-  "colors": ["white", "fawn", "gray"],
+  "colors": ["gray", "fawn", "white", "piebald"],
   "species": "dog",
   "sizeAvg": 65,
-  "sizeRange": [55, 85],
+  "sizeRange": [50, 85],
   "litterSize": "L",
   "traits": {
     "intelligence": 7,
@@ -9019,16 +9695,19 @@ var DEMO_BREEDS = [{
     "heart": 82,
     "joints": 78
   },
-  "aptitudes": ["Herding", "Conformation"]
+  "aptitudes": ["Herding", "Conformation"],
+  "founderCOI": 4.5,
+  "coatFreqs": {"E": [["E", 0.8], ["e", 0.2]], "K": [["KB", 0.05], ["kbr", 0], ["ky", 0.95]], "A": [["Ay", 0.3], ["aw", 0.35], ["at", 0.25], ["a", 0.1]], "S": [["S", 0.45], ["sp", 0.35], ["sw", 0.2]]},
+  "healthFlags": ["hips", "joints"]
 }, {
   "name": "South African Boerboel Herder",
   "group": "Herding",
   "size": "L",
   "coat": "short",
-  "colors": ["fawn", "brindle", "brown"],
+  "colors": ["brown", "fawn", "brindle", "red-brown with black mask"],
   "species": "dog",
-  "sizeAvg": 65,
-  "sizeRange": [55, 85],
+  "sizeAvg": 110,
+  "sizeRange": [88, 145],
   "litterSize": "L",
   "traits": {
     "intelligence": 7,
@@ -9048,16 +9727,19 @@ var DEMO_BREEDS = [{
     "heart": 80,
     "joints": 75
   },
-  "aptitudes": ["Herding", "Obedience"]
+  "aptitudes": ["Herding", "Obedience"],
+  "founderCOI": 5.5,
+  "coatFreqs": {"E": [["E", 1.0], ["e", 0.0]], "K": [["KB", 0.2], ["kbr", 0.5], ["ky", 0.3]], "A": [["Ay", 0.75], ["aw", 0], ["at", 0.2], ["a", 0.05]]},
+  "healthFlags": ["hips", "joints", "heart", "cancer", "bloat"]
 }, {
   "name": "Maremma-Abruzzese mix",
   "group": "Herding",
   "size": "XL",
   "coat": "long",
-  "colors": ["white"],
+  "colors": ["white", "ivory"],
   "species": "dog",
-  "sizeAvg": 100,
-  "sizeRange": [80, 130],
+  "sizeAvg": 80,
+  "sizeRange": [60, 100],
   "litterSize": "L",
   "traits": {
     "intelligence": 7,
@@ -9077,7 +9759,10 @@ var DEMO_BREEDS = [{
     "heart": 78,
     "joints": 72
   },
-  "aptitudes": ["Herding", "Conformation", "LGD"]
+  "aptitudes": ["Herding", "Conformation", "LGD"],
+  "founderCOI": 4.5,
+  "coatFreqs": {"E": [["E", 0.4], ["e", 0.6]], "K": [["KB", 0.05], ["kbr", 0], ["ky", 0.95]], "A": [["Ay", 0.7], ["aw", 0.2], ["at", 0.05], ["a", 0.05]], "S": [["S", 0.05], ["sp", 0.15], ["sw", 0.8]]},
+  "healthFlags": ["hips", "joints", "bloat"]
 }, {
   "name": "Karelian Bear Dog",
   "group": "Hound",
@@ -9085,8 +9770,8 @@ var DEMO_BREEDS = [{
   "coat": "medium",
   "colors": ["black & white"],
   "species": "dog",
-  "sizeAvg": 40,
-  "sizeRange": [28, 55],
+  "sizeAvg": 48,
+  "sizeRange": [35, 62],
   "litterSize": "M",
   "traits": {
     "intelligence": 7,
@@ -9106,16 +9791,19 @@ var DEMO_BREEDS = [{
     "heart": 88,
     "joints": 82
   },
-  "aptitudes": ["Field Trials", "Tracking"]
+  "aptitudes": ["Field Trials", "Tracking"],
+  "founderCOI": 6.0,
+  "coatFreqs": {"E": [["E", 1.0], ["e", 0.0]], "K": [["KB", 0.85], ["kbr", 0], ["ky", 0.15]], "A": [["Ay", 0], ["aw", 0.2], ["at", 0.1], ["a", 0.7]], "S": [["S", 0.15], ["sp", 0.6], ["sw", 0.25]]},
+  "healthFlags": ["hips", "eyes"]
 }, {
   "name": "Laika (West Siberian)",
   "group": "Hound",
   "size": "M",
   "coat": "medium",
-  "colors": ["white", "gray", "black", "red"],
+  "colors": ["white", "gray", "black", "red — piebald common"],
   "species": "dog",
-  "sizeAvg": 40,
-  "sizeRange": [28, 55],
+  "sizeAvg": 48,
+  "sizeRange": [35, 62],
   "litterSize": "M",
   "traits": {
     "intelligence": 7,
@@ -9135,16 +9823,19 @@ var DEMO_BREEDS = [{
     "heart": 88,
     "joints": 82
   },
-  "aptitudes": ["Field Trials", "Tracking"]
+  "aptitudes": ["Field Trials", "Tracking"],
+  "founderCOI": 4.5,
+  "coatFreqs": {"E": [["E", 0.8], ["e", 0.2]], "K": [["KB", 0.15], ["kbr", 0], ["ky", 0.85]], "A": [["Ay", 0.3], ["aw", 0.35], ["at", 0.25], ["a", 0.1]], "S": [["S", 0.4], ["sp", 0.4], ["sw", 0.2]]},
+  "healthFlags": ["hips", "eyes"]
 }, {
   "name": "Laika (East Siberian)",
   "group": "Hound",
   "size": "M",
   "coat": "medium",
-  "colors": ["white", "gray", "black", "sable"],
+  "colors": ["any color or piebald"],
   "species": "dog",
-  "sizeAvg": 40,
-  "sizeRange": [28, 55],
+  "sizeAvg": 52,
+  "sizeRange": [38, 68],
   "litterSize": "M",
   "traits": {
     "intelligence": 7,
@@ -9164,16 +9855,19 @@ var DEMO_BREEDS = [{
     "heart": 88,
     "joints": 82
   },
-  "aptitudes": ["Field Trials", "Tracking"]
+  "aptitudes": ["Field Trials", "Tracking"],
+  "founderCOI": 4.0,
+  "coatFreqs": {"E": [["E", 0.8], ["e", 0.2]], "K": [["KB", 0.15], ["kbr", 0], ["ky", 0.85]], "A": [["Ay", 0.3], ["aw", 0.35], ["at", 0.25], ["a", 0.1]], "S": [["S", 0.4], ["sp", 0.4], ["sw", 0.2]]},
+  "healthFlags": ["hips", "eyes"]
 }, {
   "name": "Laika (Russo-European)",
   "group": "Hound",
   "size": "M",
   "coat": "medium",
-  "colors": ["black & white", "gray & white"],
+  "colors": ["black & white", "gray", "white", "black"],
   "species": "dog",
-  "sizeAvg": 40,
-  "sizeRange": [28, 55],
+  "sizeAvg": 44,
+  "sizeRange": [33, 58],
   "litterSize": "M",
   "traits": {
     "intelligence": 7,
@@ -9193,16 +9887,19 @@ var DEMO_BREEDS = [{
     "heart": 85,
     "joints": 80
   },
-  "aptitudes": ["Field Trials", "Tracking"]
+  "aptitudes": ["Field Trials", "Tracking"],
+  "founderCOI": 4.5,
+  "coatFreqs": {"E": [["E", 0.85], ["e", 0.15]], "K": [["KB", 0.3], ["kbr", 0], ["ky", 0.7]], "A": [["Ay", 0.2], ["aw", 0.3], ["at", 0.3], ["a", 0.2]], "S": [["S", 0.45], ["sp", 0.4], ["sw", 0.15]]},
+  "healthFlags": ["hips", "eyes"]
 }, {
   "name": "Finnish Hound",
   "group": "Hound",
   "size": "L",
   "coat": "short",
-  "colors": ["tricolor"],
+  "colors": ["tricolor (black, tan & white)"],
   "species": "dog",
-  "sizeAvg": 65,
-  "sizeRange": [55, 85],
+  "sizeAvg": 52,
+  "sizeRange": [40, 65],
   "litterSize": "L",
   "traits": {
     "intelligence": 7,
@@ -9222,16 +9919,19 @@ var DEMO_BREEDS = [{
     "heart": 85,
     "joints": 80
   },
-  "aptitudes": ["Field Trials", "Conformation"]
+  "aptitudes": ["Field Trials", "Conformation"],
+  "founderCOI": 5.5,
+  "coatFreqs": {"E": [["E", 1.0], ["e", 0.0]], "K": [["KB", 0.05], ["kbr", 0], ["ky", 0.95]], "A": [["Ay", 0.3], ["aw", 0], ["at", 0.65], ["a", 0.05]], "S": [["S", 0.2], ["sp", 0.6], ["sw", 0.2]]},
+  "healthFlags": ["hips", "ears", "eyes"]
 }, {
   "name": "Estonian Hound",
   "group": "Hound",
   "size": "M",
   "coat": "short",
-  "colors": ["tricolor", "black & tan"],
+  "colors": ["tricolor", "bicolor — any hound color"],
   "species": "dog",
   "sizeAvg": 40,
-  "sizeRange": [28, 55],
+  "sizeRange": [28, 52],
   "litterSize": "M",
   "traits": {
     "intelligence": 7,
@@ -9251,16 +9951,19 @@ var DEMO_BREEDS = [{
     "heart": 85,
     "joints": 80
   },
-  "aptitudes": ["Field Trials", "Conformation"]
+  "aptitudes": ["Field Trials", "Conformation"],
+  "founderCOI": 5.0,
+  "coatFreqs": {"E": [["E", 0.85], ["e", 0.15]], "K": [["KB", 0.05], ["kbr", 0.15], ["ky", 0.8]], "A": [["Ay", 0.3], ["aw", 0], ["at", 0.6], ["a", 0.1]], "S": [["S", 0.2], ["sp", 0.55], ["sw", 0.25]]},
+  "healthFlags": ["hips", "ears"]
 }, {
   "name": "Polish Hound",
   "group": "Hound",
   "size": "L",
   "coat": "short",
-  "colors": ["black & tan"],
+  "colors": ["black & tan", "black tan & white"],
   "species": "dog",
-  "sizeAvg": 65,
-  "sizeRange": [55, 85],
+  "sizeAvg": 55,
+  "sizeRange": [44, 70],
   "litterSize": "L",
   "traits": {
     "intelligence": 7,
@@ -9280,16 +9983,19 @@ var DEMO_BREEDS = [{
     "heart": 82,
     "joints": 78
   },
-  "aptitudes": ["Field Trials", "Conformation"]
+  "aptitudes": ["Field Trials", "Conformation"],
+  "founderCOI": 5.5,
+  "coatFreqs": {"E": [["E", 1.0], ["e", 0.0]], "K": [["KB", 0.05], ["kbr", 0], ["ky", 0.95]], "A": [["Ay", 0], ["aw", 0], ["at", 1.0], ["a", 0]], "S": [["S", 0.55], ["sp", 0.35], ["sw", 0.1]]},
+  "healthFlags": ["hips", "ears", "bloat"]
 }, {
   "name": "Serbian Hound",
   "group": "Hound",
   "size": "M",
   "coat": "short",
-  "colors": ["red & black saddle"],
+  "colors": ["red & black (black mantle over red)"],
   "species": "dog",
-  "sizeAvg": 40,
-  "sizeRange": [28, 55],
+  "sizeAvg": 44,
+  "sizeRange": [33, 55],
   "litterSize": "M",
   "traits": {
     "intelligence": 7,
@@ -9309,7 +10015,10 @@ var DEMO_BREEDS = [{
     "heart": 82,
     "joints": 78
   },
-  "aptitudes": ["Field Trials", "Conformation"]
+  "aptitudes": ["Field Trials", "Conformation"],
+  "founderCOI": 5.0,
+  "coatFreqs": {"E": [["E", 1.0], ["e", 0.0]], "K": [["KB", 0.05], ["kbr", 0], ["ky", 0.95]], "A": [["Ay", 0.75], ["aw", 0.05], ["at", 0.15], ["a", 0.05]], "As": [["N", 0.7], ["n", 0.3]]},
+  "healthFlags": ["hips", "ears"]
 }, {
   "name": "Porcelaine",
   "group": "Hound",
@@ -9317,8 +10026,8 @@ var DEMO_BREEDS = [{
   "coat": "short",
   "colors": ["white with orange spots"],
   "species": "dog",
-  "sizeAvg": 65,
-  "sizeRange": [55, 85],
+  "sizeAvg": 55,
+  "sizeRange": [44, 68],
   "litterSize": "L",
   "traits": {
     "intelligence": 7,
@@ -9338,16 +10047,19 @@ var DEMO_BREEDS = [{
     "heart": 85,
     "joints": 80
   },
-  "aptitudes": ["Field Trials", "Conformation"]
+  "aptitudes": ["Field Trials", "Conformation"],
+  "founderCOI": 5.5,
+  "coatFreqs": {"E": [["E", 0.85], ["e", 0.15]], "K": [["KB", 0.05], ["kbr", 0], ["ky", 0.95]], "A": [["Ay", 0.8], ["aw", 0], ["at", 0.15], ["a", 0.05]], "S": [["S", 0.1], ["sp", 0.4], ["sw", 0.5]]},
+  "healthFlags": ["hips", "ears"]
 }, {
   "name": "Billy",
   "group": "Hound",
   "size": "L",
   "coat": "short",
-  "colors": ["white", "white & orange"],
+  "colors": ["white", "white with lemon patches", "white with orange patches"],
   "species": "dog",
-  "sizeAvg": 65,
-  "sizeRange": [55, 85],
+  "sizeAvg": 66,
+  "sizeRange": [52, 78],
   "litterSize": "L",
   "traits": {
     "intelligence": 7,
@@ -9367,16 +10079,19 @@ var DEMO_BREEDS = [{
     "heart": 85,
     "joints": 80
   },
-  "aptitudes": ["Field Trials", "Conformation"]
+  "aptitudes": ["Field Trials", "Conformation"],
+  "founderCOI": 5.5,
+  "coatFreqs": {"E": [["E", 0.85], ["e", 0.15]], "K": [["KB", 0.05], ["kbr", 0], ["ky", 0.95]], "A": [["Ay", 0.7], ["aw", 0.1], ["at", 0.15], ["a", 0.05]], "S": [["S", 0.2], ["sp", 0.4], ["sw", 0.4]]},
+  "healthFlags": ["hips", "ears", "bloat"]
 }, {
   "name": "Petit Basset Griffon Vend\xE9en",
   "group": "Hound",
   "size": "S",
   "coat": "wire",
-  "colors": ["white & lemon", "white & orange", "tricolor"],
+  "colors": ["white with orange", "white with grizzle", "tricolor", "white & black"],
   "species": "dog",
-  "sizeAvg": 20,
-  "sizeRange": [12, 28],
+  "sizeAvg": 35,
+  "sizeRange": [25, 45],
   "litterSize": "S",
   "traits": {
     "intelligence": 6,
@@ -9396,16 +10111,19 @@ var DEMO_BREEDS = [{
     "heart": 82,
     "joints": 80
   },
-  "aptitudes": ["Field Trials", "Conformation", "Agility"]
+  "aptitudes": ["Field Trials", "Conformation", "Agility"],
+  "founderCOI": 5.5,
+  "coatFreqs": {"E": [["E", 0.85], ["e", 0.15]], "K": [["KB", 0.05], ["kbr", 0.2], ["ky", 0.75]], "A": [["Ay", 0.35], ["aw", 0.2], ["at", 0.35], ["a", 0.1]], "W": [["W", 0.55], ["w", 0.45]], "S": [["S", 0.2], ["sp", 0.5], ["sw", 0.3]]},
+  "healthFlags": ["hips", "eyes", "ears", "epilepsy"]
 }, {
   "name": "Grand Basset Griffon Vend\xE9en",
   "group": "Hound",
   "size": "M",
   "coat": "wire",
-  "colors": ["white & lemon", "white & orange", "tricolor"],
+  "colors": ["white with orange", "white with grizzle", "tricolor", "white & black"],
   "species": "dog",
-  "sizeAvg": 40,
-  "sizeRange": [28, 55],
+  "sizeAvg": 44,
+  "sizeRange": [33, 55],
   "litterSize": "M",
   "traits": {
     "intelligence": 6,
@@ -9425,16 +10143,19 @@ var DEMO_BREEDS = [{
     "heart": 80,
     "joints": 78
   },
-  "aptitudes": ["Field Trials", "Conformation"]
+  "aptitudes": ["Field Trials", "Conformation"],
+  "founderCOI": 5.5,
+  "coatFreqs": {"E": [["E", 0.85], ["e", 0.15]], "K": [["KB", 0.05], ["kbr", 0.2], ["ky", 0.75]], "A": [["Ay", 0.35], ["aw", 0.2], ["at", 0.35], ["a", 0.1]], "W": [["W", 0.55], ["w", 0.45]], "S": [["S", 0.2], ["sp", 0.5], ["sw", 0.3]]},
+  "healthFlags": ["hips", "ears", "eyes"]
 }, {
   "name": "Briquet Griffon Vend\xE9en",
   "group": "Hound",
   "size": "M",
   "coat": "wire",
-  "colors": ["white & orange", "white & black", "tricolor"],
+  "colors": ["fawn", "white & orange", "tricolor", "white & black"],
   "species": "dog",
-  "sizeAvg": 40,
-  "sizeRange": [28, 55],
+  "sizeAvg": 48,
+  "sizeRange": [35, 58],
   "litterSize": "M",
   "traits": {
     "intelligence": 6,
@@ -9454,16 +10175,19 @@ var DEMO_BREEDS = [{
     "heart": 80,
     "joints": 78
   },
-  "aptitudes": ["Field Trials", "Conformation"]
+  "aptitudes": ["Field Trials", "Conformation"],
+  "founderCOI": 5.5,
+  "coatFreqs": {"E": [["E", 0.85], ["e", 0.15]], "K": [["KB", 0.05], ["kbr", 0.2], ["ky", 0.75]], "A": [["Ay", 0.4], ["aw", 0.2], ["at", 0.3], ["a", 0.1]], "W": [["W", 0.5], ["w", 0.5]]},
+  "healthFlags": ["hips", "ears", "eyes"]
 }, {
   "name": "Anglo-Fran\xE7ais de Petite V\xE9nerie",
   "group": "Hound",
   "size": "M",
   "coat": "short",
-  "colors": ["tricolor", "bicolor"],
+  "colors": ["tricolor", "bicolor orange & white", "bicolor lemon & white"],
   "species": "dog",
-  "sizeAvg": 40,
-  "sizeRange": [28, 55],
+  "sizeAvg": 44,
+  "sizeRange": [33, 55],
   "litterSize": "M",
   "traits": {
     "intelligence": 7,
@@ -9483,16 +10207,19 @@ var DEMO_BREEDS = [{
     "heart": 85,
     "joints": 80
   },
-  "aptitudes": ["Field Trials"]
+  "aptitudes": ["Field Trials"],
+  "founderCOI": 5.0,
+  "coatFreqs": {"E": [["E", 0.85], ["e", 0.15]], "K": [["KB", 0.05], ["kbr", 0.15], ["ky", 0.8]], "A": [["Ay", 0.35], ["aw", 0], ["at", 0.55], ["a", 0.1]], "S": [["S", 0.2], ["sp", 0.55], ["sw", 0.25]]},
+  "healthFlags": ["hips", "ears"]
 }, {
   "name": "Mountain Cur",
   "group": "Hound",
   "size": "M",
   "coat": "short",
-  "colors": ["yellow", "brindle", "black", "blue"],
+  "colors": ["brindle", "yellow", "black", "black & tan", "black brindle"],
   "species": "dog",
-  "sizeAvg": 40,
-  "sizeRange": [28, 55],
+  "sizeAvg": 48,
+  "sizeRange": [30, 65],
   "litterSize": "M",
   "traits": {
     "intelligence": 7,
@@ -9512,16 +10239,19 @@ var DEMO_BREEDS = [{
     "heart": 88,
     "joints": 82
   },
-  "aptitudes": ["Field Trials", "Tracking"]
+  "aptitudes": ["Field Trials", "Tracking"],
+  "founderCOI": 4.0,
+  "coatFreqs": {"E": [["E", 0.85], ["e", 0.15]], "K": [["KB", 0.1], ["kbr", 0.4], ["ky", 0.5]], "A": [["Ay", 0.4], ["aw", 0.15], ["at", 0.35], ["a", 0.1]], "S": [["S", 0.65], ["sp", 0.25], ["sw", 0.1]]},
+  "healthFlags": ["hips", "ears", "eyes"]
 }, {
   "name": "Treeing Tennessee Brindle",
   "group": "Hound",
   "size": "M",
   "coat": "short",
-  "colors": ["brindle"],
+  "colors": ["brindle", "brindle with white markings"],
   "species": "dog",
-  "sizeAvg": 40,
-  "sizeRange": [28, 55],
+  "sizeAvg": 50,
+  "sizeRange": [35, 65],
   "litterSize": "M",
   "traits": {
     "intelligence": 7,
@@ -9541,16 +10271,19 @@ var DEMO_BREEDS = [{
     "heart": 88,
     "joints": 82
   },
-  "aptitudes": ["Field Trials", "Tracking"]
+  "aptitudes": ["Field Trials", "Tracking"],
+  "founderCOI": 4.5,
+  "coatFreqs": {"E": [["E", 1.0], ["e", 0.0]], "K": [["KB", 0.05], ["kbr", 0.9], ["ky", 0.05]], "A": [["Ay", 0.7], ["aw", 0.1], ["at", 0.15], ["a", 0.05]], "S": [["S", 0.6], ["sp", 0.3], ["sw", 0.1]]},
+  "healthFlags": ["hips", "ears"]
 }, {
   "name": "Black Mouth Cur",
   "group": "Hound",
   "size": "M",
   "coat": "short",
-  "colors": ["fawn", "yellow", "brindle", "red"],
+  "colors": ["yellow", "fawn", "red", "brindle", "black — all with black muzzle"],
   "species": "dog",
-  "sizeAvg": 40,
-  "sizeRange": [28, 55],
+  "sizeAvg": 55,
+  "sizeRange": [40, 75],
   "litterSize": "M",
   "traits": {
     "intelligence": 7,
@@ -9570,16 +10303,19 @@ var DEMO_BREEDS = [{
     "heart": 88,
     "joints": 82
   },
-  "aptitudes": ["Field Trials", "Tracking", "Herding"]
+  "aptitudes": ["Field Trials", "Tracking", "Herding"],
+  "founderCOI": 4.0,
+  "coatFreqs": {"E": [["E", 0.85], ["e", 0.15]], "K": [["KB", 0.1], ["kbr", 0.4], ["ky", 0.5]], "A": [["Ay", 0.65], ["aw", 0.1], ["at", 0.2], ["a", 0.05]], "S": [["S", 0.7], ["sp", 0.22], ["sw", 0.08]]},
+  "healthFlags": ["hips", "ears", "eyes"]
 }, {
   "name": "American English Coonhound",
   "group": "Hound",
   "size": "L",
   "coat": "short",
-  "colors": ["tricolor", "blue tick", "red tick"],
+  "colors": ["redtick", "bluetick", "tricolor", "red & white", "black & white"],
   "species": "dog",
   "sizeAvg": 65,
-  "sizeRange": [55, 85],
+  "sizeRange": [45, 80],
   "litterSize": "L",
   "traits": {
     "intelligence": 6,
@@ -9599,16 +10335,19 @@ var DEMO_BREEDS = [{
     "heart": 85,
     "joints": 80
   },
-  "aptitudes": ["Field Trials", "Tracking"]
+  "aptitudes": ["Field Trials", "Tracking"],
+  "founderCOI": 5.0,
+  "coatFreqs": {"E": [["E", 0.85], ["e", 0.15]], "K": [["KB", 0.05], ["kbr", 0.15], ["ky", 0.8]], "A": [["Ay", 0.3], ["aw", 0], ["at", 0.6], ["a", 0.1]], "T": [["TR", 0.45], ["T", 0.3], ["t", 0.25]], "S": [["S", 0.2], ["sp", 0.55], ["sw", 0.25]]},
+  "healthFlags": ["hips", "ears", "eyes", "bloat"]
 }, {
   "name": "Bluetick Coonhound",
   "group": "Hound",
   "size": "L",
   "coat": "short",
-  "colors": ["blue tick"],
+  "colors": ["dark blue with black mottling", "red & blue ticked"],
   "species": "dog",
   "sizeAvg": 65,
-  "sizeRange": [55, 85],
+  "sizeRange": [45, 80],
   "litterSize": "L",
   "traits": {
     "intelligence": 6,
@@ -9628,16 +10367,19 @@ var DEMO_BREEDS = [{
     "heart": 85,
     "joints": 80
   },
-  "aptitudes": ["Field Trials", "Tracking"]
+  "aptitudes": ["Field Trials", "Tracking"],
+  "founderCOI": 5.0,
+  "coatFreqs": {"E": [["E", 1.0], ["e", 0.0]], "K": [["KB", 0.05], ["kbr", 0], ["ky", 0.95]], "A": [["Ay", 0.25], ["aw", 0], ["at", 0.7], ["a", 0.05]], "T": [["TR", 0.85], ["T", 0.1], ["t", 0.05]], "D": [["D", 0.6], ["d", 0.4]]},
+  "healthFlags": ["hips", "ears", "bloat"]
 }, {
   "name": "Chien Fran\xE7ais Blanc et Noir",
   "group": "Hound",
   "size": "L",
   "coat": "short",
-  "colors": ["white & black"],
+  "colors": ["white & black", "white black & tan"],
   "species": "dog",
   "sizeAvg": 65,
-  "sizeRange": [55, 85],
+  "sizeRange": [52, 78],
   "litterSize": "L",
   "traits": {
     "intelligence": 7,
@@ -9657,16 +10399,19 @@ var DEMO_BREEDS = [{
     "heart": 85,
     "joints": 80
   },
-  "aptitudes": ["Field Trials"]
+  "aptitudes": ["Field Trials"],
+  "founderCOI": 5.5,
+  "coatFreqs": {"E": [["E", 1.0], ["e", 0.0]], "K": [["KB", 0.05], ["kbr", 0], ["ky", 0.95]], "A": [["Ay", 0.2], ["aw", 0], ["at", 0.75], ["a", 0.05]], "S": [["S", 0.15], ["sp", 0.55], ["sw", 0.3]]},
+  "healthFlags": ["hips", "ears", "bloat"]
 }, {
   "name": "Dungker",
   "group": "Hound",
   "size": "L",
   "coat": "short",
-  "colors": ["blue merle", "black & tan"],
+  "colors": ["blue merle & white", "black & white — with tan markings"],
   "species": "dog",
-  "sizeAvg": 65,
-  "sizeRange": [55, 85],
+  "sizeAvg": 48,
+  "sizeRange": [35, 60],
   "litterSize": "L",
   "traits": {
     "intelligence": 7,
@@ -9686,16 +10431,19 @@ var DEMO_BREEDS = [{
     "heart": 82,
     "joints": 78
   },
-  "aptitudes": ["Field Trials", "Conformation"]
+  "aptitudes": ["Field Trials", "Conformation"],
+  "founderCOI": 5.5,
+  "coatFreqs": {"E": [["E", 1.0], ["e", 0.0]], "K": [["KB", 0.05], ["kbr", 0], ["ky", 0.95]], "A": [["Ay", 0.2], ["aw", 0], ["at", 0.75], ["a", 0.05]], "M": [["M", 0.4], ["m", 0.6]], "S": [["S", 0.2], ["sp", 0.55], ["sw", 0.25]]},
+  "healthFlags": ["hips", "ears", "deafness"]
 }, {
   "name": "Drever",
   "group": "Hound",
   "size": "S",
   "coat": "short",
-  "colors": ["tricolor", "red & white", "black & tan & white"],
+  "colors": ["any color with white markings — tricolor common"],
   "species": "dog",
-  "sizeAvg": 20,
-  "sizeRange": [12, 28],
+  "sizeAvg": 32,
+  "sizeRange": [24, 40],
   "litterSize": "S",
   "traits": {
     "intelligence": 7,
@@ -9715,16 +10463,19 @@ var DEMO_BREEDS = [{
     "heart": 82,
     "joints": 78
   },
-  "aptitudes": ["Field Trials", "Conformation"]
+  "aptitudes": ["Field Trials", "Conformation"],
+  "founderCOI": 5.5,
+  "coatFreqs": {"E": [["E", 0.85], ["e", 0.15]], "K": [["KB", 0.05], ["kbr", 0.2], ["ky", 0.75]], "A": [["Ay", 0.35], ["aw", 0.05], ["at", 0.5], ["a", 0.1]], "S": [["S", 0.2], ["sp", 0.55], ["sw", 0.25]]},
+  "healthFlags": ["hips", "ears", "spine"]
 }, {
   "name": "H\xE4lleforshund",
   "group": "Hound",
   "size": "M",
   "coat": "short",
-  "colors": ["tricolor"],
+  "colors": ["black & white with tan markings"],
   "species": "dog",
-  "sizeAvg": 40,
-  "sizeRange": [28, 55],
+  "sizeAvg": 48,
+  "sizeRange": [35, 60],
   "litterSize": "M",
   "traits": {
     "intelligence": 7,
@@ -9744,16 +10495,19 @@ var DEMO_BREEDS = [{
     "heart": 82,
     "joints": 78
   },
-  "aptitudes": ["Field Trials", "Conformation"]
+  "aptitudes": ["Field Trials", "Conformation"],
+  "founderCOI": 5.5,
+  "coatFreqs": {"E": [["E", 1.0], ["e", 0.0]], "K": [["KB", 0.05], ["kbr", 0], ["ky", 0.95]], "A": [["Ay", 0.2], ["aw", 0], ["at", 0.75], ["a", 0.05]], "S": [["S", 0.3], ["sp", 0.55], ["sw", 0.15]]},
+  "healthFlags": ["hips", "ears"]
 }, {
   "name": "Schillerst\xF6vare",
   "group": "Hound",
   "size": "L",
   "coat": "short",
-  "colors": ["tricolor"],
+  "colors": ["tan & black (black saddle over rich tan)"],
   "species": "dog",
-  "sizeAvg": 65,
-  "sizeRange": [55, 85],
+  "sizeAvg": 48,
+  "sizeRange": [35, 62],
   "litterSize": "L",
   "traits": {
     "intelligence": 7,
@@ -9773,7 +10527,10 @@ var DEMO_BREEDS = [{
     "heart": 82,
     "joints": 78
   },
-  "aptitudes": ["Field Trials", "Conformation"]
+  "aptitudes": ["Field Trials", "Conformation"],
+  "founderCOI": 5.5,
+  "coatFreqs": {"E": [["E", 1.0], ["e", 0.0]], "K": [["KB", 0.05], ["kbr", 0], ["ky", 0.95]], "A": [["Ay", 0.6], ["aw", 0.1], ["at", 0.25], ["a", 0.05]], "As": [["N", 0.65], ["n", 0.35]]},
+  "healthFlags": ["hips", "ears", "eyes"]
 }, {
   "name": "Smalandsst\xF6vare",
   "group": "Hound",
@@ -9782,7 +10539,7 @@ var DEMO_BREEDS = [{
   "colors": ["black & tan"],
   "species": "dog",
   "sizeAvg": 40,
-  "sizeRange": [28, 55],
+  "sizeRange": [30, 50],
   "litterSize": "M",
   "traits": {
     "intelligence": 7,
@@ -9802,16 +10559,19 @@ var DEMO_BREEDS = [{
     "heart": 82,
     "joints": 78
   },
-  "aptitudes": ["Field Trials", "Conformation"]
+  "aptitudes": ["Field Trials", "Conformation"],
+  "founderCOI": 6.0,
+  "coatFreqs": {"E": [["E", 1.0], ["e", 0.0]], "K": [["KB", 0.05], ["kbr", 0], ["ky", 0.95]], "A": [["Ay", 0], ["aw", 0], ["at", 1.0], ["a", 0]]},
+  "healthFlags": ["hips", "ears", "eyes"]
 }, {
   "name": "Hygen Hound",
   "group": "Hound",
   "size": "M",
   "coat": "short",
-  "colors": ["red", "yellow", "tricolor"],
+  "colors": ["tan", "red & white", "black & tan"],
   "species": "dog",
-  "sizeAvg": 40,
-  "sizeRange": [28, 55],
+  "sizeAvg": 48,
+  "sizeRange": [38, 60],
   "litterSize": "M",
   "traits": {
     "intelligence": 7,
@@ -9831,7 +10591,10 @@ var DEMO_BREEDS = [{
     "heart": 82,
     "joints": 78
   },
-  "aptitudes": ["Field Trials", "Conformation"]
+  "aptitudes": ["Field Trials", "Conformation"],
+  "founderCOI": 5.5,
+  "coatFreqs": {"E": [["E", 0.85], ["e", 0.15]], "K": [["KB", 0.05], ["kbr", 0], ["ky", 0.95]], "A": [["Ay", 0.5], ["aw", 0.05], ["at", 0.4], ["a", 0.05]], "S": [["S", 0.45], ["sp", 0.4], ["sw", 0.15]]},
+  "healthFlags": ["hips", "ears"]
 }, {
   "name": "Hellenikos Ichnilatis",
   "group": "Hound",
@@ -9839,8 +10602,8 @@ var DEMO_BREEDS = [{
   "coat": "short",
   "colors": ["black & tan"],
   "species": "dog",
-  "sizeAvg": 40,
-  "sizeRange": [28, 55],
+  "sizeAvg": 44,
+  "sizeRange": [33, 55],
   "litterSize": "M",
   "traits": {
     "intelligence": 7,
@@ -9860,16 +10623,19 @@ var DEMO_BREEDS = [{
     "heart": 82,
     "joints": 78
   },
-  "aptitudes": ["Field Trials", "Conformation"]
+  "aptitudes": ["Field Trials", "Conformation"],
+  "founderCOI": 4.5,
+  "coatFreqs": {"E": [["E", 1.0], ["e", 0.0]], "K": [["KB", 0.05], ["kbr", 0], ["ky", 0.95]], "A": [["Ay", 0], ["aw", 0], ["at", 1.0], ["a", 0]]},
+  "healthFlags": ["hips", "ears"]
 }, {
   "name": "Fell Terrier",
   "group": "Terrier",
   "size": "XS",
   "coat": "wire",
-  "colors": ["black", "black & tan", "red"],
+  "colors": ["black", "black & tan", "red", "grizzle"],
   "species": "dog",
-  "sizeAvg": 8,
-  "sizeRange": [4, 12],
+  "sizeAvg": 15,
+  "sizeRange": [12, 18],
   "litterSize": "S",
   "traits": {
     "intelligence": 7,
@@ -9889,16 +10655,19 @@ var DEMO_BREEDS = [{
     "heart": 88,
     "joints": 85
   },
-  "aptitudes": ["Earthdog", "Field Trials"]
+  "aptitudes": ["Earthdog", "Field Trials"],
+  "founderCOI": 4.5,
+  "coatFreqs": {"E": [["E", 0.85], ["e", 0.15]], "K": [["KB", 0.5], ["kbr", 0.1], ["ky", 0.4]], "A": [["Ay", 0.3], ["aw", 0.15], ["at", 0.4], ["a", 0.15]], "W": [["W", 0.65], ["w", 0.35]]},
+  "healthFlags": ["hips", "eyes", "spine"]
 }, {
   "name": "Plummer Terrier",
   "group": "Terrier",
   "size": "S",
   "coat": "short",
-  "colors": ["white & tan", "tricolor"],
+  "colors": ["red & white", "tan & white"],
   "species": "dog",
-  "sizeAvg": 20,
-  "sizeRange": [12, 28],
+  "sizeAvg": 14,
+  "sizeRange": [11, 18],
   "litterSize": "S",
   "traits": {
     "intelligence": 7,
@@ -9918,16 +10687,19 @@ var DEMO_BREEDS = [{
     "heart": 88,
     "joints": 85
   },
-  "aptitudes": ["Earthdog", "Field Trials"]
+  "aptitudes": ["Earthdog", "Field Trials"],
+  "founderCOI": 5.0,
+  "coatFreqs": {"E": [["E", 0.85], ["e", 0.15]], "K": [["KB", 0.05], ["kbr", 0.1], ["ky", 0.85]], "A": [["Ay", 0.65], ["aw", 0.1], ["at", 0.2], ["a", 0.05]], "S": [["S", 0.2], ["sp", 0.55], ["sw", 0.25]]},
+  "healthFlags": ["hips", "eyes", "spine"]
 }, {
   "name": "Lucas Terrier",
   "group": "Terrier",
   "size": "S",
   "coat": "wire",
-  "colors": ["grizzle & tan", "sandy & tan"],
+  "colors": ["tan & white", "tan", "grizzle & tan", "black & tan"],
   "species": "dog",
-  "sizeAvg": 20,
-  "sizeRange": [12, 28],
+  "sizeAvg": 16,
+  "sizeRange": [12, 20],
   "litterSize": "S",
   "traits": {
     "intelligence": 7,
@@ -9947,16 +10719,19 @@ var DEMO_BREEDS = [{
     "heart": 85,
     "joints": 82
   },
-  "aptitudes": ["Earthdog", "Conformation"]
+  "aptitudes": ["Earthdog", "Conformation"],
+  "founderCOI": 6.0,
+  "coatFreqs": {"E": [["E", 0.85], ["e", 0.15]], "K": [["KB", 0.05], ["kbr", 0.25], ["ky", 0.7]], "A": [["Ay", 0.35], ["aw", 0.3], ["at", 0.3], ["a", 0.05]], "W": [["W", 0.7], ["w", 0.3]]},
+  "healthFlags": ["hips", "eyes", "heart"]
 }, {
   "name": "Ratonero Bodeguero Andaluz",
   "group": "Terrier",
   "size": "S",
   "coat": "short",
-  "colors": ["white & black", "white & tan", "tricolor"],
+  "colors": ["white with black & tan markings", "white with black markings", "white with tan markings"],
   "species": "dog",
-  "sizeAvg": 20,
-  "sizeRange": [12, 28],
+  "sizeAvg": 15,
+  "sizeRange": [11, 18],
   "litterSize": "S",
   "traits": {
     "intelligence": 7,
@@ -9976,16 +10751,19 @@ var DEMO_BREEDS = [{
     "heart": 88,
     "joints": 82
   },
-  "aptitudes": ["Earthdog", "Agility", "Conformation"]
+  "aptitudes": ["Earthdog", "Agility", "Conformation"],
+  "founderCOI": 5.0,
+  "coatFreqs": {"E": [["E", 0.85], ["e", 0.15]], "K": [["KB", 0.05], ["kbr", 0.15], ["ky", 0.8]], "A": [["Ay", 0.4], ["aw", 0.1], ["at", 0.4], ["a", 0.1]], "S": [["S", 0.1], ["sp", 0.4], ["sw", 0.5]]},
+  "healthFlags": ["hips", "eyes", "spine"]
 }, {
   "name": "Teddy Roosevelt Terrier",
   "group": "Terrier",
   "size": "S",
   "coat": "short",
-  "colors": ["white & black", "white & tan", "tricolor"],
+  "colors": ["bicolor or tricolor — white base with patches"],
   "species": "dog",
-  "sizeAvg": 20,
-  "sizeRange": [12, 28],
+  "sizeAvg": 13,
+  "sizeRange": [8, 18],
   "litterSize": "S",
   "traits": {
     "intelligence": 8,
@@ -10005,16 +10783,19 @@ var DEMO_BREEDS = [{
     "heart": 88,
     "joints": 84
   },
-  "aptitudes": ["Earthdog", "Agility", "Conformation"]
+  "aptitudes": ["Earthdog", "Agility", "Conformation"],
+  "founderCOI": 4.5,
+  "coatFreqs": {"E": [["E", 0.85], ["e", 0.15]], "K": [["KB", 0.05], ["kbr", 0.2], ["ky", 0.75]], "A": [["Ay", 0.35], ["aw", 0.1], ["at", 0.45], ["a", 0.1]], "S": [["S", 0.1], ["sp", 0.5], ["sw", 0.4]]},
+  "healthFlags": ["hips", "Legg-Perthes", "eyes", "heart"]
 }, {
   "name": "American Hairless Terrier",
   "group": "Terrier",
   "size": "S",
   "coat": "hairless",
-  "colors": ["pink", "pink & gray", "pink & red"],
+  "colors": ["any color — pink skin with spots when hairless", "various coat colors in coated variety"],
   "species": "dog",
-  "sizeAvg": 20,
-  "sizeRange": [12, 28],
+  "sizeAvg": 14,
+  "sizeRange": [10, 18],
   "litterSize": "S",
   "traits": {
     "intelligence": 7,
@@ -10034,16 +10815,19 @@ var DEMO_BREEDS = [{
     "heart": 85,
     "joints": 84
   },
-  "aptitudes": ["Agility", "Conformation", "Rally-O"]
+  "aptitudes": ["Agility", "Conformation", "Rally-O"],
+  "founderCOI": 6.5,
+  "coatFreqs": {"E": [["E", 0.85], ["e", 0.15]], "K": [["KB", 0.05], ["kbr", 0.15], ["ky", 0.8]], "A": [["Ay", 0.35], ["aw", 0.1], ["at", 0.45], ["a", 0.1]], "Hr": [["H", 0.5], ["h", 0.5]]},
+  "healthFlags": ["skin", "sunburn", "eyes", "heart", "epilepsy"]
 }, {
   "name": "Tenterfield Terrier",
   "group": "Terrier",
   "size": "XS",
   "coat": "short",
-  "colors": ["white & black", "white & tan", "tricolor"],
+  "colors": ["white with black & tan", "white with black", "white with tan"],
   "species": "dog",
-  "sizeAvg": 8,
-  "sizeRange": [4, 12],
+  "sizeAvg": 10,
+  "sizeRange": [8, 14],
   "litterSize": "S",
   "traits": {
     "intelligence": 7,
@@ -10063,16 +10847,19 @@ var DEMO_BREEDS = [{
     "heart": 85,
     "joints": 82
   },
-  "aptitudes": ["Earthdog", "Agility", "Conformation"]
+  "aptitudes": ["Earthdog", "Agility", "Conformation"],
+  "founderCOI": 4.5,
+  "coatFreqs": {"E": [["E", 0.85], ["e", 0.15]], "K": [["KB", 0.05], ["kbr", 0.15], ["ky", 0.8]], "A": [["Ay", 0.4], ["aw", 0.1], ["at", 0.4], ["a", 0.1]], "S": [["S", 0.1], ["sp", 0.4], ["sw", 0.5]]},
+  "healthFlags": ["hips", "eyes", "Legg-Perthes"]
 }, {
   "name": "Brazilian Terrier",
   "group": "Terrier",
   "size": "S",
   "coat": "short",
-  "colors": ["tricolor", "white & black", "white & tan"],
+  "colors": ["tricolor (white with black or brown & tan markings)"],
   "species": "dog",
-  "sizeAvg": 20,
-  "sizeRange": [12, 28],
+  "sizeAvg": 18,
+  "sizeRange": [13, 22],
   "litterSize": "S",
   "traits": {
     "intelligence": 7,
@@ -10092,16 +10879,19 @@ var DEMO_BREEDS = [{
     "heart": 88,
     "joints": 82
   },
-  "aptitudes": ["Agility", "Conformation", "Obedience"]
+  "aptitudes": ["Agility", "Conformation", "Obedience"],
+  "founderCOI": 5.0,
+  "coatFreqs": {"E": [["E", 0.85], ["e", 0.15]], "K": [["KB", 0.05], ["kbr", 0.15], ["ky", 0.8]], "A": [["Ay", 0.3], ["aw", 0.05], ["at", 0.55], ["a", 0.1]], "S": [["S", 0.1], ["sp", 0.4], ["sw", 0.5]]},
+  "healthFlags": ["hips", "eyes", "deafness", "spine"]
 }, {
   "name": "Irish Water Spaniel",
   "group": "Sporting",
   "size": "L",
   "coat": "curly",
-  "colors": ["liver"],
+  "colors": ["rich puce-brown (liver) only"],
   "species": "dog",
-  "sizeAvg": 65,
-  "sizeRange": [55, 85],
+  "sizeAvg": 55,
+  "sizeRange": [44, 68],
   "litterSize": "L",
   "traits": {
     "intelligence": 7,
@@ -10121,16 +10911,19 @@ var DEMO_BREEDS = [{
     "heart": 80,
     "joints": 75
   },
-  "aptitudes": ["Field Trials", "Dock Diving", "Conformation"]
+  "aptitudes": ["Field Trials", "Dock Diving", "Conformation"],
+  "founderCOI": 6.5,
+  "coatFreqs": {"E": [["E", 0.85], ["e", 0.15]], "K": [["KB", 0.1], ["kbr", 0], ["ky", 0.9]], "A": [["Ay", 0.3], ["aw", 0.2], ["at", 0.35], ["a", 0.15]], "B": [["B", 0.2], ["b", 0.8]], "Cu": [["Cu", 0.9], ["cu", 0.1]]},
+  "healthFlags": ["hips", "cancer", "thyroid", "epilepsy", "immune"]
 }, {
   "name": "Field Spaniel",
   "group": "Sporting",
   "size": "M",
   "coat": "medium",
-  "colors": ["black", "liver", "golden liver"],
+  "colors": ["black", "liver", "golden liver", "roan", "any of these with tan points"],
   "species": "dog",
   "sizeAvg": 40,
-  "sizeRange": [28, 55],
+  "sizeRange": [30, 52],
   "litterSize": "M",
   "traits": {
     "intelligence": 7,
@@ -10150,7 +10943,10 @@ var DEMO_BREEDS = [{
     "heart": 80,
     "joints": 75
   },
-  "aptitudes": ["Field Trials", "Conformation", "Agility"]
+  "aptitudes": ["Field Trials", "Conformation", "Agility"],
+  "founderCOI": 7.0,
+  "coatFreqs": {"E": [["E", 0.85], ["e", 0.15]], "K": [["KB", 0.3], ["kbr", 0], ["ky", 0.7]], "A": [["Ay", 0.3], ["aw", 0.1], ["at", 0.45], ["a", 0.15]], "B": [["B", 0.5], ["b", 0.5]]},
+  "healthFlags": ["hips", "eyes", "ears", "cancer", "heart"]
 }, {
   "name": "Stabyhoun",
   "group": "Sporting",
@@ -10158,8 +10954,8 @@ var DEMO_BREEDS = [{
   "coat": "medium",
   "colors": ["black & white", "brown & white", "orange & white"],
   "species": "dog",
-  "sizeAvg": 40,
-  "sizeRange": [28, 55],
+  "sizeAvg": 48,
+  "sizeRange": [38, 60],
   "litterSize": "M",
   "traits": {
     "intelligence": 8,
@@ -10179,16 +10975,19 @@ var DEMO_BREEDS = [{
     "heart": 85,
     "joints": 80
   },
-  "aptitudes": ["Field Trials", "Agility", "Conformation"]
+  "aptitudes": ["Field Trials", "Agility", "Conformation"],
+  "founderCOI": 7.0,
+  "coatFreqs": {"E": [["E", 0.85], ["e", 0.15]], "K": [["KB", 0.05], ["kbr", 0], ["ky", 0.95]], "A": [["Ay", 0.3], ["aw", 0.1], ["at", 0.5], ["a", 0.1]], "B": [["B", 0.65], ["b", 0.35]], "S": [["S", 0.15], ["sp", 0.6], ["sw", 0.25]]},
+  "healthFlags": ["hips", "eyes", "heart", "epilepsy"]
 }, {
   "name": "Small M\xFCnsterl\xE4nder",
   "group": "Sporting",
   "size": "M",
   "coat": "medium",
-  "colors": ["brown & white", "brown roan"],
+  "colors": ["brown & white", "brown roan with brown head"],
   "species": "dog",
-  "sizeAvg": 40,
-  "sizeRange": [28, 55],
+  "sizeAvg": 38,
+  "sizeRange": [28, 52],
   "litterSize": "M",
   "traits": {
     "intelligence": 8,
@@ -10208,16 +11007,19 @@ var DEMO_BREEDS = [{
     "heart": 85,
     "joints": 78
   },
-  "aptitudes": ["Field Trials", "Tracking", "Conformation"]
+  "aptitudes": ["Field Trials", "Tracking", "Conformation"],
+  "founderCOI": 5.5,
+  "coatFreqs": {"E": [["E", 0.85], ["e", 0.15]], "K": [["KB", 0.05], ["kbr", 0], ["ky", 0.95]], "A": [["Ay", 0.6], ["aw", 0.15], ["at", 0.2], ["a", 0.05]], "B": [["B", 0.4], ["b", 0.6]], "S": [["S", 0.2], ["sp", 0.6], ["sw", 0.2]]},
+  "healthFlags": ["hips", "eyes", "heart"]
 }, {
   "name": "Large M\xFCnsterl\xE4nder",
   "group": "Sporting",
   "size": "L",
   "coat": "long",
-  "colors": ["black & white", "black roan"],
+  "colors": ["black & white", "black white & tan"],
   "species": "dog",
-  "sizeAvg": 65,
-  "sizeRange": [55, 85],
+  "sizeAvg": 62,
+  "sizeRange": [50, 75],
   "litterSize": "L",
   "traits": {
     "intelligence": 8,
@@ -10237,16 +11039,19 @@ var DEMO_BREEDS = [{
     "heart": 85,
     "joints": 78
   },
-  "aptitudes": ["Field Trials", "Tracking", "Conformation"]
+  "aptitudes": ["Field Trials", "Tracking", "Conformation"],
+  "founderCOI": 5.5,
+  "coatFreqs": {"E": [["E", 1.0], ["e", 0.0]], "K": [["KB", 0.05], ["kbr", 0], ["ky", 0.95]], "A": [["Ay", 0.25], ["aw", 0.05], ["at", 0.6], ["a", 0.1]], "S": [["S", 0.2], ["sp", 0.6], ["sw", 0.2]]},
+  "healthFlags": ["hips", "eyes", "heart", "bloat"]
 }, {
   "name": "Cesky Fousek",
   "group": "Sporting",
   "size": "L",
   "coat": "wire",
-  "colors": ["brown", "brown & white", "roan"],
+  "colors": ["dark brown roan", "brown roan", "brown with white spots"],
   "species": "dog",
-  "sizeAvg": 65,
-  "sizeRange": [55, 85],
+  "sizeAvg": 58,
+  "sizeRange": [48, 72],
   "litterSize": "L",
   "traits": {
     "intelligence": 8,
@@ -10266,16 +11071,19 @@ var DEMO_BREEDS = [{
     "heart": 85,
     "joints": 78
   },
-  "aptitudes": ["Field Trials", "Tracking", "Conformation"]
+  "aptitudes": ["Field Trials", "Tracking", "Conformation"],
+  "founderCOI": 5.5,
+  "coatFreqs": {"E": [["E", 1.0], ["e", 0.0]], "K": [["KB", 0.05], ["kbr", 0], ["ky", 0.95]], "A": [["Ay", 0.5], ["aw", 0.2], ["at", 0.25], ["a", 0.05]], "B": [["B", 0.4], ["b", 0.6]], "W": [["W", 0.65], ["w", 0.35]], "T": [["TR", 0.4], ["T", 0.35], ["t", 0.25]]},
+  "healthFlags": ["hips", "eyes", "heart"]
 }, {
   "name": "Slovakian Wirehaired Pointer",
   "group": "Sporting",
   "size": "L",
   "coat": "wire",
-  "colors": ["gray", "gray & white"],
+  "colors": ["gray", "gray-brown", "brown with white markings"],
   "species": "dog",
-  "sizeAvg": 65,
-  "sizeRange": [55, 85],
+  "sizeAvg": 60,
+  "sizeRange": [48, 70],
   "litterSize": "L",
   "traits": {
     "intelligence": 8,
@@ -10295,16 +11103,19 @@ var DEMO_BREEDS = [{
     "heart": 85,
     "joints": 78
   },
-  "aptitudes": ["Field Trials", "Tracking", "Conformation"]
+  "aptitudes": ["Field Trials", "Tracking", "Conformation"],
+  "founderCOI": 5.5,
+  "coatFreqs": {"E": [["E", 1.0], ["e", 0.0]], "K": [["KB", 0.05], ["kbr", 0], ["ky", 0.95]], "A": [["Ay", 0.3], ["aw", 0.4], ["at", 0.25], ["a", 0.05]], "B": [["B", 0.5], ["b", 0.5]], "W": [["W", 0.7], ["w", 0.3]]},
+  "healthFlags": ["hips", "eyes", "heart"]
 }, {
   "name": "Perdigueiro Portugu\xEAs",
   "group": "Sporting",
   "size": "M",
   "coat": "short",
-  "colors": ["yellow", "yellow & white", "fawn"],
+  "colors": ["yellow", "fawn", "yellow & white", "fawn & white"],
   "species": "dog",
-  "sizeAvg": 40,
-  "sizeRange": [28, 55],
+  "sizeAvg": 55,
+  "sizeRange": [44, 66],
   "litterSize": "M",
   "traits": {
     "intelligence": 8,
@@ -10324,16 +11135,19 @@ var DEMO_BREEDS = [{
     "heart": 82,
     "joints": 78
   },
-  "aptitudes": ["Field Trials", "Conformation"]
+  "aptitudes": ["Field Trials", "Conformation"],
+  "founderCOI": 5.0,
+  "coatFreqs": {"E": [["E", 0.85], ["e", 0.15]], "K": [["KB", 0.05], ["kbr", 0], ["ky", 0.95]], "A": [["Ay", 0.8], ["aw", 0.1], ["at", 0.07], ["a", 0.03]], "S": [["S", 0.5], ["sp", 0.35], ["sw", 0.15]]},
+  "healthFlags": ["hips", "eyes", "heart"]
 }, {
   "name": "Perdiguero de Burgos",
   "group": "Sporting",
   "size": "L",
   "coat": "short",
-  "colors": ["white & liver", "white & orange"],
+  "colors": ["white & liver", "white speckled liver", "liver"],
   "species": "dog",
   "sizeAvg": 65,
-  "sizeRange": [55, 85],
+  "sizeRange": [55, 80],
   "litterSize": "L",
   "traits": {
     "intelligence": 7,
@@ -10353,16 +11167,19 @@ var DEMO_BREEDS = [{
     "heart": 80,
     "joints": 75
   },
-  "aptitudes": ["Field Trials", "Conformation"]
+  "aptitudes": ["Field Trials", "Conformation"],
+  "founderCOI": 5.5,
+  "coatFreqs": {"E": [["E", 0.85], ["e", 0.15]], "K": [["KB", 0.05], ["kbr", 0], ["ky", 0.95]], "A": [["Ay", 0.7], ["aw", 0.1], ["at", 0.15], ["a", 0.05]], "B": [["B", 0.4], ["b", 0.6]], "T": [["TR", 0.4], ["T", 0.35], ["t", 0.25]], "S": [["S", 0.25], ["sp", 0.5], ["sw", 0.25]]},
+  "healthFlags": ["hips", "eyes", "heart", "bloat"]
 }, {
   "name": "\xC9pagneul Pont-Audemer",
   "group": "Sporting",
   "size": "M",
   "coat": "curly",
-  "colors": ["brown", "brown & gray roan"],
+  "colors": ["chestnut", "chestnut with white spots", "chestnut roan"],
   "species": "dog",
-  "sizeAvg": 40,
-  "sizeRange": [28, 55],
+  "sizeAvg": 48,
+  "sizeRange": [38, 60],
   "litterSize": "M",
   "traits": {
     "intelligence": 8,
@@ -10382,16 +11199,19 @@ var DEMO_BREEDS = [{
     "heart": 82,
     "joints": 78
   },
-  "aptitudes": ["Field Trials", "Conformation"]
+  "aptitudes": ["Field Trials", "Conformation"],
+  "founderCOI": 7.0,
+  "coatFreqs": {"E": [["E", 0.8], ["e", 0.2]], "K": [["KB", 0.05], ["kbr", 0], ["ky", 0.95]], "A": [["Ay", 0.55], ["aw", 0.2], ["at", 0.2], ["a", 0.05]], "B": [["B", 0.4], ["b", 0.6]], "Cu": [["Cu", 0.75], ["cu", 0.25]]},
+  "healthFlags": ["hips", "eyes"]
 }, {
   "name": "\xC9pagneul Bleu de Picardie",
   "group": "Sporting",
   "size": "L",
   "coat": "medium",
-  "colors": ["blue roan"],
+  "colors": ["blue gray with black patches", "speckled blue gray"],
   "species": "dog",
-  "sizeAvg": 65,
-  "sizeRange": [55, 85],
+  "sizeAvg": 42,
+  "sizeRange": [33, 55],
   "litterSize": "L",
   "traits": {
     "intelligence": 7,
@@ -10411,16 +11231,19 @@ var DEMO_BREEDS = [{
     "heart": 80,
     "joints": 75
   },
-  "aptitudes": ["Field Trials", "Conformation"]
+  "aptitudes": ["Field Trials", "Conformation"],
+  "founderCOI": 6.5,
+  "coatFreqs": {"E": [["E", 1.0], ["e", 0.0]], "K": [["KB", 0.05], ["kbr", 0], ["ky", 0.95]], "A": [["Ay", 0.2], ["aw", 0.1], ["at", 0.6], ["a", 0.1]], "D": [["D", 0.65], ["d", 0.35]], "T": [["TR", 0.55], ["T", 0.3], ["t", 0.15]]},
+  "healthFlags": ["hips", "eyes", "ears"]
 }, {
   "name": "Volpino Italiano",
   "group": "Toy",
   "size": "XS",
   "coat": "long",
-  "colors": ["white", "red"],
+  "colors": ["white", "red (champagne)"],
   "species": "dog",
-  "sizeAvg": 8,
-  "sizeRange": [4, 12],
+  "sizeAvg": 11,
+  "sizeRange": [9, 14],
   "litterSize": "S",
   "traits": {
     "intelligence": 7,
@@ -10440,16 +11263,19 @@ var DEMO_BREEDS = [{
     "heart": 82,
     "joints": 82
   },
-  "aptitudes": ["Conformation", "Agility"]
+  "aptitudes": ["Conformation", "Agility"],
+  "founderCOI": 6.5,
+  "coatFreqs": {"E": [["E", 0.65], ["e", 0.35]], "K": [["KB", 0.05], ["kbr", 0], ["ky", 0.95]], "A": [["Ay", 0.8], ["aw", 0.1], ["at", 0.05], ["a", 0.05]], "S": [["S", 0.3], ["sp", 0.3], ["sw", 0.4]]},
+  "healthFlags": ["hips", "teeth", "heart", "eyes"]
 }, {
   "name": "German Spitz (Klein)",
   "group": "Toy",
   "size": "XS",
   "coat": "long",
-  "colors": ["white", "black", "brown", "orange", "gray"],
+  "colors": ["white", "black", "chocolate brown", "orange", "gray shaded", "cream", "parti-color", "sable"],
   "species": "dog",
-  "sizeAvg": 8,
-  "sizeRange": [4, 12],
+  "sizeAvg": 18,
+  "sizeRange": [13, 24],
   "litterSize": "S",
   "traits": {
     "intelligence": 7,
@@ -10469,16 +11295,19 @@ var DEMO_BREEDS = [{
     "heart": 82,
     "joints": 82
   },
-  "aptitudes": ["Conformation", "Agility"]
+  "aptitudes": ["Conformation", "Agility"],
+  "founderCOI": 6.0,
+  "coatFreqs": {"E": [["E", 0.75], ["e", 0.25]], "K": [["KB", 0.15], ["kbr", 0.15], ["ky", 0.7]], "A": [["Ay", 0.45], ["aw", 0.2], ["at", 0.25], ["a", 0.1]], "B": [["B", 0.75], ["b", 0.25]], "D": [["D", 0.8], ["d", 0.2]]},
+  "healthFlags": ["hips", "teeth", "eyes", "heart", "epilepsy"]
 }, {
   "name": "German Spitz (Mittel)",
   "group": "Toy",
   "size": "S",
   "coat": "long",
-  "colors": ["white", "black", "brown", "orange", "gray"],
+  "colors": ["white", "black", "chocolate brown", "orange", "gray shaded", "cream", "parti-color", "sable"],
   "species": "dog",
-  "sizeAvg": 20,
-  "sizeRange": [12, 28],
+  "sizeAvg": 25,
+  "sizeRange": [18, 33],
   "litterSize": "S",
   "traits": {
     "intelligence": 7,
@@ -10498,16 +11327,19 @@ var DEMO_BREEDS = [{
     "heart": 82,
     "joints": 82
   },
-  "aptitudes": ["Conformation", "Agility"]
+  "aptitudes": ["Conformation", "Agility"],
+  "founderCOI": 6.0,
+  "coatFreqs": {"E": [["E", 0.75], ["e", 0.25]], "K": [["KB", 0.15], ["kbr", 0.15], ["ky", 0.7]], "A": [["Ay", 0.45], ["aw", 0.2], ["at", 0.25], ["a", 0.1]], "B": [["B", 0.75], ["b", 0.25]], "D": [["D", 0.8], ["d", 0.2]]},
+  "healthFlags": ["hips", "teeth", "eyes", "heart"]
 }, {
   "name": "Mi-Ki",
   "group": "Toy",
   "size": "XS",
   "coat": "long",
-  "colors": ["white", "black", "cream", "gold", "parti"],
+  "colors": ["any color or combination"],
   "species": "dog",
-  "sizeAvg": 8,
-  "sizeRange": [4, 12],
+  "sizeAvg": 9,
+  "sizeRange": [5, 12],
   "litterSize": "S",
   "traits": {
     "intelligence": 7,
@@ -10527,16 +11359,19 @@ var DEMO_BREEDS = [{
     "heart": 82,
     "joints": 82
   },
-  "aptitudes": ["Conformation", "Agility"]
+  "aptitudes": ["Conformation", "Agility"],
+  "founderCOI": 6.0,
+  "coatFreqs": {"E": [["E", 0.8], ["e", 0.2]], "K": [["KB", 0.1], ["kbr", 0], ["ky", 0.9]], "A": [["Ay", 0.4], ["aw", 0.2], ["at", 0.25], ["a", 0.15]], "B": [["B", 0.7], ["b", 0.3]], "S": [["S", 0.3], ["sp", 0.45], ["sw", 0.25]]},
+  "healthFlags": ["teeth", "hips (Legg-Perthes)", "eyes", "heart"]
 }, {
   "name": "English Toy Terrier",
   "group": "Toy",
   "size": "XS",
   "coat": "short",
-  "colors": ["black & tan"],
+  "colors": ["black & tan only"],
   "species": "dog",
-  "sizeAvg": 8,
-  "sizeRange": [4, 12],
+  "sizeAvg": 10,
+  "sizeRange": [7, 13],
   "litterSize": "S",
   "traits": {
     "intelligence": 7,
@@ -10556,16 +11391,19 @@ var DEMO_BREEDS = [{
     "heart": 82,
     "joints": 80
   },
-  "aptitudes": ["Conformation", "Agility"]
+  "aptitudes": ["Conformation", "Agility"],
+  "founderCOI": 7.0,
+  "coatFreqs": {"E": [["E", 1.0], ["e", 0.0]], "K": [["KB", 0.05], ["kbr", 0], ["ky", 0.95]], "A": [["Ay", 0], ["aw", 0], ["at", 1.0], ["a", 0]]},
+  "healthFlags": ["hips", "teeth", "eyes", "heart", "joint"]
 }, {
   "name": "Thai Bangkaew",
   "group": "Toy",
   "size": "M",
   "coat": "long",
-  "colors": ["white & fawn", "white & red", "white & gray"],
+  "colors": ["white with colored patches", "white with yellow", "white with red", "white with gray"],
   "species": "dog",
   "sizeAvg": 40,
-  "sizeRange": [28, 55],
+  "sizeRange": [28, 52],
   "litterSize": "M",
   "traits": {
     "intelligence": 7,
@@ -10585,7 +11423,10 @@ var DEMO_BREEDS = [{
     "heart": 82,
     "joints": 80
   },
-  "aptitudes": ["Conformation", "Agility"]
+  "aptitudes": ["Conformation", "Agility"],
+  "founderCOI": 4.5,
+  "coatFreqs": {"E": [["E", 0.8], ["e", 0.2]], "K": [["KB", 0.1], ["kbr", 0], ["ky", 0.9]], "A": [["Ay", 0.4], ["aw", 0.25], ["at", 0.25], ["a", 0.1]], "S": [["S", 0.15], ["sp", 0.55], ["sw", 0.3]]},
+  "healthFlags": ["hips", "eyes", "bloat"]
 }, {
   "name": "Samoyed",
   "group": "Working",
@@ -11103,10 +11944,10 @@ var DEMO_BREEDS = [{
   "group": "Non-Sporting",
   "size": "M",
   "coat": "medium",
-  "colors": ["white", "fawn", "gray", "black & tan", "brindle"],
+  "colors": ["white", "fawn", "gray", "black & tan", "brindle", "red"],
   "species": "dog",
-  "sizeAvg": 40,
-  "sizeRange": [28, 55],
+  "sizeAvg": 42,
+  "sizeRange": [30, 55],
   "litterSize": "M",
   "traits": {
     "intelligence": 7,
@@ -11126,7 +11967,10 @@ var DEMO_BREEDS = [{
     "heart": 85,
     "joints": 82
   },
-  "aptitudes": ["Conformation", "Agility"]
+  "aptitudes": ["Conformation", "Agility"],
+  "founderCOI": 5.5,
+  "coatFreqs": {"E": [["E", 0.8], ["e", 0.2]], "K": [["KB", 0.1], ["kbr", 0.2], ["ky", 0.7]], "A": [["Ay", 0.5], ["aw", 0.15], ["at", 0.25], ["a", 0.1]], "S": [["S", 0.65], ["sp", 0.25], ["sw", 0.1]]},
+  "healthFlags": ["hips", "eyes", "thyroid"]
 }, {
   "name": "Kishu Ken",
   "group": "Non-Sporting",
@@ -11134,8 +11978,8 @@ var DEMO_BREEDS = [{
   "coat": "medium",
   "colors": ["white", "red", "sesame"],
   "species": "dog",
-  "sizeAvg": 40,
-  "sizeRange": [28, 55],
+  "sizeAvg": 50,
+  "sizeRange": [35, 65],
   "litterSize": "M",
   "traits": {
     "intelligence": 7,
@@ -11155,16 +11999,19 @@ var DEMO_BREEDS = [{
     "heart": 85,
     "joints": 82
   },
-  "aptitudes": ["Conformation", "Agility"]
+  "aptitudes": ["Conformation", "Agility"],
+  "founderCOI": 5.5,
+  "coatFreqs": {"E": [["E", 0.75], ["e", 0.25]], "K": [["KB", 0.15], ["kbr", 0], ["ky", 0.85]], "A": [["Ay", 0.55], ["aw", 0.2], ["at", 0.15], ["a", 0.1]], "S": [["S", 0.7], ["sp", 0.2], ["sw", 0.1]]},
+  "healthFlags": ["hips", "eyes", "thyroid", "cancer"]
 }, {
   "name": "Kai Ken",
   "group": "Non-Sporting",
   "size": "M",
   "coat": "medium",
-  "colors": ["black brindle", "red brindle", "brindle"],
+  "colors": ["black brindle (kuro tora)", "red brindle (aka tora)", "brindle (chu tora)"],
   "species": "dog",
-  "sizeAvg": 40,
-  "sizeRange": [28, 55],
+  "sizeAvg": 42,
+  "sizeRange": [30, 55],
   "litterSize": "M",
   "traits": {
     "intelligence": 7,
@@ -11184,16 +12031,19 @@ var DEMO_BREEDS = [{
     "heart": 85,
     "joints": 82
   },
-  "aptitudes": ["Conformation", "Agility"]
+  "aptitudes": ["Conformation", "Agility"],
+  "founderCOI": 5.5,
+  "coatFreqs": {"E": [["E", 1.0], ["e", 0.0]], "K": [["KB", 0.05], ["kbr", 0.9], ["ky", 0.05]], "A": [["Ay", 0.7], ["aw", 0.1], ["at", 0.15], ["a", 0.05]]},
+  "healthFlags": ["hips", "eyes", "thyroid"]
 }, {
   "name": "Hokkaido",
   "group": "Non-Sporting",
   "size": "M",
   "coat": "medium",
-  "colors": ["red", "white", "black", "sesame", "brindle"],
+  "colors": ["sesame", "black", "red", "brindle", "white", "wolf gray"],
   "species": "dog",
-  "sizeAvg": 40,
-  "sizeRange": [28, 55],
+  "sizeAvg": 48,
+  "sizeRange": [35, 62],
   "litterSize": "M",
   "traits": {
     "intelligence": 7,
@@ -11213,16 +12063,19 @@ var DEMO_BREEDS = [{
     "heart": 85,
     "joints": 82
   },
-  "aptitudes": ["Conformation", "Agility"]
+  "aptitudes": ["Conformation", "Agility"],
+  "founderCOI": 5.5,
+  "coatFreqs": {"E": [["E", 0.8], ["e", 0.2]], "K": [["KB", 0.15], ["kbr", 0.2], ["ky", 0.65]], "A": [["Ay", 0.4], ["aw", 0.25], ["at", 0.25], ["a", 0.1]], "S": [["S", 0.7], ["sp", 0.2], ["sw", 0.1]]},
+  "healthFlags": ["hips", "eyes", "heart", "thyroid", "epilepsy"]
 }, {
   "name": "Shikoku",
   "group": "Non-Sporting",
   "size": "M",
   "coat": "medium",
-  "colors": ["sesame", "red sesame", "black sesame"],
+  "colors": ["sesame", "black sesame", "red sesame"],
   "species": "dog",
-  "sizeAvg": 40,
-  "sizeRange": [28, 55],
+  "sizeAvg": 48,
+  "sizeRange": [35, 62],
   "litterSize": "M",
   "traits": {
     "intelligence": 7,
@@ -11242,7 +12095,10 @@ var DEMO_BREEDS = [{
     "heart": 85,
     "joints": 82
   },
-  "aptitudes": ["Conformation", "Agility"]
+  "aptitudes": ["Conformation", "Agility"],
+  "founderCOI": 6.0,
+  "coatFreqs": {"E": [["E", 0.85], ["e", 0.15]], "K": [["KB", 0.05], ["kbr", 0], ["ky", 0.95]], "A": [["Ay", 0.3], ["aw", 0.5], ["at", 0.15], ["a", 0.05]], "As": [["N", 0.7], ["n", 0.3]]},
+  "healthFlags": ["hips", "eyes", "thyroid"]
 }, {
   "name": "Nihon Supittsu",
   "group": "Non-Sporting",
@@ -11250,8 +12106,8 @@ var DEMO_BREEDS = [{
   "coat": "long",
   "colors": ["white"],
   "species": "dog",
-  "sizeAvg": 40,
-  "sizeRange": [28, 55],
+  "sizeAvg": 18,
+  "sizeRange": [13, 22],
   "litterSize": "M",
   "traits": {
     "intelligence": 7,
@@ -11271,16 +12127,19 @@ var DEMO_BREEDS = [{
     "heart": 82,
     "joints": 82
   },
-  "aptitudes": ["Conformation", "Agility"]
+  "aptitudes": ["Conformation", "Agility"],
+  "founderCOI": 5.5,
+  "coatFreqs": {"E": [["E", 0.3], ["e", 0.7]], "K": [["KB", 0.05], ["kbr", 0], ["ky", 0.95]], "A": [["Ay", 0.8], ["aw", 0.12], ["at", 0.04], ["a", 0.04]]},
+  "healthFlags": ["hips", "eyes", "teeth"]
 }, {
   "name": "Olde English Bulldogge",
   "group": "Non-Sporting",
   "size": "L",
   "coat": "short",
-  "colors": ["brindle", "fawn", "red", "white"],
+  "colors": ["brindle", "fawn", "red", "white — with or without black mask"],
   "species": "dog",
   "sizeAvg": 65,
-  "sizeRange": [55, 85],
+  "sizeRange": [50, 80],
   "litterSize": "L",
   "traits": {
     "intelligence": 6,
@@ -11300,16 +12159,19 @@ var DEMO_BREEDS = [{
     "heart": 70,
     "joints": 68
   },
-  "aptitudes": ["Conformation", "Obedience"]
+  "aptitudes": ["Conformation", "Obedience"],
+  "founderCOI": 5.5,
+  "coatFreqs": {"E": [["E", 0.85], ["e", 0.15]], "K": [["KB", 0.1], ["kbr", 0.5], ["ky", 0.4]], "A": [["Ay", 0.6], ["aw", 0], ["at", 0.25], ["a", 0.15]], "S": [["S", 0.45], ["sp", 0.35], ["sw", 0.2]]},
+  "healthFlags": ["hips", "heart", "breathing", "skin", "joints"]
 }, {
   "name": "Teddy Roosevelt (Non-Sp)",
   "group": "Non-Sporting",
   "size": "S",
   "coat": "short",
-  "colors": ["white & black", "white & tan"],
+  "colors": ["bicolor or tricolor — white base with patches"],
   "species": "dog",
-  "sizeAvg": 20,
-  "sizeRange": [12, 28],
+  "sizeAvg": 13,
+  "sizeRange": [8, 18],
   "litterSize": "S",
   "traits": {
     "intelligence": 8,
@@ -11329,16 +12191,19 @@ var DEMO_BREEDS = [{
     "heart": 85,
     "joints": 82
   },
-  "aptitudes": ["Agility", "Conformation"]
+  "aptitudes": ["Agility", "Conformation"],
+  "founderCOI": 4.5,
+  "coatFreqs": {"E": [["E", 0.85], ["e", 0.15]], "K": [["KB", 0.05], ["kbr", 0.2], ["ky", 0.75]], "A": [["Ay", 0.35], ["aw", 0.1], ["at", 0.45], ["a", 0.1]], "S": [["S", 0.1], ["sp", 0.5], ["sw", 0.4]]},
+  "healthFlags": ["hips", "eyes", "heart"]
 }, {
   "name": "Czechoslovakian Vlcak",
   "group": "Non-Sporting",
   "size": "L",
   "coat": "medium",
-  "colors": ["yellow gray", "silver gray"],
+  "colors": ["yellow-gray", "silver-gray"],
   "species": "dog",
-  "sizeAvg": 65,
-  "sizeRange": [55, 85],
+  "sizeAvg": 58,
+  "sizeRange": [44, 75],
   "litterSize": "L",
   "traits": {
     "intelligence": 8,
@@ -11358,6 +12223,9 @@ var DEMO_BREEDS = [{
     "heart": 85,
     "joints": 80
   },
-  "aptitudes": ["Conformation", "Tracking"]
+  "aptitudes": ["Conformation", "Tracking"],
+  "founderCOI": 6.5,
+  "coatFreqs": {"E": [["E", 0.85], ["e", 0.15]], "K": [["KB", 0.05], ["kbr", 0], ["ky", 0.95]], "A": [["Ay", 0.2], ["aw", 0.65], ["at", 0.1], ["a", 0.05]], "S": [["S", 0.85], ["sp", 0.12], ["sw", 0.03]]},
+  "healthFlags": ["hips", "eyes", "spine", "shyness"]
 }];
 
