@@ -12952,11 +12952,11 @@ function DNAModal(_ref5) {
         /*#__PURE__*/React.createElement("span", null, v[0]),
         /*#__PURE__*/React.createElement("span", null, v[1])
       ),
-      /*#__PURE__*/React.createElement("div", { style: { fontSize: "0.58rem", color: "#8a7055", marginBottom: 2 } }, "Avg score (1\u20135)"),
+      /*#__PURE__*/React.createElement("div", { style: { fontSize: "0.58rem", color: "#8a7055", marginBottom: 2 } }, "Avg (1\u20135)"),
       /*#__PURE__*/React.createElement("div", { style: { background: "#1a1410", borderRadius: 3, height: 4, overflow: "hidden", marginBottom: 3 } },
-        /*#__PURE__*/React.createElement("div", { style: { background: "#c4956a", width: "".concat(avg / 5 * 100, "%"), height: "100%" } })
+        /*#__PURE__*/React.createElement("div", { style: { background: "#c4956a", width: Math.min(100, (avg / 5 * 100)) + "%", height: "100%" } })
       ),
-      /*#__PURE__*/React.createElement("div", { style: { color: "#c4956a", fontSize: "0.72rem", fontWeight: "bold" } }, avg, "/5"));
+      /*#__PURE__*/React.createElement("div", { style: { color: "#c4956a", fontSize: "0.72rem", fontWeight: "bold" } }, Math.min(5, parseFloat(avg)).toFixed(1), "/5"));
     });
   })()), ((_animal$mutations = animal.mutations) === null || _animal$mutations === void 0 ? void 0 : _animal$mutations.length) > 0 && /*#__PURE__*/React.createElement("div", {
     style: {
@@ -13793,10 +13793,11 @@ function Card(_ref0) {
       }, "\uD83D\uDD25 In Heat \u2014 ", hs.hoursLeft, "h remaining");
     }
     if (hs.status === "too_young") {
+      var monthsOld = Math.floor(animal.ageMonths || 0);
       return /*#__PURE__*/React.createElement("div", {
         style: { display: "inline-block", background: "#1a1410", border: "1px solid #4a3a28",
           borderRadius: 4, padding: "3px 10px", fontSize: "0.82rem", color: "#6b5038", marginBottom: 6 }
-      }, "\uD83D\uDCC5 First heat in ", hs.daysUntilHeat, hs.daysUntilHeat === 1 ? " day" : " days");
+      }, "\uD83D\uDCC5 Matures at 18 months", monthsOld > 0 ? " (" + monthsOld + " now)" : "");
     }
     return /*#__PURE__*/React.createElement("div", {
       style: { display: "inline-block", background: "#1a1410", border: "1px solid #3a2810",
@@ -14914,7 +14915,7 @@ function App() {
     if (a.sex === "F") {
       var heatStatus = getHeatStatus(a, Date.now());
       if (heatStatus) {
-        if (heatStatus.status === "too_young") return "Not yet mature — " + heatStatus.daysUntilHeat + " days to first heat";
+        if (heatStatus.status === "too_young") return "Not yet mature — females breed at 18 months";
         if (heatStatus.status === "waiting") return "Not in heat — " + heatStatus.daysUntilHeat + (heatStatus.daysUntilHeat === 1 ? " day" : " days") + " until next heat";
       }
     }
