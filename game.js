@@ -520,6 +520,91 @@ var getDesc = function(loci, loc, al) { return getLocusDesc(loci, loc, al); };
 
 // ── END GENETICS ENGINE ───────────────────────────────────────
 
+// ── SIZE & GROWTH ENGINE ──────────────────────────────────────
+// Height (inches) and weight (lbs) by size category
+var SIZE_STANDARDS = {
+  XS: { weightAvg: 8,   weightRange: [4,   12],  heightAvg: 9,  heightRange: [6,  11] },
+  S:  { weightAvg: 18,  weightRange: [10,  25],  heightAvg: 13, heightRange: [10, 16] },
+  M:  { weightAvg: 40,  weightRange: [26,  55],  heightAvg: 18, heightRange: [16, 21] },
+  L:  { weightAvg: 70,  weightRange: [56,  90],  heightAvg: 23, heightRange: [21, 26] },
+  XL: { weightAvg: 120, weightRange: [91,  200], heightAvg: 28, heightRange: [26, 34] }
+};
+
+// Growth curve: returns 0.0-1.0 fraction of adult size at a given age in months
+// Dogs reach height faster than weight — height ~90% done at 12mo, weight at 18-24mo
+function growthFraction(ageMonths, sizeCategory, type) {
+  // Larger breeds mature slower
+  var matureAge = { XS: 10, S: 12, M: 15, L: 18, XL: 24 }[sizeCategory] || 15;
+  if (type === "height") matureAge = Math.round(matureAge * 0.75);
+  if (ageMonths <= 0) return 0.08; // newborns ~8% of adult
+  if (ageMonths >= matureAge) return 1.0;
+  // Sigmoid-ish growth curve
+  var t = ageMonths / matureAge;
+  return Math.min(1.0, 0.08 + 0.92 * (3*t*t - 2*t*t*t));
+}
+
+// Calculate a pup's adult size potential from parents + mutation chance
+function calcAdultSizePotential(sire, dam) {
+  var sireW = sire.adultWeight || sire.sizeAvg || SIZE_STANDARDS[sire.size||"M"].weightAvg;
+  var damW  = dam.adultWeight  || dam.sizeAvg  || SIZE_STANDARDS[dam.size||"M"].weightAvg;
+  var sireH = sire.adultHeight || SIZE_STANDARDS[sire.size||"M"].heightAvg;
+  var damH  = dam.adultHeight  || SIZE_STANDARDS[dam.size||"M"].heightAvg;
+
+  // Base potential = midpoint of parents + ±10% natural variance
+  var baseW = (sireW + damW) / 2;
+  var baseH = (sireH + damH) / 2;
+  var variance = (Math.random() - 0.5) * 0.2; // ±10%
+  var potentialW = Math.round(baseW * (1 + variance));
+  var potentialH = Math.round(baseH * (1 + variance * 0.5));
+
+  // Size mutation flags
+  var sizeVariant = null;
+  var roll = Math.random();
+  if (roll < 0.01) {
+    // True mutation — outside breed standard
+    var direction = Math.random() < 0.5 ? 1 : -1;
+    potentialW = Math.round(potentialW * (1 + direction * 0.35));
+    potentialH = Math.round(potentialH * (1 + direction * 0.20));
+    sizeVariant = direction > 0 ? "giant_variant" : "dwarf_variant";
+  } else if (roll < 0.04) {
+    // Throwback — outside parents but within breed history
+    var dir = Math.random() < 0.5 ? 1 : -1;
+    potentialW = Math.round(potentialW * (1 + dir * 0.18));
+    potentialH = Math.round(potentialH * (1 + dir * 0.10));
+    sizeVariant = dir > 0 ? "large_throwback" : "small_throwback";
+  }
+
+  return { potentialW: potentialW, potentialH: potentialH, sizeVariant: sizeVariant };
+}
+
+// Get current weight/height for display based on age
+function getCurrentSize(animal) {
+  var size = animal.size || "M";
+  var std = SIZE_STANDARDS[size];
+  var adultW = animal.adultWeight || animal.sizeAvg || std.weightAvg;
+  var adultH = animal.adultHeight || std.heightAvg;
+  var age = animal.ageMonths || 0;
+  var wFrac = growthFraction(age, size, "weight");
+  var hFrac = growthFraction(age, size, "height");
+  var currentW = Math.max(1, Math.round(adultW * wFrac));
+  var currentH = Math.max(1, Math.round(adultH * hFrac));
+  var mature = age >= ({ XS:10, S:12, M:15, L:18, XL:24 }[size] || 15);
+  return { currentW: currentW, currentH: currentH, adultW: adultW, adultH: adultH, mature: mature };
+}
+
+// Size variant label + health note for DNA panel
+function getSizeVariantInfo(variant) {
+  if (!variant) return null;
+  var map = {
+    giant_variant:   { label: "⚡ Giant Variant",      color: "#f97316", health: "Joint/cardiac stress risk at maturity" },
+    dwarf_variant:   { label: "⚡ Dwarf Variant",       color: "#a78bfa", health: "Potential cardiac and joint issues" },
+    large_throwback: { label: "⚡ Large Throwback",     color: "#e8a020", health: "Monitor joints as adult" },
+    small_throwback: { label: "⚡ Small Throwback",     color: "#c4956a", health: "Monitor heart as adult" }
+  };
+  return map[variant] || null;
+}
+// ── END SIZE ENGINE ───────────────────────────────────────────
+
 // ── LOCI DEFINITIONS ─────────────────────────────────────────
 var idCtr = 1;
 function mkId() {
@@ -556,6 +641,9 @@ function makeAnimal(breed, name, sex) {
     born: new Date().toLocaleDateString(),
     traits: breed.traits || null,
     aptitudes: breed.aptitudes || [],
+    adultWeight: breed.sizeAvg || SIZE_STANDARDS[breed.size||"M"].weightAvg,
+    adultHeight: SIZE_STANDARDS[breed.size||"M"].heightAvg,
+    sizeVariant: null,
     photoUrl: null,
     photoLoading: false
   };
@@ -612,7 +700,10 @@ function breedPair(sire, dam) {
         ? Math.round((sire.lifespan + dam.lifespan) / 2)
         : (sire.lifespan || dam.lifespan || 144))
         + (mixedLifespanBonus(sire, dam) * 12),
-      born: new Date().toLocaleDateString()
+      born: new Date().toLocaleDateString(),
+      adultWeight: (function(){ var s=calcAdultSizePotential(sire,dam); return s.potentialW; })(),
+      adultHeight: (function(){ var s=calcAdultSizePotential(sire,dam); return s.potentialH; })(),
+      sizeVariant: (function(){ var s=calcAdultSizePotential(sire,dam); return s.sizeVariant; })()
     };
   });
 }
@@ -12990,7 +13081,29 @@ function DNAModal(_ref5) {
         color: "#b09070"
       }
     }, "(from ", m.src, ")"));
-  })), /*#__PURE__*/React.createElement("div", {
+  })),
+  animal.sizeVariant && (function(){
+    var sv = getSizeVariantInfo(animal.sizeVariant);
+    if (!sv) return null;
+    var sz = getCurrentSize(animal);
+    return /*#__PURE__*/React.createElement("div", {
+      style: { marginBottom: 18 }
+    },
+      /*#__PURE__*/React.createElement("div", {
+        style: { color: sv.color, fontWeight: "bold", fontSize: "0.8rem",
+          textTransform: "uppercase", marginBottom: 8 }
+      }, sv.label),
+      /*#__PURE__*/React.createElement("div", {
+        style: { background: "#1a1410", border: "1px solid "+sv.color,
+          borderRadius: 6, padding: "8px 12px", fontSize: "0.78rem" }
+      },
+        /*#__PURE__*/React.createElement("div", { style: { color: sv.color, fontWeight: "bold", marginBottom: 4 } },
+          "Est. Adult: ", sz.adultW, " lbs · ", sz.adultH, "\u2033"
+        ),
+        /*#__PURE__*/React.createElement("div", { style: { color: "#b09070" } }, "\u26A0\uFE0F ", sv.health)
+      )
+    );
+  })(), /*#__PURE__*/React.createElement("div", {
     style: {
       background: "#443828",
       border: "1px solid #4a3a28",
@@ -13773,6 +13886,35 @@ function Card(_ref0) {
     /*#__PURE__*/React.createElement("span", { style: { color: "#4a3a28" } }, "|"),
     /*#__PURE__*/React.createElement("span", { style: { color: coiColor(animal.coi), fontWeight: "bold", fontSize: "0.95rem" } }, "COI ", animal.coi, "%")
   ),
+  (function() {
+    var sz = getCurrentSize(animal);
+    var variant = animal.sizeVariant ? getSizeVariantInfo(animal.sizeVariant) : null;
+    return /*#__PURE__*/React.createElement("div", {
+      style: { display: "flex", alignItems: "center", gap: 8, marginBottom: 6,
+        background: "#1a1410", borderRadius: 5, padding: "5px 8px" }
+    },
+      /*#__PURE__*/React.createElement("span", { style: { fontSize: "0.82rem" } }, "\u2696\uFE0F"),
+      sz.mature
+        ? /*#__PURE__*/React.createElement("span", { style: { color: "#c4956a", fontSize: "0.82rem", fontWeight: "bold" } }, sz.currentW, " lbs")
+        : /*#__PURE__*/React.createElement("span", { style: { color: "#8a7055", fontSize: "0.78rem" } },
+            /*#__PURE__*/React.createElement("span", { style: { color: "#c4956a", fontWeight: "bold" } }, sz.currentW, " lbs"),
+            " \u2192 ", sz.adultW, " est."
+          ),
+      /*#__PURE__*/React.createElement("span", { style: { color: "#4a3a28" } }, "|"),
+      /*#__PURE__*/React.createElement("span", { style: { fontSize: "0.82rem" } }, "\uD83D\uDCCF"),
+      sz.mature
+        ? /*#__PURE__*/React.createElement("span", { style: { color: "#c4956a", fontSize: "0.82rem", fontWeight: "bold" } }, sz.currentH, "\u2033")
+        : /*#__PURE__*/React.createElement("span", { style: { color: "#8a7055", fontSize: "0.78rem" } },
+            /*#__PURE__*/React.createElement("span", { style: { color: "#c4956a", fontWeight: "bold" } }, sz.currentH, "\u2033"),
+            " \u2192 ", sz.adultH, "\u2033 est."
+          ),
+      variant && /*#__PURE__*/React.createElement("span", {
+        style: { color: variant.color, fontSize: "0.72rem", fontWeight: "bold",
+          marginLeft: 4, border: "1px solid "+variant.color, borderRadius: 3, padding: "1px 5px" },
+        title: variant.health
+      }, variant.label)
+    );
+  })(),
   /*#__PURE__*/React.createElement("div", {
     onClick: function(e){ e.stopPropagation(); setShowDNA(true); },
     style: { fontFamily: "monospace", fontSize: "0.78rem", color: "#d4942a", background: "#1a1410",
