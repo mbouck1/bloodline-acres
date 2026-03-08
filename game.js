@@ -1759,7 +1759,7 @@ var GAME_VERSION = "2026.03.08.1";
 
 // ── COAT COLOR SWATCH MAP ─────────────────────────────────────
 function getCoatSwatch(coatColor) {
-  if (!coatColor) return null;
+  if (!coatColor || coatColor === "Unknown") return null;
   var primary = coatColor.split(" \xB7 ")[0].trim().toLowerCase();
   var map = {
     "black":"#1a1a1a","blue":"#6b8ca8","chocolate":"#5c3317","isabella":"#b5967a",
@@ -1782,7 +1782,7 @@ function getCoatSwatch(coatColor) {
   if (primary.includes("brindle")) return "#6b4a28";
   if (primary.includes("red")) return "#c8622a";
   if (primary.includes("yellow")) return "#d4a843";
-  return "#8a7055";
+  return null;
 }
 
 // ── DEMO BREEDS ───────────────────────────────────────────────
@@ -13904,9 +13904,10 @@ function Card(_ref0) {
         var swatchColor = getCoatSwatch(animal.coatColor);
         return swatchColor ? /*#__PURE__*/React.createElement(React.Fragment, null,
           /*#__PURE__*/React.createElement("span", {
-            style: { display:"inline-block", width:10, height:10, borderRadius:"50%",
-              background: swatchColor, border:"1px solid rgba(255,255,255,0.2)",
-              marginRight:5, verticalAlign:"middle" }
+            style: { display:"inline-block", width:14, height:14, borderRadius:"50%",
+              background: swatchColor, border:"2px solid rgba(255,255,255,0.35)",
+              marginRight:6, verticalAlign:"middle", flexShrink:0,
+              boxShadow: "0 0 3px rgba(0,0,0,0.5)" }
           }),
           animal.coatColor ? animal.coatColor.split(" \xB7 ")[0] : "Unknown"
         ) : (animal.coatColor ? animal.coatColor.split(" \xB7 ")[0] : "Unknown");
