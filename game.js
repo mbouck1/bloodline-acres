@@ -1811,7 +1811,7 @@ function mixedLifespanBonus(sire, dam) {
 }
 
 // ── VERSION STAMP ─────────────────────────────────────────────
-var GAME_VERSION = "2026.03.08.1";
+var GAME_VERSION = "2026.03.08.2";
 
 // ── COAT COLOR SWATCH MAP ─────────────────────────────────────
 function getCoatSwatch(coatColor) {
@@ -14898,7 +14898,6 @@ function App() {
   useEffect(function () {
     var profiled = breeds.map(function(b){return assignGeneticProfile(b);});
     setBreeds(profiled);
-    setAnimals([]);
   }, []);
 
   // Daily farm income tick
