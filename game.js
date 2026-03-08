@@ -425,6 +425,20 @@ function calcHealthScore(genome) {
   return { score: Math.max(0, score), issues: issues };
 }
 
+// ── COI HEALTH PENALTY ────────────────────────────────────────
+// Applied at display time — reduces effective health score based on inbreeding
+function applyCoiPenalty(baseScore, coi) {
+  if (!coi || coi <= 0) return baseScore;
+  // Gentle curve: <6% no penalty, 6-12% small, 12-25% moderate, 25%+ severe
+  var penalty = 0;
+  if (coi >= 6  && coi < 12.5) penalty = Math.round((coi - 6) * 0.8);
+  if (coi >= 12.5 && coi < 25)  penalty = Math.round(5 + (coi - 12.5) * 1.5);
+  if (coi >= 25 && coi < 50)   penalty = Math.round(24 + (coi - 25) * 2);
+  if (coi >= 50)                penalty = Math.round(74 + (coi - 50) * 0.4);
+  return Math.max(0, baseScore - penalty);
+}
+// ─────────────────────────────────────────────────────────────
+
 // ── PERFORMANCE SCORE ─────────────────────────────────────────
 function calcPerfScore(genome) {
   var p = genome.perf;
@@ -13257,7 +13271,9 @@ function DNAModal(_ref5) {
       color: coiColor(animal.coi),
       fontWeight: "bold"
     }
-  }, animal.coi, "% \u2014 ", coiLabel(animal.coi))), /*#__PURE__*/React.createElement("div", {
+  }, animal.coi, "% \u2014 ", coiLabel(animal.coi))),
+  (function(){ var pen = animal.healthScore - applyCoiPenalty(animal.healthScore, animal.coi); return pen > 0 ? /*#__PURE__*/React.createElement("div", { style: { marginTop: 6, fontSize: "0.75rem", color: "#f97316" } }, "\u26A0\uFE0F Inbreeding load: \u2212", pen, " health points") : null; })(),
+  /*#__PURE__*/React.createElement("div", {
     style: {
       background: "#1a1410",
       borderRadius: 4,
@@ -14007,11 +14023,13 @@ function Card(_ref0) {
     style: { display: "flex", alignItems: "center", gap: 10, marginBottom: 6,
       background: "#1a1410", borderRadius: 5, padding: "5px 8px" }
   },
-    /*#__PURE__*/React.createElement("span", { style: { color: healthColor(animal.healthScore), fontWeight: "bold", fontSize: "0.95rem" } }, "\u2764\uFE0F ", animal.healthScore),
-    /*#__PURE__*/React.createElement("span", { style: { color: "#4a3a28" } }, "|"),
-    /*#__PURE__*/React.createElement("span", { style: { color: "#c4956a", fontWeight: "bold", fontSize: "0.95rem" } }, "\u26A1 ", animal.perfScore),
-    /*#__PURE__*/React.createElement("span", { style: { color: "#4a3a28" } }, "|"),
-    /*#__PURE__*/React.createElement("span", { style: { color: coiColor(animal.coi), fontWeight: "bold", fontSize: "0.95rem" } }, "COI ", animal.coi, "%")
+    (function(){ var effH = applyCoiPenalty(animal.healthScore, animal.coi); var penalized = effH < animal.healthScore; return /*#__PURE__*/React.createElement(React.Fragment, null,
+      /*#__PURE__*/React.createElement("span", { style: { color: healthColor(effH), fontWeight: "bold", fontSize: "0.95rem" }, title: penalized ? "Base: " + animal.healthScore + " − COI penalty: " + (animal.healthScore - effH) : "" }, "\u2764\uFE0F ", effH, penalized ? /*#__PURE__*/React.createElement("span", { style: { color:"#f97316", fontSize:"0.7rem", marginLeft:2 } }, "\u2193") : null),
+      /*#__PURE__*/React.createElement("span", { style: { color: "#4a3a28" } }, "|"),
+      /*#__PURE__*/React.createElement("span", { style: { color: "#c4956a", fontWeight: "bold", fontSize: "0.95rem" } }, "\u26A1 ", animal.perfScore),
+      /*#__PURE__*/React.createElement("span", { style: { color: "#4a3a28" } }, "|"),
+      /*#__PURE__*/React.createElement("span", { style: { color: coiColor(animal.coi), fontWeight: "bold", fontSize: "0.95rem" } }, "COI ", animal.coi, "%")
+    ); })()
   ),
   (function() {
     var sz = getCurrentSize(animal);
@@ -14781,6 +14799,14 @@ function App() {
     _useStateKS2 = _slicedToArray(_useStateKS, 2),
     showKennelMgr = _useStateKS2[0],
     setShowKennelMgr = _useStateKS2[1];
+  var _useStateKC = useState([]),
+    _useStateKC2 = _slicedToArray(_useStateKC, 2),
+    kennelChecked = _useStateKC2[0],
+    setKennelChecked = _useStateKC2[1];
+  var _useStateKMT = useState(""),
+    _useStateKMT2 = _slicedToArray(_useStateKMT, 2),
+    kennelMoveTarget = _useStateKMT2[0],
+    setKennelMoveTarget = _useStateKMT2[1];
   var _useStateRH = useState(null),
     _useStateRH2 = _slicedToArray(_useStateRH, 2),
     actionModalId = _useStateRH2[0],
@@ -15792,14 +15818,71 @@ function App() {
         if (kennelDogs.length === 0) {
           return /*#__PURE__*/React.createElement("div", { style: { color: "#4a3a28", fontSize: "0.82rem", padding: "20px 0" } }, "No dogs yet \u2014 use Buy Dogs to add some.");
         }
+        var allChecked = kennelDogs.length > 0 && kennelDogs.every(function(a){ return kennelChecked.includes(a.id); });
+        var otherKennels = kennels.filter(function(k){ return k.id !== (activeKennel ? activeKennel.id : null); });
         return /*#__PURE__*/React.createElement("div", { style: { display: "flex", flexDirection: "column", gap: 4 } },
+          // ── Bulk action toolbar ──────────────────────────────────────
+          /*#__PURE__*/React.createElement("div", { style: { display: "flex", alignItems: "center", gap: 8, marginBottom: 4,
+            padding: "5px 8px", background: "#1a1410", borderRadius: 6, border: "1px solid #2e2218" } },
+            /*#__PURE__*/React.createElement("input", { type: "checkbox", checked: allChecked,
+              onChange: function(e){ setKennelChecked(e.target.checked ? kennelDogs.map(function(a){ return a.id; }) : []); },
+              style: { accentColor: "#c4956a", width: 14, height: 14, cursor: "pointer" }
+            }),
+            /*#__PURE__*/React.createElement("span", { style: { color: "#8a7055", fontSize: "0.72rem" } },
+              kennelChecked.length > 0 ? kennelChecked.length + " selected" : "Select all"
+            ),
+            kennelChecked.length > 0 && otherKennels.length > 0 && /*#__PURE__*/React.createElement(React.Fragment, null,
+              /*#__PURE__*/React.createElement("select", {
+                value: kennelMoveTarget,
+                onChange: function(e){ setKennelMoveTarget(e.target.value); },
+                style: { marginLeft: "auto", background: "#241a10", border: "1px solid #4a3a28",
+                  color: "#c4956a", borderRadius: 4, padding: "2px 6px", fontSize: "0.72rem", cursor: "pointer" }
+              },
+                /*#__PURE__*/React.createElement("option", { value: "" }, "Move to..."),
+                otherKennels.map(function(k){
+                  var cnt = animals.filter(function(x){ return !x.retired && x.kennelId===k.id; }).length;
+                  var cap = (KENNEL_TYPES[k.type]||{capacity:10}).capacity;
+                  return /*#__PURE__*/React.createElement("option", { key: k.id, value: k.id, disabled: cnt >= cap },
+                    k.name + " (" + cnt + "/" + cap + ")" + (cnt >= cap ? " FULL" : "")
+                  );
+                })
+              ),
+              /*#__PURE__*/React.createElement("button", {
+                onClick: function() {
+                  if (!kennelMoveTarget) { alert("Pick a destination kennel first!"); return; }
+                  var dest = kennels.find(function(k){ return k.id === kennelMoveTarget; });
+                  if (!dest) return;
+                  var destCap = (KENNEL_TYPES[dest.type]||{capacity:10}).capacity;
+                  var destCount = animals.filter(function(x){ return !x.retired && x.kennelId===dest.id; }).length;
+                  var toMove = kennelChecked.slice(0, destCap - destCount);
+                  if (toMove.length === 0) { alert(dest.name + " is full!"); return; }
+                  var skipped = kennelChecked.length - toMove.length;
+                  setAnimals(function(prev){ return prev.map(function(x){ return toMove.includes(x.id) ? Object.assign({},x,{kennelId:dest.id}) : x; }); });
+                  setKennelChecked([]);
+                  setKennelMoveTarget("");
+                  if (skipped > 0) alert(toMove.length + " dogs moved. " + skipped + " skipped — " + dest.name + " is now full.");
+                },
+                style: { background: "#1a3a1a", border: "1px solid #22c55e", color: "#4ade80",
+                  borderRadius: 4, padding: "2px 10px", cursor: "pointer", fontSize: "0.72rem" }
+              }, "Move")
+            )
+          ),
+          // ── Dog rows ─────────────────────────────────────────────────
           kennelDogs.map(function(a){
             var sz = getCurrentSize(a);
+            var checked = kennelChecked.includes(a.id);
             return /*#__PURE__*/React.createElement("div", { key: a.id,
-              style: { display: "flex", gap: 10, alignItems: "center", padding: "5px 8px", background: "#241a10",
+              style: { display: "flex", gap: 10, alignItems: "center", padding: "5px 8px",
+                background: checked ? "#2a2010" : "#241a10",
+                border: "1px solid " + (checked ? "#c4956a" : "transparent"),
                 borderRadius: 6, fontSize: "0.8rem", color: "#c4956a", cursor: "pointer" },
               onClick: function(){ setLitterViewPup(a); }
             },
+              /*#__PURE__*/React.createElement("input", { type: "checkbox", checked: checked,
+                onChange: function(e){ e.stopPropagation(); setKennelChecked(function(prev){ return e.target.checked ? prev.concat([a.id]) : prev.filter(function(id){ return id !== a.id; }); }); },
+                onClick: function(e){ e.stopPropagation(); },
+                style: { accentColor: "#c4956a", width: 14, height: 14, cursor: "pointer", flexShrink: 0 }
+              }),
               /*#__PURE__*/React.createElement("span", { style: { fontWeight: "bold", minWidth: 110 } }, a.name),
               /*#__PURE__*/React.createElement("span", { style: { color: "#8a7055", fontSize: "0.72rem" } }, a.breed),
               /*#__PURE__*/React.createElement("span", { style: { color: a.sex === "M" ? "#60a5fa" : "#f472b6", fontSize: "0.72rem", marginLeft: "auto" } }, a.sex === "M" ? "\u2642" : "\u2640"),
