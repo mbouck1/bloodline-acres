@@ -15014,21 +15014,21 @@ function App() {
         toFinalize.forEach(function(lit) {
           var kept = lit.pups.filter(function(p){ return lit.selectedIds.includes(p.id); });
           var rehomed = lit.pups.filter(function(p){ return !lit.selectedIds.includes(p.id); });
+          var destKennelId = lit.dam.kennelId || null;
           if (kept.length > 0) {
-            setHoldingPups(function(h) {
-              return h.concat(kept.map(function(p){
-                return _objectSpread(_objectSpread({}, p), {}, { heldSince: now, name: p.sireBreed.split(" ")[0]+"×"+p.damBreed.split(" ")[0]+" Pup" });
-              }));
+            setAnimals(function(prev) {
+              return prev
+                .map(function(animal){ return animal.id===lit.dam.id ? Object.assign({},animal,{inWhelping:false}) : animal; })
+                .concat(kept.map(function(p){ return Object.assign({}, p, { kennelId: destKennelId }); }));
             });
+          } else {
+            setAnimals(function(prev){ return prev.map(function(animal){ return animal.id===lit.dam.id ? Object.assign({},animal,{inWhelping:false}) : animal; }); });
           }
           var logEntries = [];
-          if (kept.length > 0) logEntries.push({ id: now+Math.random(), type:"pups_holding", count: kept.length, date: new Date().toLocaleString() });
-          if (rehomed.length > 0) logEntries.push({ id: now+Math.random(), type:"rehome", name: rehomed.length+" pup(s) auto-rehomed (day 4)", breed: lit.dam.breed, date: new Date().toLocaleString(), auto: true });
+          if (kept.length > 0) logEntries.push({ id: now+Math.random(), type:"pups_kept", count: kept.length, date: new Date().toLocaleString() });
+          if (rehomed.length > 0) logEntries.push({ id: now+Math.random(), type:"rehome", name: rehomed.length+" pup(s) rehomed (day 4)", breed: lit.dam.breed, date: new Date().toLocaleString(), auto: true });
           logEntries.push({ id: now+Math.random(), type:"whelp", name: lit.dam.name, breed: lit.dam.breed, note:"Dam returned home from Whelping Kennel", date: new Date().toLocaleString() });
-          if (logEntries.length > 0) {
-            setLog(function(lg) { return logEntries.concat(_toConsumableArray(lg)); });
-          }
-          setAnimals(function(a) { return a.map(function(animal){ return animal.id===lit.dam.id ? _objectSpread(_objectSpread({},animal),{},{inWhelping:false}) : animal; }); });
+          if (logEntries.length > 0) { setLog(function(lg) { return logEntries.concat(_toConsumableArray(lg)); }); }
         });
         return prevLitters.filter(function(lit) {
           return Math.floor((now - lit.bornDate) / (1000*60*60*24)) < 4;
