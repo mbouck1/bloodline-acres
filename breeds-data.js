@@ -1857,7 +1857,9 @@ var DEMO_BREEDS = [{
     "heart": 82,
     "joints": 78
   },
-  "aptitudes": ["Tracking", "Lure Coursing", "Conformation"]
+  "aptitudes": ["Tracking", "Lure Coursing", "Conformation"],
+  "coatFreqs": {"E": [["E", 0.8], ["e", 0.2]], "K": [["KB", 0], ["kbr", 0], ["ky", 1.0]], "A": [["Ay", 1.0], ["aw", 0], ["at", 0], ["a", 0]], "B": [["B", 0.9], ["b", 0.1]], "S": [["S", 0.95], ["sp", 0.05], ["sw", 0.0]]},
+  "healthFlags": ["hips", "cancer", "thyroid", "dermoid sinus"]
 }, {
   "name": "Peruvian Inca Orchid",
   "group": "Hound",
@@ -3429,10 +3431,10 @@ var DEMO_BREEDS = [{
   "group": "Working",
   "size": "L",
   "coat": "short",
-  "colors": ["fawn", "brindle"],
+  "colors": ["fawn", "brindle", "fawn with white", "brindle with white"],
   "species": "dog",
   "sizeAvg": 65,
-  "sizeRange": [55, 85],
+  "sizeRange": [50, 80],
   "litterSize": "L",
   "traits": {
     "intelligence": 7,
@@ -3444,24 +3446,27 @@ var DEMO_BREEDS = [{
     "preyDrive": 5,
     "barkTendency": 5,
     "sociability": 8,
-    "adaptability": 8
-  },
+    "adaptability": 8,
+  "founderCOI": 5.5
+},
   "health": {
     "hips": 72,
     "eyes": 80,
     "heart": 72,
     "joints": 72
   },
-  "aptitudes": ["Schutzhund", "Agility", "Conformation"]
+  "aptitudes": ["Schutzhund", "Agility", "Conformation"],
+  "coatFreqs": {"E": [["E", 0.85], ["e", 0.15]], "K": [["KB", 0.45], ["kbr", 0.45], ["ky", 0.1]], "A": [["Ay", 0.9], ["aw", 0], ["at", 0.1], ["a", 0]], "S": [["S", 0.55], ["sp", 0.4], ["sw", 0.05]]},
+  "healthFlags": ["heart", "cancer", "hips", "breathing"]
 }, {
   "name": "Doberman Pinscher",
   "group": "Working",
   "size": "L",
   "coat": "short",
-  "colors": ["black", "red", "blue", "fawn"],
+  "colors": ["black & rust", "red & rust", "blue & rust", "fawn & rust"],
   "species": "dog",
-  "sizeAvg": 65,
-  "sizeRange": [55, 85],
+  "sizeAvg": 80,
+  "sizeRange": [60, 100],
   "litterSize": "L",
   "traits": {
     "intelligence": 9,
@@ -3473,24 +3478,27 @@ var DEMO_BREEDS = [{
     "preyDrive": 6,
     "barkTendency": 6,
     "sociability": 7,
-    "adaptability": 8
-  },
+    "adaptability": 8,
+  "founderCOI": 6.5
+},
   "health": {
     "hips": 75,
     "eyes": 82,
     "heart": 72,
     "joints": 75
   },
-  "aptitudes": ["Schutzhund", "Obedience", "Agility"]
+  "aptitudes": ["Schutzhund", "Obedience", "Agility"],
+  "coatFreqs": {"E": [["E", 1.0], ["e", 0.0]], "K": [["KB", 0.95], ["kbr", 0], ["ky", 0.05]], "A": [["Ay", 0], ["aw", 0], ["at", 1.0], ["a", 0]], "B": [["B", 0.65], ["b", 0.35]], "D": [["D", 0.7], ["d", 0.3]]},
+  "healthFlags": ["heart", "hips", "cancer", "bloat"]
 }, {
   "name": "Rottweiler",
   "group": "Working",
   "size": "L",
   "coat": "short",
-  "colors": ["black & tan", "black & mahogany"],
+  "colors": ["black & mahogany", "black & rust", "black & tan"],
   "species": "dog",
-  "sizeAvg": 65,
-  "sizeRange": [55, 85],
+  "sizeAvg": 105,
+  "sizeRange": [80, 135],
   "litterSize": "L",
   "traits": {
     "intelligence": 8,
@@ -3502,15 +3510,18 @@ var DEMO_BREEDS = [{
     "preyDrive": 5,
     "barkTendency": 5,
     "sociability": 7,
-    "adaptability": 7
-  },
+    "adaptability": 7,
+  "founderCOI": 5.0
+},
   "health": {
     "hips": 72,
     "eyes": 80,
     "heart": 78,
     "joints": 72
   },
-  "aptitudes": ["Schutzhund", "Obedience", "Tracking"]
+  "aptitudes": ["Schutzhund", "Obedience", "Tracking"],
+  "coatFreqs": {"E": [["E", 1.0], ["e", 0.0]], "K": [["KB", 0.95], ["kbr", 0], ["ky", 0.05]], "A": [["Ay", 0], ["aw", 0], ["at", 1.0], ["a", 0]], "B": [["B", 1.0], ["b", 0.0]]},
+  "healthFlags": ["hips", "joints", "heart", "cancer", "bloat"]
 }, {
   "name": "Giant Schnauzer",
   "group": "Working",
@@ -3518,8 +3529,8 @@ var DEMO_BREEDS = [{
   "coat": "wire",
   "colors": ["black", "salt & pepper"],
   "species": "dog",
-  "sizeAvg": 65,
-  "sizeRange": [55, 85],
+  "sizeAvg": 80,
+  "sizeRange": [60, 105],
   "litterSize": "L",
   "traits": {
     "intelligence": 9,
@@ -3531,24 +3542,27 @@ var DEMO_BREEDS = [{
     "preyDrive": 5,
     "barkTendency": 6,
     "sociability": 6,
-    "adaptability": 7
-  },
+    "adaptability": 7,
+  "founderCOI": 5.0
+},
   "health": {
     "hips": 72,
     "eyes": 78,
     "heart": 78,
     "joints": 72
   },
-  "aptitudes": ["Schutzhund", "Obedience", "Agility"]
+  "aptitudes": ["Schutzhund", "Obedience", "Agility"],
+  "coatFreqs": {"E": [["E", 1.0], ["e", 0.0]], "K": [["KB", 0.7], ["kbr", 0], ["ky", 0.3]], "A": [["Ay", 0], ["aw", 0.8], ["at", 0.1], ["a", 0.1]], "B": [["B", 1.0], ["b", 0.0]], "W": [["W", 0.3], ["w", 0.7]]},
+  "healthFlags": ["hips", "cancer", "eyes"]
 }, {
   "name": "Standard Schnauzer",
   "group": "Working",
   "size": "M",
   "coat": "wire",
-  "colors": ["black", "salt & pepper"],
+  "colors": ["salt & pepper", "black"],
   "species": "dog",
-  "sizeAvg": 40,
-  "sizeRange": [28, 55],
+  "sizeAvg": 35,
+  "sizeRange": [26, 45],
   "litterSize": "M",
   "traits": {
     "intelligence": 8,
@@ -3560,24 +3574,27 @@ var DEMO_BREEDS = [{
     "preyDrive": 5,
     "barkTendency": 6,
     "sociability": 7,
-    "adaptability": 7
-  },
+    "adaptability": 7,
+  "founderCOI": 4.5
+},
   "health": {
     "hips": 78,
     "eyes": 82,
     "heart": 82,
     "joints": 78
   },
-  "aptitudes": ["Schutzhund", "Obedience", "Agility"]
+  "aptitudes": ["Schutzhund", "Obedience", "Agility"],
+  "coatFreqs": {"E": [["E", 1.0], ["e", 0.0]], "K": [["KB", 0.6], ["kbr", 0], ["ky", 0.4]], "A": [["Ay", 0], ["aw", 0.8], ["at", 0.1], ["a", 0.1]], "W": [["W", 0.4], ["w", 0.6]]},
+  "healthFlags": ["hips", "eyes"]
 }, {
   "name": "Akita Inu",
   "group": "Working",
   "size": "L",
   "coat": "medium",
-  "colors": ["fawn", "red", "brindle", "white"],
+  "colors": ["red fawn", "sesame", "brindle", "white"],
   "species": "dog",
-  "sizeAvg": 65,
-  "sizeRange": [55, 85],
+  "sizeAvg": 90,
+  "sizeRange": [70, 110],
   "litterSize": "L",
   "traits": {
     "intelligence": 7,
@@ -3589,23 +3606,26 @@ var DEMO_BREEDS = [{
     "preyDrive": 7,
     "barkTendency": 4,
     "sociability": 5,
-    "adaptability": 6
-  },
+    "adaptability": 6,
+  "founderCOI": 5.5
+},
   "health": {
     "hips": 75,
     "eyes": 78,
     "heart": 80,
     "joints": 75
   },
-  "aptitudes": ["Conformation", "Obedience"]
+  "aptitudes": ["Conformation", "Obedience"],
+  "coatFreqs": {"E": [["E", 0.8], ["e", 0.2]], "K": [["KB", 0.2], ["kbr", 0.3], ["ky", 0.5]], "A": [["Ay", 0.6], ["aw", 0.2], ["at", 0.15], ["a", 0.05]], "S": [["S", 0.6], ["sp", 0.35], ["sw", 0.05]]},
+  "healthFlags": ["hips", "eyes", "thyroid", "skin"]
 }, {
   "name": "American Akita",
   "group": "Working",
   "size": "XL",
   "coat": "medium",
-  "colors": ["fawn", "brindle", "white", "pinto"],
+  "colors": ["any color including pinto", "brindle", "white", "fawn", "red"],
   "species": "dog",
-  "sizeAvg": 100,
+  "sizeAvg": 105,
   "sizeRange": [80, 130],
   "litterSize": "L",
   "traits": {
@@ -3618,24 +3638,27 @@ var DEMO_BREEDS = [{
     "preyDrive": 7,
     "barkTendency": 4,
     "sociability": 5,
-    "adaptability": 6
-  },
+    "adaptability": 6,
+  "founderCOI": 5.0
+},
   "health": {
     "hips": 75,
     "eyes": 78,
     "heart": 80,
     "joints": 75
   },
-  "aptitudes": ["Conformation", "Obedience"]
+  "aptitudes": ["Conformation", "Obedience"],
+  "coatFreqs": {"E": [["E", 0.8], ["e", 0.2]], "K": [["KB", 0.25], ["kbr", 0.3], ["ky", 0.45]], "A": [["Ay", 0.5], ["aw", 0.2], ["at", 0.2], ["a", 0.1]], "S": [["S", 0.4], ["sp", 0.5], ["sw", 0.1]]},
+  "healthFlags": ["hips", "eyes", "thyroid", "bloat"]
 }, {
   "name": "Siberian Husky",
   "group": "Working",
   "size": "L",
   "coat": "medium",
-  "colors": ["gray & white", "black & white", "red & white", "sable"],
+  "colors": ["black & white", "gray & white", "red & white", "sable & white", "all white", "agouti & white"],
   "species": "dog",
-  "sizeAvg": 65,
-  "sizeRange": [55, 85],
+  "sizeAvg": 50,
+  "sizeRange": [35, 65],
   "litterSize": "L",
   "traits": {
     "intelligence": 7,
@@ -3647,24 +3670,27 @@ var DEMO_BREEDS = [{
     "preyDrive": 7,
     "barkTendency": 7,
     "sociability": 8,
-    "adaptability": 6
-  },
+    "adaptability": 6,
+  "founderCOI": 4.0
+},
   "health": {
     "hips": 82,
     "eyes": 80,
     "heart": 88,
     "joints": 82
   },
-  "aptitudes": ["Sled Racing", "Agility", "Conformation"]
+  "aptitudes": ["Sled Racing", "Agility", "Conformation"],
+  "coatFreqs": {"E": [["E", 0.75], ["e", 0.25]], "K": [["KB", 0.05], ["kbr", 0], ["ky", 0.95]], "A": [["Ay", 0.2], ["aw", 0.4], ["at", 0.25], ["a", 0.15]], "B": [["B", 0.7], ["b", 0.3]], "S": [["S", 0.3], ["sp", 0.55], ["sw", 0.15]]},
+  "healthFlags": ["eyes", "hips"]
 }, {
   "name": "Alaskan Malamute",
   "group": "Working",
   "size": "XL",
   "coat": "long",
-  "colors": ["gray & white", "sable & white", "black & white", "red & white"],
+  "colors": ["gray & white", "black & white", "red & white", "sable & white", "all white", "seal & white"],
   "species": "dog",
-  "sizeAvg": 100,
-  "sizeRange": [80, 130],
+  "sizeAvg": 85,
+  "sizeRange": [70, 100],
   "litterSize": "L",
   "traits": {
     "intelligence": 7,
@@ -3676,24 +3702,27 @@ var DEMO_BREEDS = [{
     "preyDrive": 7,
     "barkTendency": 6,
     "sociability": 7,
-    "adaptability": 5
-  },
+    "adaptability": 5,
+  "founderCOI": 5.0
+},
   "health": {
     "hips": 75,
     "eyes": 78,
     "heart": 82,
     "joints": 75
   },
-  "aptitudes": ["Sled Racing", "Draft", "Conformation"]
+  "aptitudes": ["Sled Racing", "Draft", "Conformation"],
+  "coatFreqs": {"E": [["E", 0.85], ["e", 0.15]], "K": [["KB", 0.1], ["kbr", 0], ["ky", 0.9]], "A": [["Ay", 0.15], ["aw", 0.45], ["at", 0.3], ["a", 0.1]], "S": [["S", 0.3], ["sp", 0.55], ["sw", 0.15]]},
+  "healthFlags": ["hips", "eyes", "bloat", "joints"]
 }, {
   "name": "Greenland Dog",
   "group": "Working",
   "size": "L",
   "coat": "long",
-  "colors": ["white", "black", "gray", "sable"],
+  "colors": ["any color or combination"],
   "species": "dog",
-  "sizeAvg": 65,
-  "sizeRange": [55, 85],
+  "sizeAvg": 75,
+  "sizeRange": [60, 100],
   "litterSize": "L",
   "traits": {
     "intelligence": 6,
@@ -3705,24 +3734,27 @@ var DEMO_BREEDS = [{
     "preyDrive": 8,
     "barkTendency": 7,
     "sociability": 6,
-    "adaptability": 4
-  },
+    "adaptability": 4,
+  "founderCOI": 3.5
+},
   "health": {
     "hips": 78,
     "eyes": 80,
     "heart": 85,
     "joints": 78
   },
-  "aptitudes": ["Sled Racing", "Conformation"]
+  "aptitudes": ["Sled Racing", "Conformation"],
+  "coatFreqs": {"E": [["E", 0.75], ["e", 0.25]], "K": [["KB", 0.15], ["kbr", 0.1], ["ky", 0.75]], "A": [["Ay", 0.3], ["aw", 0.3], ["at", 0.25], ["a", 0.15]], "S": [["S", 0.4], ["sp", 0.45], ["sw", 0.15]]},
+  "healthFlags": ["hips", "joints"]
 }, {
   "name": "Canadian Eskimo Dog",
   "group": "Working",
   "size": "L",
   "coat": "long",
-  "colors": ["white", "gray", "black", "sable"],
+  "colors": ["any color or combination", "white", "black", "gray", "red"],
   "species": "dog",
-  "sizeAvg": 65,
-  "sizeRange": [55, 85],
+  "sizeAvg": 75,
+  "sizeRange": [60, 95],
   "litterSize": "L",
   "traits": {
     "intelligence": 6,
@@ -3734,24 +3766,27 @@ var DEMO_BREEDS = [{
     "preyDrive": 8,
     "barkTendency": 7,
     "sociability": 5,
-    "adaptability": 4
-  },
+    "adaptability": 4,
+  "founderCOI": 4.0
+},
   "health": {
     "hips": 78,
     "eyes": 80,
     "heart": 85,
     "joints": 78
   },
-  "aptitudes": ["Sled Racing", "Conformation"]
+  "aptitudes": ["Sled Racing", "Conformation"],
+  "coatFreqs": {"E": [["E", 0.75], ["e", 0.25]], "K": [["KB", 0.1], ["kbr", 0], ["ky", 0.9]], "A": [["Ay", 0.25], ["aw", 0.35], ["at", 0.25], ["a", 0.15]], "S": [["S", 0.4], ["sp", 0.45], ["sw", 0.15]]},
+  "healthFlags": ["hips", "joints"]
 }, {
   "name": "Bernese Mountain Dog",
   "group": "Working",
   "size": "L",
   "coat": "long",
-  "colors": ["tricolor"],
+  "colors": ["black, white & rust (tricolor only)"],
   "species": "dog",
-  "sizeAvg": 65,
-  "sizeRange": [55, 85],
+  "sizeAvg": 90,
+  "sizeRange": [70, 115],
   "litterSize": "L",
   "traits": {
     "intelligence": 7,
@@ -3763,24 +3798,27 @@ var DEMO_BREEDS = [{
     "preyDrive": 3,
     "barkTendency": 4,
     "sociability": 9,
-    "adaptability": 6
-  },
+    "adaptability": 6,
+  "founderCOI": 7.5
+},
   "health": {
     "hips": 62,
     "eyes": 75,
     "heart": 65,
     "joints": 62
   },
-  "aptitudes": ["Draft", "Conformation", "Obedience"]
+  "aptitudes": ["Draft", "Conformation", "Obedience"],
+  "coatFreqs": {"E": [["E", 1.0], ["e", 0.0]], "K": [["KB", 0.9], ["kbr", 0], ["ky", 0.1]], "A": [["Ay", 0], ["aw", 0], ["at", 1.0], ["a", 0]], "B": [["B", 1.0], ["b", 0.0]], "S": [["S", 0.1], ["sp", 0.8], ["sw", 0.1]]},
+  "healthFlags": ["hips", "cancer", "joints", "bloat", "eyes"]
 }, {
   "name": "Greater Swiss Mountain Dog",
   "group": "Working",
   "size": "XL",
   "coat": "medium",
-  "colors": ["tricolor"],
+  "colors": ["black, white & rust (tricolor only)"],
   "species": "dog",
-  "sizeAvg": 100,
-  "sizeRange": [80, 130],
+  "sizeAvg": 110,
+  "sizeRange": [85, 140],
   "litterSize": "L",
   "traits": {
     "intelligence": 7,
@@ -3792,24 +3830,27 @@ var DEMO_BREEDS = [{
     "preyDrive": 3,
     "barkTendency": 5,
     "sociability": 8,
-    "adaptability": 6
-  },
+    "adaptability": 6,
+  "founderCOI": 6.5
+},
   "health": {
     "hips": 68,
     "eyes": 78,
     "heart": 72,
     "joints": 68
   },
-  "aptitudes": ["Draft", "Conformation", "Obedience"]
+  "aptitudes": ["Draft", "Conformation", "Obedience"],
+  "coatFreqs": {"E": [["E", 1.0], ["e", 0.0]], "K": [["KB", 0.9], ["kbr", 0], ["ky", 0.1]], "A": [["Ay", 0], ["aw", 0], ["at", 1.0], ["a", 0]], "B": [["B", 1.0], ["b", 0.0]], "S": [["S", 0.1], ["sp", 0.8], ["sw", 0.1]]},
+  "healthFlags": ["hips", "bloat", "cancer", "joints"]
 }, {
   "name": "Appenzeller Sennenhund",
   "group": "Working",
   "size": "M",
   "coat": "short",
-  "colors": ["tricolor"],
+  "colors": ["black, white & rust (tricolor only)"],
   "species": "dog",
-  "sizeAvg": 40,
-  "sizeRange": [28, 55],
+  "sizeAvg": 55,
+  "sizeRange": [44, 70],
   "litterSize": "M",
   "traits": {
     "intelligence": 8,
@@ -3821,24 +3862,27 @@ var DEMO_BREEDS = [{
     "preyDrive": 5,
     "barkTendency": 7,
     "sociability": 7,
-    "adaptability": 7
-  },
+    "adaptability": 7,
+  "founderCOI": 5.0
+},
   "health": {
     "hips": 75,
     "eyes": 80,
     "heart": 80,
     "joints": 75
   },
-  "aptitudes": ["Draft", "Agility", "Conformation"]
+  "aptitudes": ["Draft", "Agility", "Conformation"],
+  "coatFreqs": {"E": [["E", 1.0], ["e", 0.0]], "K": [["KB", 0.9], ["kbr", 0], ["ky", 0.1]], "A": [["Ay", 0], ["aw", 0], ["at", 1.0], ["a", 0]], "S": [["S", 0.1], ["sp", 0.8], ["sw", 0.1]]},
+  "healthFlags": ["hips", "eyes"]
 }, {
   "name": "Entlebucher Mountain Dog",
   "group": "Working",
   "size": "M",
   "coat": "short",
-  "colors": ["tricolor"],
+  "colors": ["black, white & rust (tricolor only)"],
   "species": "dog",
-  "sizeAvg": 40,
-  "sizeRange": [28, 55],
+  "sizeAvg": 55,
+  "sizeRange": [44, 66],
   "litterSize": "M",
   "traits": {
     "intelligence": 8,
@@ -3850,15 +3894,18 @@ var DEMO_BREEDS = [{
     "preyDrive": 5,
     "barkTendency": 6,
     "sociability": 7,
-    "adaptability": 7
-  },
+    "adaptability": 7,
+  "founderCOI": 5.5
+},
   "health": {
     "hips": 75,
     "eyes": 78,
     "heart": 80,
     "joints": 75
   },
-  "aptitudes": ["Draft", "Agility", "Conformation"]
+  "aptitudes": ["Draft", "Agility", "Conformation"],
+  "coatFreqs": {"E": [["E", 1.0], ["e", 0.0]], "K": [["KB", 0.9], ["kbr", 0], ["ky", 0.1]], "A": [["Ay", 0], ["aw", 0], ["at", 1.0], ["a", 0]], "S": [["S", 0.1], ["sp", 0.8], ["sw", 0.1]]},
+  "healthFlags": ["hips", "eyes"]
 }, {
   "name": "Saint Bernard",
   "group": "Working",
@@ -3866,8 +3913,8 @@ var DEMO_BREEDS = [{
   "coat": "long",
   "colors": ["red & white", "mahogany & white", "brindle & white"],
   "species": "dog",
-  "sizeAvg": 100,
-  "sizeRange": [80, 130],
+  "sizeAvg": 160,
+  "sizeRange": [120, 200],
   "litterSize": "L",
   "traits": {
     "intelligence": 7,
@@ -3879,24 +3926,27 @@ var DEMO_BREEDS = [{
     "preyDrive": 2,
     "barkTendency": 4,
     "sociability": 9,
-    "adaptability": 5
-  },
+    "adaptability": 5,
+  "founderCOI": 6.0
+},
   "health": {
     "hips": 62,
     "eyes": 72,
     "heart": 65,
     "joints": 62
   },
-  "aptitudes": ["Draft", "Conformation", "Obedience"]
+  "aptitudes": ["Draft", "Conformation", "Obedience"],
+  "coatFreqs": {"E": [["E", 1.0], ["e", 0.0]], "K": [["KB", 0.2], ["kbr", 0.4], ["ky", 0.4]], "A": [["Ay", 0.8], ["aw", 0], ["at", 0.15], ["a", 0.05]], "S": [["S", 0.2], ["sp", 0.65], ["sw", 0.15]]},
+  "healthFlags": ["hips", "joints", "bloat", "heart", "cancer"]
 }, {
   "name": "Newfoundland",
   "group": "Working",
   "size": "XL",
   "coat": "long",
-  "colors": ["black", "brown", "gray", "landseer"],
+  "colors": ["black", "brown", "gray", "black & white (Landseer)"],
   "species": "dog",
-  "sizeAvg": 100,
-  "sizeRange": [80, 130],
+  "sizeAvg": 130,
+  "sizeRange": [100, 150],
   "litterSize": "L",
   "traits": {
     "intelligence": 7,
@@ -3908,24 +3958,27 @@ var DEMO_BREEDS = [{
     "preyDrive": 2,
     "barkTendency": 3,
     "sociability": 9,
-    "adaptability": 6
-  },
+    "adaptability": 6,
+  "founderCOI": 5.5
+},
   "health": {
     "hips": 68,
     "eyes": 75,
     "heart": 70,
     "joints": 68
   },
-  "aptitudes": ["Draft", "Dock Diving", "Conformation"]
+  "aptitudes": ["Draft", "Dock Diving", "Conformation"],
+  "coatFreqs": {"E": [["E", 1.0], ["e", 0.0]], "K": [["KB", 0.85], ["kbr", 0], ["ky", 0.15]], "A": [["Ay", 0], ["aw", 0], ["at", 0.2], ["a", 0.8]], "B": [["B", 0.65], ["b", 0.35]], "S": [["S", 0.7], ["sp", 0.2], ["sw", 0.1]]},
+  "healthFlags": ["hips", "heart", "joints", "bloat", "cancer"]
 }, {
   "name": "Leonberger",
   "group": "Working",
   "size": "XL",
   "coat": "long",
-  "colors": ["lion-yellow", "red", "sandy"],
+  "colors": ["lion yellow", "golden", "red", "red-brown with black mask"],
   "species": "dog",
-  "sizeAvg": 100,
-  "sizeRange": [80, 130],
+  "sizeAvg": 130,
+  "sizeRange": [100, 170],
   "litterSize": "L",
   "traits": {
     "intelligence": 7,
@@ -3937,24 +3990,27 @@ var DEMO_BREEDS = [{
     "preyDrive": 3,
     "barkTendency": 4,
     "sociability": 9,
-    "adaptability": 7
-  },
+    "adaptability": 7,
+  "founderCOI": 5.5
+},
   "health": {
     "hips": 65,
     "eyes": 72,
     "heart": 68,
     "joints": 65
   },
-  "aptitudes": ["Draft", "Conformation", "Obedience"]
+  "aptitudes": ["Draft", "Conformation", "Obedience"],
+  "coatFreqs": {"E": [["E", 0.8], ["e", 0.2]], "K": [["KB", 0.1], ["kbr", 0], ["ky", 0.9]], "A": [["Ay", 0.9], ["aw", 0.05], ["at", 0.05], ["a", 0]], "B": [["B", 0.95], ["b", 0.05]]},
+  "healthFlags": ["hips", "joints", "heart", "cancer", "bloat"]
 }, {
   "name": "Hovawart",
   "group": "Working",
   "size": "L",
   "coat": "long",
-  "colors": ["black", "blond", "black & gold"],
+  "colors": ["black & gold", "blonde", "black"],
   "species": "dog",
-  "sizeAvg": 65,
-  "sizeRange": [55, 85],
+  "sizeAvg": 80,
+  "sizeRange": [55, 100],
   "litterSize": "L",
   "traits": {
     "intelligence": 7,
@@ -3966,15 +4022,18 @@ var DEMO_BREEDS = [{
     "preyDrive": 5,
     "barkTendency": 5,
     "sociability": 7,
-    "adaptability": 7
-  },
+    "adaptability": 7,
+  "founderCOI": 5.0
+},
   "health": {
     "hips": 72,
     "eyes": 78,
     "heart": 78,
     "joints": 72
   },
-  "aptitudes": ["Schutzhund", "Tracking", "Conformation"]
+  "aptitudes": ["Schutzhund", "Tracking", "Conformation"],
+  "coatFreqs": {"E": [["E", 1.0], ["e", 0.0]], "K": [["KB", 0.4], ["kbr", 0], ["ky", 0.6]], "A": [["Ay", 0.4], ["aw", 0], ["at", 0.5], ["a", 0.1]], "B": [["B", 1.0], ["b", 0.0]]},
+  "healthFlags": ["hips", "thyroid"]
 }, {
   "name": "English Mastiff",
   "group": "Working",
@@ -3982,8 +4041,8 @@ var DEMO_BREEDS = [{
   "coat": "short",
   "colors": ["fawn", "apricot", "brindle"],
   "species": "dog",
-  "sizeAvg": 100,
-  "sizeRange": [80, 130],
+  "sizeAvg": 175,
+  "sizeRange": [130, 230],
   "litterSize": "L",
   "traits": {
     "intelligence": 6,
@@ -3995,15 +4054,18 @@ var DEMO_BREEDS = [{
     "preyDrive": 3,
     "barkTendency": 4,
     "sociability": 7,
-    "adaptability": 5
-  },
+    "adaptability": 5,
+  "founderCOI": 6.5
+},
   "health": {
     "hips": 62,
     "eyes": 72,
     "heart": 65,
     "joints": 62
   },
-  "aptitudes": ["Conformation", "Obedience"]
+  "aptitudes": ["Conformation", "Obedience"],
+  "coatFreqs": {"E": [["E", 1.0], ["e", 0.0]], "K": [["KB", 0.2], ["kbr", 0.5], ["ky", 0.3]], "A": [["Ay", 0.9], ["aw", 0], ["at", 0.1], ["a", 0]], "B": [["B", 1.0], ["b", 0.0]], "S": [["S", 0.95], ["sp", 0.05], ["sw", 0.0]]},
+  "healthFlags": ["hips", "joints", "bloat", "cancer", "heart", "breathing"]
 }, {
   "name": "Bullmastiff",
   "group": "Working",
@@ -4011,8 +4073,8 @@ var DEMO_BREEDS = [{
   "coat": "short",
   "colors": ["fawn", "red", "brindle"],
   "species": "dog",
-  "sizeAvg": 100,
-  "sizeRange": [80, 130],
+  "sizeAvg": 115,
+  "sizeRange": [100, 130],
   "litterSize": "L",
   "traits": {
     "intelligence": 7,
@@ -4024,24 +4086,27 @@ var DEMO_BREEDS = [{
     "preyDrive": 5,
     "barkTendency": 4,
     "sociability": 7,
-    "adaptability": 6
-  },
+    "adaptability": 6,
+  "founderCOI": 6.0
+},
   "health": {
     "hips": 65,
     "eyes": 72,
     "heart": 68,
     "joints": 65
   },
-  "aptitudes": ["Schutzhund", "Conformation", "Obedience"]
+  "aptitudes": ["Schutzhund", "Conformation", "Obedience"],
+  "coatFreqs": {"E": [["E", 1.0], ["e", 0.0]], "K": [["KB", 0.2], ["kbr", 0.5], ["ky", 0.3]], "A": [["Ay", 0.9], ["aw", 0], ["at", 0.1], ["a", 0]], "B": [["B", 1.0], ["b", 0.0]], "S": [["S", 0.95], ["sp", 0.05], ["sw", 0.0]]},
+  "healthFlags": ["hips", "bloat", "cancer", "heart", "breathing"]
 }, {
   "name": "Neapolitan Mastiff",
   "group": "Working",
   "size": "XL",
   "coat": "short",
-  "colors": ["black", "gray", "mahogany", "tawny", "blue"],
+  "colors": ["gray", "black", "mahogany", "tawny", "brindle"],
   "species": "dog",
-  "sizeAvg": 100,
-  "sizeRange": [80, 130],
+  "sizeAvg": 140,
+  "sizeRange": [110, 200],
   "litterSize": "L",
   "traits": {
     "intelligence": 6,
@@ -4053,15 +4118,18 @@ var DEMO_BREEDS = [{
     "preyDrive": 4,
     "barkTendency": 5,
     "sociability": 6,
-    "adaptability": 4
-  },
+    "adaptability": 4,
+  "founderCOI": 7.0
+},
   "health": {
     "hips": 62,
     "eyes": 68,
     "heart": 65,
     "joints": 62
   },
-  "aptitudes": ["Conformation", "Obedience"]
+  "aptitudes": ["Conformation", "Obedience"],
+  "coatFreqs": {"E": [["E", 1.0], ["e", 0.0]], "K": [["KB", 0.5], ["kbr", 0.3], ["ky", 0.2]], "A": [["Ay", 0.4], ["aw", 0], ["at", 0.3], ["a", 0.3]], "B": [["B", 0.7], ["b", 0.3]], "D": [["D", 0.75], ["d", 0.25]]},
+  "healthFlags": ["hips", "joints", "bloat", "heart", "breathing", "skin", "eyes"]
 }, {
   "name": "Dogue de Bordeaux",
   "group": "Working",
@@ -4069,8 +4137,8 @@ var DEMO_BREEDS = [{
   "coat": "short",
   "colors": ["fawn", "mahogany", "red"],
   "species": "dog",
-  "sizeAvg": 100,
-  "sizeRange": [80, 130],
+  "sizeAvg": 110,
+  "sizeRange": [99, 145],
   "litterSize": "L",
   "traits": {
     "intelligence": 6,
@@ -4082,24 +4150,27 @@ var DEMO_BREEDS = [{
     "preyDrive": 4,
     "barkTendency": 5,
     "sociability": 7,
-    "adaptability": 5
-  },
+    "adaptability": 5,
+  "founderCOI": 7.0
+},
   "health": {
     "hips": 65,
     "eyes": 70,
     "heart": 65,
     "joints": 65
   },
-  "aptitudes": ["Schutzhund", "Conformation", "Obedience"]
+  "aptitudes": ["Schutzhund", "Conformation", "Obedience"],
+  "coatFreqs": {"E": [["E", 1.0], ["e", 0.0]], "K": [["KB", 0.1], ["kbr", 0], ["ky", 0.9]], "A": [["Ay", 1.0], ["aw", 0], ["at", 0], ["a", 0]], "S": [["S", 0.8], ["sp", 0.2], ["sw", 0.0]]},
+  "healthFlags": ["hips", "heart", "bloat", "cancer", "breathing", "joints"]
 }, {
   "name": "Cane Corso",
   "group": "Working",
   "size": "XL",
   "coat": "short",
-  "colors": ["black", "gray", "fawn", "brindle"],
+  "colors": ["black", "gray", "fawn", "red", "brindle", "black brindle", "gray brindle", "chestnut brindle"],
   "species": "dog",
-  "sizeAvg": 100,
-  "sizeRange": [80, 130],
+  "sizeAvg": 105,
+  "sizeRange": [88, 130],
   "litterSize": "L",
   "traits": {
     "intelligence": 8,
@@ -4111,24 +4182,27 @@ var DEMO_BREEDS = [{
     "preyDrive": 6,
     "barkTendency": 4,
     "sociability": 6,
-    "adaptability": 6
-  },
+    "adaptability": 6,
+  "founderCOI": 5.5
+},
   "health": {
     "hips": 70,
     "eyes": 75,
     "heart": 72,
     "joints": 70
   },
-  "aptitudes": ["Schutzhund", "Conformation", "Obedience"]
+  "aptitudes": ["Schutzhund", "Conformation", "Obedience"],
+  "coatFreqs": {"E": [["E", 1.0], ["e", 0.0]], "K": [["KB", 0.55], ["kbr", 0.35], ["ky", 0.1]], "A": [["Ay", 0.4], ["aw", 0], ["at", 0.3], ["a", 0.3]], "B": [["B", 0.8], ["b", 0.2]], "D": [["D", 0.8], ["d", 0.2]]},
+  "healthFlags": ["hips", "bloat", "heart", "eyes", "joints"]
 }, {
   "name": "Broholmer",
   "group": "Working",
   "size": "XL",
   "coat": "short",
-  "colors": ["yellow", "brown", "black"],
+  "colors": ["yellow with black mask", "golden red", "black"],
   "species": "dog",
-  "sizeAvg": 100,
-  "sizeRange": [80, 130],
+  "sizeAvg": 110,
+  "sizeRange": [88, 150],
   "litterSize": "L",
   "traits": {
     "intelligence": 7,
@@ -4140,24 +4214,27 @@ var DEMO_BREEDS = [{
     "preyDrive": 3,
     "barkTendency": 5,
     "sociability": 7,
-    "adaptability": 6
-  },
+    "adaptability": 6,
+  "founderCOI": 6.0
+},
   "health": {
     "hips": 65,
     "eyes": 72,
     "heart": 68,
     "joints": 65
   },
-  "aptitudes": ["Conformation", "Obedience"]
+  "aptitudes": ["Conformation", "Obedience"],
+  "coatFreqs": {"E": [["E", 0.85], ["e", 0.15]], "K": [["KB", 0.3], ["kbr", 0], ["ky", 0.7]], "A": [["Ay", 0.9], ["aw", 0], ["at", 0.1], ["a", 0]], "B": [["B", 1.0], ["b", 0.0]]},
+  "healthFlags": ["hips", "bloat", "heart"]
 }, {
   "name": "Boerboel",
   "group": "Working",
   "size": "XL",
   "coat": "short",
-  "colors": ["fawn", "red", "brindle", "brown"],
+  "colors": ["brown", "red", "fawn", "brindle", "black (rare)"],
   "species": "dog",
-  "sizeAvg": 100,
-  "sizeRange": [80, 130],
+  "sizeAvg": 150,
+  "sizeRange": [110, 200],
   "litterSize": "L",
   "traits": {
     "intelligence": 8,
@@ -4169,15 +4246,18 @@ var DEMO_BREEDS = [{
     "preyDrive": 6,
     "barkTendency": 5,
     "sociability": 6,
-    "adaptability": 6
-  },
+    "adaptability": 6,
+  "founderCOI": 5.5
+},
   "health": {
     "hips": 68,
     "eyes": 72,
     "heart": 70,
     "joints": 68
   },
-  "aptitudes": ["Schutzhund", "Conformation", "Obedience"]
+  "aptitudes": ["Schutzhund", "Conformation", "Obedience"],
+  "coatFreqs": {"E": [["E", 1.0], ["e", 0.0]], "K": [["KB", 0.15], ["kbr", 0.4], ["ky", 0.45]], "A": [["Ay", 0.8], ["aw", 0], ["at", 0.15], ["a", 0.05]], "B": [["B", 0.85], ["b", 0.15]]},
+  "healthFlags": ["hips", "joints", "heart", "cancer", "bloat"]
 }, {
   "name": "Rhodesian Ridgeback",
   "group": "Working",
@@ -4185,8 +4265,8 @@ var DEMO_BREEDS = [{
   "coat": "short",
   "colors": ["wheaten", "light wheaten", "red wheaten"],
   "species": "dog",
-  "sizeAvg": 65,
-  "sizeRange": [55, 85],
+  "sizeAvg": 80,
+  "sizeRange": [65, 90],
   "litterSize": "L",
   "traits": {
     "intelligence": 7,
@@ -4198,8 +4278,9 @@ var DEMO_BREEDS = [{
     "preyDrive": 7,
     "barkTendency": 4,
     "sociability": 7,
-    "adaptability": 7
-  },
+    "adaptability": 7,
+  "founderCOI": 5.0
+},
   "health": {
     "hips": 78,
     "eyes": 82,
@@ -4212,10 +4293,10 @@ var DEMO_BREEDS = [{
   "group": "Working",
   "size": "L",
   "coat": "short",
-  "colors": ["brindle", "fawn"],
+  "colors": ["brindle", "fawn", "brindle with white"],
   "species": "dog",
-  "sizeAvg": 65,
-  "sizeRange": [55, 85],
+  "sizeAvg": 95,
+  "sizeRange": [75, 110],
   "litterSize": "L",
   "traits": {
     "intelligence": 7,
@@ -4227,24 +4308,27 @@ var DEMO_BREEDS = [{
     "preyDrive": 6,
     "barkTendency": 5,
     "sociability": 6,
-    "adaptability": 6
-  },
+    "adaptability": 6,
+  "founderCOI": 4.5
+},
   "health": {
     "hips": 72,
     "eyes": 78,
     "heart": 78,
     "joints": 72
   },
-  "aptitudes": ["Schutzhund", "Conformation"]
+  "aptitudes": ["Schutzhund", "Conformation"],
+  "coatFreqs": {"E": [["E", 1.0], ["e", 0.0]], "K": [["KB", 0.15], ["kbr", 0.55], ["ky", 0.3]], "A": [["Ay", 0.85], ["aw", 0], ["at", 0.1], ["a", 0.05]], "S": [["S", 0.7], ["sp", 0.25], ["sw", 0.05]]},
+  "healthFlags": ["hips", "heart"]
 }, {
   "name": "Spanish Mastiff",
   "group": "Working",
   "size": "XL",
   "coat": "long",
-  "colors": ["fawn", "red", "black", "brindle", "wolf sable"],
+  "colors": ["fawn", "red", "black", "wolf sable", "brindle", "white with patches"],
   "species": "dog",
-  "sizeAvg": 100,
-  "sizeRange": [80, 130],
+  "sizeAvg": 185,
+  "sizeRange": [140, 240],
   "litterSize": "L",
   "traits": {
     "intelligence": 7,
@@ -4256,24 +4340,27 @@ var DEMO_BREEDS = [{
     "preyDrive": 5,
     "barkTendency": 7,
     "sociability": 6,
-    "adaptability": 5
-  },
+    "adaptability": 5,
+  "founderCOI": 5.5
+},
   "health": {
     "hips": 65,
     "eyes": 72,
     "heart": 68,
     "joints": 65
   },
-  "aptitudes": ["Conformation", "Obedience", "LGD"]
+  "aptitudes": ["Conformation", "Obedience", "LGD"],
+  "coatFreqs": {"E": [["E", 0.85], ["e", 0.15]], "K": [["KB", 0.2], ["kbr", 0.35], ["ky", 0.45]], "A": [["Ay", 0.5], ["aw", 0.2], ["at", 0.2], ["a", 0.1]], "S": [["S", 0.5], ["sp", 0.35], ["sw", 0.15]]},
+  "healthFlags": ["hips", "joints", "bloat", "heart", "skin"]
 }, {
   "name": "Pyrenean Mastiff",
   "group": "Working",
   "size": "XL",
   "coat": "long",
-  "colors": ["white & gray", "white & beige", "white & black"],
+  "colors": ["white with gray patches", "white with golden patches", "white with black patches"],
   "species": "dog",
-  "sizeAvg": 100,
-  "sizeRange": [80, 130],
+  "sizeAvg": 180,
+  "sizeRange": [130, 240],
   "litterSize": "L",
   "traits": {
     "intelligence": 7,
@@ -4285,24 +4372,27 @@ var DEMO_BREEDS = [{
     "preyDrive": 4,
     "barkTendency": 7,
     "sociability": 7,
-    "adaptability": 5
-  },
+    "adaptability": 5,
+  "founderCOI": 5.5
+},
   "health": {
     "hips": 65,
     "eyes": 72,
     "heart": 68,
     "joints": 65
   },
-  "aptitudes": ["Conformation", "Obedience"]
+  "aptitudes": ["Conformation", "Obedience"],
+  "coatFreqs": {"E": [["E", 0.85], ["e", 0.15]], "K": [["KB", 0.1], ["kbr", 0], ["ky", 0.9]], "A": [["Ay", 0.5], ["aw", 0.3], ["at", 0.1], ["a", 0.1]], "S": [["S", 0.05], ["sp", 0.45], ["sw", 0.5]]},
+  "healthFlags": ["hips", "joints", "bloat", "heart"]
 }, {
   "name": "Great Pyrenees",
   "group": "Working",
   "size": "XL",
   "coat": "long",
-  "colors": ["white", "white & badger", "white & gray"],
+  "colors": ["white", "white with gray patches", "white with tan patches", "white with badger patches"],
   "species": "dog",
   "sizeAvg": 100,
-  "sizeRange": [80, 130],
+  "sizeRange": [85, 115],
   "litterSize": "L",
   "traits": {
     "intelligence": 7,
@@ -4314,24 +4404,27 @@ var DEMO_BREEDS = [{
     "preyDrive": 4,
     "barkTendency": 8,
     "sociability": 7,
-    "adaptability": 6
-  },
+    "adaptability": 6,
+  "founderCOI": 5.0
+},
   "health": {
     "hips": 70,
     "eyes": 78,
     "heart": 75,
     "joints": 70
   },
-  "aptitudes": ["Conformation", "Obedience", "LGD"]
+  "aptitudes": ["Conformation", "Obedience", "LGD"],
+  "coatFreqs": {"E": [["E", 0.5], ["e", 0.5]], "K": [["KB", 0.05], ["kbr", 0], ["ky", 0.95]], "A": [["Ay", 0.6], ["aw", 0.2], ["at", 0.1], ["a", 0.1]], "S": [["S", 0.05], ["sp", 0.25], ["sw", 0.7]]},
+  "healthFlags": ["hips", "joints", "bloat", "cancer"]
 }, {
   "name": "Dogo Argentino",
   "group": "Working",
   "size": "L",
   "coat": "short",
-  "colors": ["white"],
+  "colors": ["white (with small dark patch on skull allowed)"],
   "species": "dog",
-  "sizeAvg": 65,
-  "sizeRange": [55, 85],
+  "sizeAvg": 95,
+  "sizeRange": [80, 115],
   "litterSize": "L",
   "traits": {
     "intelligence": 8,
@@ -4343,24 +4436,27 @@ var DEMO_BREEDS = [{
     "preyDrive": 9,
     "barkTendency": 4,
     "sociability": 6,
-    "adaptability": 6
-  },
+    "adaptability": 6,
+  "founderCOI": 6.5
+},
   "health": {
     "hips": 72,
     "eyes": 72,
     "heart": 78,
     "joints": 72
   },
-  "aptitudes": ["Schutzhund", "Tracking", "Conformation"]
+  "aptitudes": ["Schutzhund", "Tracking", "Conformation"],
+  "coatFreqs": {"E": [["E", 0.5], ["e", 0.5]], "K": [["KB", 0.1], ["kbr", 0], ["ky", 0.9]], "A": [["Ay", 1.0], ["aw", 0], ["at", 0], ["a", 0]], "S": [["S", 0.05], ["sp", 0.05], ["sw", 0.9]]},
+  "healthFlags": ["hips", "deafness", "skin", "cancer"]
 }, {
   "name": "Fila Brasileiro",
   "group": "Working",
   "size": "XL",
   "coat": "short",
-  "colors": ["fawn", "brindle", "black"],
+  "colors": ["brindle", "fawn", "black", "yellow"],
   "species": "dog",
-  "sizeAvg": 100,
-  "sizeRange": [80, 130],
+  "sizeAvg": 145,
+  "sizeRange": [110, 180],
   "litterSize": "L",
   "traits": {
     "intelligence": 7,
@@ -4372,24 +4468,27 @@ var DEMO_BREEDS = [{
     "preyDrive": 7,
     "barkTendency": 6,
     "sociability": 4,
-    "adaptability": 4
-  },
+    "adaptability": 4,
+  "founderCOI": 5.5
+},
   "health": {
     "hips": 65,
     "eyes": 70,
     "heart": 68,
     "joints": 65
   },
-  "aptitudes": ["Tracking", "Conformation"]
+  "aptitudes": ["Tracking", "Conformation"],
+  "coatFreqs": {"E": [["E", 1.0], ["e", 0.0]], "K": [["KB", 0.2], ["kbr", 0.5], ["ky", 0.3]], "A": [["Ay", 0.7], ["aw", 0], ["at", 0.2], ["a", 0.1]], "B": [["B", 0.85], ["b", 0.15]]},
+  "healthFlags": ["hips", "joints", "bloat", "heart", "skin"]
 }, {
   "name": "Perro de Presa Canario",
   "group": "Working",
   "size": "XL",
   "coat": "short",
-  "colors": ["brindle", "fawn"],
+  "colors": ["fawn", "brindle", "fawn with white", "brindle with white"],
   "species": "dog",
-  "sizeAvg": 100,
-  "sizeRange": [80, 130],
+  "sizeAvg": 110,
+  "sizeRange": [84, 145],
   "litterSize": "L",
   "traits": {
     "intelligence": 7,
@@ -4401,24 +4500,27 @@ var DEMO_BREEDS = [{
     "preyDrive": 6,
     "barkTendency": 5,
     "sociability": 6,
-    "adaptability": 5
-  },
+    "adaptability": 5,
+  "founderCOI": 6.0
+},
   "health": {
     "hips": 68,
     "eyes": 72,
     "heart": 72,
     "joints": 68
   },
-  "aptitudes": ["Schutzhund", "Conformation", "Obedience"]
+  "aptitudes": ["Schutzhund", "Conformation", "Obedience"],
+  "coatFreqs": {"E": [["E", 1.0], ["e", 0.0]], "K": [["KB", 0.15], ["kbr", 0.55], ["ky", 0.3]], "A": [["Ay", 0.8], ["aw", 0], ["at", 0.15], ["a", 0.05]], "S": [["S", 0.65], ["sp", 0.3], ["sw", 0.05]]},
+  "healthFlags": ["hips", "heart", "bloat"]
 }, {
   "name": "Caucasian Ovcharka",
   "group": "Working",
   "size": "XL",
   "coat": "long",
-  "colors": ["gray", "fawn", "white", "brindle", "piebald"],
+  "colors": ["gray", "fawn", "red", "cream", "white", "brindle", "piebald"],
   "species": "dog",
-  "sizeAvg": 100,
-  "sizeRange": [80, 130],
+  "sizeAvg": 160,
+  "sizeRange": [99, 220],
   "litterSize": "L",
   "traits": {
     "intelligence": 7,
@@ -4430,24 +4532,27 @@ var DEMO_BREEDS = [{
     "preyDrive": 6,
     "barkTendency": 7,
     "sociability": 4,
-    "adaptability": 5
-  },
+    "adaptability": 5,
+  "founderCOI": 4.5
+},
   "health": {
     "hips": 68,
     "eyes": 72,
     "heart": 72,
     "joints": 68
   },
-  "aptitudes": ["Schutzhund", "Conformation", "LGD"]
+  "aptitudes": ["Schutzhund", "Conformation", "LGD"],
+  "coatFreqs": {"E": [["E", 0.8], ["e", 0.2]], "K": [["KB", 0.15], ["kbr", 0.2], ["ky", 0.65]], "A": [["Ay", 0.45], ["aw", 0.25], ["at", 0.2], ["a", 0.1]], "S": [["S", 0.5], ["sp", 0.35], ["sw", 0.15]]},
+  "healthFlags": ["hips", "joints", "bloat", "heart"]
 }, {
   "name": "Central Asian Ovcharka",
   "group": "Working",
   "size": "XL",
   "coat": "medium",
-  "colors": ["white", "gray", "fawn", "black", "brindle"],
+  "colors": ["white", "black", "gray", "straw", "red", "brindle", "piebald"],
   "species": "dog",
-  "sizeAvg": 100,
-  "sizeRange": [80, 130],
+  "sizeAvg": 130,
+  "sizeRange": [88, 175],
   "litterSize": "L",
   "traits": {
     "intelligence": 7,
@@ -4459,24 +4564,27 @@ var DEMO_BREEDS = [{
     "preyDrive": 6,
     "barkTendency": 7,
     "sociability": 4,
-    "adaptability": 6
-  },
+    "adaptability": 6,
+  "founderCOI": 4.0
+},
   "health": {
     "hips": 70,
     "eyes": 75,
     "heart": 75,
     "joints": 70
   },
-  "aptitudes": ["Schutzhund", "Conformation", "LGD"]
+  "aptitudes": ["Schutzhund", "Conformation", "LGD"],
+  "coatFreqs": {"E": [["E", 0.8], ["e", 0.2]], "K": [["KB", 0.15], ["kbr", 0.15], ["ky", 0.7]], "A": [["Ay", 0.4], ["aw", 0.25], ["at", 0.2], ["a", 0.15]], "S": [["S", 0.45], ["sp", 0.35], ["sw", 0.2]]},
+  "healthFlags": ["hips", "joints", "bloat"]
 }, {
   "name": "South Russian Ovcharka",
   "group": "Working",
   "size": "L",
   "coat": "long",
-  "colors": ["white", "gray", "white & gray"],
+  "colors": ["white", "white with gray", "white with yellow", "gray", "straw"],
   "species": "dog",
-  "sizeAvg": 65,
-  "sizeRange": [55, 85],
+  "sizeAvg": 110,
+  "sizeRange": [88, 130],
   "litterSize": "L",
   "traits": {
     "intelligence": 6,
@@ -4488,24 +4596,27 @@ var DEMO_BREEDS = [{
     "preyDrive": 5,
     "barkTendency": 7,
     "sociability": 4,
-    "adaptability": 5
-  },
+    "adaptability": 5,
+  "founderCOI": 5.0
+},
   "health": {
     "hips": 70,
     "eyes": 75,
     "heart": 78,
     "joints": 70
   },
-  "aptitudes": ["Conformation"]
+  "aptitudes": ["Conformation"],
+  "coatFreqs": {"E": [["E", 0.6], ["e", 0.4]], "K": [["KB", 0.05], ["kbr", 0], ["ky", 0.95]], "A": [["Ay", 0.5], ["aw", 0.3], ["at", 0.1], ["a", 0.1]], "S": [["S", 0.2], ["sp", 0.4], ["sw", 0.4]]},
+  "healthFlags": ["hips", "joints"]
 }, {
   "name": "Black Russian Terrier",
   "group": "Working",
   "size": "L",
   "coat": "wire",
-  "colors": ["black"],
+  "colors": ["black", "black with gray hairs"],
   "species": "dog",
-  "sizeAvg": 65,
-  "sizeRange": [55, 85],
+  "sizeAvg": 110,
+  "sizeRange": [80, 145],
   "litterSize": "L",
   "traits": {
     "intelligence": 8,
@@ -4517,24 +4628,27 @@ var DEMO_BREEDS = [{
     "preyDrive": 5,
     "barkTendency": 5,
     "sociability": 6,
-    "adaptability": 7
-  },
+    "adaptability": 7,
+  "founderCOI": 5.5
+},
   "health": {
     "hips": 72,
     "eyes": 78,
     "heart": 78,
     "joints": 72
   },
-  "aptitudes": ["Schutzhund", "Obedience", "Conformation"]
+  "aptitudes": ["Schutzhund", "Obedience", "Conformation"],
+  "coatFreqs": {"E": [["E", 1.0], ["e", 0.0]], "K": [["KB", 0.9], ["kbr", 0], ["ky", 0.1]], "A": [["Ay", 0], ["aw", 0.1], ["at", 0.1], ["a", 0.8]], "B": [["B", 1.0], ["b", 0.0]], "W": [["W", 0.5], ["w", 0.5]]},
+  "healthFlags": ["hips", "joints", "heart", "eyes"]
 }, {
   "name": "Moscow Watchdog",
   "group": "Working",
   "size": "XL",
   "coat": "long",
-  "colors": ["red & white", "piebald"],
+  "colors": ["red & white", "red", "white with red patches"],
   "species": "dog",
-  "sizeAvg": 100,
-  "sizeRange": [80, 130],
+  "sizeAvg": 150,
+  "sizeRange": [110, 175],
   "litterSize": "L",
   "traits": {
     "intelligence": 6,
@@ -4546,24 +4660,27 @@ var DEMO_BREEDS = [{
     "preyDrive": 4,
     "barkTendency": 6,
     "sociability": 6,
-    "adaptability": 5
-  },
+    "adaptability": 5,
+  "founderCOI": 6.0
+},
   "health": {
     "hips": 68,
     "eyes": 72,
     "heart": 70,
     "joints": 68
   },
-  "aptitudes": ["Conformation", "Obedience"]
+  "aptitudes": ["Conformation", "Obedience"],
+  "coatFreqs": {"E": [["E", 1.0], ["e", 0.0]], "K": [["KB", 0.2], ["kbr", 0.4], ["ky", 0.4]], "A": [["Ay", 0.8], ["aw", 0], ["at", 0.15], ["a", 0.05]], "S": [["S", 0.3], ["sp", 0.55], ["sw", 0.15]]},
+  "healthFlags": ["hips", "joints", "bloat", "heart"]
 }, {
   "name": "Kangal",
   "group": "Working",
   "size": "XL",
   "coat": "medium",
-  "colors": ["fawn", "tan", "sable"],
+  "colors": ["fawn with black mask", "cream with black mask"],
   "species": "dog",
-  "sizeAvg": 100,
-  "sizeRange": [80, 130],
+  "sizeAvg": 130,
+  "sizeRange": [90, 145],
   "litterSize": "L",
   "traits": {
     "intelligence": 7,
@@ -4575,24 +4692,27 @@ var DEMO_BREEDS = [{
     "preyDrive": 5,
     "barkTendency": 6,
     "sociability": 6,
-    "adaptability": 7
-  },
+    "adaptability": 7,
+  "founderCOI": 4.5
+},
   "health": {
     "hips": 75,
     "eyes": 80,
     "heart": 80,
     "joints": 75
   },
-  "aptitudes": ["Conformation", "Obedience", "LGD"]
+  "aptitudes": ["Conformation", "Obedience", "LGD"],
+  "coatFreqs": {"E": [["E", 1.0], ["e", 0.0]], "K": [["KB", 0.1], ["kbr", 0], ["ky", 0.9]], "A": [["Ay", 1.0], ["aw", 0], ["at", 0], ["a", 0]], "S": [["S", 0.9], ["sp", 0.1], ["sw", 0.0]]},
+  "healthFlags": ["hips", "joints", "bloat"]
 }, {
   "name": "Anatolian Shepherd",
   "group": "Working",
   "size": "XL",
   "coat": "medium",
-  "colors": ["fawn", "brindle", "white"],
+  "colors": ["fawn with black mask", "brindle", "white", "pinto"],
   "species": "dog",
-  "sizeAvg": 100,
-  "sizeRange": [80, 130],
+  "sizeAvg": 120,
+  "sizeRange": [80, 150],
   "litterSize": "L",
   "traits": {
     "intelligence": 7,
@@ -4604,15 +4724,18 @@ var DEMO_BREEDS = [{
     "preyDrive": 5,
     "barkTendency": 7,
     "sociability": 5,
-    "adaptability": 6
-  },
+    "adaptability": 6,
+  "founderCOI": 4.5
+},
   "health": {
     "hips": 75,
     "eyes": 78,
     "heart": 80,
     "joints": 75
   },
-  "aptitudes": ["Conformation", "LGD"]
+  "aptitudes": ["Conformation", "LGD"],
+  "coatFreqs": {"E": [["E", 0.85], ["e", 0.15]], "K": [["KB", 0.1], ["kbr", 0.2], ["ky", 0.7]], "A": [["Ay", 0.7], ["aw", 0.1], ["at", 0.1], ["a", 0.1]], "S": [["S", 0.5], ["sp", 0.3], ["sw", 0.2]]},
+  "healthFlags": ["hips", "joints", "bloat"]
 }, {
   "name": "Akbash",
   "group": "Working",
@@ -4620,8 +4743,8 @@ var DEMO_BREEDS = [{
   "coat": "long",
   "colors": ["white"],
   "species": "dog",
-  "sizeAvg": 100,
-  "sizeRange": [80, 130],
+  "sizeAvg": 105,
+  "sizeRange": [75, 140],
   "litterSize": "L",
   "traits": {
     "intelligence": 7,
@@ -4633,24 +4756,27 @@ var DEMO_BREEDS = [{
     "preyDrive": 5,
     "barkTendency": 7,
     "sociability": 5,
-    "adaptability": 6
-  },
+    "adaptability": 6,
+  "founderCOI": 4.0
+},
   "health": {
     "hips": 72,
     "eyes": 78,
     "heart": 78,
     "joints": 72
   },
-  "aptitudes": ["Conformation", "LGD"]
+  "aptitudes": ["Conformation", "LGD"],
+  "coatFreqs": {"E": [["E", 0.4], ["e", 0.6]], "K": [["KB", 0.05], ["kbr", 0], ["ky", 0.95]], "A": [["Ay", 0.7], ["aw", 0.2], ["at", 0.05], ["a", 0.05]], "S": [["S", 0.05], ["sp", 0.1], ["sw", 0.85]]},
+  "healthFlags": ["hips", "joints", "bloat"]
 }, {
   "name": "Bully Kutta",
   "group": "Working",
   "size": "XL",
   "coat": "short",
-  "colors": ["white", "fawn", "black", "brindle", "harlequin"],
+  "colors": ["white", "fawn", "brindle", "black", "harlequin"],
   "species": "dog",
-  "sizeAvg": 100,
-  "sizeRange": [80, 130],
+  "sizeAvg": 155,
+  "sizeRange": [130, 210],
   "litterSize": "L",
   "traits": {
     "intelligence": 7,
@@ -4662,15 +4788,18 @@ var DEMO_BREEDS = [{
     "preyDrive": 6,
     "barkTendency": 5,
     "sociability": 5,
-    "adaptability": 5
-  },
+    "adaptability": 5,
+  "founderCOI": 4.5
+},
   "health": {
     "hips": 68,
     "eyes": 72,
     "heart": 72,
     "joints": 68
   },
-  "aptitudes": ["Schutzhund", "Conformation"]
+  "aptitudes": ["Schutzhund", "Conformation"],
+  "coatFreqs": {"E": [["E", 0.8], ["e", 0.2]], "K": [["KB", 0.15], ["kbr", 0.35], ["ky", 0.5]], "A": [["Ay", 0.55], ["aw", 0.1], ["at", 0.15], ["a", 0.2]], "S": [["S", 0.4], ["sp", 0.35], ["sw", 0.25]]},
+  "healthFlags": ["hips", "joints", "bloat", "heart", "skin"]
 }, {
   "name": "Rajapalayam",
   "group": "Working",
@@ -4679,7 +4808,7 @@ var DEMO_BREEDS = [{
   "colors": ["white"],
   "species": "dog",
   "sizeAvg": 65,
-  "sizeRange": [55, 85],
+  "sizeRange": [55, 88],
   "litterSize": "L",
   "traits": {
     "intelligence": 7,
@@ -4691,24 +4820,27 @@ var DEMO_BREEDS = [{
     "preyDrive": 7,
     "barkTendency": 5,
     "sociability": 5,
-    "adaptability": 5
-  },
+    "adaptability": 5,
+  "founderCOI": 5.5
+},
   "health": {
     "hips": 75,
     "eyes": 78,
     "heart": 80,
     "joints": 75
   },
-  "aptitudes": ["Conformation"]
+  "aptitudes": ["Conformation"],
+  "coatFreqs": {"E": [["E", 0.3], ["e", 0.7]], "K": [["KB", 0.05], ["kbr", 0], ["ky", 0.95]], "A": [["Ay", 0.8], ["aw", 0.1], ["at", 0.05], ["a", 0.05]], "S": [["S", 0.05], ["sp", 0.05], ["sw", 0.9]]},
+  "healthFlags": ["deafness", "skin", "eyes", "hips"]
 }, {
   "name": "Tosa Inu",
   "group": "Working",
   "size": "XL",
   "coat": "short",
-  "colors": ["red", "brindle", "fawn", "black"],
+  "colors": ["red", "brindle", "fawn", "black", "multi-color (red dominant)"],
   "species": "dog",
-  "sizeAvg": 100,
-  "sizeRange": [80, 130],
+  "sizeAvg": 145,
+  "sizeRange": [100, 200],
   "litterSize": "L",
   "traits": {
     "intelligence": 7,
@@ -4720,24 +4852,27 @@ var DEMO_BREEDS = [{
     "preyDrive": 6,
     "barkTendency": 3,
     "sociability": 5,
-    "adaptability": 5
-  },
+    "adaptability": 5,
+  "founderCOI": 6.5
+},
   "health": {
     "hips": 68,
     "eyes": 72,
     "heart": 70,
     "joints": 68
   },
-  "aptitudes": ["Schutzhund", "Conformation"]
+  "aptitudes": ["Schutzhund", "Conformation"],
+  "coatFreqs": {"E": [["E", 1.0], ["e", 0.0]], "K": [["KB", 0.2], ["kbr", 0.5], ["ky", 0.3]], "A": [["Ay", 0.7], ["aw", 0], ["at", 0.2], ["a", 0.1]], "B": [["B", 0.85], ["b", 0.15]]},
+  "healthFlags": ["hips", "heart", "bloat", "cancer", "joints"]
 }, {
   "name": "Tibetan Mastiff",
   "group": "Working",
   "size": "XL",
   "coat": "long",
-  "colors": ["black", "brown", "blue gray", "red"],
+  "colors": ["black", "black & tan", "brown", "brown & tan", "blue gray", "blue gray & tan", "gold", "red gold"],
   "species": "dog",
-  "sizeAvg": 100,
-  "sizeRange": [80, 130],
+  "sizeAvg": 130,
+  "sizeRange": [90, 170],
   "litterSize": "L",
   "traits": {
     "intelligence": 6,
@@ -4749,24 +4884,27 @@ var DEMO_BREEDS = [{
     "preyDrive": 5,
     "barkTendency": 7,
     "sociability": 5,
-    "adaptability": 4
-  },
+    "adaptability": 4,
+  "founderCOI": 5.5
+},
   "health": {
     "hips": 68,
     "eyes": 75,
     "heart": 75,
     "joints": 68
   },
-  "aptitudes": ["Conformation", "LGD"]
+  "aptitudes": ["Conformation", "LGD"],
+  "coatFreqs": {"E": [["E", 1.0], ["e", 0.0]], "K": [["KB", 0.55], ["kbr", 0], ["ky", 0.45]], "A": [["Ay", 0.2], ["aw", 0.1], ["at", 0.6], ["a", 0.1]], "B": [["B", 0.7], ["b", 0.3]], "D": [["D", 0.8], ["d", 0.2]]},
+  "healthFlags": ["hips", "thyroid", "heart", "joints", "cancer"]
 }, {
   "name": "Great Dane",
   "group": "Working",
   "size": "XL",
   "coat": "short",
-  "colors": ["fawn", "brindle", "blue", "black", "harlequin"],
+  "colors": ["fawn", "brindle", "blue", "black", "harlequin", "mantle", "merle"],
   "species": "dog",
-  "sizeAvg": 100,
-  "sizeRange": [80, 130],
+  "sizeAvg": 145,
+  "sizeRange": [110, 175],
   "litterSize": "L",
   "traits": {
     "intelligence": 7,
@@ -4778,15 +4916,18 @@ var DEMO_BREEDS = [{
     "preyDrive": 4,
     "barkTendency": 5,
     "sociability": 8,
-    "adaptability": 6
-  },
+    "adaptability": 6,
+  "founderCOI": 6.0
+},
   "health": {
     "hips": 58,
     "eyes": 78,
     "heart": 62,
     "joints": 58
   },
-  "aptitudes": ["Conformation", "Obedience"]
+  "aptitudes": ["Conformation", "Obedience"],
+  "coatFreqs": {"E": [["E", 0.85], ["e", 0.15]], "K": [["KB", 0.25], ["kbr", 0.35], ["ky", 0.4]], "A": [["Ay", 0.5], ["aw", 0], ["at", 0.3], ["a", 0.2]], "B": [["B", 0.8], ["b", 0.2]], "D": [["D", 0.75], ["d", 0.25]], "M": [["M", 0.2], ["m", 0.8]], "S": [["S", 0.35], ["sp", 0.4], ["sw", 0.25]]},
+  "healthFlags": ["hips", "heart", "bloat", "cancer", "joints", "bones"]
 }, {
   "name": "Labrador Retriever",
   "group": "Sporting",
@@ -7199,10 +7340,10 @@ var DEMO_BREEDS = [{
   "group": "Working",
   "size": "XL",
   "coat": "short",
-  "colors": ["white", "fawn", "brindle", "piebald", "black & tan"],
+  "colors": ["white", "black", "gray", "straw", "red", "brindle", "piebald"],
   "species": "dog",
-  "sizeAvg": 100,
-  "sizeRange": [80, 130],
+  "sizeAvg": 130,
+  "sizeRange": [88, 175],
   "litterSize": "L",
   "traits": {
     "intelligence": 7,
@@ -7214,24 +7355,27 @@ var DEMO_BREEDS = [{
     "preyDrive": 7,
     "barkTendency": 7,
     "sociability": 3,
-    "adaptability": 6
-  },
+    "adaptability": 6,
+  "founderCOI": 4.0
+},
   "health": {
     "hips": 72,
     "eyes": 78,
     "heart": 78,
     "joints": 72
   },
-  "aptitudes": ["Schutzhund", "Conformation"]
+  "aptitudes": ["Schutzhund", "Conformation"],
+  "coatFreqs": {"E": [["E", 0.8], ["e", 0.2]], "K": [["KB", 0.15], ["kbr", 0.15], ["ky", 0.7]], "A": [["Ay", 0.4], ["aw", 0.25], ["at", 0.2], ["a", 0.15]], "S": [["S", 0.45], ["sp", 0.35], ["sw", 0.2]]},
+  "healthFlags": ["hips", "joints", "bloat"]
 }, {
   "name": "Kazakh Tobet",
   "group": "Working",
   "size": "XL",
   "coat": "medium",
-  "colors": ["white", "fawn", "gray", "black", "piebald"],
+  "colors": ["white", "black", "gray", "fawn", "brindle", "piebald"],
   "species": "dog",
-  "sizeAvg": 100,
-  "sizeRange": [80, 130],
+  "sizeAvg": 120,
+  "sizeRange": [88, 145],
   "litterSize": "L",
   "traits": {
     "intelligence": 7,
@@ -7243,24 +7387,27 @@ var DEMO_BREEDS = [{
     "preyDrive": 6,
     "barkTendency": 7,
     "sociability": 4,
-    "adaptability": 6
-  },
+    "adaptability": 6,
+  "founderCOI": 3.5
+},
   "health": {
     "hips": 72,
     "eyes": 78,
     "heart": 78,
     "joints": 72
   },
-  "aptitudes": ["Schutzhund", "Conformation"]
+  "aptitudes": ["Schutzhund", "Conformation"],
+  "coatFreqs": {"E": [["E", 0.8], ["e", 0.2]], "K": [["KB", 0.15], ["kbr", 0.15], ["ky", 0.7]], "A": [["Ay", 0.4], ["aw", 0.25], ["at", 0.2], ["a", 0.15]], "S": [["S", 0.45], ["sp", 0.35], ["sw", 0.2]]},
+  "healthFlags": ["hips", "joints", "bloat"]
 }, {
   "name": "Sage Koochee Mountain",
   "group": "Working",
   "size": "XL",
   "coat": "long",
-  "colors": ["fawn", "gray", "white", "brindle", "black"],
+  "colors": ["white", "fawn", "gray", "black", "piebald"],
   "species": "dog",
-  "sizeAvg": 100,
-  "sizeRange": [80, 130],
+  "sizeAvg": 150,
+  "sizeRange": [110, 200],
   "litterSize": "L",
   "traits": {
     "intelligence": 7,
@@ -7272,24 +7419,27 @@ var DEMO_BREEDS = [{
     "preyDrive": 7,
     "barkTendency": 7,
     "sociability": 3,
-    "adaptability": 4
-  },
+    "adaptability": 4,
+  "founderCOI": 3.5
+},
   "health": {
     "hips": 75,
     "eyes": 80,
     "heart": 80,
     "joints": 75
   },
-  "aptitudes": ["Schutzhund"]
+  "aptitudes": ["Schutzhund"],
+  "coatFreqs": {"E": [["E", 0.8], ["e", 0.2]], "K": [["KB", 0.1], ["kbr", 0.15], ["ky", 0.75]], "A": [["Ay", 0.45], ["aw", 0.25], ["at", 0.15], ["a", 0.15]], "S": [["S", 0.4], ["sp", 0.35], ["sw", 0.25]]},
+  "healthFlags": ["hips", "joints", "bloat"]
 }, {
   "name": "Sage Koochee Steppe",
   "group": "Working",
   "size": "XL",
   "coat": "medium",
-  "colors": ["fawn", "gray", "white", "brindle", "black"],
+  "colors": ["white", "fawn", "gray", "brindle", "piebald"],
   "species": "dog",
-  "sizeAvg": 100,
-  "sizeRange": [80, 130],
+  "sizeAvg": 130,
+  "sizeRange": [99, 175],
   "litterSize": "L",
   "traits": {
     "intelligence": 7,
@@ -7301,24 +7451,27 @@ var DEMO_BREEDS = [{
     "preyDrive": 7,
     "barkTendency": 7,
     "sociability": 3,
-    "adaptability": 6
-  },
+    "adaptability": 6,
+  "founderCOI": 3.5
+},
   "health": {
     "hips": 75,
     "eyes": 80,
     "heart": 80,
     "joints": 75
   },
-  "aptitudes": ["Schutzhund"]
+  "aptitudes": ["Schutzhund"],
+  "coatFreqs": {"E": [["E", 0.8], ["e", 0.2]], "K": [["KB", 0.1], ["kbr", 0.2], ["ky", 0.7]], "A": [["Ay", 0.45], ["aw", 0.25], ["at", 0.15], ["a", 0.15]], "S": [["S", 0.4], ["sp", 0.35], ["sw", 0.25]]},
+  "healthFlags": ["hips", "joints", "bloat"]
 }, {
   "name": "Sage Koochee Desert",
   "group": "Working",
   "size": "L",
   "coat": "short",
-  "colors": ["fawn", "sand", "white", "brindle"],
+  "colors": ["fawn", "cream", "white", "gray"],
   "species": "dog",
-  "sizeAvg": 65,
-  "sizeRange": [55, 85],
+  "sizeAvg": 110,
+  "sizeRange": [88, 145],
   "litterSize": "L",
   "traits": {
     "intelligence": 7,
@@ -7330,24 +7483,27 @@ var DEMO_BREEDS = [{
     "preyDrive": 7,
     "barkTendency": 6,
     "sociability": 3,
-    "adaptability": 7
-  },
+    "adaptability": 7,
+  "founderCOI": 3.5
+},
   "health": {
     "hips": 78,
     "eyes": 82,
     "heart": 82,
     "joints": 78
   },
-  "aptitudes": ["Schutzhund"]
+  "aptitudes": ["Schutzhund"],
+  "coatFreqs": {"E": [["E", 0.85], ["e", 0.15]], "K": [["KB", 0.05], ["kbr", 0.1], ["ky", 0.85]], "A": [["Ay", 0.7], ["aw", 0.2], ["at", 0.05], ["a", 0.05]], "S": [["S", 0.75], ["sp", 0.2], ["sw", 0.05]]},
+  "healthFlags": ["hips", "joints"]
 }, {
   "name": "Afghan Tiger Dog",
   "group": "Working",
   "size": "XL",
   "coat": "medium",
-  "colors": ["brindle", "fawn", "black & tan", "gray"],
+  "colors": ["brindle", "fawn", "gray brindle"],
   "species": "dog",
-  "sizeAvg": 100,
-  "sizeRange": [80, 130],
+  "sizeAvg": 130,
+  "sizeRange": [99, 165],
   "litterSize": "L",
   "traits": {
     "intelligence": 7,
@@ -7359,24 +7515,27 @@ var DEMO_BREEDS = [{
     "preyDrive": 8,
     "barkTendency": 7,
     "sociability": 2,
-    "adaptability": 5
-  },
+    "adaptability": 5,
+  "founderCOI": 3.5
+},
   "health": {
     "hips": 75,
     "eyes": 80,
     "heart": 80,
     "joints": 75
   },
-  "aptitudes": ["Schutzhund"]
+  "aptitudes": ["Schutzhund"],
+  "coatFreqs": {"E": [["E", 1.0], ["e", 0.0]], "K": [["KB", 0.1], ["kbr", 0.7], ["ky", 0.2]], "A": [["Ay", 0.8], ["aw", 0], ["at", 0.15], ["a", 0.05]]},
+  "healthFlags": ["hips", "joints", "bloat"]
 }, {
   "name": "Uzbek Sarkangik",
   "group": "Working",
   "size": "XL",
   "coat": "medium",
-  "colors": ["fawn", "white", "gray", "piebald"],
+  "colors": ["white", "fawn", "gray", "brindle", "piebald"],
   "species": "dog",
-  "sizeAvg": 100,
-  "sizeRange": [80, 130],
+  "sizeAvg": 120,
+  "sizeRange": [88, 155],
   "litterSize": "L",
   "traits": {
     "intelligence": 7,
@@ -7388,24 +7547,27 @@ var DEMO_BREEDS = [{
     "preyDrive": 6,
     "barkTendency": 6,
     "sociability": 4,
-    "adaptability": 6
-  },
+    "adaptability": 6,
+  "founderCOI": 3.5
+},
   "health": {
     "hips": 72,
     "eyes": 78,
     "heart": 78,
     "joints": 72
   },
-  "aptitudes": ["Schutzhund", "Conformation"]
+  "aptitudes": ["Schutzhund", "Conformation"],
+  "coatFreqs": {"E": [["E", 0.8], ["e", 0.2]], "K": [["KB", 0.1], ["kbr", 0.2], ["ky", 0.7]], "A": [["Ay", 0.45], ["aw", 0.25], ["at", 0.15], ["a", 0.15]], "S": [["S", 0.45], ["sp", 0.35], ["sw", 0.2]]},
+  "healthFlags": ["hips", "joints", "bloat"]
 }, {
   "name": "Tajik Dahmarda",
   "group": "Working",
   "size": "XL",
   "coat": "long",
-  "colors": ["gray", "white", "fawn", "black"],
+  "colors": ["white", "fawn", "gray", "black", "piebald"],
   "species": "dog",
-  "sizeAvg": 100,
-  "sizeRange": [80, 130],
+  "sizeAvg": 130,
+  "sizeRange": [99, 165],
   "litterSize": "L",
   "traits": {
     "intelligence": 7,
@@ -7417,24 +7579,27 @@ var DEMO_BREEDS = [{
     "preyDrive": 6,
     "barkTendency": 7,
     "sociability": 3,
-    "adaptability": 4
-  },
+    "adaptability": 4,
+  "founderCOI": 3.5
+},
   "health": {
     "hips": 70,
     "eyes": 75,
     "heart": 75,
     "joints": 70
   },
-  "aptitudes": ["Schutzhund"]
+  "aptitudes": ["Schutzhund"],
+  "coatFreqs": {"E": [["E", 0.8], ["e", 0.2]], "K": [["KB", 0.1], ["kbr", 0.2], ["ky", 0.7]], "A": [["Ay", 0.4], ["aw", 0.25], ["at", 0.2], ["a", 0.15]], "S": [["S", 0.45], ["sp", 0.35], ["sw", 0.2]]},
+  "healthFlags": ["hips", "joints", "bloat"]
 }, {
   "name": "Kyrgyz Volkodav",
   "group": "Working",
   "size": "XL",
   "coat": "medium",
-  "colors": ["white", "gray", "fawn", "brindle"],
+  "colors": ["white", "gray", "fawn", "black", "piebald"],
   "species": "dog",
-  "sizeAvg": 100,
-  "sizeRange": [80, 130],
+  "sizeAvg": 130,
+  "sizeRange": [99, 165],
   "litterSize": "L",
   "traits": {
     "intelligence": 7,
@@ -7446,24 +7611,27 @@ var DEMO_BREEDS = [{
     "preyDrive": 7,
     "barkTendency": 6,
     "sociability": 3,
-    "adaptability": 5
-  },
+    "adaptability": 5,
+  "founderCOI": 3.5
+},
   "health": {
     "hips": 72,
     "eyes": 78,
     "heart": 78,
     "joints": 72
   },
-  "aptitudes": ["Schutzhund"]
+  "aptitudes": ["Schutzhund"],
+  "coatFreqs": {"E": [["E", 0.8], ["e", 0.2]], "K": [["KB", 0.1], ["kbr", 0.2], ["ky", 0.7]], "A": [["Ay", 0.4], ["aw", 0.25], ["at", 0.2], ["a", 0.15]], "S": [["S", 0.45], ["sp", 0.35], ["sw", 0.2]]},
+  "healthFlags": ["hips", "joints", "bloat"]
 }, {
   "name": "Sarmatian Mastiff",
   "group": "Working",
   "size": "XL",
   "coat": "medium",
-  "colors": ["white", "fawn", "gray", "piebald"],
+  "colors": ["fawn", "red", "brindle", "gray", "white with patches"],
   "species": "dog",
-  "sizeAvg": 100,
-  "sizeRange": [80, 130],
+  "sizeAvg": 145,
+  "sizeRange": [110, 185],
   "litterSize": "L",
   "traits": {
     "intelligence": 7,
@@ -7475,15 +7643,18 @@ var DEMO_BREEDS = [{
     "preyDrive": 5,
     "barkTendency": 7,
     "sociability": 4,
-    "adaptability": 5
-  },
+    "adaptability": 5,
+  "founderCOI": 4.0
+},
   "health": {
     "hips": 68,
     "eyes": 75,
     "heart": 72,
     "joints": 68
   },
-  "aptitudes": ["Schutzhund", "Conformation"]
+  "aptitudes": ["Schutzhund", "Conformation"],
+  "coatFreqs": {"E": [["E", 0.85], ["e", 0.15]], "K": [["KB", 0.15], ["kbr", 0.4], ["ky", 0.45]], "A": [["Ay", 0.6], ["aw", 0.15], ["at", 0.15], ["a", 0.1]], "S": [["S", 0.55], ["sp", 0.3], ["sw", 0.15]]},
+  "healthFlags": ["hips", "joints", "bloat", "heart"]
 }, {
   "name": "GSD West German Working",
   "group": "Herding",
@@ -7840,7 +8011,7 @@ var DEMO_BREEDS = [{
   "colors": ["white"],
   "species": "dog",
   "sizeAvg": 100,
-  "sizeRange": [80, 130],
+  "sizeRange": [70, 115],
   "litterSize": "L",
   "traits": {
     "intelligence": 7,
@@ -7852,24 +8023,27 @@ var DEMO_BREEDS = [{
     "preyDrive": 5,
     "barkTendency": 7,
     "sociability": 5,
-    "adaptability": 6
-  },
+    "adaptability": 6,
+  "founderCOI": 5.5
+},
   "health": {
     "hips": 70,
     "eyes": 78,
     "heart": 78,
     "joints": 70
   },
-  "aptitudes": ["Conformation", "Obedience", "LGD"]
+  "aptitudes": ["Conformation", "Obedience", "LGD"],
+  "coatFreqs": {"E": [["E", 0.4], ["e", 0.6]], "K": [["KB", 0.05], ["kbr", 0], ["ky", 0.95]], "A": [["Ay", 0.7], ["aw", 0.2], ["at", 0.05], ["a", 0.05]], "S": [["S", 0.05], ["sp", 0.1], ["sw", 0.85]]},
+  "healthFlags": ["hips", "joints", "bloat", "cancer"]
 }, {
   "name": "Maremma Sheepdog",
   "group": "Working",
   "size": "XL",
   "coat": "long",
-  "colors": ["white"],
+  "colors": ["white", "white with pale yellow or ivory tints"],
   "species": "dog",
-  "sizeAvg": 100,
-  "sizeRange": [80, 130],
+  "sizeAvg": 85,
+  "sizeRange": [66, 100],
   "litterSize": "L",
   "traits": {
     "intelligence": 7,
@@ -7881,24 +8055,27 @@ var DEMO_BREEDS = [{
     "preyDrive": 4,
     "barkTendency": 8,
     "sociability": 6,
-    "adaptability": 6
-  },
+    "adaptability": 6,
+  "founderCOI": 5.0
+},
   "health": {
     "hips": 72,
     "eyes": 78,
     "heart": 80,
     "joints": 72
   },
-  "aptitudes": ["Conformation", "Obedience", "LGD"]
+  "aptitudes": ["Conformation", "Obedience", "LGD"],
+  "coatFreqs": {"E": [["E", 0.4], ["e", 0.6]], "K": [["KB", 0.05], ["kbr", 0], ["ky", 0.95]], "A": [["Ay", 0.7], ["aw", 0.2], ["at", 0.05], ["a", 0.05]], "S": [["S", 0.05], ["sp", 0.15], ["sw", 0.8]]},
+  "healthFlags": ["hips", "joints", "bloat"]
 }, {
   "name": "Sarplaninac",
   "group": "Working",
   "size": "XL",
   "coat": "long",
-  "colors": ["iron gray", "fawn", "white", "tan", "black"],
+  "colors": ["white", "gray", "iron gray", "almost white to dark brown (solid)"],
   "species": "dog",
-  "sizeAvg": 100,
-  "sizeRange": [80, 130],
+  "sizeAvg": 90,
+  "sizeRange": [66, 110],
   "litterSize": "L",
   "traits": {
     "intelligence": 7,
@@ -7910,24 +8087,27 @@ var DEMO_BREEDS = [{
     "preyDrive": 5,
     "barkTendency": 7,
     "sociability": 5,
-    "adaptability": 5
-  },
+    "adaptability": 5,
+  "founderCOI": 4.5
+},
   "health": {
     "hips": 72,
     "eyes": 78,
     "heart": 78,
     "joints": 72
   },
-  "aptitudes": ["Conformation", "Obedience", "LGD"]
+  "aptitudes": ["Conformation", "Obedience", "LGD"],
+  "coatFreqs": {"E": [["E", 0.85], ["e", 0.15]], "K": [["KB", 0.1], ["kbr", 0], ["ky", 0.9]], "A": [["Ay", 0.3], ["aw", 0.4], ["at", 0.2], ["a", 0.1]], "S": [["S", 0.8], ["sp", 0.15], ["sw", 0.05]]},
+  "healthFlags": ["hips", "joints", "bloat"]
 }, {
   "name": "Tornjak",
   "group": "Working",
   "size": "XL",
   "coat": "long",
-  "colors": ["white & black", "white & brown", "tricolor", "multicolor"],
+  "colors": ["white with colored patches", "multi-color"],
   "species": "dog",
-  "sizeAvg": 100,
-  "sizeRange": [80, 130],
+  "sizeAvg": 90,
+  "sizeRange": [66, 110],
   "litterSize": "L",
   "traits": {
     "intelligence": 7,
@@ -7939,24 +8119,27 @@ var DEMO_BREEDS = [{
     "preyDrive": 4,
     "barkTendency": 7,
     "sociability": 7,
-    "adaptability": 6
-  },
+    "adaptability": 6,
+  "founderCOI": 4.5
+},
   "health": {
     "hips": 75,
     "eyes": 80,
     "heart": 80,
     "joints": 75
   },
-  "aptitudes": ["Conformation", "Obedience", "LGD"]
+  "aptitudes": ["Conformation", "Obedience", "LGD"],
+  "coatFreqs": {"E": [["E", 0.8], ["e", 0.2]], "K": [["KB", 0.1], ["kbr", 0.1], ["ky", 0.8]], "A": [["Ay", 0.4], ["aw", 0.2], ["at", 0.2], ["a", 0.2]], "S": [["S", 0.15], ["sp", 0.5], ["sw", 0.35]]},
+  "healthFlags": ["hips", "joints", "bloat"]
 }, {
   "name": "Estrela Mountain Dog",
   "group": "Working",
   "size": "XL",
   "coat": "long",
-  "colors": ["fawn", "brindle", "wolf gray", "yellow"],
+  "colors": ["fawn", "brindle", "yellow", "gray wolf"],
   "species": "dog",
   "sizeAvg": 100,
-  "sizeRange": [80, 130],
+  "sizeRange": [77, 132],
   "litterSize": "L",
   "traits": {
     "intelligence": 7,
@@ -7968,24 +8151,27 @@ var DEMO_BREEDS = [{
     "preyDrive": 5,
     "barkTendency": 7,
     "sociability": 6,
-    "adaptability": 5
-  },
+    "adaptability": 5,
+  "founderCOI": 5.0
+},
   "health": {
     "hips": 72,
     "eyes": 78,
     "heart": 78,
     "joints": 72
   },
-  "aptitudes": ["Conformation", "Obedience", "LGD"]
+  "aptitudes": ["Conformation", "Obedience", "LGD"],
+  "coatFreqs": {"E": [["E", 0.85], ["e", 0.15]], "K": [["KB", 0.1], ["kbr", 0.3], ["ky", 0.6]], "A": [["Ay", 0.6], ["aw", 0.2], ["at", 0.15], ["a", 0.05]], "S": [["S", 0.85], ["sp", 0.12], ["sw", 0.03]]},
+  "healthFlags": ["hips", "joints", "bloat"]
 }, {
   "name": "Rafeiro do Alentejo",
   "group": "Working",
   "size": "XL",
   "coat": "medium",
-  "colors": ["black", "fawn", "yellow", "brindle", "white marked"],
+  "colors": ["black", "wolf gray", "yellow", "fawn — with white markings"],
   "species": "dog",
-  "sizeAvg": 100,
-  "sizeRange": [80, 130],
+  "sizeAvg": 110,
+  "sizeRange": [88, 132],
   "litterSize": "L",
   "traits": {
     "intelligence": 6,
@@ -7997,24 +8183,27 @@ var DEMO_BREEDS = [{
     "preyDrive": 5,
     "barkTendency": 8,
     "sociability": 5,
-    "adaptability": 4
-  },
+    "adaptability": 4,
+  "founderCOI": 5.0
+},
   "health": {
     "hips": 70,
     "eyes": 75,
     "heart": 75,
     "joints": 70
   },
-  "aptitudes": ["Conformation"]
+  "aptitudes": ["Conformation"],
+  "coatFreqs": {"E": [["E", 0.85], ["e", 0.15]], "K": [["KB", 0.25], ["kbr", 0.2], ["ky", 0.55]], "A": [["Ay", 0.45], ["aw", 0.2], ["at", 0.25], ["a", 0.1]], "S": [["S", 0.4], ["sp", 0.45], ["sw", 0.15]]},
+  "healthFlags": ["hips", "joints", "bloat"]
 }, {
   "name": "Cao de Gado Transmontano",
   "group": "Working",
   "size": "XL",
   "coat": "long",
-  "colors": ["white", "white & yellow", "white & black"],
+  "colors": ["white with yellow patches", "white with fawn patches", "white with brindle patches"],
   "species": "dog",
-  "sizeAvg": 100,
-  "sizeRange": [80, 130],
+  "sizeAvg": 115,
+  "sizeRange": [88, 145],
   "litterSize": "L",
   "traits": {
     "intelligence": 7,
@@ -8026,15 +8215,18 @@ var DEMO_BREEDS = [{
     "preyDrive": 5,
     "barkTendency": 7,
     "sociability": 5,
-    "adaptability": 4
-  },
+    "adaptability": 4,
+  "founderCOI": 4.5
+},
   "health": {
     "hips": 68,
     "eyes": 75,
     "heart": 75,
     "joints": 68
   },
-  "aptitudes": ["Conformation"]
+  "aptitudes": ["Conformation"],
+  "coatFreqs": {"E": [["E", 0.8], ["e", 0.2]], "K": [["KB", 0.1], ["kbr", 0.2], ["ky", 0.7]], "A": [["Ay", 0.5], ["aw", 0.2], ["at", 0.15], ["a", 0.15]], "S": [["S", 0.2], ["sp", 0.5], ["sw", 0.3]]},
+  "healthFlags": ["hips", "joints", "bloat"]
 }, {
   "name": "Slovak Cuvac",
   "group": "Working",
@@ -8042,8 +8234,8 @@ var DEMO_BREEDS = [{
   "coat": "long",
   "colors": ["white"],
   "species": "dog",
-  "sizeAvg": 100,
-  "sizeRange": [80, 130],
+  "sizeAvg": 85,
+  "sizeRange": [66, 99],
   "litterSize": "L",
   "traits": {
     "intelligence": 7,
@@ -8055,24 +8247,27 @@ var DEMO_BREEDS = [{
     "preyDrive": 4,
     "barkTendency": 7,
     "sociability": 7,
-    "adaptability": 6
-  },
+    "adaptability": 6,
+  "founderCOI": 5.0
+},
   "health": {
     "hips": 72,
     "eyes": 78,
     "heart": 80,
     "joints": 72
   },
-  "aptitudes": ["Conformation", "Obedience"]
+  "aptitudes": ["Conformation", "Obedience"],
+  "coatFreqs": {"E": [["E", 0.4], ["e", 0.6]], "K": [["KB", 0.05], ["kbr", 0], ["ky", 0.95]], "A": [["Ay", 0.7], ["aw", 0.2], ["at", 0.05], ["a", 0.05]], "S": [["S", 0.05], ["sp", 0.1], ["sw", 0.85]]},
+  "healthFlags": ["hips", "joints", "bloat"]
 }, {
   "name": "Carpathian Shepherd Dog",
   "group": "Working",
   "size": "XL",
   "coat": "long",
-  "colors": ["wolf sable", "fawn", "black & tan"],
+  "colors": ["pale fawn with black saddle", "wolf gray"],
   "species": "dog",
-  "sizeAvg": 100,
-  "sizeRange": [80, 130],
+  "sizeAvg": 90,
+  "sizeRange": [70, 110],
   "litterSize": "L",
   "traits": {
     "intelligence": 7,
@@ -8084,24 +8279,27 @@ var DEMO_BREEDS = [{
     "preyDrive": 5,
     "barkTendency": 7,
     "sociability": 6,
-    "adaptability": 6
-  },
+    "adaptability": 6,
+  "founderCOI": 4.5
+},
   "health": {
     "hips": 72,
     "eyes": 78,
     "heart": 78,
     "joints": 72
   },
-  "aptitudes": ["Conformation", "Obedience"]
+  "aptitudes": ["Conformation", "Obedience"],
+  "coatFreqs": {"E": [["E", 0.85], ["e", 0.15]], "K": [["KB", 0.1], ["kbr", 0], ["ky", 0.9]], "A": [["Ay", 0.2], ["aw", 0.4], ["at", 0.3], ["a", 0.1]], "As": [["N", 0.7], ["n", 0.3]], "S": [["S", 0.8], ["sp", 0.15], ["sw", 0.05]]},
+  "healthFlags": ["hips", "joints", "bloat"]
 }, {
   "name": "Romanian Mioritic Shepherd",
   "group": "Working",
   "size": "XL",
   "coat": "long",
-  "colors": ["white", "gray", "white & gray", "white & black"],
+  "colors": ["white", "white with pale gray patches", "white with pale fawn patches"],
   "species": "dog",
   "sizeAvg": 100,
-  "sizeRange": [80, 130],
+  "sizeRange": [77, 130],
   "litterSize": "L",
   "traits": {
     "intelligence": 7,
@@ -8113,24 +8311,27 @@ var DEMO_BREEDS = [{
     "preyDrive": 4,
     "barkTendency": 7,
     "sociability": 7,
-    "adaptability": 5
-  },
+    "adaptability": 5,
+  "founderCOI": 5.0
+},
   "health": {
     "hips": 72,
     "eyes": 78,
     "heart": 78,
     "joints": 72
   },
-  "aptitudes": ["Conformation", "Obedience"]
+  "aptitudes": ["Conformation", "Obedience"],
+  "coatFreqs": {"E": [["E", 0.5], ["e", 0.5]], "K": [["KB", 0.05], ["kbr", 0], ["ky", 0.95]], "A": [["Ay", 0.5], ["aw", 0.3], ["at", 0.1], ["a", 0.1]], "S": [["S", 0.1], ["sp", 0.3], ["sw", 0.6]]},
+  "healthFlags": ["hips", "joints", "bloat"]
 }, {
   "name": "Romanian Raven Shepherd",
   "group": "Working",
   "size": "XL",
   "coat": "long",
-  "colors": ["black", "black & tan"],
+  "colors": ["black", "black with tan points", "black with white markings"],
   "species": "dog",
-  "sizeAvg": 100,
-  "sizeRange": [80, 130],
+  "sizeAvg": 90,
+  "sizeRange": [66, 115],
   "litterSize": "L",
   "traits": {
     "intelligence": 7,
@@ -8142,24 +8343,27 @@ var DEMO_BREEDS = [{
     "preyDrive": 5,
     "barkTendency": 7,
     "sociability": 6,
-    "adaptability": 5
-  },
+    "adaptability": 5,
+  "founderCOI": 4.5
+},
   "health": {
     "hips": 70,
     "eyes": 78,
     "heart": 78,
     "joints": 70
   },
-  "aptitudes": ["Conformation", "Obedience"]
+  "aptitudes": ["Conformation", "Obedience"],
+  "coatFreqs": {"E": [["E", 1.0], ["e", 0.0]], "K": [["KB", 0.8], ["kbr", 0], ["ky", 0.2]], "A": [["Ay", 0], ["aw", 0], ["at", 0.8], ["a", 0.2]], "B": [["B", 1.0], ["b", 0.0]]},
+  "healthFlags": ["hips", "joints", "bloat"]
 }, {
   "name": "Karakachan",
   "group": "Working",
   "size": "XL",
   "coat": "long",
-  "colors": ["white & black", "tricolor", "white"],
+  "colors": ["white with colored patches", "tri-color", "black with white", "black & tan with white"],
   "species": "dog",
   "sizeAvg": 100,
-  "sizeRange": [80, 130],
+  "sizeRange": [77, 125],
   "litterSize": "L",
   "traits": {
     "intelligence": 7,
@@ -8171,24 +8375,27 @@ var DEMO_BREEDS = [{
     "preyDrive": 6,
     "barkTendency": 8,
     "sociability": 5,
-    "adaptability": 5
-  },
+    "adaptability": 5,
+  "founderCOI": 4.5
+},
   "health": {
     "hips": 70,
     "eyes": 75,
     "heart": 78,
     "joints": 70
   },
-  "aptitudes": ["Conformation", "LGD"]
+  "aptitudes": ["Conformation", "LGD"],
+  "coatFreqs": {"E": [["E", 0.8], ["e", 0.2]], "K": [["KB", 0.15], ["kbr", 0.1], ["ky", 0.75]], "A": [["Ay", 0.3], ["aw", 0.2], ["at", 0.35], ["a", 0.15]], "S": [["S", 0.2], ["sp", 0.5], ["sw", 0.3]]},
+  "healthFlags": ["hips", "joints", "bloat"]
 }, {
   "name": "Greek Shepherd",
   "group": "Working",
   "size": "XL",
   "coat": "long",
-  "colors": ["white", "fawn", "gray", "black & tan"],
+  "colors": ["fawn", "gray", "white", "black", "brindle"],
   "species": "dog",
-  "sizeAvg": 100,
-  "sizeRange": [80, 130],
+  "sizeAvg": 90,
+  "sizeRange": [66, 110],
   "litterSize": "L",
   "traits": {
     "intelligence": 7,
@@ -8200,24 +8407,27 @@ var DEMO_BREEDS = [{
     "preyDrive": 5,
     "barkTendency": 7,
     "sociability": 6,
-    "adaptability": 6
-  },
+    "adaptability": 6,
+  "founderCOI": 4.0
+},
   "health": {
     "hips": 72,
     "eyes": 78,
     "heart": 78,
     "joints": 72
   },
-  "aptitudes": ["Conformation"]
+  "aptitudes": ["Conformation"],
+  "coatFreqs": {"E": [["E", 0.8], ["e", 0.2]], "K": [["KB", 0.15], ["kbr", 0.2], ["ky", 0.65]], "A": [["Ay", 0.45], ["aw", 0.25], ["at", 0.2], ["a", 0.1]], "S": [["S", 0.55], ["sp", 0.3], ["sw", 0.15]]},
+  "healthFlags": ["hips", "joints", "bloat"]
 }, {
   "name": "Himalayan Sheepdog",
   "group": "Working",
   "size": "XL",
   "coat": "long",
-  "colors": ["black & tan", "fawn", "tawny"],
+  "colors": ["black & tan", "fawn", "sable", "white"],
   "species": "dog",
-  "sizeAvg": 100,
-  "sizeRange": [80, 130],
+  "sizeAvg": 95,
+  "sizeRange": [66, 130],
   "litterSize": "L",
   "traits": {
     "intelligence": 7,
@@ -8229,24 +8439,27 @@ var DEMO_BREEDS = [{
     "preyDrive": 6,
     "barkTendency": 8,
     "sociability": 4,
-    "adaptability": 4
-  },
+    "adaptability": 4,
+  "founderCOI": 3.5
+},
   "health": {
     "hips": 68,
     "eyes": 75,
     "heart": 75,
     "joints": 68
   },
-  "aptitudes": ["Conformation"]
+  "aptitudes": ["Conformation"],
+  "coatFreqs": {"E": [["E", 0.85], ["e", 0.15]], "K": [["KB", 0.2], ["kbr", 0.1], ["ky", 0.7]], "A": [["Ay", 0.4], ["aw", 0.2], ["at", 0.3], ["a", 0.1]], "S": [["S", 0.65], ["sp", 0.25], ["sw", 0.1]]},
+  "healthFlags": ["hips", "joints", "bloat"]
 }, {
   "name": "Armenian Gampr",
   "group": "Working",
   "size": "XL",
   "coat": "long",
-  "colors": ["fawn", "gray", "white", "piebald", "brindle"],
+  "colors": ["white", "fawn", "gray", "brindle", "piebald", "any color"],
   "species": "dog",
-  "sizeAvg": 100,
-  "sizeRange": [80, 130],
+  "sizeAvg": 120,
+  "sizeRange": [88, 155],
   "litterSize": "L",
   "traits": {
     "intelligence": 7,
@@ -8258,24 +8471,27 @@ var DEMO_BREEDS = [{
     "preyDrive": 6,
     "barkTendency": 7,
     "sociability": 5,
-    "adaptability": 6
-  },
+    "adaptability": 6,
+  "founderCOI": 3.5
+},
   "health": {
     "hips": 72,
     "eyes": 78,
     "heart": 78,
     "joints": 72
   },
-  "aptitudes": ["Schutzhund", "Conformation"]
+  "aptitudes": ["Schutzhund", "Conformation"],
+  "coatFreqs": {"E": [["E", 0.8], ["e", 0.2]], "K": [["KB", 0.1], ["kbr", 0.2], ["ky", 0.7]], "A": [["Ay", 0.4], ["aw", 0.25], ["at", 0.2], ["a", 0.15]], "S": [["S", 0.45], ["sp", 0.35], ["sw", 0.2]]},
+  "healthFlags": ["hips", "joints", "bloat"]
 }, {
   "name": "Georgian Shepherd Nagazi",
   "group": "Working",
   "size": "XL",
   "coat": "long",
-  "colors": ["gray", "fawn", "white", "brindle", "black"],
+  "colors": ["white", "fawn", "gray", "black", "brindle", "piebald"],
   "species": "dog",
-  "sizeAvg": 100,
-  "sizeRange": [80, 130],
+  "sizeAvg": 130,
+  "sizeRange": [99, 165],
   "litterSize": "L",
   "traits": {
     "intelligence": 7,
@@ -8287,24 +8503,27 @@ var DEMO_BREEDS = [{
     "preyDrive": 6,
     "barkTendency": 7,
     "sociability": 4,
-    "adaptability": 5
-  },
+    "adaptability": 5,
+  "founderCOI": 3.5
+},
   "health": {
     "hips": 70,
     "eyes": 75,
     "heart": 75,
     "joints": 70
   },
-  "aptitudes": ["Schutzhund", "Conformation"]
+  "aptitudes": ["Schutzhund", "Conformation"],
+  "coatFreqs": {"E": [["E", 0.8], ["e", 0.2]], "K": [["KB", 0.1], ["kbr", 0.2], ["ky", 0.7]], "A": [["Ay", 0.4], ["aw", 0.25], ["at", 0.2], ["a", 0.15]], "S": [["S", 0.45], ["sp", 0.35], ["sw", 0.2]]},
+  "healthFlags": ["hips", "joints", "bloat"]
 }, {
   "name": "Gurdbasar",
   "group": "Working",
   "size": "XL",
   "coat": "long",
-  "colors": ["gray", "fawn", "white", "brindle"],
+  "colors": ["white", "fawn", "gray", "brindle", "piebald"],
   "species": "dog",
-  "sizeAvg": 100,
-  "sizeRange": [80, 130],
+  "sizeAvg": 120,
+  "sizeRange": [88, 155],
   "litterSize": "L",
   "traits": {
     "intelligence": 7,
@@ -8316,24 +8535,27 @@ var DEMO_BREEDS = [{
     "preyDrive": 6,
     "barkTendency": 7,
     "sociability": 4,
-    "adaptability": 5
-  },
+    "adaptability": 5,
+  "founderCOI": 3.5
+},
   "health": {
     "hips": 70,
     "eyes": 75,
     "heart": 75,
     "joints": 70
   },
-  "aptitudes": ["Schutzhund"]
+  "aptitudes": ["Schutzhund"],
+  "coatFreqs": {"E": [["E", 0.8], ["e", 0.2]], "K": [["KB", 0.1], ["kbr", 0.2], ["ky", 0.7]], "A": [["Ay", 0.4], ["aw", 0.25], ["at", 0.2], ["a", 0.15]], "S": [["S", 0.45], ["sp", 0.35], ["sw", 0.2]]},
+  "healthFlags": ["hips", "joints", "bloat"]
 }, {
   "name": "Sarabi Persian Mastiff",
   "group": "Working",
   "size": "XL",
   "coat": "medium",
-  "colors": ["fawn", "red", "black", "piebald"],
+  "colors": ["fawn", "red", "cream", "gray", "brindle"],
   "species": "dog",
-  "sizeAvg": 100,
-  "sizeRange": [80, 130],
+  "sizeAvg": 155,
+  "sizeRange": [110, 200],
   "litterSize": "L",
   "traits": {
     "intelligence": 7,
@@ -8345,24 +8567,27 @@ var DEMO_BREEDS = [{
     "preyDrive": 5,
     "barkTendency": 7,
     "sociability": 6,
-    "adaptability": 5
-  },
+    "adaptability": 5,
+  "founderCOI": 4.0
+},
   "health": {
     "hips": 70,
     "eyes": 75,
     "heart": 72,
     "joints": 70
   },
-  "aptitudes": ["Conformation", "Obedience"]
+  "aptitudes": ["Conformation", "Obedience"],
+  "coatFreqs": {"E": [["E", 0.85], ["e", 0.15]], "K": [["KB", 0.1], ["kbr", 0.35], ["ky", 0.55]], "A": [["Ay", 0.7], ["aw", 0.15], ["at", 0.1], ["a", 0.05]], "S": [["S", 0.8], ["sp", 0.15], ["sw", 0.05]]},
+  "healthFlags": ["hips", "joints", "bloat", "heart"]
 }, {
   "name": "Kurdish Mastiff Pshdar",
   "group": "Working",
   "size": "XL",
   "coat": "medium",
-  "colors": ["fawn", "red", "black & tan", "white"],
+  "colors": ["fawn", "red", "brindle", "gray", "white with patches"],
   "species": "dog",
-  "sizeAvg": 100,
-  "sizeRange": [80, 130],
+  "sizeAvg": 140,
+  "sizeRange": [99, 185],
   "litterSize": "L",
   "traits": {
     "intelligence": 7,
@@ -8374,24 +8599,27 @@ var DEMO_BREEDS = [{
     "preyDrive": 6,
     "barkTendency": 7,
     "sociability": 4,
-    "adaptability": 5
-  },
+    "adaptability": 5,
+  "founderCOI": 4.0
+},
   "health": {
     "hips": 70,
     "eyes": 75,
     "heart": 75,
     "joints": 70
   },
-  "aptitudes": ["Schutzhund"]
+  "aptitudes": ["Schutzhund"],
+  "coatFreqs": {"E": [["E", 0.85], ["e", 0.15]], "K": [["KB", 0.1], ["kbr", 0.4], ["ky", 0.5]], "A": [["Ay", 0.65], ["aw", 0.15], ["at", 0.15], ["a", 0.05]], "S": [["S", 0.6], ["sp", 0.3], ["sw", 0.1]]},
+  "healthFlags": ["hips", "joints", "bloat"]
 }, {
   "name": "Kars Dog",
   "group": "Working",
   "size": "XL",
   "coat": "long",
-  "colors": ["gray", "fawn", "black", "piebald"],
+  "colors": ["fawn with black mask", "gray", "brindle", "white with patches"],
   "species": "dog",
-  "sizeAvg": 100,
-  "sizeRange": [80, 130],
+  "sizeAvg": 120,
+  "sizeRange": [88, 145],
   "litterSize": "L",
   "traits": {
     "intelligence": 7,
@@ -8403,15 +8631,18 @@ var DEMO_BREEDS = [{
     "preyDrive": 6,
     "barkTendency": 7,
     "sociability": 5,
-    "adaptability": 5
-  },
+    "adaptability": 5,
+  "founderCOI": 4.0
+},
   "health": {
     "hips": 72,
     "eyes": 78,
     "heart": 78,
     "joints": 72
   },
-  "aptitudes": ["Conformation"]
+  "aptitudes": ["Conformation"],
+  "coatFreqs": {"E": [["E", 0.85], ["e", 0.15]], "K": [["KB", 0.1], ["kbr", 0.25], ["ky", 0.65]], "A": [["Ay", 0.6], ["aw", 0.2], ["at", 0.15], ["a", 0.05]], "S": [["S", 0.6], ["sp", 0.3], ["sw", 0.1]]},
+  "healthFlags": ["hips", "joints", "bloat"]
 }, {
   "name": "Saarloos Wolfdog",
   "group": "Herding",
@@ -10360,10 +10591,10 @@ var DEMO_BREEDS = [{
   "group": "Working",
   "size": "L",
   "coat": "long",
-  "colors": ["white", "cream", "biscuit"],
+  "colors": ["white", "cream", "biscuit", "white & biscuit"],
   "species": "dog",
-  "sizeAvg": 65,
-  "sizeRange": [55, 85],
+  "sizeAvg": 50,
+  "sizeRange": [35, 65],
   "litterSize": "L",
   "traits": {
     "intelligence": 7,
@@ -10375,24 +10606,27 @@ var DEMO_BREEDS = [{
     "preyDrive": 5,
     "barkTendency": 7,
     "sociability": 8,
-    "adaptability": 6
-  },
+    "adaptability": 6,
+  "founderCOI": 5.5
+},
   "health": {
     "hips": 72,
     "eyes": 78,
     "heart": 78,
     "joints": 72
   },
-  "aptitudes": ["Sled Racing", "Conformation", "Agility"]
+  "aptitudes": ["Sled Racing", "Conformation", "Agility"],
+  "coatFreqs": {"E": [["E", 0.5], ["e", 0.5]], "K": [["KB", 0.05], ["kbr", 0], ["ky", 0.95]], "A": [["Ay", 0.8], ["aw", 0.15], ["at", 0.03], ["a", 0.02]], "S": [["S", 0.4], ["sp", 0.3], ["sw", 0.3]]},
+  "healthFlags": ["hips", "eyes", "heart", "diabetes"]
 }, {
   "name": "Chinook",
   "group": "Working",
   "size": "L",
   "coat": "medium",
-  "colors": ["tawny", "fawn"],
+  "colors": ["tawny", "palomino", "red-gold"],
   "species": "dog",
   "sizeAvg": 65,
-  "sizeRange": [55, 85],
+  "sizeRange": [55, 90],
   "litterSize": "L",
   "traits": {
     "intelligence": 8,
@@ -10404,15 +10638,18 @@ var DEMO_BREEDS = [{
     "preyDrive": 5,
     "barkTendency": 4,
     "sociability": 8,
-    "adaptability": 8
-  },
+    "adaptability": 8,
+  "founderCOI": 7.5
+},
   "health": {
     "hips": 75,
     "eyes": 80,
     "heart": 80,
     "joints": 75
   },
-  "aptitudes": ["Sled Racing", "Draft", "Conformation"]
+  "aptitudes": ["Sled Racing", "Draft", "Conformation"],
+  "coatFreqs": {"E": [["E", 0.85], ["e", 0.15]], "K": [["KB", 0.05], ["kbr", 0], ["ky", 0.95]], "A": [["Ay", 0.9], ["aw", 0.08], ["at", 0.02], ["a", 0]], "S": [["S", 0.85], ["sp", 0.12], ["sw", 0.03]]},
+  "healthFlags": ["hips", "eyes", "epilepsy"]
 }, {
   "name": "Tamaskan",
   "group": "Working",
@@ -10420,8 +10657,8 @@ var DEMO_BREEDS = [{
   "coat": "medium",
   "colors": ["wolf gray", "red gray", "black gray"],
   "species": "dog",
-  "sizeAvg": 65,
-  "sizeRange": [55, 85],
+  "sizeAvg": 75,
+  "sizeRange": [55, 99],
   "litterSize": "L",
   "traits": {
     "intelligence": 8,
@@ -10433,24 +10670,27 @@ var DEMO_BREEDS = [{
     "preyDrive": 7,
     "barkTendency": 5,
     "sociability": 6,
-    "adaptability": 6
-  },
+    "adaptability": 6,
+  "founderCOI": 6.0
+},
   "health": {
     "hips": 80,
     "eyes": 82,
     "heart": 85,
     "joints": 80
   },
-  "aptitudes": ["Sled Racing", "Agility", "Conformation"]
+  "aptitudes": ["Sled Racing", "Agility", "Conformation"],
+  "coatFreqs": {"E": [["E", 0.8], ["e", 0.2]], "K": [["KB", 0.05], ["kbr", 0], ["ky", 0.95]], "A": [["Ay", 0.15], ["aw", 0.6], ["at", 0.2], ["a", 0.05]], "S": [["S", 0.75], ["sp", 0.2], ["sw", 0.05]]},
+  "healthFlags": ["hips", "epilepsy", "eyes"]
 }, {
   "name": "Northern Inuit",
   "group": "Working",
   "size": "L",
   "coat": "medium",
-  "colors": ["white", "black", "gray", "sable"],
+  "colors": ["white", "black", "gray", "sable", "black & white", "gray & white"],
   "species": "dog",
-  "sizeAvg": 65,
-  "sizeRange": [55, 85],
+  "sizeAvg": 75,
+  "sizeRange": [55, 110],
   "litterSize": "L",
   "traits": {
     "intelligence": 7,
@@ -10462,24 +10702,27 @@ var DEMO_BREEDS = [{
     "preyDrive": 6,
     "barkTendency": 5,
     "sociability": 6,
-    "adaptability": 6
-  },
+    "adaptability": 6,
+  "founderCOI": 6.0
+},
   "health": {
     "hips": 78,
     "eyes": 80,
     "heart": 82,
     "joints": 78
   },
-  "aptitudes": ["Conformation", "Agility"]
+  "aptitudes": ["Conformation", "Agility"],
+  "coatFreqs": {"E": [["E", 0.8], ["e", 0.2]], "K": [["KB", 0.05], ["kbr", 0], ["ky", 0.95]], "A": [["Ay", 0.2], ["aw", 0.45], ["at", 0.25], ["a", 0.1]], "S": [["S", 0.4], ["sp", 0.45], ["sw", 0.15]]},
+  "healthFlags": ["hips", "epilepsy", "eyes", "spine"]
 }, {
   "name": "Utonagan",
   "group": "Working",
   "size": "L",
   "coat": "medium",
-  "colors": ["gray", "white", "black", "sable"],
+  "colors": ["white", "black", "gray", "sable", "wolf gray"],
   "species": "dog",
-  "sizeAvg": 65,
-  "sizeRange": [55, 85],
+  "sizeAvg": 75,
+  "sizeRange": [55, 110],
   "litterSize": "L",
   "traits": {
     "intelligence": 7,
@@ -10491,24 +10734,27 @@ var DEMO_BREEDS = [{
     "preyDrive": 6,
     "barkTendency": 5,
     "sociability": 6,
-    "adaptability": 6
-  },
+    "adaptability": 6,
+  "founderCOI": 6.0
+},
   "health": {
     "hips": 78,
     "eyes": 80,
     "heart": 82,
     "joints": 78
   },
-  "aptitudes": ["Conformation", "Agility"]
+  "aptitudes": ["Conformation", "Agility"],
+  "coatFreqs": {"E": [["E", 0.8], ["e", 0.2]], "K": [["KB", 0.05], ["kbr", 0], ["ky", 0.95]], "A": [["Ay", 0.2], ["aw", 0.45], ["at", 0.25], ["a", 0.1]], "S": [["S", 0.4], ["sp", 0.45], ["sw", 0.15]]},
+  "healthFlags": ["hips", "epilepsy", "eyes"]
 }, {
   "name": "Bucovina Shepherd",
   "group": "Working",
   "size": "XL",
   "coat": "long",
-  "colors": ["white & black", "tricolor", "white & sand"],
+  "colors": ["white with black patches", "white with sandy patches", "white with brindle patches"],
   "species": "dog",
-  "sizeAvg": 100,
-  "sizeRange": [80, 130],
+  "sizeAvg": 110,
+  "sizeRange": [88, 145],
   "litterSize": "L",
   "traits": {
     "intelligence": 7,
@@ -10520,24 +10766,27 @@ var DEMO_BREEDS = [{
     "preyDrive": 5,
     "barkTendency": 7,
     "sociability": 5,
-    "adaptability": 5
-  },
+    "adaptability": 5,
+  "founderCOI": 4.5
+},
   "health": {
     "hips": 70,
     "eyes": 75,
     "heart": 75,
     "joints": 70
   },
-  "aptitudes": ["Conformation"]
+  "aptitudes": ["Conformation"],
+  "coatFreqs": {"E": [["E", 0.8], ["e", 0.2]], "K": [["KB", 0.1], ["kbr", 0.15], ["ky", 0.75]], "A": [["Ay", 0.35], ["aw", 0.25], ["at", 0.25], ["a", 0.15]], "S": [["S", 0.15], ["sp", 0.5], ["sw", 0.35]]},
+  "healthFlags": ["hips", "joints", "bloat"]
 }, {
   "name": "Bankhar",
   "group": "Working",
   "size": "XL",
   "coat": "long",
-  "colors": ["black & tan", "fawn", "brown"],
+  "colors": ["black & tan", "black", "brown & tan", "sable"],
   "species": "dog",
-  "sizeAvg": 100,
-  "sizeRange": [80, 130],
+  "sizeAvg": 110,
+  "sizeRange": [88, 145],
   "litterSize": "L",
   "traits": {
     "intelligence": 7,
@@ -10549,24 +10798,27 @@ var DEMO_BREEDS = [{
     "preyDrive": 6,
     "barkTendency": 8,
     "sociability": 4,
-    "adaptability": 4
-  },
+    "adaptability": 4,
+  "founderCOI": 3.5
+},
   "health": {
     "hips": 68,
     "eyes": 72,
     "heart": 72,
     "joints": 68
   },
-  "aptitudes": ["Schutzhund"]
+  "aptitudes": ["Schutzhund"],
+  "coatFreqs": {"E": [["E", 0.85], ["e", 0.15]], "K": [["KB", 0.3], ["kbr", 0], ["ky", 0.7]], "A": [["Ay", 0.2], ["aw", 0.2], ["at", 0.5], ["a", 0.1]], "S": [["S", 0.75], ["sp", 0.2], ["sw", 0.05]]},
+  "healthFlags": ["hips", "joints", "bloat"]
 }, {
   "name": "Mongolian Bankhar",
   "group": "Working",
   "size": "XL",
   "coat": "long",
-  "colors": ["black & tan", "fawn", "gray"],
+  "colors": ["black & tan", "black", "brown & tan", "sable"],
   "species": "dog",
-  "sizeAvg": 100,
-  "sizeRange": [80, 130],
+  "sizeAvg": 110,
+  "sizeRange": [88, 145],
   "litterSize": "L",
   "traits": {
     "intelligence": 7,
@@ -10578,24 +10830,27 @@ var DEMO_BREEDS = [{
     "preyDrive": 6,
     "barkTendency": 8,
     "sociability": 4,
-    "adaptability": 4
-  },
+    "adaptability": 4,
+  "founderCOI": 3.5
+},
   "health": {
     "hips": 68,
     "eyes": 72,
     "heart": 72,
     "joints": 68
   },
-  "aptitudes": ["Schutzhund"]
+  "aptitudes": ["Schutzhund"],
+  "coatFreqs": {"E": [["E", 0.85], ["e", 0.15]], "K": [["KB", 0.3], ["kbr", 0], ["ky", 0.7]], "A": [["Ay", 0.2], ["aw", 0.2], ["at", 0.5], ["a", 0.1]], "S": [["S", 0.75], ["sp", 0.2], ["sw", 0.05]]},
+  "healthFlags": ["hips", "joints", "bloat"]
 }, {
   "name": "Assyrian Shepherd",
   "group": "Working",
   "size": "XL",
   "coat": "medium",
-  "colors": ["fawn", "gray", "white"],
+  "colors": ["white", "fawn", "gray", "black", "piebald"],
   "species": "dog",
-  "sizeAvg": 100,
-  "sizeRange": [80, 130],
+  "sizeAvg": 120,
+  "sizeRange": [88, 155],
   "litterSize": "L",
   "traits": {
     "intelligence": 7,
@@ -10607,24 +10862,27 @@ var DEMO_BREEDS = [{
     "preyDrive": 6,
     "barkTendency": 7,
     "sociability": 4,
-    "adaptability": 5
-  },
+    "adaptability": 5,
+  "founderCOI": 3.5
+},
   "health": {
     "hips": 70,
     "eyes": 75,
     "heart": 75,
     "joints": 70
   },
-  "aptitudes": ["Schutzhund"]
+  "aptitudes": ["Schutzhund"],
+  "coatFreqs": {"E": [["E", 0.8], ["e", 0.2]], "K": [["KB", 0.1], ["kbr", 0.15], ["ky", 0.75]], "A": [["Ay", 0.4], ["aw", 0.25], ["at", 0.2], ["a", 0.15]], "S": [["S", 0.45], ["sp", 0.35], ["sw", 0.2]]},
+  "healthFlags": ["hips", "joints", "bloat"]
 }, {
   "name": "Dogo Canario",
   "group": "Working",
   "size": "XL",
   "coat": "short",
-  "colors": ["brindle", "fawn"],
+  "colors": ["fawn", "brindle", "fawn with white", "brindle with white"],
   "species": "dog",
-  "sizeAvg": 100,
-  "sizeRange": [80, 130],
+  "sizeAvg": 110,
+  "sizeRange": [84, 145],
   "litterSize": "L",
   "traits": {
     "intelligence": 7,
@@ -10636,24 +10894,27 @@ var DEMO_BREEDS = [{
     "preyDrive": 6,
     "barkTendency": 4,
     "sociability": 5,
-    "adaptability": 5
-  },
+    "adaptability": 5,
+  "founderCOI": 6.0
+},
   "health": {
     "hips": 68,
     "eyes": 72,
     "heart": 70,
     "joints": 68
   },
-  "aptitudes": ["Schutzhund", "Conformation"]
+  "aptitudes": ["Schutzhund", "Conformation"],
+  "coatFreqs": {"E": [["E", 1.0], ["e", 0.0]], "K": [["KB", 0.15], ["kbr", 0.55], ["ky", 0.3]], "A": [["Ay", 0.8], ["aw", 0], ["at", 0.15], ["a", 0.05]], "S": [["S", 0.65], ["sp", 0.3], ["sw", 0.05]]},
+  "healthFlags": ["hips", "heart", "bloat"]
 }, {
   "name": "Ca de Bou",
   "group": "Working",
   "size": "XL",
   "coat": "short",
-  "colors": ["brindle", "fawn", "black"],
+  "colors": ["fawn", "brindle", "black"],
   "species": "dog",
-  "sizeAvg": 100,
-  "sizeRange": [80, 130],
+  "sizeAvg": 90,
+  "sizeRange": [66, 110],
   "litterSize": "L",
   "traits": {
     "intelligence": 7,
@@ -10665,24 +10926,27 @@ var DEMO_BREEDS = [{
     "preyDrive": 5,
     "barkTendency": 4,
     "sociability": 6,
-    "adaptability": 5
-  },
+    "adaptability": 5,
+  "founderCOI": 6.5
+},
   "health": {
     "hips": 68,
     "eyes": 70,
     "heart": 68,
     "joints": 68
   },
-  "aptitudes": ["Schutzhund", "Conformation"]
+  "aptitudes": ["Schutzhund", "Conformation"],
+  "coatFreqs": {"E": [["E", 1.0], ["e", 0.0]], "K": [["KB", 0.25], ["kbr", 0.5], ["ky", 0.25]], "A": [["Ay", 0.7], ["aw", 0], ["at", 0.2], ["a", 0.1]], "S": [["S", 0.85], ["sp", 0.12], ["sw", 0.03]]},
+  "healthFlags": ["hips", "heart", "breathing", "joints"]
 }, {
   "name": "Alano Espa\xF1ol",
   "group": "Working",
   "size": "L",
   "coat": "short",
-  "colors": ["fawn", "brindle", "black"],
+  "colors": ["fawn", "brindle", "wolf sable", "black", "black brindle"],
   "species": "dog",
-  "sizeAvg": 65,
-  "sizeRange": [55, 85],
+  "sizeAvg": 90,
+  "sizeRange": [66, 110],
   "litterSize": "L",
   "traits": {
     "intelligence": 7,
@@ -10702,16 +10966,19 @@ var DEMO_BREEDS = [{
     "heart": 70,
     "joints": 68
   },
-  "aptitudes": ["Schutzhund", "Conformation"]
+  "aptitudes": ["Schutzhund", "Conformation"],
+  "founderCOI": 5.5,
+  "coatFreqs": {"E": [["E", 1.0], ["e", 0.0]], "K": [["KB", 0.15], ["kbr", 0.55], ["ky", 0.3]], "A": [["Ay", 0.55], ["aw", 0.2], ["at", 0.15], ["a", 0.1]], "S": [["S", 0.7], ["sp", 0.25], ["sw", 0.05]]},
+  "healthFlags": ["hips", "heart", "joints", "cancer"]
 }, {
   "name": "Cao de Fila de Sao Miguel",
   "group": "Working",
   "size": "L",
   "coat": "short",
-  "colors": ["fawn", "brindle", "gray brindle"],
+  "colors": ["brindle (yellow, fawn or gray base with dark stripes)"],
   "species": "dog",
-  "sizeAvg": 65,
-  "sizeRange": [55, 85],
+  "sizeAvg": 90,
+  "sizeRange": [66, 110],
   "litterSize": "L",
   "traits": {
     "intelligence": 8,
@@ -10723,24 +10990,27 @@ var DEMO_BREEDS = [{
     "preyDrive": 6,
     "barkTendency": 5,
     "sociability": 6,
-    "adaptability": 6
-  },
+    "adaptability": 6,
+  "founderCOI": 5.5
+},
   "health": {
     "hips": 72,
     "eyes": 75,
     "heart": 75,
     "joints": 72
   },
-  "aptitudes": ["Herding", "Schutzhund", "Conformation"]
+  "aptitudes": ["Herding", "Schutzhund", "Conformation"],
+  "coatFreqs": {"E": [["E", 1.0], ["e", 0.0]], "K": [["KB", 0.05], ["kbr", 0.85], ["ky", 0.1]], "A": [["Ay", 0.8], ["aw", 0.1], ["at", 0.1], ["a", 0]], "S": [["S", 0.8], ["sp", 0.17], ["sw", 0.03]]},
+  "healthFlags": ["hips", "joints", "heart"]
 }, {
   "name": "C\xE3o de Castro Laboreiro",
   "group": "Working",
   "size": "L",
   "coat": "short",
-  "colors": ["wolf gray", "dark", "brindle"],
+  "colors": ["wolf gray", "dark brown", "mountain (dark with lighter underparts)"],
   "species": "dog",
-  "sizeAvg": 65,
-  "sizeRange": [55, 85],
+  "sizeAvg": 75,
+  "sizeRange": [55, 88],
   "litterSize": "L",
   "traits": {
     "intelligence": 7,
@@ -10760,16 +11030,19 @@ var DEMO_BREEDS = [{
     "heart": 78,
     "joints": 72
   },
-  "aptitudes": ["Conformation"]
+  "aptitudes": ["Conformation"],
+  "founderCOI": 5.0,
+  "coatFreqs": {"E": [["E", 0.85], ["e", 0.15]], "K": [["KB", 0.1], ["kbr", 0], ["ky", 0.9]], "A": [["Ay", 0.2], ["aw", 0.55], ["at", 0.2], ["a", 0.05]], "S": [["S", 0.85], ["sp", 0.12], ["sw", 0.03]]},
+  "healthFlags": ["hips", "joints"]
 }, {
   "name": "Perro Cimarron",
   "group": "Working",
   "size": "L",
   "coat": "short",
-  "colors": ["brindle", "fawn"],
+  "colors": ["brindle", "fawn", "brindle with white"],
   "species": "dog",
-  "sizeAvg": 65,
-  "sizeRange": [55, 85],
+  "sizeAvg": 90,
+  "sizeRange": [66, 110],
   "litterSize": "L",
   "traits": {
     "intelligence": 7,
@@ -10781,24 +11054,27 @@ var DEMO_BREEDS = [{
     "preyDrive": 6,
     "barkTendency": 5,
     "sociability": 6,
-    "adaptability": 5
-  },
+    "adaptability": 5,
+  "founderCOI": 5.0
+},
   "health": {
     "hips": 70,
     "eyes": 75,
     "heart": 75,
     "joints": 70
   },
-  "aptitudes": ["Schutzhund", "Conformation"]
+  "aptitudes": ["Schutzhund", "Conformation"],
+  "coatFreqs": {"E": [["E", 1.0], ["e", 0.0]], "K": [["KB", 0.1], ["kbr", 0.65], ["ky", 0.25]], "A": [["Ay", 0.8], ["aw", 0], ["at", 0.15], ["a", 0.05]], "S": [["S", 0.7], ["sp", 0.25], ["sw", 0.05]]},
+  "healthFlags": ["hips", "heart", "joints"]
 }, {
   "name": "Alaunt",
   "group": "Working",
   "size": "XL",
   "coat": "short",
-  "colors": ["fawn", "brindle", "white"],
+  "colors": ["white", "fawn", "brindle", "any color"],
   "species": "dog",
-  "sizeAvg": 100,
-  "sizeRange": [80, 130],
+  "sizeAvg": 120,
+  "sizeRange": [88, 160],
   "litterSize": "L",
   "traits": {
     "intelligence": 7,
@@ -10810,15 +11086,18 @@ var DEMO_BREEDS = [{
     "preyDrive": 6,
     "barkTendency": 5,
     "sociability": 5,
-    "adaptability": 5
-  },
+    "adaptability": 5,
+  "founderCOI": 4.0
+},
   "health": {
     "hips": 68,
     "eyes": 72,
     "heart": 70,
     "joints": 68
   },
-  "aptitudes": ["Schutzhund", "Conformation"]
+  "aptitudes": ["Schutzhund", "Conformation"],
+  "coatFreqs": {"E": [["E", 0.8], ["e", 0.2]], "K": [["KB", 0.15], ["kbr", 0.35], ["ky", 0.5]], "A": [["Ay", 0.55], ["aw", 0.15], ["at", 0.15], ["a", 0.15]], "S": [["S", 0.45], ["sp", 0.35], ["sw", 0.2]]},
+  "healthFlags": ["hips", "joints", "bloat", "heart"]
 }, {
   "name": "Jindo",
   "group": "Non-Sporting",

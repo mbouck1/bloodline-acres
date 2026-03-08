@@ -686,7 +686,7 @@ function makeAnimal(breed, name, sex) {
     healthScore: hs,
     healthIssues: issues,
     perfScore: calcPerfScore(genome),
-    coi: 0,
+    coi: (function(){ var base = breed.founderCOI || 4.0; var variance = (Math.random() - 0.5) * 2; return Math.round(Math.max(0, Math.min(8, base + variance)) * 10) / 10; })(),
     vinStr: buildVIN(genome),
     mutations: [],
     generation: 1,
