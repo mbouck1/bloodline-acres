@@ -329,6 +329,47 @@ function breedGenomes(g1, g2) {
 }
 
 // ── PHENOTYPE — E→K→A→B→D ────────────────────────────────────
+// ── BREED COLOR RESOLVER ──────────────────────────────────────
+// Snaps a raw genetics color label to the closest entry in breed.colors.
+// Used so pups say "Sable & White" instead of "Sable/Fawn · Piebald".
+function resolveBreedColor(rawColor, breedColors) {
+  if (!breedColors || !breedColors.length || !rawColor || rawColor === "Unknown") return rawColor;
+
+  var raw = rawColor.toLowerCase();
+  var parts = raw.split(" \xB7 ").map(function(s){ return s.trim(); });
+
+  // Build a score: count keyword overlaps between raw parts and each breed color string
+  var scored = breedColors.map(function(bc) {
+    var bcl = bc.toLowerCase();
+    var score = 0;
+    parts.forEach(function(p) {
+      // Direct substring match
+      if (bcl.includes(p)) score += 3;
+      // Word-level match
+      p.split(/\s+/).forEach(function(w) {
+        if (w.length > 2 && bcl.includes(w)) score += 1;
+      });
+    });
+    // Penalize if breed color mentions a color keyword completely absent from raw
+    var colorWords = ["black","chocolate","liver","blue","red","fawn","sable","cream","white","tan","silver","gold","brindle","merle","tricolor","piebald","roan","ticked","harlequin","Isabella","wolf"];
+    colorWords.forEach(function(cw) {
+      if (bcl.includes(cw) && !raw.includes(cw)) score -= 0.5;
+    });
+    return { label: bc, score: score };
+  });
+
+  scored.sort(function(a,b){ return b.score - a.score; });
+
+  // If top score is 0 or negative, fall back to raw label
+  if (scored[0].score <= 0) return rawColor;
+
+  // Preserve any lethal/warning suffix (e.g. "Double Merle ⚠️")
+  var warningPart = parts.find(function(p){ return p.includes("\u26A0"); });
+  var resolved = scored[0].label;
+  if (warningPart) resolved += " \xB7 " + warningPart;
+  return resolved;
+}
+
 function interpretColor(genome) {
   var c = genome.coat;
   if (!c || !c.E) return "Unknown";
@@ -682,7 +723,7 @@ function makeAnimal(breed, name, sex) {
     sizeRange: breed.sizeRange || [30, 55],
     isMixed: false,
     genome: genome,
-    coatColor: interpretColor(genome),
+    coatColor: resolveBreedColor(interpretColor(genome), breed.colors),
     healthScore: hs,
     healthIssues: issues,
     perfScore: calcPerfScore(genome),
@@ -737,7 +778,7 @@ function breedPair(sire, dam) {
       sizeAvg: Math.round((sire.sizeAvg + dam.sizeAvg) / 2),
       isMixed: sire.breed !== dam.breed,
       genome: g,
-      coatColor: interpretColor(g),
+      coatColor: resolveBreedColor(interpretColor(g), sire.isMixed ? null : (typeof DEMO_BREEDS !== "undefined" ? DEMO_BREEDS : []).find(function(b){ return b.name === sire.breed; }) && (typeof DEMO_BREEDS !== "undefined" ? DEMO_BREEDS : []).find(function(b){ return b.name === sire.breed; }).colors),
       healthScore: hs,
       healthIssues: issues,
       perfScore: calcPerfScore(g),
@@ -822,6 +863,80 @@ function calcCOI(sireId, damId, allAnimals) {
 
 // ── BREED GENETIC PROFILE ASSIGNMENT ─────────────────────────
 // Assigns realistic coat/health freq profiles based on breed name & group
+// ── HEALTH FLAGS → HEALTH LOCI ────────────────────────────────
+// Maps breed.healthFlags string array to adjusted healthFreqs allele frequencies.
+// Called inside assignGeneticProfile before the return.
+function buildHealthFreqsFromFlags(flags, base) {
+  var h = Object.assign({}, base);
+  if (!flags || !flags.length) return h;
+  var f = flags.map(function(s){ return s.toLowerCase(); });
+
+  // Helper — clamp freq to [0.01, 0.99]
+  function worsify(loc, affKey, carrierBoost) {
+    var cur = h[loc];
+    if (!cur) return;
+    // cur is [[good, p], [bad, q]] — raise bad allele freq
+    var badIdx = cur.findIndex(function(a){ return a[0] === affKey; });
+    if (badIdx === -1) return;
+    var newBad = Math.min(0.60, cur[badIdx][1] + (carrierBoost || 0.10));
+    var goodIdx = 1 - badIdx;
+    h[loc] = cur.map(function(a, i){ return i === badIdx ? [a[0], newBad] : [a[0], Math.max(0.01, 1 - newBad)]; });
+  }
+
+  // HipQ — hips, dysplasia, joints
+  if (f.some(function(x){ return x.includes("hip") || x === "dysplasia"; })) worsify("HipQ","g",0.12);
+  // JointQ — joints, spine, ivdd, elbow, patellas, luxating
+  if (f.some(function(x){ return x.includes("joint") || x.includes("spine") || x.includes("elbow") || x.includes("patella") || x.includes("legg") || x.includes("luxat"); })) worsify("JointQ","g",0.12);
+  // HeartQ — heart, cardiac, mvd, dcm
+  if (f.some(function(x){ return x.includes("heart") || x.includes("cardiac") || x.includes("mvd") || x.includes("dcm"); })) worsify("HeartQ","g",0.10);
+  // EyeQ — eyes, cataracts, pra, retinal, glaucoma
+  if (f.some(function(x){ return x.includes("eye") || x.includes("cataract") || x.includes("retinal") || x.includes("glaucom") || x.includes("pra"); })) worsify("EyeQ","g",0.10);
+  // MDR1 — MDR1, drug sensitivity, herding drug
+  if (f.some(function(x){ return x.includes("mdr1") || x.includes("drug sens"); })) {
+    h["MDR1"] = [["N", 0.65], ["m", 0.35]];
+  }
+  // PRA — pra, progressive retinal
+  if (f.some(function(x){ return x.includes("pra") || x.includes("progressive retinal"); })) {
+    h["PRA"] = [["N", 0.80], ["n", 0.20]];
+  }
+  // DM — degenerative myelopathy, dm
+  if (f.some(function(x){ return x === "dm" || x.includes("myelop"); })) {
+    h["DM"] = [["N", 0.82], ["n", 0.18]];
+  }
+  // vWD — bleeding, von willebrand
+  if (f.some(function(x){ return x.includes("bleed") || x.includes("vwd") || x.includes("willebrand"); })) {
+    h["vWD"] = [["N", 0.82], ["n", 0.18]];
+  }
+  // Bloat risk stored as a flag on the breed profile for aging events (not a locus)
+  // Epilepsy — raise JointQ slightly as proxy for neurological fragility
+  if (f.some(function(x){ return x.includes("epilep"); })) {
+    worsify("EyeQ","g",0.05); // slight overall fragility signal
+  }
+  // Thyroid — HeartQ secondary
+  if (f.some(function(x){ return x.includes("thyroid") || x.includes("addison") || x.includes("immune"); })) {
+    worsify("HeartQ","g",0.06);
+  }
+  // Cancer flag — worsify HeartQ & JointQ as proxy for systemic risk
+  if (f.some(function(x){ return x === "cancer"; })) {
+    worsify("HeartQ","g",0.06);
+    worsify("HipQ","g",0.05);
+  }
+  // Deafness — raise EyeQ slightly (sensorineural correlation)
+  if (f.some(function(x){ return x.includes("deaf"); })) {
+    worsify("EyeQ","g",0.07);
+  }
+  // Kidney/renal — JointQ as proxy
+  if (f.some(function(x){ return x.includes("kidney") || x.includes("renal") || x.includes("fanconi"); })) {
+    worsify("JointQ","g",0.07);
+  }
+  // Breathing/brachycephalic — HeartQ and JointQ
+  if (f.some(function(x){ return x.includes("breath") || x.includes("brachy") || x.includes("heat"); })) {
+    worsify("HeartQ","g",0.12);
+    worsify("JointQ","g",0.08);
+  }
+  return h;
+}
+
 function assignGeneticProfile(breed) {
   if (breed.coatFreqs) return breed; // already has profiles, skip
 
@@ -1508,6 +1623,9 @@ function assignGeneticProfile(breed) {
     coat.T = [["TR", 0.10], ["T", 0.50], ["t", 0.40]];
     coat.L = [["L", 0.20], ["l", 0.80]];
   }
+
+  // Apply breed-specific health loci overrides from healthFlags
+  health = buildHealthFreqsFromFlags(breed.healthFlags || [], health);
 
   return _objectSpread2(_objectSpread2({}, breed), {}, {
     coatFreqs: coat,
@@ -3923,7 +4041,45 @@ function App() {
               sizeLockUpdate = { adultWeight: finalSize.adultW, adultHeight: finalSize.adultH, sizeLocked: true };
             }
           }
-          return Object.assign({}, a, studReset, sizeLockUpdate, {ageMonths: newAge, lastUpdated: now});
+          // ── HEALTH FLAG EVENTS ────────────────────────────────
+          var healthEvents = {};
+          var breedData = (typeof DEMO_BREEDS !== "undefined" ? DEMO_BREEDS : []).find(function(b){ return b.name === a.breed; });
+          var flags = (breedData && breedData.healthFlags) ? breedData.healthFlags.map(function(s){ return s.toLowerCase(); }) : [];
+
+          // BLOAT — acute emergency, retired with "bloat episode" (large/giant breeds, 6+ yrs)
+          if (!a.retired && flags.some(function(x){ return x === "bloat"; }) && newAge >= 72) {
+            var bloatChancePerDay = 0.0003 * daysPassed; // ~0.03%/day = ~10%/yr in high-risk
+            if (Math.random() < bloatChancePerDay) {
+              (function(){
+                var entry = { id: now+Math.random(), type:"incident", name: (a.name||a.breed)+" suffered a bloat episode", breed: a.breed, date: new Date().toLocaleString() };
+                setTimeout(function(){ setLog(function(p){ return [entry].concat(_toConsumableArray(p)); }); }, 0);
+              })();
+              return Object.assign({}, a, studReset, sizeLockUpdate, { ageMonths: newAge, retired: true, retireReason: "Bloat episode", lastUpdated: now });
+            }
+          }
+
+          // CANCER — senior mortality risk (7+ yrs), higher for flagged breeds
+          if (!a.retired && flags.some(function(x){ return x === "cancer"; }) && newAge >= 84) {
+            var cancerChance = 0.0004 * daysPassed; // ~0.04%/day = ~14%/yr in seniors
+            if (Math.random() < cancerChance) {
+              (function(){
+                var entry = { id: now+Math.random(), type:"incident", name: (a.name||a.breed)+" lost to cancer", breed: a.breed, date: new Date().toLocaleString() };
+                setTimeout(function(){ setLog(function(p){ return [entry].concat(_toConsumableArray(p)); }); }, 0);
+              })();
+              return Object.assign({}, a, studReset, sizeLockUpdate, { ageMonths: newAge, retired: true, retireReason: "Cancer", lastUpdated: now });
+            }
+          }
+
+          // JOINT DEGRADATION — once daily, senior dogs with joint/hip flags lose health pts
+          if (!a.retired && flags.some(function(x){ return x.includes("hip") || x.includes("joint") || x.includes("spine"); }) && newAge >= 96) {
+            var jDeg = Math.random() < 0.15 * daysPassed ? 1 : 0; // ~15%/day to tick down
+            if (jDeg && (a.healthScore || 100) > 20) {
+              healthEvents.healthScore = Math.max(20, (a.healthScore || 100) - jDeg);
+            }
+          }
+          // ─────────────────────────────────────────────────────
+
+          return Object.assign({}, a, studReset, sizeLockUpdate, healthEvents, {ageMonths: newAge, lastUpdated: now});
         });
       });
 
