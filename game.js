@@ -15921,7 +15921,7 @@ function App() {
     )
   ), tab === "breed" && /*#__PURE__*/React.createElement("div", {
     style: {
-      maxWidth: 800
+      maxWidth: 800, overflowY: "auto", maxHeight: "calc(100vh - 130px)", paddingBottom: 20
     }
   }, /*#__PURE__*/React.createElement("div", {
     style: {
