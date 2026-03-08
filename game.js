@@ -1760,7 +1760,11 @@ var GAME_VERSION = "2026.03.08.1";
 // ── COAT COLOR SWATCH MAP ─────────────────────────────────────
 function getCoatSwatch(coatColor) {
   if (!coatColor || coatColor === "Unknown") return null;
-  var primary = coatColor.split(" \xB7 ")[0].trim().toLowerCase();
+  var parts = coatColor.split(" \xB7 ");
+  var primary = parts[0].trim().toLowerCase();
+  // If a white spotting modifier is present, that dominates visually
+  var hasWhite = parts.some(function(p){ var pl = p.trim().toLowerCase(); return pl === "mostly white" || pl === "piebald"; });
+  if (hasWhite) return "#f0ede8";
   var map = {
     "black":"#1a1a1a","blue":"#6b8ca8","chocolate":"#5c3317","isabella":"#b5967a",
     "red/yellow":"#c8622a","red":"#b84a1a","yellow":"#d4a843","cream":"#f0ddb0",
@@ -13899,24 +13903,7 @@ function Card(_ref0) {
     /*#__PURE__*/React.createElement("span", {
       style: { display:"inline-block", background:"#1a1410", border:"1px solid #3a2810",
         borderRadius:4, padding:"3px 10px", fontSize:"0.82rem", color:"#b09070", marginRight:4 }
-    },
-      (function(){
-        var swatchColor = getCoatSwatch(animal.coatColor);
-        return swatchColor ? /*#__PURE__*/React.createElement(React.Fragment, null,
-          /*#__PURE__*/React.createElement("span", {
-            style: { display:"inline-block", width:14, height:14, borderRadius:"50%",
-              background: swatchColor, border:"2px solid rgba(255,255,255,0.35)",
-              marginRight:6, verticalAlign:"middle", flexShrink:0,
-              boxShadow: "0 0 3px rgba(0,0,0,0.5)" }
-          }),
-          animal.coatColor ? animal.coatColor.split(" \xB7 ")[0] : "Unknown"
-        ) : (animal.coatColor ? animal.coatColor.split(" \xB7 ")[0] : "Unknown");
-      })()
-    ),
-    animal.coatColor && animal.coatColor.includes(" \xB7 ") && /*#__PURE__*/React.createElement("span", {
-      style: { display:"inline-block", background:"#1a1410", border:"1px solid #4a3a28",
-        borderRadius:4, padding:"3px 10px", fontSize:"0.82rem", color:"#f0e6d3" }
-    }, animal.coatColor.split(" \xB7 ").slice(1).join(" \xB7 "))
+    }, animal.coatColor ? animal.coatColor.split(" \xB7 ").join(" \u00B7 ") : "Unknown")
   ), (function() {
     var stage = getAgeStage(animal.ageMonths || 0);
     var lifespanYrs = animal.lifespan ? Math.round(animal.lifespan / 12 * 10) / 10 : "?";
