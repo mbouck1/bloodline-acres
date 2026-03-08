@@ -727,6 +727,8 @@ function breedPair(sire, dam) {
       healthScore: hs,
       healthIssues: issues,
       perfScore: calcPerfScore(g),
+      sireId: sire.id,
+      damId: dam.id,
       coi: 0,
       vinStr: buildVIN(g),
       mutations: g.mutations.map(function (m) {
@@ -749,6 +751,60 @@ function breedPair(sire, dam) {
     };
   });
 }
+
+
+// ── COI CALCULATION (Wright's Path Coefficient, 4-gen) ────────────
+function calcCOI(sireId, damId, allAnimals) {
+  if (!sireId || !damId) return 0;
+
+  // Build a lookup map
+  var lookup = {};
+  allAnimals.forEach(function(a){ lookup[a.id] = a; });
+
+  // Get ancestors up to N generations as a map of { id -> [paths] }
+  // Each path is an array of ancestor IDs from the individual back to the ancestor
+  function getAncestors(id, maxGen) {
+    var result = {}; // id -> list of path lengths from this individual
+    function walk(currentId, depth, path) {
+      if (!currentId || depth > maxGen) return;
+      var animal = lookup[currentId];
+      if (!animal) return;
+      if (!result[currentId]) result[currentId] = [];
+      result[currentId].push(path.slice());
+      if (animal.sireId) walk(animal.sireId, depth + 1, path.concat([animal.sireId]));
+      if (animal.damId) walk(animal.damId, depth + 1, path.concat([animal.damId]));
+    }
+    walk(id, 0, [id]);
+    return result;
+  }
+
+  var sireAncestors = getAncestors(sireId, 4);
+  var damAncestors  = getAncestors(damId,  4);
+
+  // Find common ancestors
+  var commonIds = Object.keys(sireAncestors).filter(function(id){ return damAncestors[id]; });
+  if (commonIds.length === 0) return 0;
+
+  var F = 0;
+  commonIds.forEach(function(aId) {
+    var sirePathsToA = sireAncestors[aId];
+    var damPathsToA  = damAncestors[aId];
+    var ancestor = lookup[aId];
+    var Fa = ancestor ? (ancestor.coi || 0) / 100 : 0; // ancestor's own inbreeding
+
+    sirePathsToA.forEach(function(sp) {
+      damPathsToA.forEach(function(dp) {
+        // n = number of links in the chain through this common ancestor
+        // Wright's formula: (0.5)^(n+1) * (1 + Fa)
+        var n = sp.length + dp.length - 1; // -1 because ancestor counted once
+        F += Math.pow(0.5, n + 1) * (1 + Fa);
+      });
+    });
+  });
+
+  return Math.round(Math.min(F * 100, 99.9) * 10) / 10; // round to 1 decimal, cap at 99.9%
+}
+// ─────────────────────────────────────────────────────────────────
 
 // ── BREED GENETIC PROFILE ASSIGNMENT ─────────────────────────
 // Assigns realistic coat/health freq profiles based on breed name & group
@@ -15179,6 +15235,9 @@ function App() {
   var doBreed = function doBreed() {
     if (!sire || !dam) return;
     var pups = breedPair(sire, dam);
+    // Calculate COI for each pup now that we know sireId/damId
+    var pupCOI = calcCOI(sire.id, dam.id, animals);
+    pups = pups.map(function(p){ return Object.assign({}, p, { coi: pupCOI }); });
     var now = Date.now();
     var useWhelping = hasWhelpingKennel && whelpingLitters.length < 4;
     if (hasWhelpingKennel && !useWhelping) {
@@ -15967,6 +16026,17 @@ function App() {
       letterSpacing: "0.03em"
     }
   }, sire && dam ? "🧬 BREED SELECTED PAIR" : "Select a sire ♂ and dam ♀ to breed"),
+  sire && dam && sire.sex !== dam.sex && /*#__PURE__*/React.createElement("div", {
+    style: { marginTop: 6, padding: "8px 14px", borderRadius: 8,
+      background: (function(){ var coi = calcCOI(sire.id, dam.id, animals); return coi >= 25 ? "#2a0a0a" : coi >= 12.5 ? "#2a1a08" : coi >= 6 ? "#1a1a08" : "#0a1a10"; })(),
+      border: "1px solid " + (function(){ var coi = calcCOI(sire.id, dam.id, animals); return coi >= 25 ? "#ef4444" : coi >= 12.5 ? "#f97316" : coi >= 6 ? "#eab308" : "#22c55e"; })(),
+      fontSize: "0.8rem", display: "flex", justifyContent: "space-between", alignItems: "center" }
+  },
+    /*#__PURE__*/React.createElement("span", { style: { color: "#8a7055" } }, "Projected pup COI"),
+    /*#__PURE__*/React.createElement("span", { style: { fontWeight: "bold", fontSize: "0.95rem",
+      color: (function(){ var coi = calcCOI(sire.id, dam.id, animals); return coi >= 25 ? "#ef4444" : coi >= 12.5 ? "#f97316" : coi >= 6 ? "#eab308" : "#22c55e"; })()
+    } }, (function(){ var coi = calcCOI(sire.id, dam.id, animals); return coi + "% — " + (coi >= 25 ? "⚠️ Extreme" : coi >= 12.5 ? "⚠️ High" : coi >= 6 ? "⚡ Elevated" : "✅ Safe"); })())
+  ),
   sire && dam && sire.sex !== dam.sex && sire.id !== dam.id && /*#__PURE__*/React.createElement("button", {
     onClick: doBreed,
     title: "DEV MODE: Bypasses heat cycle and eligibility checks",
