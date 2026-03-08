@@ -2922,7 +2922,7 @@ function PedigreeModal(_ref_ped) {
   },
     React.createElement("div", {
       style:{ background:"#1a1208", border:"1px solid #6a5238", borderRadius:"14px 14px 0 0",
-        width:"100%", maxWidth:700, height:"78vh", display:"flex", flexDirection:"column",
+        width:"100%", maxWidth:700, height:"90vh", display:"flex", flexDirection:"column",
         overflow:"hidden", boxShadow:"0 -8px 40px rgba(0,0,0,0.7)" },
       onClick: function(e){ e.stopPropagation(); }
     },
@@ -2975,20 +2975,20 @@ function PedigreeModal(_ref_ped) {
             // Generation 2 — Grandparents
             (ss||sd||ds||dd) && React.createElement("div", { style:{ marginBottom:18 } },
               React.createElement(GenLabel, { label:"Generation 2 — Grandparents" }),
-              React.createElement("div", { style:{ display:"grid", gridTemplateColumns:"1fr 1fr 1fr 1fr", gap:8 } },
-                React.createElement("div", null,
+              React.createElement("div", { style:{ display:"flex", gap:8, overflowX:"auto", paddingBottom:6 } },
+                React.createElement("div", { style:{ minWidth:160, flex:"0 0 160px" } },
                   React.createElement("div", { style:{ color:"#60a5fa", fontSize:"0.65rem", marginBottom:4 } }, "♂ Sire's Sire"),
                   React.createElement(AncCard, { a: ss, gen:2 })
                 ),
-                React.createElement("div", null,
+                React.createElement("div", { style:{ minWidth:160, flex:"0 0 160px" } },
                   React.createElement("div", { style:{ color:"#f472b6", fontSize:"0.65rem", marginBottom:4 } }, "♀ Sire's Dam"),
                   React.createElement(AncCard, { a: sd, gen:2 })
                 ),
-                React.createElement("div", null,
+                React.createElement("div", { style:{ minWidth:160, flex:"0 0 160px" } },
                   React.createElement("div", { style:{ color:"#60a5fa", fontSize:"0.65rem", marginBottom:4 } }, "♂ Dam's Sire"),
                   React.createElement(AncCard, { a: ds, gen:2 })
                 ),
-                React.createElement("div", null,
+                React.createElement("div", { style:{ minWidth:160, flex:"0 0 160px" } },
                   React.createElement("div", { style:{ color:"#f472b6", fontSize:"0.65rem", marginBottom:4 } }, "♀ Dam's Dam"),
                   React.createElement(AncCard, { a: dd, gen:2 })
                 )
@@ -2998,13 +2998,17 @@ function PedigreeModal(_ref_ped) {
             // Generation 3 — Great-Grandparents
             (sss||ssd||sds||sdd||dss||dsd||dds||ddd) && React.createElement("div", { style:{ marginBottom:18 } },
               React.createElement(GenLabel, { label:"Generation 3 — Great-Grandparents" }),
-              React.createElement("div", { style:{ display:"grid", gridTemplateColumns:"repeat(8,1fr)", gap:6 } },
-                [sss,ssd,sds,sdd,dss,dsd,dds,ddd].map(function(anc, i){
-                  var labels = ["♂ SS·S","♀ SS·D","♂ SD·S","♀ SD·D","♂ DS·S","♀ DS·D","♂ DD·S","♀ DD·D"];
+              React.createElement("div", { style:{ display:"flex", gap:8, overflowX:"auto", paddingBottom:6 } },
+                [
+                  { a:sss, label:"♂ SS·Sire" }, { a:ssd, label:"♀ SS·Dam" },
+                  { a:sds, label:"♂ SD·Sire" }, { a:sdd, label:"♀ SD·Dam" },
+                  { a:dss, label:"♂ DS·Sire" }, { a:dsd, label:"♀ DS·Dam" },
+                  { a:dds, label:"♂ DD·Sire" }, { a:ddd, label:"♀ DD·Dam" }
+                ].map(function(item, i){
                   var col = (i % 2 === 0) ? "#60a5fa" : "#f472b6";
-                  return React.createElement("div", { key:i },
-                    React.createElement("div", { style:{ color:col, fontSize:"0.6rem", marginBottom:4 } }, labels[i]),
-                    React.createElement(AncCard, { a: anc, gen:3 })
+                  return React.createElement("div", { key:i, style:{ minWidth:150, flex:"0 0 150px" } },
+                    React.createElement("div", { style:{ color:col, fontSize:"0.62rem", marginBottom:3 } }, item.label),
+                    React.createElement(AncCard, { a: item.a, gen:3 })
                   );
                 })
               )
