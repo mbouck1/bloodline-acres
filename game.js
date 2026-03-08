@@ -4334,6 +4334,10 @@ function App() {
     _useState30 = _slicedToArray(_useState29, 2),
     litterIdx = _useState30[0],
     setLitterIdx = _useState30[1];
+  var _useStateEditOL = _slicedToArray(useState(null), 2),
+    editingPupId = _useStateEditOL[0], setEditingPupId = _useStateEditOL[1];
+  var _useStateEditWH = _slicedToArray(useState(null), 2),
+    editingWHKey = _useStateEditWH[0], setEditingWHKey = _useStateEditWH[1];
   var _useStateWK = useState(_savedState ? !!_savedState.hasWhelpingKennel : false),
     _useStateWK2 = _slicedToArray(_useStateWK, 2),
     hasWhelpingKennel = _useStateWK2[0],
@@ -5711,9 +5715,7 @@ function App() {
       color: "#4ade80", borderRadius: 8, padding: "8px 12px",
       cursor: "pointer", fontSize: "0.78rem", fontWeight: "bold", letterSpacing: "0.03em"
     }
-  }, "\uD83D\uDCC5 DEV: Force +1 Day (ages dogs & litters)"), tab === "openlitter" && (function(){
-    var _editOL = _slicedToArray(useState(null), 2), editingPupId = _editOL[0], setEditingPupId = _editOL[1];
-    return /*#__PURE__*/React.createElement("div", { style: { position: "relative", overflowY: "auto", maxHeight: "calc(100vh - 130px)" } },
+  }, "\uD83D\uDCC5 DEV: Force +1 Day (ages dogs & litters)"), tab === "openlitter" && /*#__PURE__*/React.createElement("div", { style: { position: "relative", overflowY: "auto", maxHeight: "calc(100vh - 130px)" } },
     litter.length === 0
       ? /*#__PURE__*/React.createElement("div", { style: { textAlign:"center", color:"#6b5038", padding:"60px 0" } },
           /*#__PURE__*/React.createElement("div", { style:{ fontSize:"2rem", marginBottom:10 } }, "\uD83D\uDC3E"),
@@ -5781,10 +5783,8 @@ function App() {
             )
           )
         )
-  ); })(),
-  tab === "whelping" && (function(){
-    var _editWH = _slicedToArray(useState(null), 2), editingWHKey = _editWH[0], setEditingWHKey = _editWH[1];
-    return /*#__PURE__*/React.createElement("div", { style:{ overflowY:"auto", maxHeight:"calc(100vh - 130px)" } },
+  ),
+  tab === "whelping" && /*#__PURE__*/React.createElement("div", { style:{ overflowY:"auto", maxHeight:"calc(100vh - 130px)" } },
     !hasWhelpingKennel
       ? /*#__PURE__*/React.createElement("div", { style:{ textAlign:"center", color:"#6b5038", padding:"40px 20px" } },
           /*#__PURE__*/React.createElement("div", { style:{ fontSize:"2rem", marginBottom:12 } }, "\uD83C\uDFE5"),
@@ -5867,7 +5867,7 @@ function App() {
               )
             )
           )
-  ); })(),
+  ),
   tab === "holding" && /*#__PURE__*/React.createElement("div", null,
     /*#__PURE__*/React.createElement("div", { style:{color:"#22c55e",fontWeight:"bold",fontSize:"1rem",marginBottom:10} }, "\uD83D\uDC3E Temporary Holding"),
     /*#__PURE__*/React.createElement("div", { style:{fontSize:"0.78rem",color:"#8a7055",marginBottom:12} }, "Pups here are aging. Move them to a kennel before they grow up unused!"),
