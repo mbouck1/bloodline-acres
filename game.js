@@ -578,23 +578,17 @@ function calcAdultSizePotential(sire, dam) {
 
 // Get current weight/height for display based on age
 // Guards against bad saved height data (>40" is impossible for a dog)
-// If sizeLocked is true, skip growth math — return stored final values directly
 function getCurrentSize(animal) {
   var size = animal.size || "M";
   var std = SIZE_STANDARDS[size];
   var adultW = animal.adultWeight || animal.sizeAvg || std.weightAvg;
   var adultH = (animal.adultHeight && animal.adultHeight <= 40) ? animal.adultHeight : std.heightAvg;
-  // Short-circuit: already locked at final size
-  if (animal.sizeLocked) {
-    return { currentW: adultW, currentH: adultH, adultW: adultW, adultH: adultH, mature: true };
-  }
   var age = animal.ageMonths || 0;
-  var matureAgeW = ({ XS:10, S:12, M:15, L:18, XL:24 }[size] || 15);
   var wFrac = growthFraction(age, size, "weight");
   var hFrac = growthFraction(age, size, "height");
   var currentW = Math.max(1, Math.round(adultW * wFrac));
   var currentH = Math.max(1, Math.round(adultH * hFrac));
-  var mature = age >= matureAgeW;
+  var mature = age >= ({ XS:10, S:12, M:15, L:18, XL:24 }[size] || 15);
   return { currentW: currentW, currentH: currentH, adultW: adultW, adultH: adultH, mature: mature };
 }
 
@@ -14631,7 +14625,7 @@ function App() {
     _useState12 = _slicedToArray(_useState11, 2),
     dam = _useState12[0],
     setDam = _useState12[1];
-  var _useState13 = useState([]),
+  var _useState13 = useState(_savedState ? _savedState.whelpingLitters || [] : []),
     _useState14 = _slicedToArray(_useState13, 2),
     litter = _useState14[0],
     setLitter = _useState14[1];
@@ -14720,11 +14714,11 @@ function App() {
     _useStateWK2 = _slicedToArray(_useStateWK, 2),
     hasWhelpingKennel = _useStateWK2[0],
     setHasWhelpingKennel = _useStateWK2[1];
-  var _useStateWL = useState(_savedState ? _savedState.whelpingLitters || [] : []),
+  var _useStateWL = useState(_savedState ? _savedState.holdingPups || [] : []),
     _useStateWL2 = _slicedToArray(_useStateWL, 2),
     whelpingLitters = _useStateWL2[0],
     setWhelpingLitters = _useStateWL2[1];
-  var _useStateTH = useState(_savedState ? _savedState.holdingPups || [] : []),
+  var _useStateTH = useState(_savedState ? _savedState.ownedLivestock || [] : []),
     _useStateTH2 = _slicedToArray(_useStateTH, 2),
     holdingPups = _useStateTH2[0],
     setHoldingPups = _useStateTH2[1];
@@ -14767,6 +14761,18 @@ function App() {
     _useStateCL2 = _slicedToArray(_useStateCL, 2),
     showCatLady = _useStateCL2[0],
     setShowCatLady = _useStateCL2[1];
+  var _useStateBD = useState(false),
+    _useStateBD2 = _slicedToArray(_useStateBD, 2),
+    showBuyDogs = _useStateBD2[0],
+    setShowBuyDogs = _useStateBD2[1];
+  var _useStatePBD = useState(null),
+    _useStatePBD2 = _slicedToArray(_useStatePBD, 2),
+    pendingBoughtDog = _useStatePBD2[0],
+    setPendingBoughtDog = _useStatePBD2[1];
+  var _useStateLVP = useState(null),
+    _useStateLVP2 = _slicedToArray(_useStateLVP, 2),
+    litterViewPup = _useStateLVP2[0],
+    setLitterViewPup = _useStateLVP2[1];
   var _useStateSHED = useState(false),
     _useStateSHED2 = _slicedToArray(_useStateSHED, 2),
     showShearing = _useStateSHED2[0],
@@ -14857,23 +14863,7 @@ function App() {
             })();
             return Object.assign({}, a, studReset, {ageMonths: newAge, retired: true, retireReason: "End of natural life"});
           }
-          // Size locking: when a dog first reaches mature age, lock their final size permanently
-          var sizeLockUpdate = {};
-          if (!a.sizeLocked) {
-            var matureThreshold = ({ XS:10, S:12, M:15, L:18, XL:24 }[a.size||"M"] || 15);
-            var wasImmature = (a.ageMonths||0) < matureThreshold;
-            var isNowMature = newAge >= matureThreshold;
-            if (wasImmature && isNowMature) {
-              var tempAnimal = Object.assign({}, a, { ageMonths: newAge });
-              var finalSize = getCurrentSize(tempAnimal);
-              sizeLockUpdate = {
-                adultWeight: finalSize.adultW,
-                adultHeight: finalSize.adultH,
-                sizeLocked: true
-              };
-            }
-          }
-          return Object.assign({}, a, studReset, sizeLockUpdate, {ageMonths: newAge, lastUpdated: now});
+          return Object.assign({}, a, studReset, {ageMonths: newAge, lastUpdated: now});
         });
       });
 
@@ -15085,14 +15075,14 @@ function App() {
     if (b) {
       var dogCost = (arrivalAge && arrivalAge <= 12) ? DOG_COST_PUPPY : DOG_COST_ADULT;
       if (money < dogCost) { alert("Not enough funds!\nThis dog costs " + formatMoney(dogCost) + ", you have " + formatMoney(money) + "."); return; }
+      // Deduct money immediately — no refund on reject
       setMoney(function(m){ return m - dogCost; });
       setLog(function(lg){ return [{ id:Date.now(), type:"financial", name:"Purchased dog: " + b.name, amount: -dogCost, date: new Date().toLocaleString() }].concat(_toConsumableArray(lg)); });
-      setAnimals(function (p) {
-        var a = makeAnimal(b, "".concat(b.name, " ").concat(p.length + 1), sex);
-        a.ageMonths = arrivalAge || 12;
-        a.kennelId = activeKennel.id;
-        return [].concat(_toConsumableArray(p), [a]);
-      });
+      // Generate the animal and show preview card — player keeps or releases
+      var newAnimal = makeAnimal(b, b.name + " " + (Math.floor(Math.random()*900)+100), sex);
+      newAnimal.ageMonths = arrivalAge || 12;
+      newAnimal.kennelId = activeKennel.id;
+      setPendingBoughtDog(newAnimal);
     }
   };
   var breedingIneligibleReason = function breedingIneligibleReason(a) {
@@ -15503,10 +15493,9 @@ function App() {
   }, /*#__PURE__*/React.createElement("button", {
     style: tabS("kennel"),
     onClick: function onClick() {
-      if (tab === "kennel") { setKennelOpen(function(v){ return !v; }); }
-      else { setTab("kennel"); setKennelOpen(true); }
+      setShowBuyDogs(function(v){ return !v; });
     }
-  }, kennelOpen && tab === "kennel" ? "\uD83C\uDFE1 Kennel (" + (activeKennel ? getKennelCount(activeKennel.id) + "/" + getKennelCapacity(activeKennel) : animals.length) + ")" : "\uD83C\uDFE0 Kennel (" + (activeKennel ? getKennelCount(activeKennel.id) + "/" + getKennelCapacity(activeKennel) : animals.length) + ")"), /*#__PURE__*/React.createElement("button", {
+  }, "\uD83D\uDED2 Buy Dogs"), /*#__PURE__*/React.createElement("button", {
     style: tabS("breed"),
     onClick: function onClick() {
       return setTab("breed");
@@ -15663,15 +15652,33 @@ function App() {
     /*#__PURE__*/React.createElement("div", {
       style: {
         flex: 1, background: "#1a1410", borderRadius: 12, border: "1px solid #2e2218",
-        display: "flex", alignItems: "center", justifyContent: "center",
-        padding: 20
+        padding: "14px 18px", overflowY: "auto"
       }
     },
-      /*#__PURE__*/React.createElement("div", { style: { textAlign: "center", color: "#4a3a28" } },
-        /*#__PURE__*/React.createElement("div", { style: { fontSize: "3rem", marginBottom: 10 } }, "\uD83D\uDDFA\uFE0F"),
-        /*#__PURE__*/React.createElement("div", { style: { fontSize: "0.9rem", color: "#6b5038", marginBottom: 6 } }, "Property Map"),
-        /*#__PURE__*/React.createElement("div", { style: { fontSize: "0.75rem", color: "#4a3a28" } }, "Coming soon \u2014 click \uD83C\uDFE0 Kennel to manage your dogs")
-      )
+      /*#__PURE__*/React.createElement("div", { style: { color: "#8a7055", fontSize: "0.72rem", textTransform: "uppercase", letterSpacing: "0.05em", marginBottom: 10 } },
+        "\uD83D\uDC15 " + (activeKennel ? activeKennel.name : "Kennel") + " \u00B7 Dogs"
+      ),
+      (function(){
+        var kennelDogs = animals.filter(function(a){ return !a.retired && a.kennelId === (activeKennel ? activeKennel.id : null); });
+        if (kennelDogs.length === 0) {
+          return /*#__PURE__*/React.createElement("div", { style: { color: "#4a3a28", fontSize: "0.82rem", padding: "20px 0" } }, "No dogs yet \u2014 use Buy Dogs to add some.");
+        }
+        return /*#__PURE__*/React.createElement("div", { style: { display: "flex", flexDirection: "column", gap: 4 } },
+          kennelDogs.map(function(a){
+            var sz = getCurrentSize(a);
+            return /*#__PURE__*/React.createElement("div", { key: a.id,
+              style: { display: "flex", gap: 10, alignItems: "center", padding: "5px 8px",
+                background: "#241a10", borderRadius: 6, fontSize: "0.8rem", color: "#c4956a" }
+            },
+              /*#__PURE__*/React.createElement("span", { style: { fontWeight: "bold", minWidth: 110 } }, a.name),
+              /*#__PURE__*/React.createElement("span", { style: { color: "#8a7055", fontSize: "0.72rem" } }, a.breed),
+              /*#__PURE__*/React.createElement("span", { style: { color: a.sex === "M" ? "#60a5fa" : "#f472b6", fontSize: "0.72rem", marginLeft: "auto" } }, a.sex === "M" ? "\u2642" : "\u2640"),
+              /*#__PURE__*/React.createElement("span", { style: { color: "#6b5038", fontSize: "0.72rem" } }, Math.round((a.ageMonths||0)/12*10)/10 + " yrs"),
+              /*#__PURE__*/React.createElement("span", { style: { color: "#6b5038", fontSize: "0.72rem" } }, sz.currentW + " lbs")
+            );
+          })
+        );
+      })()
     )
   ),
 
@@ -15683,58 +15690,12 @@ function App() {
     }
   },
     /*#__PURE__*/React.createElement("div", {
-      style: { background: "#443828", borderBottom: "1px solid #4a3a28", padding: "10px 14px",
+      style: { background: "#443828", borderBottom: "1px solid #4a3a28", padding: "8px 14px",
         display: "flex", gap: 8, flexWrap: "wrap", alignItems: "center", flexShrink: 0 }
     },
-      /*#__PURE__*/React.createElement("div", { style: { color: "#8a7055", fontSize: "0.75rem", textTransform: "uppercase", letterSpacing: "0.05em" } },
-        "Add Animal to Kennel"
+      /*#__PURE__*/React.createElement("div", { style: { color: "#c4956a", fontSize: "0.82rem", fontWeight: "bold" } },
+        "\uD83D\uDC15 " + (activeKennel ? activeKennel.name : "Kennel")
       ),
-      (function(){
-        var groupMap = breeds.slice().sort(function(a,b){
-          return (a.group||"Other").localeCompare(b.group||"Other") || a.name.localeCompare(b.name);
-        }).reduce(function(acc,b){ var g=b.group||"Other"; if(!acc[g])acc[g]=[]; acc[g].push(b); return acc; }, {});
-        var groupNames = Object.keys(groupMap).sort();
-        var breedsInGroup = buyGroup ? (groupMap[buyGroup]||[]) : [];
-        var selDropStyle = { background:"#1a1410", border:"1px solid #4a3a28", color:"#f0e6d3", borderRadius:6, padding:"6px 10px", fontSize:"0.82rem" };
-        return /*#__PURE__*/React.createElement(React.Fragment, null,
-          /*#__PURE__*/React.createElement("select", {
-            value: buyGroup,
-            onChange: function(e){ setBuyGroup(e.target.value); setBuyBreed(""); },
-            style: Object.assign({}, selDropStyle, { minWidth: 140 })
-          },
-            /*#__PURE__*/React.createElement("option", { value: "" }, "\u2014 Group \u2014"),
-            groupNames.map(function(g){ return /*#__PURE__*/React.createElement("option", { key:g, value:g }, g); })
-          ),
-          /*#__PURE__*/React.createElement("select", {
-            value: buyBreed,
-            onChange: function(e){ setBuyBreed(e.target.value); },
-            disabled: !buyGroup,
-            style: Object.assign({}, selDropStyle, { minWidth: 180, opacity: buyGroup ? 1 : 0.4 })
-          },
-            /*#__PURE__*/React.createElement("option", { value: "" }, buyGroup ? "\u2014 Breed \u2014" : "\u2014 Pick group first \u2014"),
-            breedsInGroup.map(function(b){ return /*#__PURE__*/React.createElement("option", { key:b.name, value:b.name }, b.name); })
-          ),
-          /*#__PURE__*/React.createElement("button", {
-            onClick: function(){ if(buyBreed) addAnimal(buyBreed,"M",addAge); },
-            disabled: !buyBreed,
-            style: { background: buyBreed?"#3a2810":"#2e2418", border:"1px solid "+(buyBreed?"#d4942a":"#4a3a28"), color:buyBreed?"#e8a020":"#6b5038", borderRadius:6, padding:"6px 12px", cursor:buyBreed?"pointer":"not-allowed", fontSize:"0.82rem" }
-          }, "+ Male \u2642 (" + formatMoney(addAge <= 12 ? DOG_COST_PUPPY : DOG_COST_ADULT) + ")"),
-          /*#__PURE__*/React.createElement("button", {
-            onClick: function(){ if(buyBreed) addAnimal(buyBreed,"F",addAge); },
-            disabled: !buyBreed,
-            style: { background: buyBreed?"#442e18":"#2e2418", border:"1px solid "+(buyBreed?"#c4956a":"#4a3a28"), color:buyBreed?"#c4956a":"#6b5038", borderRadius:6, padding:"6px 12px", cursor:buyBreed?"pointer":"not-allowed", fontSize:"0.82rem" }
-          }, "+ Female \u2640 (" + formatMoney(addAge <= 12 ? DOG_COST_PUPPY : DOG_COST_ADULT) + ")")
-        );
-      })(),
-      [{ label:"\uD83D\uDC3E Puppy", age:12 }, { label:"\uD83D\uDC15 Adult", age:20 }].map(function(opt){
-        return /*#__PURE__*/React.createElement("button", {
-          key: opt.age, onClick: function(){ setAddAge(opt.age); },
-          style: { background: addAge===opt.age?"#3a2810":"transparent",
-            border:"1px solid "+(addAge===opt.age?"#d4942a":"#4a3a28"),
-            color:addAge===opt.age?"#d4942a":"#8a7055",
-            borderRadius:6,padding:"4px 10px",cursor:"pointer",fontSize:"0.75rem" }
-        }, opt.label, " (", opt.age===12?"12mo":"20mo", ")");
-      }),
       /*#__PURE__*/React.createElement("div", { style: { marginLeft: "auto", display: "flex", gap: 6, alignItems: "center" } },
         ["All","M","F"].map(function(s){
           return /*#__PURE__*/React.createElement("button", {
@@ -15918,95 +15879,104 @@ function App() {
       color: "#a78bfa", borderRadius: 8, padding: "8px 12px",
       cursor: "pointer", fontSize: "0.78rem", fontWeight: "bold", letterSpacing: "0.03em"
     }
-  }, "\uD83E\uDDEA DEV: Force Breed (bypasses heat check)")), tab === "litter" && /*#__PURE__*/React.createElement("div", null,
-    litter.length === 0
+  }, "\uD83E\uDDEA DEV: Force Breed (bypasses heat check)")), tab === "litter" && /*#__PURE__*/React.createElement("div", { style: { position: "relative" } },
+    litter.length === 0 && whelpingLitters.length === 0
       ? /*#__PURE__*/React.createElement("div", { style: { textAlign:"center", color:"#6b5038", padding:"60px 0" } }, "No litter yet \u2014 go to the Breed tab!")
       : /*#__PURE__*/React.createElement(React.Fragment, null,
-          /*#__PURE__*/React.createElement("div", {
-            style: { background:"#2a1e14", border:"1px solid #d4860a", borderRadius:8, padding:"10px 14px", marginBottom:12, fontSize:"0.8rem", color:"#f0c040" }
-          }, "\uD83D\uDC3E Litter of ", litter.length, " \u00B7 ",
-            /*#__PURE__*/React.createElement("span", { style:{color:"#8a7055"} }, (litter[0]||{}).sireBreed, " \xD7 ", (litter[0]||{}).damBreed),
-            " \u00B7 No Whelping Kennel \u2014 select 1 pup to keep"
-          ),
-          /*#__PURE__*/React.createElement("div", { style: { display:"flex", flexWrap:"wrap", gap:10, marginBottom:14, maxHeight:"520px", overflowY:"auto", paddingRight:4 } },
-            litter.map(function(pup) {
+          litter.length > 0 && /*#__PURE__*/React.createElement("div", {
+            style: { background:"#1a1410", border:"1px solid #d4860a", borderRadius:8, padding:"10px 14px", marginBottom:10 }
+          },
+            /*#__PURE__*/React.createElement("div", { style:{ color:"#f0c040", fontWeight:"bold", fontSize:"0.82rem", marginBottom:6 } },
+              "\uD83D\uDC3E Litter \u00B7 ", litter[0].sireBreed, " \xD7 ", litter[0].damBreed, " \u00B7 ", litter.length, " pups \u00B7 No Whelping Kennel \u2014 select 1 to keep"
+            ),
+            litter.map(function(pup){
               var sel = litterSelected.includes(pup.id);
-              return /*#__PURE__*/React.createElement("div", { key: pup.id, style:{ cursor:"pointer" }, onClick: function(){ toggleLitterSelect(pup.id); } },
-                /*#__PURE__*/React.createElement(Card, { animal: pup }),
+              return /*#__PURE__*/React.createElement("div", { key: pup.id,
+                style: { display:"flex", alignItems:"center", gap:8, padding:"5px 8px", marginBottom:3,
+                  background: sel ? "#0a2a15" : "#241a10", borderRadius:6,
+                  border: "1px solid " + (sel ? "#22c55e" : "#2e2218"), cursor:"pointer" },
+                onClick: function(){ setLitterViewPup(pup); }
+              },
+                /*#__PURE__*/React.createElement("span", { style:{ color: sel?"#22c55e":"#c4956a", fontWeight:"bold", fontSize:"0.8rem", minWidth:120 } }, pup.name || (pup.breed + " Pup")),
+                /*#__PURE__*/React.createElement("span", { style:{ color:"#8a7055", fontSize:"0.72rem" } }, pup.breed),
+                /*#__PURE__*/React.createElement("span", { style:{ color: pup.sex==="M"?"#60a5fa":"#f472b6", fontSize:"0.72rem" } }, pup.sex==="M"?"\u2642":"\u2640"),
+                /*#__PURE__*/React.createElement("span", { style:{ color:"#6b5038", fontSize:"0.72rem", marginLeft:"auto" } }, "tap to view"),
                 /*#__PURE__*/React.createElement("div", {
-                  style: { background: sel?"#2a1e14":"#443828", border:"1px solid "+(sel?"#22c55e":"#6b5038"),
-                    color: sel?"#22c55e":"#8a7055", borderRadius:"0 0 8px 8px",
-                    padding:"6px 0", textAlign:"center", fontSize:"0.78rem", fontWeight:"bold", marginTop:-2 }
-                }, sel ? "\u2713 Selected" : "Tap to Select")
+                  style: { background: sel?"#22c55e":"#4a3a28", color: sel?"#000":"#8a7055",
+                    borderRadius:4, padding:"2px 8px", fontSize:"0.7rem", fontWeight:"bold" },
+                  onClick: function(e){ e.stopPropagation(); toggleLitterSelect(pup.id); }
+                }, sel ? "\u2713 Keep" : "Select")
               );
-            })
+            }),
+            /*#__PURE__*/React.createElement("button", {
+              onClick: finalizeLitter,
+              style: { marginTop:8, width:"100%", background:"#0a2a15", border:"2px solid #22c55e", color:"#22c55e",
+                borderRadius:8, padding:"8px 0", fontSize:"0.85rem", fontWeight:"bold", cursor:"pointer" }
+            }, "\u2705 Keep ", litterSelected.length, " \u2014 Rehome rest (", litter.length-litterSelected.length, ")")
           ),
-          /*#__PURE__*/React.createElement("button", {
-            onClick: finalizeLitter,
-            style: { width:"100%", background:"#0a2a15", border:"2px solid #22c55e", color:"#22c55e",
-              borderRadius:8, padding:"10px 0", fontSize:"0.88rem", fontWeight:"bold", cursor:"pointer" }
-          }, "\u2705 Keep ", litterSelected.length, " \u2014 Rehome rest (", litter.length-litterSelected.length, ")")
-      )
-  ),
-
-  tab === "whelping" && /*#__PURE__*/React.createElement("div", null,
-    /*#__PURE__*/React.createElement("div", { style:{ display:"flex", justifyContent:"space-between", alignItems:"center", marginBottom:12 } },
-      /*#__PURE__*/React.createElement("div", { style:{ color:"#e870a0", fontWeight:"bold", fontSize:"1rem" } }, "\uD83C\uDFE5 Whelping Kennel"),
-      !hasWhelpingKennel && /*#__PURE__*/React.createElement("button", {
-        onClick: function(){
-          if (money < WHELPING_COST) { alert("Not enough funds!\nWhelping Kennel costs " + formatMoney(WHELPING_COST) + ", you have " + formatMoney(money) + "."); return; }
-          if (confirm("Purchase Whelping Kennel for " + formatMoney(WHELPING_COST) + "?\nKeep up to 2 pups per litter, house up to 4 litters at once.")) {
-            setHasWhelpingKennel(true);
-            setMoney(function(m){ return m - WHELPING_COST; });
-            setLog(function(lg){ return [{ id:Date.now(), type:"financial", name:"Purchased Whelping Kennel", amount: -WHELPING_COST, date: new Date().toLocaleString() }].concat(_toConsumableArray(lg)); });
-          }
-        },
-        style: { background:"#443828", border:"1px solid #e870a0", color:"#e870a0", borderRadius:6, padding:"6px 14px", cursor:"pointer", fontSize:"0.8rem" }
-      }, "\uD83D\uDED2 Purchase Whelping Kennel (placeholder)")
-    ),
-    !hasWhelpingKennel
-      ? /*#__PURE__*/React.createElement("div", { style:{ textAlign:"center", color:"#6b5038", padding:"40px 0", fontSize:"0.85rem" } },
-          "\uD83C\uDFE5 You don't have a Whelping Kennel yet.", /*#__PURE__*/React.createElement("br", null),
-          "Purchase one to house up to 4 litters and keep 2 pups per breeding.")
-      : whelpingLitters.length === 0
-        ? /*#__PURE__*/React.createElement("div", { style:{ textAlign:"center", color:"#6b5038", padding:"40px 0" } }, "Whelping Kennel is empty \u2014 breed a pair to use it.")
-        : whelpingLitters.map(function(lit) {
+          whelpingLitters.map(function(lit){
             var ageDays = Math.floor((Date.now()-lit.bornDate)/(1000*60*60*24));
             var canWean = ageDays >= 3;
             return /*#__PURE__*/React.createElement("div", { key: lit.litterId,
-              style:{ background:"#443828", border:"1px solid #6d28d9", borderRadius:10, padding:14, marginBottom:14 }
+              style: { background:"#1a1410", border:"1px solid #6d28d9", borderRadius:8, padding:"10px 14px", marginBottom:10 }
             },
-              /*#__PURE__*/React.createElement("div", { style:{ display:"flex", justifyContent:"space-between", alignItems:"center", marginBottom:8 } },
-                /*#__PURE__*/React.createElement("div", null,
-                  /*#__PURE__*/React.createElement("span", { style:{color:"#c4956a",fontWeight:"bold"} }, lit.dam.name),
-                  /*#__PURE__*/React.createElement("span", { style:{color:"#8a7055",fontSize:"0.75rem",marginLeft:8} }, lit.dam.breed, " \u00B7 ", lit.pups.length, " pups \u00B7 Day ", ageDays, "/3")
+              /*#__PURE__*/React.createElement("div", { style:{ display:"flex", justifyContent:"space-between", alignItems:"center", marginBottom:6 } },
+                /*#__PURE__*/React.createElement("div", { style:{ color:"#c4956a", fontWeight:"bold", fontSize:"0.82rem" } },
+                  "\uD83C\uDFE5 ", lit.dam.name, " \u00B7 ", lit.pups.length, " pups \u00B7 Day ", ageDays, "/3 \u00B7 ", lit.selectedIds.length, "/2 selected"
                 ),
-                /*#__PURE__*/React.createElement("span", { style:{fontSize:"0.75rem", color: canWean?"#22c55e":"#d4860a"} },
+                /*#__PURE__*/React.createElement("span", { style:{ fontSize:"0.72rem", color: canWean?"#22c55e":"#d4860a" } },
                   canWean ? "\u2705 Ready to wean" : "\u23F3 "+(3-ageDays)+" day(s) left")
               ),
-              /*#__PURE__*/React.createElement("div", { style:{fontSize:"0.72rem",color:"#8a7055",marginBottom:8} }, "Select up to 2 pups \u00B7 ", lit.selectedIds.length, "/2 selected"),
-              /*#__PURE__*/React.createElement("div", { style:{ display:"flex", flexWrap:"wrap", gap:8, marginBottom:10, maxHeight:"520px", overflowY:"auto", paddingRight:4 } },
-                lit.pups.map(function(pup) {
-                  var sel = lit.selectedIds.includes(pup.id);
-                  return /*#__PURE__*/React.createElement("div", { key:pup.id, style:{cursor:"pointer"}, onClick:function(){ toggleWhelpSelect(lit.litterId, pup.id); } },
-                    /*#__PURE__*/React.createElement(Card, { animal:pup }),
-                    /*#__PURE__*/React.createElement("div", {
-                      style:{ background:sel?"#2a1e14":"#443828", border:"1px solid "+(sel?"#22c55e":"#6b5038"),
-                        color:sel?"#22c55e":"#8a7055", borderRadius:"0 0 8px 8px",
-                        padding:"5px 0", textAlign:"center", fontSize:"0.75rem", fontWeight:"bold", marginTop:-2 }
-                    }, sel?"\u2713 Keep":"Tap to Keep")
-                  );
-                })
-              ),
+              lit.pups.map(function(pup){
+                var sel = lit.selectedIds.includes(pup.id);
+                return /*#__PURE__*/React.createElement("div", { key: pup.id,
+                  style: { display:"flex", alignItems:"center", gap:8, padding:"5px 8px", marginBottom:3,
+                    background: sel ? "#1a0a2e" : "#241a10", borderRadius:6,
+                    border: "1px solid " + (sel ? "#7c3aed" : "#2e2218"), cursor:"pointer" },
+                  onClick: function(){ setLitterViewPup(pup); }
+                },
+                  /*#__PURE__*/React.createElement("span", { style:{ color: sel?"#a78bfa":"#c4956a", fontWeight:"bold", fontSize:"0.8rem", minWidth:120 } }, pup.name || (pup.breed + " Pup")),
+                  /*#__PURE__*/React.createElement("span", { style:{ color:"#8a7055", fontSize:"0.72rem" } }, pup.breed),
+                  /*#__PURE__*/React.createElement("span", { style:{ color: pup.sex==="M"?"#60a5fa":"#f472b6", fontSize:"0.72rem" } }, pup.sex==="M"?"\u2642":"\u2640"),
+                  /*#__PURE__*/React.createElement("span", { style:{ color:"#6b5038", fontSize:"0.72rem", marginLeft:"auto" } }, "tap to view"),
+                  /*#__PURE__*/React.createElement("div", {
+                    style: { background: sel?"#7c3aed":"#4a3a28", color: sel?"#fff":"#8a7055",
+                      borderRadius:4, padding:"2px 8px", fontSize:"0.7rem", fontWeight:"bold" },
+                    onClick: function(e){ e.stopPropagation(); toggleWhelpSelect(lit.litterId, pup.id); }
+                  }, sel ? "\u2713 Keep" : "Select")
+                );
+              }),
               canWean && /*#__PURE__*/React.createElement("button", {
                 onClick: function(){ finalizeWhelpingLitter(lit.litterId); },
-                style:{ width:"100%", background:"#443828", border:"2px solid #d4942a", color:"#d4942a",
+                style: { marginTop:8, width:"100%", background:"#1a0a2e", border:"2px solid #d4942a", color:"#d4942a",
                   borderRadius:8, padding:"8px 0", fontSize:"0.85rem", fontWeight:"bold", cursor:"pointer" }
               }, "\uD83C\uDFE0 Wean Litter \u2014 Keep ", lit.selectedIds.length, ", Rehome ", lit.pups.length-lit.selectedIds.length)
             );
-          })
-  ),
+          }),
+          litterViewPup && /*#__PURE__*/React.createElement("div", {
+            style: { position:"fixed", top:0, left:0, right:0, bottom:0, background:"rgba(0,0,0,0.75)",
+              zIndex:200, display:"flex", alignItems:"center", justifyContent:"center" },
+            onClick: function(){ setLitterViewPup(null); }
+          },
+            /*#__PURE__*/React.createElement("div", {
+              style: { background:"#2a1e14", border:"1px solid #4a3a28", borderRadius:12,
+                padding:"10px", maxWidth:380, width:"90%", position:"relative" },
+              onClick: function(e){ e.stopPropagation(); }
+            },
+              /*#__PURE__*/React.createElement("button", {
+                onClick: function(){ setLitterViewPup(null); },
+                style: { position:"absolute", top:8, right:10, background:"transparent", border:"none",
+                  color:"#8a7055", fontSize:"1.2rem", cursor:"pointer", lineHeight:1 }
+              }, "\u2715"),
+              /*#__PURE__*/React.createElement(Card, { animal: litterViewPup })
+            )
+          )
+      )
 
+  ),
+  tab === "whelping" && /*#__PURE__*/React.createElement("div", { style:{ textAlign:"center", color:"#6b5038", padding:"40px 0", fontSize:"0.85rem" } },
+    "Whelping litters have moved to the ", /*#__PURE__*/React.createElement("span", { style:{color:"#d4942a", cursor:"pointer", textDecoration:"underline"}, onClick:function(){ setTab("litter"); } }, "\uD83D\uDC3E Litter"), " tab."
+  ),
   tab === "holding" && /*#__PURE__*/React.createElement("div", null,
     /*#__PURE__*/React.createElement("div", { style:{color:"#22c55e",fontWeight:"bold",fontSize:"1rem",marginBottom:10} }, "\uD83D\uDC3E Temporary Holding"),
     /*#__PURE__*/React.createElement("div", { style:{fontSize:"0.78rem",color:"#8a7055",marginBottom:12} }, "Pups here are aging. Move them to a kennel before they grow up unused!"),
@@ -16238,6 +16208,110 @@ function App() {
     commodities: commodities,
     onClose: function(){ setTab("kennel"); }
   })),
+  showBuyDogs && /*#__PURE__*/React.createElement("div", {
+    style: { position:"fixed", top:0, left:0, right:0, bottom:0, background:"rgba(0,0,0,0.6)",
+      zIndex:150, display:"flex", alignItems:"flex-start", justifyContent:"center", paddingTop:8 },
+    onClick: function(){ setShowBuyDogs(false); }
+  },
+    /*#__PURE__*/React.createElement("div", {
+      style: { background:"#2a1e14", borderTop:"4px solid #d4942a", borderLeft:"2px solid #4a3a28",
+        borderRight:"2px solid #4a3a28", borderBottom:"2px solid #4a3a28",
+        borderRadius:"0 0 10px 10px", padding:"10px 14px", width:"calc(100% - 32px)", maxWidth:680,
+        display:"flex", flexDirection:"column", gap:8 },
+      onClick: function(e){ e.stopPropagation(); }
+    },
+      /*#__PURE__*/React.createElement("div", { style:{ display:"flex", alignItems:"center", justifyContent:"space-between", marginBottom:2 } },
+        /*#__PURE__*/React.createElement("span", { style:{ color:"#d4942a", fontWeight:"bold", fontSize:"0.85rem" } }, "\uD83D\uDED2 Buy Dogs"),
+        /*#__PURE__*/React.createElement("button", {
+          onClick: function(){ setShowBuyDogs(false); },
+          style:{ background:"transparent", border:"none", color:"#8a7055", fontSize:"1.1rem", cursor:"pointer" }
+        }, "\u2715")
+      ),
+      /*#__PURE__*/React.createElement("div", { style:{ display:"flex", flexWrap:"wrap", gap:8, alignItems:"center" } },
+        (function(){
+          var groupMap = breeds.slice().sort(function(a,b){
+            return (a.group||"Other").localeCompare(b.group||"Other") || a.name.localeCompare(b.name);
+          }).reduce(function(acc,b){ var g=b.group||"Other"; if(!acc[g])acc[g]=[]; acc[g].push(b); return acc; }, {});
+          var groupNames = Object.keys(groupMap).sort();
+          var breedsInGroup = buyGroup ? (groupMap[buyGroup]||[]) : [];
+          var selDropStyle = { background:"#1a1410", border:"1px solid #4a3a28", color:"#f0e6d3", borderRadius:6, padding:"5px 8px", fontSize:"0.8rem" };
+          return /*#__PURE__*/React.createElement(React.Fragment, null,
+            /*#__PURE__*/React.createElement("select", {
+              value: buyGroup,
+              onChange: function(e){ setBuyGroup(e.target.value); setBuyBreed(""); },
+              style: Object.assign({}, selDropStyle, { minWidth:130 })
+            },
+              /*#__PURE__*/React.createElement("option", { value:"" }, "\u2014 Group \u2014"),
+              groupNames.map(function(g){ return /*#__PURE__*/React.createElement("option", { key:g, value:g }, g); })
+            ),
+            /*#__PURE__*/React.createElement("select", {
+              value: buyBreed,
+              onChange: function(e){ setBuyBreed(e.target.value); },
+              disabled: !buyGroup,
+              style: Object.assign({}, selDropStyle, { minWidth:170, opacity: buyGroup?1:0.4 })
+            },
+              /*#__PURE__*/React.createElement("option", { value:"" }, buyGroup ? "\u2014 Breed \u2014" : "\u2014 Pick group first \u2014"),
+              breedsInGroup.map(function(b){ return /*#__PURE__*/React.createElement("option", { key:b.name, value:b.name }, b.name); })
+            ),
+            [{ label:"\uD83D\uDC3E Puppy", age:12 }, { label:"\uD83D\uDC15 Adult", age:20 }].map(function(opt){
+              return /*#__PURE__*/React.createElement("button", {
+                key: opt.age, onClick: function(){ setAddAge(opt.age); },
+                style: { background: addAge===opt.age?"#3a2810":"transparent",
+                  border:"1px solid "+(addAge===opt.age?"#d4942a":"#4a3a28"),
+                  color:addAge===opt.age?"#d4942a":"#8a7055",
+                  borderRadius:6, padding:"4px 9px", cursor:"pointer", fontSize:"0.75rem" }
+              }, opt.label);
+            }),
+            /*#__PURE__*/React.createElement("button", {
+              onClick: function(){ if(buyBreed) addAnimal(buyBreed,"M",addAge); },
+              disabled: !buyBreed,
+              style: { background:buyBreed?"#3a2810":"#2e2418", border:"1px solid "+(buyBreed?"#d4942a":"#4a3a28"),
+                color:buyBreed?"#e8a020":"#6b5038", borderRadius:6, padding:"5px 10px",
+                cursor:buyBreed?"pointer":"not-allowed", fontSize:"0.8rem" }
+            }, "+ Male \u2642 (" + formatMoney(addAge<=12?DOG_COST_PUPPY:DOG_COST_ADULT) + ")"),
+            /*#__PURE__*/React.createElement("button", {
+              onClick: function(){ if(buyBreed) addAnimal(buyBreed,"F",addAge); },
+              disabled: !buyBreed,
+              style: { background:buyBreed?"#442e18":"#2e2418", border:"1px solid "+(buyBreed?"#c4956a":"#4a3a28"),
+                color:buyBreed?"#c4956a":"#6b5038", borderRadius:6, padding:"5px 10px",
+                cursor:buyBreed?"pointer":"not-allowed", fontSize:"0.8rem" }
+            }, "+ Female \u2640 (" + formatMoney(addAge<=12?DOG_COST_PUPPY:DOG_COST_ADULT) + ")")
+          );
+        })()
+      )
+    )
+  ),
+  pendingBoughtDog && /*#__PURE__*/React.createElement("div", {
+    style: { position:"fixed", top:0, left:0, right:0, bottom:0, background:"rgba(0,0,0,0.8)",
+      zIndex:160, display:"flex", alignItems:"center", justifyContent:"center" }
+  },
+    /*#__PURE__*/React.createElement("div", {
+      style: { background:"#2a1e14", border:"1px solid #d4942a", borderRadius:12,
+        padding:"14px", maxWidth:400, width:"92%", display:"flex", flexDirection:"column", gap:10 }
+    },
+      /*#__PURE__*/React.createElement("div", { style:{ color:"#d4942a", fontWeight:"bold", fontSize:"0.85rem", marginBottom:2 } },
+        "\uD83D\uDED2 Dog Acquired \u2014 Keep or Release?"),
+      /*#__PURE__*/React.createElement("div", { style:{ color:"#8a7055", fontSize:"0.72rem", marginBottom:4 } },
+        "Money already spent. Releasing means this dog goes free \u2014 no refund."),
+      /*#__PURE__*/React.createElement(Card, { animal: pendingBoughtDog }),
+      /*#__PURE__*/React.createElement("div", { style:{ display:"flex", gap:10, marginTop:4 } },
+        /*#__PURE__*/React.createElement("button", {
+          onClick: function(){
+            setAnimals(function(p){ return [].concat(_toConsumableArray(p), [pendingBoughtDog]); });
+            setPendingBoughtDog(null);
+            setShowBuyDogs(false);
+          },
+          style: { flex:1, background:"#0a2a15", border:"2px solid #22c55e", color:"#22c55e",
+            borderRadius:8, padding:"9px 0", fontSize:"0.85rem", fontWeight:"bold", cursor:"pointer" }
+        }, "\u2705 Keep"),
+        /*#__PURE__*/React.createElement("button", {
+          onClick: function(){ setPendingBoughtDog(null); },
+          style: { flex:1, background:"#2a0a0a", border:"2px solid #ef4444", color:"#ef4444",
+            borderRadius:8, padding:"9px 0", fontSize:"0.85rem", fontWeight:"bold", cursor:"pointer" }
+        }, "\uD83D\uDEAA Release (no refund)")
+      )
+    )
+  ),
   showShearing && /*#__PURE__*/React.createElement(ShearingModal, {
     onClose: function(){ setShowShearing(false); },
     ownedLivestock: ownedLivestock,
