@@ -15970,7 +15970,24 @@ function App() {
       color: "#a78bfa", borderRadius: 8, padding: "8px 12px",
       cursor: "pointer", fontSize: "0.78rem", fontWeight: "bold", letterSpacing: "0.03em"
     }
-  }, "\uD83E\uDDEA DEV: Force Breed (bypasses heat check)")), tab === "litter" && /*#__PURE__*/React.createElement("div", { style: { position: "relative" } },
+  }, "\uD83E\uDDEA DEV: Force Breed (bypasses heat check)"),
+  /*#__PURE__*/React.createElement("button", {
+    onClick: function() {
+      var key = "breedingSim_lastTick";
+      var current = parseInt(localStorage.getItem(key) || "0");
+      var oneDayMs = 24 * 60 * 60 * 1000;
+      var newTick = current > 0 ? current - oneDayMs : Date.now() - oneDayMs;
+      localStorage.setItem(key, newTick.toString());
+      location.reload();
+    },
+    title: "DEV MODE: Forces one game day to pass and reloads",
+    style: {
+      width: "100%", marginTop: 4,
+      background: "#0a1a0a", border: "2px dashed #22c55e",
+      color: "#4ade80", borderRadius: 8, padding: "8px 12px",
+      cursor: "pointer", fontSize: "0.78rem", fontWeight: "bold", letterSpacing: "0.03em"
+    }
+  }, "\uD83D\uDCC5 DEV: Force +1 Day (ages dogs & litters)")), tab === "litter" && /*#__PURE__*/React.createElement("div", { style: { position: "relative" } },
     litter.length === 0 && whelpingLitters.length === 0
       ? /*#__PURE__*/React.createElement("div", { style: { textAlign:"center", color:"#6b5038", padding:"60px 0" } }, "No litter yet \u2014 go to the Breed tab!")
       : /*#__PURE__*/React.createElement(React.Fragment, null,
