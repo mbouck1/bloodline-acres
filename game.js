@@ -406,9 +406,9 @@ function breedGenomes(g1, g2) {
     mutations.push({ loc:"E", type:"spontaneous", desc:"Spontaneous pigment mutation — unexpected coat color expression" });
   }
   // Merle throwback (1.5% if either parent carries M locus alleles)
-  var sireM = sire && sire.genome && sire.genome.coat && sire.genome.coat.M;
-  var damM  = dam  && dam.genome  && dam.genome.coat  && dam.genome.coat.M;
-  if ((sireM || damM) && Math.random() < 0.015) {
+  var g1M = g1 && g1.coat && g1.coat.M;
+  var g2M = g2 && g2.coat && g2.coat.M;
+  if ((g1M || g2M) && Math.random() < 0.015) {
     mutations.push({ loc:"M", type:"throwback", desc:"Merle throwback — ancestral merle pattern re-expressed" });
   }
   // White/extreme piebald throwback (1%)
