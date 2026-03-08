@@ -15563,7 +15563,7 @@ function App() {
     onClick: function onClick() {
       setShowBuyDogs(function(v){ return !v; });
     }
-  }, "\uD83D\uDED2 Buy Dogs"), /*#__PURE__*/React.createElement("button", {
+  }, "\uD83D\uDED2 Buy Dogs"), tab !== "kennel" && /*#__PURE__*/React.createElement("button", {
     style: { background: tab === "kennel" && kennelOpen ? "#3a2810" : "transparent",
       border: "1px solid " + (tab === "kennel" && kennelOpen ? "#d4942a" : "transparent"),
       borderBottom: tab === "kennel" && kennelOpen ? "2px solid #d4942a" : "2px solid transparent",
