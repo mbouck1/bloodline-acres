@@ -218,6 +218,308 @@ var _React = React,
   useEffect = _React.useEffect,
   useRef = _React.useRef;
 
+// ── GENETICS ENGINE ───────────────────────────────────────────
+// E→K→A→B→D hierarchy — Mira's spec, built by Claude
+
+// ── LOCUS METADATA (used by DNA panel UI) ────────────────────
+var COAT_LOCI = {
+  E:  { name: "Extension (MC1R) — Dark pigment switch" },
+  K:  { name: "Dominant Black (CBD103) — Coverage" },
+  A:  { name: "Agouti (ASIP) — Pattern generator" },
+  B:  { name: "Brown (TYRP1) — Black vs brown" },
+  D:  { name: "Dilute (MLPH) — Color intensity" },
+  M:  { name: "Merle (PMEL) — Merle patterning" },
+  S:  { name: "Spotting (MITF) — White pattern" },
+  T:  { name: "Ticking — Roan/ticked overlay" },
+  H:  { name: "Harlequin (PSMB7) — Harlequin" },
+  I:  { name: "Intensity — Red/tan depth" },
+  As: { name: "Saddle Tan (RALY) — Saddle modifier" },
+  L:  { name: "Length (FGF5) — Coat length" },
+  W:  { name: "Wire (RSPO2) — Wire/furnishings" },
+  Cu: { name: "Curl (KRT71) — Coat curl" }
+};
+
+var HEALTH_LOCI = {
+  HipQ:  { name: "Hip Quality" },
+  EyeQ:  { name: "Eye Health" },
+  HeartQ:{ name: "Cardiac Health" },
+  JointQ:{ name: "Joint/Orthopedic" },
+  MDR1:  { name: "MDR1 Drug Sensitivity" },
+  PRA:   { name: "Progressive Retinal Atrophy" },
+  DM:    { name: "Degenerative Myelopathy" },
+  vWD:   { name: "von Willebrand Disease" }
+};
+
+var PERF_QTLS = ["DRIVE","INTEL","NERVE","SPEED","MUSCLE"];
+
+// Pick one allele from a parent's diploid pair (50/50)
+function punnett(a0, a1) {
+  return Math.random() < 0.5 ? a0 : a1;
+}
+
+// Pick a weighted-random allele from a frequency table [["B",0.8],["b",0.2]]
+function pickWeighted(freqArr) {
+  var r = Math.random(), sum = 0;
+  for (var i = 0; i < freqArr.length; i++) {
+    sum += freqArr[i][1];
+    if (r <= sum) return freqArr[i][0];
+  }
+  return freqArr[freqArr.length - 1][0];
+}
+
+// Sample a diploid pair [allele1, allele2] from a frequency table
+function sampleDiploid(freqArr) {
+  return [pickWeighted(freqArr), pickWeighted(freqArr)];
+}
+
+// Generate a fresh genome for a new animal from breed profile frequencies
+function generateGenome(breed) {
+  var b = assignGeneticProfile(breed);
+  var coat = {};
+  Object.keys(b.coatFreqs).forEach(function(loc) {
+    coat[loc] = sampleDiploid(b.coatFreqs[loc]);
+  });
+  var health = {};
+  Object.keys(b.healthFreqs).forEach(function(loc) {
+    health[loc] = sampleDiploid(b.healthFreqs[loc]);
+  });
+  var perf = {};
+  PERF_QTLS.forEach(function(q) {
+    var avg = b.perfAvg[q] || 3;
+    var v1 = Math.max(1, Math.min(5, avg + Math.round((Math.random()-0.5)*2)));
+    var v2 = Math.max(1, Math.min(5, avg + Math.round((Math.random()-0.5)*2)));
+    perf[q] = [v1, v2];
+  });
+  return { coat: coat, health: health, perf: perf, mutations: [] };
+}
+
+// Breed two genomes — real Punnett inheritance, one allele per parent per locus
+function breedGenomes(g1, g2) {
+  var coat = {};
+  var coatLoci = Object.keys(Object.assign({}, g1.coat, g2.coat));
+  coatLoci.forEach(function(loc) {
+    var a = g1.coat[loc] || ["m","m"];
+    var b = g2.coat[loc] || ["m","m"];
+    coat[loc] = [punnett(a[0], a[1]), punnett(b[0], b[1])];
+  });
+  var health = {};
+  var healthLoci = Object.keys(Object.assign({}, g1.health, g2.health));
+  healthLoci.forEach(function(loc) {
+    var a = g1.health[loc] || ["N","N"];
+    var b = g2.health[loc] || ["N","N"];
+    health[loc] = [punnett(a[0], a[1]), punnett(b[0], b[1])];
+  });
+  var perf = {};
+  PERF_QTLS.forEach(function(q) {
+    var a = g1.perf[q] || [3,3];
+    var b = g2.perf[q] || [3,3];
+    var v1 = punnett(a[0], a[1]);
+    var v2 = punnett(b[0], b[1]);
+    // 10% chance of ±1 random mutation per allele
+    perf[q] = [
+      Math.max(1, Math.min(5, v1 + (Math.random()<0.1 ? (Math.random()<0.5?1:-1) : 0))),
+      Math.max(1, Math.min(5, v2 + (Math.random()<0.1 ? (Math.random()<0.5?1:-1) : 0)))
+    ];
+  });
+  var mutations = [];
+  if (Math.random() < 0.02) {
+    mutations.push({ loc:"E", type:"spontaneous", desc:"Spontaneous pigment mutation" });
+  }
+  return { coat:coat, health:health, perf:perf, mutations:mutations };
+}
+
+// ── PHENOTYPE — E→K→A→B→D ────────────────────────────────────
+function interpretColor(genome) {
+  var c = genome.coat;
+  if (!c || !c.E) return "Unknown";
+
+  var ee     = c.E[0]==="e" && c.E[1]==="e";
+  var hasKB  = c.K && (c.K[0]==="KB" || c.K[1]==="KB");
+  var kbrHet = c.K && (c.K[0]==="kbr" || c.K[1]==="kbr") && !hasKB;
+  var brown  = c.B && c.B[0]==="b" && c.B[1]==="b";
+  var dilute = c.D && c.D[0]==="d" && c.D[1]==="d";
+  var merle  = c.M && (c.M[0]==="M" || c.M[1]==="M");
+  var dblM   = c.M && c.M[0]==="M" && c.M[1]==="M";
+  var harl   = c.H && (c.H[0]==="H" || c.H[1]==="H") && merle;
+
+  function eumelanin() {
+    if (brown && dilute) return "Isabella";
+    if (brown) return "Chocolate";
+    if (dilute) return "Blue";
+    return "Black";
+  }
+
+  var parts = [];
+
+  // STEP 1: E — recessive red overrides all
+  if (ee) {
+    var intensity = c.I && c.I[0]==="i" && c.I[1]==="i";
+    parts.push(intensity ? "Cream" : dilute ? "Yellow" : "Red/Yellow");
+    if (merle) parts.push(dblM ? "Double Merle \u26A0\uFE0F" : "Merle");
+    return parts.join(" \xB7 ");
+  }
+
+  // STEP 2: K — dominant black skips A
+  if (hasKB) {
+    parts.push(kbrHet ? "Brindle" : eumelanin());
+    if (merle) parts.push(dblM ? "Double Merle \u26A0\uFE0F" : "Merle");
+    if (harl) parts.push("Harlequin");
+    return parts.join(" \xB7 ");
+  }
+
+  // STEP 3: A — pattern
+  var a1 = c.A ? c.A[0] : "at";
+  var saddle = c.As && (c.As[0]==="N" || c.As[1]==="N") && a1==="at";
+  var base   = eumelanin();
+
+  if (kbrHet) {
+    parts.push("Brindle");
+  } else if (a1==="Ay") {
+    parts.push(dilute ? "Fawn" : "Sable/Fawn");
+  } else if (a1==="aw") {
+    parts.push("Wolf Sable");
+  } else if (a1==="at") {
+    parts.push(saddle ? base+" & Tan (Saddle)" : base+" & Tan");
+  } else {
+    parts.push(base); // aa recessive black
+  }
+
+  // Merle/harl overlay
+  if (merle) parts.push(dblM ? "Double Merle \u26A0\uFE0F" : "Merle");
+  if (harl) parts.push("Harlequin");
+
+  // White spotting
+  if (c.S) {
+    var s0=c.S[0],s1=c.S[1];
+    if (s0==="sw"||s1==="sw") parts.push("Mostly White");
+    else if (s0==="sp"||s1==="sp") parts.push("Piebald");
+  }
+  if (c.T) {
+    var t0=c.T[0],t1=c.T[1];
+    if (t0==="TR"||t1==="TR") parts.push("Roan");
+    else if (t0==="T"||t1==="T") parts.push("Ticked");
+  }
+
+  return parts.join(" \xB7 ") || "Unknown";
+}
+
+// ── HEALTH SCORE ──────────────────────────────────────────────
+function calcHealthScore(genome) {
+  var h = genome.health;
+  var score = 100;
+  var issues = [];
+  ["HipQ","EyeQ","HeartQ","JointQ"].forEach(function(loc) {
+    var al = h[loc];
+    if (!al) return;
+    if (al[0]==="g"&&al[1]==="g") { score-=20; issues.push(loc+" Affected"); }
+    else if (al[0]==="g"||al[1]==="g") score-=5;
+  });
+  ["MDR1","PRA","DM","vWD"].forEach(function(loc) {
+    var al = h[loc];
+    if (!al) return;
+    if (al[0]==="n"&&al[1]==="n") { score-=15; issues.push(loc+" Affected"); }
+    else if (al[0]==="n"||al[1]==="n") score-=3;
+  });
+  var m = genome.coat.M;
+  if (m && m[0]==="M" && m[1]==="M") { score-=25; issues.push("Double Merle"); }
+  return { score: Math.max(0, score), issues: issues };
+}
+
+// ── PERFORMANCE SCORE ─────────────────────────────────────────
+function calcPerfScore(genome) {
+  var p = genome.perf;
+  var total = 0, count = 0;
+  PERF_QTLS.forEach(function(q) {
+    var v = p[q];
+    if (v) { total += (v[0]+v[1])/2; count++; }
+  });
+  return count ? Math.round((total/count)*20) : 60;
+}
+
+// ── LETHAL COMBO CHECK ────────────────────────────────────────
+function checkLethals(genome) {
+  var w = [];
+  var m = genome.coat.M;
+  if (m && m[0]==="M" && m[1]==="M") w.push("Double Merle: High risk of deafness/blindness");
+  var h = genome.coat.H;
+  if (h && (h[0]==="H"||h[1]==="H") && m && m[0]==="M" && m[1]==="M")
+    w.push("Harlequin + Double Merle: Embryonic lethal risk");
+  return w;
+}
+
+// ── VIN STRING BUILDER ────────────────────────────────────────
+function buildVIN(genome) {
+  var c = genome.coat;
+  if (!c || !c.E) return "BA-??????";
+  var eC = (c.E[0]==="e"&&c.E[1]==="e")?"R":(c.E[0]==="Em"||c.E[1]==="Em")?"M":"E";
+  var kC = !c.K?"A":(c.K[0]==="KB"||c.K[1]==="KB")?"K":(c.K[0]==="kbr"||c.K[1]==="kbr")?"Br":"A";
+  var aC = !c.A?"?":c.A[0]==="Ay"?"Fy":c.A[0]==="aw"?"Wf":c.A[0]==="at"?"Tp":"Bk";
+  var bC = !c.B?"B":(c.B[0]==="b"&&c.B[1]==="b")?"bb":(c.B[0]==="b"||c.B[1]==="b")?"Bb":"BB";
+  var dC = !c.D?"D":(c.D[0]==="d"&&c.D[1]==="d")?"dd":(c.D[0]==="d"||c.D[1]==="d")?"Dd":"DD";
+  var mC = !c.M||!(c.M[0]==="M"||c.M[1]==="M")?"":c.M[0]==="M"&&c.M[1]==="M"?"\xB7MM":"\xB7Mm";
+  return "BA-"+eC+kC+aC+bC+dC+mC;
+}
+
+// ── LOCUS DESCRIPTIONS (DNA panel tooltips) ──────────────────
+function getLocusDesc(loci, loc, al) {
+  if (!al) return "\u2014";
+  var a0=al[0], a1=al[1];
+  if (loc==="E") {
+    if (a0==="e"&&a1==="e") return "\u26A0\uFE0F Recessive Red \u2014 no dark pigment";
+    if (a0==="Em"||a1==="Em") return "Black mask expressed";
+    if (a0==="e"||a1==="e") return "Carrier of recessive red";
+    return "Normal dark pigment";
+  }
+  if (loc==="K") {
+    if (a0==="KB"||a1==="KB") return "Dominant Black \u2014 A locus suppressed";
+    if (a0==="kbr"||a1==="kbr") return "Brindle \u2014 stripes on tan areas";
+    return "Wild type \u2014 A locus expressed";
+  }
+  if (loc==="A") {
+    if (a0==="Ay") return "Fawn/Sable \u2014 tan with black-tipped hairs";
+    if (a0==="aw") return "Wolf Sable \u2014 banded agouti hairs";
+    if (a0==="at") return "Tan Points \u2014 black with tan markings";
+    if (a0==="a"&&a1==="a") return "Recessive Black \u2014 solid black (rare)";
+    return "Mixed A-locus";
+  }
+  if (loc==="B") {
+    if (a0==="b"&&a1==="b") return "Chocolate/Liver \u2014 brown pigment";
+    if (a0==="b"||a1==="b") return "Carrier of brown";
+    return "Black pigment";
+  }
+  if (loc==="D") {
+    if (a0==="d"&&a1==="d") return "\u26A0\uFE0F Dilute \u2014 blue or isabella";
+    if (a0==="d"||a1==="d") return "Carrier of dilute";
+    return "Normal color intensity";
+  }
+  if (loc==="M") {
+    if (a0==="M"&&a1==="M") return "\u26A0\uFE0F Double Merle \u2014 deafness/blindness risk";
+    if (a0==="M"||a1==="M") return "Merle \u2014 mottled pattern";
+    return "Non-merle";
+  }
+  if (loc==="S") {
+    if (a0==="sw"||a1==="sw") return "Extreme white spotting";
+    if (a0==="sp"||a1==="sp") return "Piebald spotting";
+    if (a0==="S"&&a1==="S") return "Solid \u2014 no white spotting";
+    return "Irish spotting";
+  }
+  if (loc==="MDR1"||loc==="PRA"||loc==="DM"||loc==="vWD") {
+    if (a0==="n"&&a1==="n") return "\u26A0\uFE0F Affected \u2014 two copies of mutation";
+    if (a0==="n"||a1==="n") return "Carrier \u2014 one copy, not affected";
+    return "Clear \u2014 no mutation";
+  }
+  if (loc==="HipQ"||loc==="EyeQ"||loc==="HeartQ"||loc==="JointQ") {
+    if (a0==="g"&&a1==="g") return "\u26A0\uFE0F Poor \u2014 high risk";
+    if (a0==="g"||a1==="g") return "Moderate genetic risk";
+    return "Good \u2014 low genetic risk";
+  }
+  return a0+"/"+a1;
+}
+
+var getDesc = function(loci, loc, al) { return getLocusDesc(loci, loc, al); };
+
+// ── END GENETICS ENGINE ───────────────────────────────────────
+
 // ── LOCI DEFINITIONS ─────────────────────────────────────────
 var idCtr = 1;
 function mkId() {
@@ -12416,11 +12718,7 @@ function DNAModal(_ref5) {
   var _animal$mutations;
   var animal = _ref5.animal,
     onClose = _ref5.onClose;
-  var getDesc = function getDesc(loci, loc, al) {
-    var _loci$loc, _loci$loc2;
-    if (!al) return "—";
-    return ((_loci$loc = loci[loc]) === null || _loci$loc === void 0 || (_loci$loc = _loci$loc.desc) === null || _loci$loc === void 0 ? void 0 : _loci$loc["".concat(al[0], "/").concat(al[1])]) || ((_loci$loc2 = loci[loc]) === null || _loci$loc2 === void 0 || (_loci$loc2 = _loci$loc2.desc) === null || _loci$loc2 === void 0 ? void 0 : _loci$loc2["".concat(al[1], "/").concat(al[0])]) || "".concat(al[0], "/").concat(al[1]);
-  };
+  // Use global genetics engine getDesc (defined above App)
   return /*#__PURE__*/React.createElement("div", {
     onClick: onClose,
     style: {
