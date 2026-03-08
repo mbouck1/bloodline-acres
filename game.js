@@ -938,7 +938,33 @@ function buildHealthFreqsFromFlags(flags, base) {
 }
 
 function assignGeneticProfile(breed) {
-  if (breed.coatFreqs) return breed; // already has profiles, skip
+  // If coatFreqs already exists (all breeds after data pass), still build healthFreqs/perfAvg
+  if (breed.coatFreqs) {
+    if (breed.healthFreqs) return breed; // fully built already, nothing to do
+    var group2 = (breed.group || "").toLowerCase();
+    // Base health defaults by group
+    var h2 = {
+      HipQ:  [["G", group2.includes("working")||group2.includes("herding") ? 0.80 : group2.includes("toy") ? 0.75 : 0.85], ["g", group2.includes("working")||group2.includes("herding") ? 0.20 : group2.includes("toy") ? 0.25 : 0.15]],
+      EyeQ:  [["G", group2.includes("sporting") ? 0.80 : 0.88], ["g", group2.includes("sporting") ? 0.20 : 0.12]],
+      HeartQ:[["G", group2.includes("toy") ? 0.80 : 0.92], ["g", group2.includes("toy") ? 0.20 : 0.08]],
+      JointQ:[["G", group2.includes("toy") ? 0.75 : 0.85], ["g", group2.includes("toy") ? 0.25 : 0.15]],
+      MDR1:  [["N", group2.includes("herding") ? 0.70 : 0.95], ["m", group2.includes("herding") ? 0.30 : 0.05]],
+      PRA:   [["N", 0.90], ["n", 0.10]],
+      DM:    [["N", 0.90], ["n", 0.10]],
+      vWD:   [["N", 0.95], ["n", 0.05]]
+    };
+    // Perf defaults by group
+    var p2 = { DRIVE:3, INTEL:3, NERVE:3, SPEED:3, MUSCLE:3 };
+    if (group2.includes("herding"))     { p2 = { DRIVE:5, INTEL:5, NERVE:3, SPEED:4, MUSCLE:2 }; }
+    else if (group2.includes("working")){ p2 = { DRIVE:4, INTEL:4, NERVE:4, SPEED:3, MUSCLE:5 }; }
+    else if (group2.includes("hound"))  { p2 = { DRIVE:4, INTEL:2, NERVE:2, SPEED:5, MUSCLE:2 }; }
+    else if (group2.includes("sporting")){ p2 = { DRIVE:4, INTEL:4, NERVE:3, SPEED:4, MUSCLE:3 }; }
+    else if (group2.includes("terrier")){ p2 = { DRIVE:5, INTEL:3, NERVE:5, SPEED:3, MUSCLE:3 }; }
+    else if (group2.includes("toy"))    { p2 = { DRIVE:2, INTEL:3, NERVE:3, SPEED:2, MUSCLE:1 }; }
+    // Apply healthFlags overrides
+    h2 = buildHealthFreqsFromFlags(breed.healthFlags || [], h2);
+    return Object.assign({}, breed, { healthFreqs: h2, perfAvg: p2 });
+  }
 
   var name = (breed.name || "").toLowerCase();
   var group = (breed.group || "").toLowerCase();
