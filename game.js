@@ -403,7 +403,51 @@ function interpretColor(genome) {
   return parts.join(" \xB7 ") || "Unknown";
 }
 
-// ── HEALTH SCORE ──────────────────────────────────────────────
+// ── COAT COLOR SWATCH MAP ─────────────────────────────────────
+// Maps the primary color token from interpretColor() to a CSS color for display
+function getCoatSwatch(coatColor) {
+  if (!coatColor) return null;
+  var primary = coatColor.split(" \xB7 ")[0].trim().toLowerCase();
+  var map = {
+    "black":             "#1a1a1a",
+    "blue":              "#6b8ca8",
+    "chocolate":         "#5c3317",
+    "isabella":          "#b5967a",
+    "red/yellow":        "#c8622a",
+    "red":               "#b84a1a",
+    "yellow":            "#d4a843",
+    "cream":             "#f0ddb0",
+    "fawn":              "#d4a060",
+    "sable/fawn":        "#a07838",
+    "sable":             "#a07838",
+    "wolf sable":        "#7a7a5a",
+    "brindle":           "#6b4a28",
+    "black & tan":       "#1a1a1a",
+    "black & tan (saddle)": "#1a1a1a",
+    "blue & tan":        "#4a6878",
+    "blue & tan (saddle)":"#4a6878",
+    "chocolate & tan":   "#5c3317",
+    "chocolate & tan (saddle)":"#5c3317",
+    "isabella & tan":    "#b5967a",
+    "isabella & tan (saddle)":"#b5967a",
+  };
+  var found = map[primary];
+  if (found) return found;
+  // Fallback: partial match
+  if (primary.includes("black"))       return "#1a1a1a";
+  if (primary.includes("blue"))        return "#6b8ca8";
+  if (primary.includes("chocolate"))   return "#5c3317";
+  if (primary.includes("isabella"))    return "#b5967a";
+  if (primary.includes("cream"))       return "#f0ddb0";
+  if (primary.includes("fawn"))        return "#d4a060";
+  if (primary.includes("sable"))       return "#a07838";
+  if (primary.includes("brindle"))     return "#6b4a28";
+  if (primary.includes("red"))         return "#c8622a";
+  if (primary.includes("yellow"))      return "#d4a843";
+  return "#8a7055"; // neutral fallback
+}
+
+
 function calcHealthScore(genome) {
   var h = genome.health;
   var score = 100;
@@ -13867,7 +13911,19 @@ function Card(_ref0) {
     /*#__PURE__*/React.createElement("span", {
       style: { display:"inline-block", background:"#1a1410", border:"1px solid #3a2810",
         borderRadius:4, padding:"3px 10px", fontSize:"0.82rem", color:"#b09070", marginRight:4 }
-    }, animal.coatColor ? animal.coatColor.split(" \xB7 ")[0] : "Unknown"),
+    },
+      (function(){
+        var swatchColor = getCoatSwatch(animal.coatColor);
+        return swatchColor ? /*#__PURE__*/React.createElement(React.Fragment, null,
+          /*#__PURE__*/React.createElement("span", {
+            style: { display:"inline-block", width:10, height:10, borderRadius:"50%",
+              background: swatchColor, border:"1px solid rgba(255,255,255,0.2)",
+              marginRight:5, verticalAlign:"middle", flexShrink:0 }
+          }),
+          animal.coatColor ? animal.coatColor.split(" \xB7 ")[0] : "Unknown"
+        ) : (animal.coatColor ? animal.coatColor.split(" \xB7 ")[0] : "Unknown");
+      })()
+    ),
     animal.coatColor && animal.coatColor.includes(" \xB7 ") && /*#__PURE__*/React.createElement("span", {
       style: { display:"inline-block", background:"#1a1410", border:"1px solid #4a3a28",
         borderRadius:4, padding:"3px 10px", fontSize:"0.82rem", color:"#f0e6d3" }
