@@ -578,17 +578,23 @@ function calcAdultSizePotential(sire, dam) {
 
 // Get current weight/height for display based on age
 // Guards against bad saved height data (>40" is impossible for a dog)
+// If sizeLocked is true, skip growth math — return stored final values directly
 function getCurrentSize(animal) {
   var size = animal.size || "M";
   var std = SIZE_STANDARDS[size];
   var adultW = animal.adultWeight || animal.sizeAvg || std.weightAvg;
   var adultH = (animal.adultHeight && animal.adultHeight <= 40) ? animal.adultHeight : std.heightAvg;
+  // Short-circuit: already locked at final size
+  if (animal.sizeLocked) {
+    return { currentW: adultW, currentH: adultH, adultW: adultW, adultH: adultH, mature: true };
+  }
   var age = animal.ageMonths || 0;
+  var matureAgeW = ({ XS:10, S:12, M:15, L:18, XL:24 }[size] || 15);
   var wFrac = growthFraction(age, size, "weight");
   var hFrac = growthFraction(age, size, "height");
   var currentW = Math.max(1, Math.round(adultW * wFrac));
   var currentH = Math.max(1, Math.round(adultH * hFrac));
-  var mature = age >= ({ XS:10, S:12, M:15, L:18, XL:24 }[size] || 15);
+  var mature = age >= matureAgeW;
   return { currentW: currentW, currentH: currentH, adultW: adultW, adultH: adultH, mature: mature };
 }
 
@@ -14625,7 +14631,7 @@ function App() {
     _useState12 = _slicedToArray(_useState11, 2),
     dam = _useState12[0],
     setDam = _useState12[1];
-  var _useState13 = useState(_savedState ? _savedState.whelpingLitters || [] : []),
+  var _useState13 = useState([]),
     _useState14 = _slicedToArray(_useState13, 2),
     litter = _useState14[0],
     setLitter = _useState14[1];
@@ -14714,11 +14720,11 @@ function App() {
     _useStateWK2 = _slicedToArray(_useStateWK, 2),
     hasWhelpingKennel = _useStateWK2[0],
     setHasWhelpingKennel = _useStateWK2[1];
-  var _useStateWL = useState(_savedState ? _savedState.holdingPups || [] : []),
+  var _useStateWL = useState(_savedState ? _savedState.whelpingLitters || [] : []),
     _useStateWL2 = _slicedToArray(_useStateWL, 2),
     whelpingLitters = _useStateWL2[0],
     setWhelpingLitters = _useStateWL2[1];
-  var _useStateTH = useState(_savedState ? _savedState.ownedLivestock || [] : []),
+  var _useStateTH = useState(_savedState ? _savedState.holdingPups || [] : []),
     _useStateTH2 = _slicedToArray(_useStateTH, 2),
     holdingPups = _useStateTH2[0],
     setHoldingPups = _useStateTH2[1];
@@ -14851,7 +14857,23 @@ function App() {
             })();
             return Object.assign({}, a, studReset, {ageMonths: newAge, retired: true, retireReason: "End of natural life"});
           }
-          return Object.assign({}, a, studReset, {ageMonths: newAge, lastUpdated: now});
+          // Size locking: when a dog first reaches mature age, lock their final size permanently
+          var sizeLockUpdate = {};
+          if (!a.sizeLocked) {
+            var matureThreshold = ({ XS:10, S:12, M:15, L:18, XL:24 }[a.size||"M"] || 15);
+            var wasImmature = (a.ageMonths||0) < matureThreshold;
+            var isNowMature = newAge >= matureThreshold;
+            if (wasImmature && isNowMature) {
+              var tempAnimal = Object.assign({}, a, { ageMonths: newAge });
+              var finalSize = getCurrentSize(tempAnimal);
+              sizeLockUpdate = {
+                adultWeight: finalSize.adultW,
+                adultHeight: finalSize.adultH,
+                sizeLocked: true
+              };
+            }
+          }
+          return Object.assign({}, a, studReset, sizeLockUpdate, {ageMonths: newAge, lastUpdated: now});
         });
       });
 
