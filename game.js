@@ -15781,11 +15781,20 @@ function App() {
 
   kennelOpen && /*#__PURE__*/React.createElement("div", {
     style: {
-      position: "absolute", top: 0, left: 0, right: 0, bottom: 0,
-      background: "#3d2f1e", zIndex: 20, display: "flex", flexDirection: "column",
-      borderRadius: 10, overflow: "hidden", maxHeight: 480
-    }
+      position: "fixed", top: 0, left: 0, right: 0, bottom: 0,
+      background: "rgba(0,0,0,0.6)", zIndex: 50,
+      display: "flex", alignItems: "flex-start", justifyContent: "center", paddingTop: 48
+    },
+    onClick: function(){ setKennelOpen(false); }
   },
+    /*#__PURE__*/React.createElement("div", {
+      style: {
+        background: "#3d2f1e", border: "1px solid #4a3a28", borderRadius: 10,
+        width: 340, maxHeight: "calc(100vh - 80px)", display: "flex", flexDirection: "column",
+        overflow: "hidden", boxShadow: "0 8px 32px rgba(0,0,0,0.6)"
+      },
+      onClick: function(e){ e.stopPropagation(); }
+    },
     /*#__PURE__*/React.createElement("div", {
       style: { background: "#443828", borderBottom: "1px solid #4a3a28", padding: "10px 14px",
         display: "flex", gap: 8, flexWrap: "wrap", alignItems: "center", flexShrink: 0 }
@@ -15857,7 +15866,7 @@ function App() {
           );
         })()
   )
-
+    )
   ), tab === "breed" && /*#__PURE__*/React.createElement("div", {
     style: {
       maxWidth: 800
