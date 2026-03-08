@@ -216,7 +216,11 @@ function _arrayLikeToArray(r, a) {
 var _React = React,
   useState = _React.useState,
   useEffect = _React.useEffect,
-  useRef = _React.useRef;
+  useRef = _React.useRef,
+  createContext = _React.createContext,
+  useContext = _React.useContext;
+
+var AnimalsContext = createContext([]);
 
 // ── GENETICS ENGINE ───────────────────────────────────────────
 // E→K→A→B→D hierarchy — Mira's spec, built by Claude
@@ -2813,6 +2817,204 @@ function BreedPhoto(_ref_bp) {
 }
 // ─────────────────────────────────────────────────────────────────────────────
 // ── ANIMAL CARD ───────────────────────────────────────────────
+// ── PEDIGREE MODAL ────────────────────────────────────────────
+function PedigreeModal(_ref_ped) {
+  var animal = _ref_ped.animal, onClose = _ref_ped.onClose;
+  var allAnimals = useContext(AnimalsContext);
+
+  // Build a lookup map by id
+  var lookup = {};
+  allAnimals.forEach(function(a){ lookup[a.id] = a; });
+
+  // Walk up to 3 generations: returns { self, sire, dam, ss, sd, ds, dd, sss, ssd, sds, sdd, dss, dsd, dds, ddd }
+  function getAnc(id, depth) {
+    if (!id || depth > 3) return null;
+    var a = lookup[id];
+    if (!a) return { id: id, name: "Unknown", breed: "–", sex: "M", unknown: true };
+    return a;
+  }
+
+  var self = animal;
+  var sire = getAnc(self.sireId, 1);
+  var dam  = getAnc(self.damId,  1);
+  var ss   = sire && !sire.unknown ? getAnc(sire.sireId, 2) : null;
+  var sd   = sire && !sire.unknown ? getAnc(sire.damId,  2) : null;
+  var ds   = dam  && !dam.unknown  ? getAnc(dam.sireId,  2) : null;
+  var dd   = dam  && !dam.unknown  ? getAnc(dam.damId,   2) : null;
+  var sss  = ss   && !ss.unknown   ? getAnc(ss.sireId,   3) : null;
+  var ssd  = ss   && !ss.unknown   ? getAnc(ss.damId,    3) : null;
+  var sds  = sd   && !sd.unknown   ? getAnc(sd.sireId,   3) : null;
+  var sdd  = sd   && !sd.unknown   ? getAnc(sd.damId,    3) : null;
+  var dss  = ds   && !ds.unknown   ? getAnc(ds.sireId,   3) : null;
+  var dsd  = ds   && !ds.unknown   ? getAnc(ds.damId,    3) : null;
+  var dds  = dd   && !dd.unknown   ? getAnc(dd.sireId,   3) : null;
+  var ddd  = dd   && !dd.unknown   ? getAnc(dd.damId,    3) : null;
+
+  var hasAnyLineage = sire || dam;
+
+  // Mini ancestor card — compact but shows key stats
+  function AncCard(props) {
+    var a = props.a, gen = props.gen;
+    if (!a) return React.createElement("div", {
+      style: { background:"#1a1208", border:"1px dashed #3a2810", borderRadius:8,
+        padding:"8px 10px", minHeight:60, display:"flex", alignItems:"center", justifyContent:"center" }
+    }, React.createElement("span", { style:{ color:"#3a2810", fontSize:"0.72rem" } }, "–"));
+
+    if (a.unknown) return React.createElement("div", {
+      style: { background:"#1a1208", border:"1px dashed #3a2810", borderRadius:8,
+        padding:"8px 10px", minHeight:60, display:"flex", alignItems:"center", justifyContent:"center", flexDirection:"column", gap:3 }
+    },
+      React.createElement("span", { style:{ color:"#4a3a28", fontSize:"0.72rem" } }, "Unknown"),
+      React.createElement("span", { style:{ color:"#3a2810", fontSize:"0.65rem" } }, "Not in kennel")
+    );
+
+    var sexColor = a.sex === "M" ? "#60a5fa" : "#f472b6";
+    var sexIcon  = a.sex === "M" ? "♂" : "♀";
+    var effH = applyCoiPenalty(a.healthScore || 0, a.coi || 0);
+    var sz = getCurrentSize(a);
+
+    return React.createElement("div", {
+      style: { background:"#2a1e14", border:"1px solid #4a3a28", borderRadius:8,
+        padding:"8px 10px", fontSize:"0.75rem" }
+    },
+      // Name + sex
+      React.createElement("div", { style:{ display:"flex", justifyContent:"space-between", alignItems:"center", marginBottom:4 } },
+        React.createElement("span", { style:{ color:"#f1f5f9", fontWeight:"bold", fontSize:"0.8rem",
+          overflow:"hidden", textOverflow:"ellipsis", whiteSpace:"nowrap", maxWidth:"80%" } }, a.name),
+        React.createElement("span", { style:{ color:sexColor, fontSize:"0.8rem", flexShrink:0 } }, sexIcon)
+      ),
+      // Breed
+      React.createElement("div", { style:{ color:"#b09070", fontSize:"0.7rem", marginBottom:4,
+        overflow:"hidden", textOverflow:"ellipsis", whiteSpace:"nowrap" } }, a.breed),
+      // Stats row
+      React.createElement("div", { style:{ display:"flex", gap:6, flexWrap:"wrap", marginBottom:3 } },
+        React.createElement("span", { style:{ color: healthColor(effH), fontSize:"0.7rem", fontWeight:"bold" } }, "❤️ " + effH),
+        React.createElement("span", { style:{ color:"#c4956a", fontSize:"0.7rem", fontWeight:"bold" } }, "⚡ " + (a.perfScore || 0)),
+        React.createElement("span", { style:{ color: coiColor(a.coi || 0), fontSize:"0.7rem", fontWeight:"bold" } }, "COI " + (a.coi || 0) + "%")
+      ),
+      // Weight + height
+      React.createElement("div", { style:{ display:"flex", gap:8, marginBottom:3 } },
+        React.createElement("span", { style:{ color:"#c4956a", fontSize:"0.68rem" } }, "⚖️ " + sz.currentW + " lbs"),
+        React.createElement("span", { style:{ color:"#c4956a", fontSize:"0.68rem" } }, "📏 " + sz.currentH + "\"")
+      ),
+      // Coat color
+      a.coatColor && React.createElement("div", { style:{ color:"#8a7055", fontSize:"0.65rem", marginBottom:2,
+        overflow:"hidden", textOverflow:"ellipsis", whiteSpace:"nowrap" } }, a.coatColor),
+      // Age
+      React.createElement("div", { style:{ color:"#6b5038", fontSize:"0.65rem" } },
+        a.ageMonths ? (Math.round(a.ageMonths / 12 * 10) / 10) + " yrs" : "–"
+      )
+    );
+  }
+
+  // Generation label header
+  function GenLabel(props) {
+    return React.createElement("div", {
+      style:{ color:"#8a7055", fontSize:"0.72rem", textTransform:"uppercase",
+        letterSpacing:"0.08em", marginBottom:6, paddingBottom:4, borderBottom:"1px solid #2e2218" }
+    }, props.label);
+  }
+
+  return React.createElement("div", {
+    style:{ position:"fixed", top:0, left:0, right:0, bottom:0, background:"rgba(0,0,0,0.88)",
+      zIndex:500, display:"flex", alignItems:"flex-end", justifyContent:"center" },
+    onClick: onClose
+  },
+    React.createElement("div", {
+      style:{ background:"#1a1208", border:"1px solid #6a5238", borderRadius:"14px 14px 0 0",
+        width:"100%", maxWidth:700, height:"78vh", display:"flex", flexDirection:"column",
+        overflow:"hidden", boxShadow:"0 -8px 40px rgba(0,0,0,0.7)" },
+      onClick: function(e){ e.stopPropagation(); }
+    },
+      // Header
+      React.createElement("div", {
+        style:{ display:"flex", alignItems:"center", padding:"12px 16px",
+          borderBottom:"1px solid #2e2218", background:"#241810", flexShrink:0 }
+      },
+        React.createElement("span", { style:{ fontSize:"1rem" } }, "🐾"),
+        React.createElement("div", { style:{ flex:1, marginLeft:10 } },
+          React.createElement("div", { style:{ color:"#f1f5f9", fontWeight:"bold", fontSize:"0.95rem" } },
+            animal.name + " — Pedigree"),
+          React.createElement("div", { style:{ color:"#8a7055", fontSize:"0.75rem" } },
+            animal.breed + " · " + (animal.sex==="M"?"♂ Male":"♀ Female") +
+            (animal.coi ? " · COI " + animal.coi + "%" : ""))
+        ),
+        React.createElement("button", {
+          onClick: onClose,
+          style:{ background:"transparent", border:"1px solid #4a3a28", color:"#b09070",
+            borderRadius:6, padding:"4px 10px", cursor:"pointer", fontSize:"0.8rem" }
+        }, "✕ Close")
+      ),
+
+      // Scrollable body
+      React.createElement("div", {
+        style:{ flex:1, overflowY:"auto", padding:"14px 16px" }
+      },
+        !hasAnyLineage
+          ? React.createElement("div", {
+              style:{ textAlign:"center", color:"#4a3a28", padding:"60px 0", fontSize:"0.85rem" }
+            }, "No lineage on record — this dog was purchased, not bred here.\nBreed your own dogs to build a pedigree.")
+
+          : React.createElement(React.Fragment, null,
+
+            // Generation 1 — Parents
+            React.createElement("div", { style:{ marginBottom:18 } },
+              React.createElement(GenLabel, { label:"Generation 1 — Parents" }),
+              React.createElement("div", { style:{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:10 } },
+                React.createElement("div", null,
+                  React.createElement("div", { style:{ color:"#60a5fa", fontSize:"0.7rem", marginBottom:4, fontWeight:"bold" } }, "♂ Sire"),
+                  React.createElement(AncCard, { a: sire, gen:1 })
+                ),
+                React.createElement("div", null,
+                  React.createElement("div", { style:{ color:"#f472b6", fontSize:"0.7rem", marginBottom:4, fontWeight:"bold" } }, "♀ Dam"),
+                  React.createElement(AncCard, { a: dam, gen:1 })
+                )
+              )
+            ),
+
+            // Generation 2 — Grandparents
+            (ss||sd||ds||dd) && React.createElement("div", { style:{ marginBottom:18 } },
+              React.createElement(GenLabel, { label:"Generation 2 — Grandparents" }),
+              React.createElement("div", { style:{ display:"grid", gridTemplateColumns:"1fr 1fr 1fr 1fr", gap:8 } },
+                React.createElement("div", null,
+                  React.createElement("div", { style:{ color:"#60a5fa", fontSize:"0.65rem", marginBottom:4 } }, "♂ Sire's Sire"),
+                  React.createElement(AncCard, { a: ss, gen:2 })
+                ),
+                React.createElement("div", null,
+                  React.createElement("div", { style:{ color:"#f472b6", fontSize:"0.65rem", marginBottom:4 } }, "♀ Sire's Dam"),
+                  React.createElement(AncCard, { a: sd, gen:2 })
+                ),
+                React.createElement("div", null,
+                  React.createElement("div", { style:{ color:"#60a5fa", fontSize:"0.65rem", marginBottom:4 } }, "♂ Dam's Sire"),
+                  React.createElement(AncCard, { a: ds, gen:2 })
+                ),
+                React.createElement("div", null,
+                  React.createElement("div", { style:{ color:"#f472b6", fontSize:"0.65rem", marginBottom:4 } }, "♀ Dam's Dam"),
+                  React.createElement(AncCard, { a: dd, gen:2 })
+                )
+              )
+            ),
+
+            // Generation 3 — Great-Grandparents
+            (sss||ssd||sds||sdd||dss||dsd||dds||ddd) && React.createElement("div", { style:{ marginBottom:18 } },
+              React.createElement(GenLabel, { label:"Generation 3 — Great-Grandparents" }),
+              React.createElement("div", { style:{ display:"grid", gridTemplateColumns:"repeat(8,1fr)", gap:6 } },
+                [sss,ssd,sds,sdd,dss,dsd,dds,ddd].map(function(anc, i){
+                  var labels = ["♂ SS·S","♀ SS·D","♂ SD·S","♀ SD·D","♂ DS·S","♀ DS·D","♂ DD·S","♀ DD·D"];
+                  var col = (i % 2 === 0) ? "#60a5fa" : "#f472b6";
+                  return React.createElement("div", { key:i },
+                    React.createElement("div", { style:{ color:col, fontSize:"0.6rem", marginBottom:4 } }, labels[i]),
+                    React.createElement(AncCard, { a: anc, gen:3 })
+                  );
+                })
+              )
+            )
+          )
+      )
+    )
+  );
+}
+
 function Card(_ref0) {
   var _animal$healthIssues, _animal$lethalWarning, _animal$mutations2;
   var animal = _ref0.animal,
@@ -2829,6 +3031,10 @@ function Card(_ref0) {
     _useState2 = _slicedToArray(_useState, 2),
     showDNA = _useState2[0],
     setShowDNA = _useState2[1];
+  var _useState_ped = useState(false),
+    _useState_ped2 = _slicedToArray(_useState_ped, 2),
+    showPedigree = _useState_ped2[0],
+    setShowPedigree = _useState_ped2[1];
   var _useState3 = useState(false),
     _useState4 = _slicedToArray(_useState3, 2),
     editing = _useState4[0],
@@ -2842,12 +3048,15 @@ function Card(_ref0) {
     if (nameVal.trim()) onRename && onRename(animal.id, nameVal.trim());
     setEditing(false);
   };
-  return /*#__PURE__*/React.createElement(React.Fragment, null, showDNA && /*#__PURE__*/React.createElement(DNAModal, {
-    animal: animal,
-    onClose: function onClose() {
-      return setShowDNA(false);
-    }
-  }), /*#__PURE__*/React.createElement("div", {
+  return /*#__PURE__*/React.createElement(React.Fragment, null,
+    showDNA && /*#__PURE__*/React.createElement(DNAModal, {
+      animal: animal,
+      onClose: function onClose() { return setShowDNA(false); }
+    }),
+    showPedigree && /*#__PURE__*/React.createElement(PedigreeModal, {
+      animal: animal,
+      onClose: function(){ setShowPedigree(false); }
+    }), /*#__PURE__*/React.createElement("div", {
     onClick: function onClick() {
       return onSelect && onSelect(animal);
     },
@@ -3129,11 +3338,17 @@ function Card(_ref0) {
   /*#__PURE__*/React.createElement("div", {
     onClick: function(e){ e.stopPropagation(); setShowDNA(true); },
     style: { fontFamily: "monospace", fontSize: "0.78rem", color: "#d4942a", background: "#1a1410",
-      borderRadius: 4, padding: "5px 10px", marginBottom: 7, overflow: "hidden",
+      borderRadius: 4, padding: "5px 10px", marginBottom: 4, overflow: "hidden",
       textOverflow: "ellipsis", whiteSpace: "nowrap", fontWeight: "bold", letterSpacing: "0.04em",
       border: "1px solid #3a2810", cursor: "pointer" },
     title: "Click to view Full DNA Panel"
   }, "\uD83E\uDDEC ", animal.vinStr),
+  /*#__PURE__*/React.createElement("button", {
+    onClick: function(e){ e.stopPropagation(); setShowPedigree(true); },
+    style: { width:"100%", background:"#1a1208", border:"1px solid #4a3820", color:"#b09070",
+      borderRadius:4, padding:"5px 0", marginBottom:7, cursor:"pointer",
+      fontSize:"0.78rem", fontWeight:"bold", letterSpacing:"0.03em" }
+  }, "\uD83D\uDC3E Pedigree"),
   (function() {
     if (animal.sex !== "F" || animal.retired) return null;
     var hs = getHeatStatus(animal, Date.now());
@@ -4600,7 +4815,8 @@ function App() {
     };
   };
   var actionModalAnimal = animals.find(function(a){ return a.id === actionModalId; });
-  return /*#__PURE__*/React.createElement("div", {
+  return /*#__PURE__*/React.createElement(AnimalsContext.Provider, { value: animals },
+  /*#__PURE__*/React.createElement("div", {
     style: {
       height: "100vh",
       display: "flex",
@@ -5861,7 +6077,7 @@ showShearing && /*#__PURE__*/React.createElement(ShearingModal, {
         amount: total, date:new Date().toLocaleString() }].concat(lg); });
     }
   })
-));
+  ))); // close LivestockMarket children + outer div + AnimalsContext.Provider
 }
 
 // ── LIVESTOCK MARKET ─────────────────────────────────────────
