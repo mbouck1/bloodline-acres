@@ -15976,7 +15976,7 @@ function App() {
       color: "#a78bfa", borderRadius: 8, padding: "8px 12px",
       cursor: "pointer", fontSize: "0.78rem", fontWeight: "bold", letterSpacing: "0.03em"
     }
-  }, "\uD83E\uDDEA DEV: Force Breed (bypasses heat check)"),
+  }, "\uD83E\uDDEA DEV: Force Breed (bypasses heat check)")),
   /*#__PURE__*/React.createElement("button", {
     onClick: function() {
       var oneDayMs = 24 * 60 * 60 * 1000;
@@ -16016,7 +16016,7 @@ function App() {
       color: "#4ade80", borderRadius: 8, padding: "8px 12px",
       cursor: "pointer", fontSize: "0.78rem", fontWeight: "bold", letterSpacing: "0.03em"
     }
-  }, "\uD83D\uDCC5 DEV: Force +1 Day (ages dogs & litters)")), tab === "litter" && /*#__PURE__*/React.createElement("div", { style: { position: "relative" } },
+  }, "\uD83D\uDCC5 DEV: Force +1 Day (ages dogs & litters)"), tab === "litter" && /*#__PURE__*/React.createElement("div", { style: { position: "relative" } },
     litter.length === 0 && whelpingLitters.length === 0
       ? /*#__PURE__*/React.createElement("div", { style: { textAlign:"center", color:"#6b5038", padding:"60px 0" } }, "No litter yet \u2014 go to the Breed tab!")
       : /*#__PURE__*/React.createElement(React.Fragment, null,
