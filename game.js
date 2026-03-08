@@ -15180,7 +15180,8 @@ function App() {
   };
   var selectAnimal = function selectAnimal(a, forceSelect) {
     var reason = breedingIneligibleReason(a);
-    if (reason && !forceSelect) return; // silently block — card will show why
+    var alreadySelected = (a.sex === "M" ? (sire && sire.id === a.id) : (dam && dam.id === a.id));
+    if (reason && !forceSelect && !alreadySelected) return; // silently block — card will show why
     if (a.sex === "M") setSire(function (p) {
       return (p === null || p === void 0 ? void 0 : p.id) === a.id ? null : a;
     });else setDam(function (p) {
@@ -15756,13 +15757,13 @@ function App() {
             );
           }),
           litterViewPup && /*#__PURE__*/React.createElement("div", {
-            style: { position:"fixed", top:0, left:0, right:0, bottom:0, background:"rgba(0,0,0,0.75)",
-              zIndex:200, display:"flex", alignItems:"center", justifyContent:"center" },
+            style: { position:"absolute", top:0, left:0, right:0, bottom:0, background:"rgba(0,0,0,0.82)",
+              zIndex:200, display:"flex", alignItems:"center", justifyContent:"center", borderRadius:12 },
             onClick: function(){ setLitterViewPup(null); }
           },
             /*#__PURE__*/React.createElement("div", {
-              style: { background:"#2a1e14", border:"1px solid #4a3a28", borderRadius:12,
-                padding:"10px", maxWidth:380, width:"90%", position:"relative" },
+              style: { background:"#2a1e14", border:"1px solid #c4956a", borderRadius:10,
+                padding:"12px", width:"92%", position:"relative" },
               onClick: function(e){ e.stopPropagation(); }
             },
               /*#__PURE__*/React.createElement("button", {
@@ -15782,7 +15783,7 @@ function App() {
     style: {
       position: "absolute", top: 0, left: 0, right: 0, bottom: 0,
       background: "#3d2f1e", zIndex: 20, display: "flex", flexDirection: "column",
-      borderRadius: 10, overflow: "hidden"
+      borderRadius: 10, overflow: "hidden", maxHeight: 480
     }
   },
     /*#__PURE__*/React.createElement("div", {
@@ -16043,11 +16044,11 @@ function App() {
             );
           }),
           litterViewPup && /*#__PURE__*/React.createElement("div", {
-            style: { position:"fixed", top:0, left:0, right:0, bottom:0, background:"rgba(0,0,0,0.75)", zIndex:200, display:"flex", alignItems:"center", justifyContent:"center" },
+            style: { position:"fixed", top:0, left:0, right:0, bottom:0, background:"rgba(0,0,0,0.82)", zIndex:200, display:"flex", alignItems:"center", justifyContent:"center" },
             onClick: function(){ setLitterViewPup(null); }
           },
             /*#__PURE__*/React.createElement("div", {
-              style: { background:"#2a1e14", border:"1px solid #4a3a28", borderRadius:12, padding:"10px", maxWidth:380, width:"90%", position:"relative" },
+              style: { background:"#2a1e14", border:"1px solid #c4956a", borderRadius:10, padding:"12px", maxWidth:360, width:"92%", position:"relative" },
               onClick: function(e){ e.stopPropagation(); }
             },
               /*#__PURE__*/React.createElement("button", {
