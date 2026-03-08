@@ -15790,7 +15790,7 @@ function App() {
     /*#__PURE__*/React.createElement("div", {
       style: {
         background: "#3d2f1e", border: "1px solid #4a3a28", borderRadius: 10,
-        width: 520, maxHeight: "calc(100vh - 80px)", display: "flex", flexDirection: "column",
+        width: 710, maxHeight: "calc(100vh - 80px)", display: "flex", flexDirection: "column",
         overflow: "hidden", boxShadow: "0 8px 32px rgba(0,0,0,0.6)"
       },
       onClick: function(e){ e.stopPropagation(); }
