@@ -222,6 +222,81 @@ var _React = React,
 
 var AnimalsContext = createContext([]);
 
+// ── DRAGGABLE HOOK ────────────────────────────────────────────
+// Returns { pos, dragHandleProps, panelStyle }
+// pos = { x, y } offset from center. null = centered (default).
+// dragHandleProps: spread onto the drag handle element (title bar).
+// panelStyle: spread onto the panel wrapper — overrides position when dragged.
+function useDrag() {
+  var _useState_drag = _slicedToArray(useState(null), 2),
+    pos = _useState_drag[0], setPos = _useState_drag[1];
+  var dragging = useRef(false);
+  var startMouse = useRef({ x:0, y:0 });
+  var startPos = useRef({ x:0, y:0 });
+
+  function onMouseDown(e) {
+    if (e.button !== 0) return;
+    e.preventDefault();
+    dragging.current = true;
+    var cur = pos || { x:0, y:0 };
+    startMouse.current = { x: e.clientX, y: e.clientY };
+    startPos.current = { x: cur.x, y: cur.y };
+    function onMove(ev) {
+      if (!dragging.current) return;
+      setPos({
+        x: startPos.current.x + (ev.clientX - startMouse.current.x),
+        y: startPos.current.y + (ev.clientY - startMouse.current.y)
+      });
+    }
+    function onUp() {
+      dragging.current = false;
+      window.removeEventListener("mousemove", onMove);
+      window.removeEventListener("mouseup", onUp);
+    }
+    window.addEventListener("mousemove", onMove);
+    window.addEventListener("mouseup", onUp);
+  }
+
+  function onTouchStart(e) {
+    var t = e.touches[0];
+    dragging.current = true;
+    var cur = pos || { x:0, y:0 };
+    startMouse.current = { x: t.clientX, y: t.clientY };
+    startPos.current = { x: cur.x, y: cur.y };
+    function onMove(ev) {
+      if (!dragging.current) return;
+      var tc = ev.touches[0];
+      setPos({
+        x: startPos.current.x + (tc.clientX - startMouse.current.x),
+        y: startPos.current.y + (tc.clientY - startMouse.current.y)
+      });
+    }
+    function onUp() {
+      dragging.current = false;
+      window.removeEventListener("touchmove", onMove);
+      window.removeEventListener("touchend", onUp);
+    }
+    window.addEventListener("touchmove", onMove, { passive: false });
+    window.addEventListener("touchend", onUp);
+  }
+
+  var dragHandleProps = {
+    onMouseDown: onMouseDown,
+    onTouchStart: onTouchStart,
+    style: { cursor: "grab" }
+  };
+
+  var panelStyle = pos ? {
+    position: "fixed",
+    left: "50%",
+    top: "50%",
+    transform: "translate(calc(-50% + " + pos.x + "px), calc(-50% + " + pos.y + "px))",
+    margin: 0
+  } : {};
+
+  return { pos: pos, dragHandleProps: dragHandleProps, panelStyle: panelStyle };
+}
+
 // ── GENETICS ENGINE ───────────────────────────────────────────
 // E→K→A→B→D hierarchy — Mira's spec, built by Claude
 
@@ -2026,7 +2101,7 @@ function DNAModal(_ref5) {
   var _animal$mutations;
   var animal = _ref5.animal,
     onClose = _ref5.onClose;
-  // Use global genetics engine getDesc (defined above App)
+  var _drag = useDrag(), dragHandleProps = _drag.dragHandleProps, panelStyle = _drag.panelStyle;
   return /*#__PURE__*/React.createElement("div", {
     onClick: onClose,
     style: {
@@ -2040,10 +2115,8 @@ function DNAModal(_ref5) {
       padding: 16
     }
   }, /*#__PURE__*/React.createElement("div", {
-    onClick: function onClick(e) {
-      return e.stopPropagation();
-    },
-    style: {
+    onClick: function onClick(e) { return e.stopPropagation(); },
+    style: Object.assign({
       background: "#1a1410",
       border: "1px solid #4a3a28",
       borderRadius: 12,
@@ -2052,7 +2125,7 @@ function DNAModal(_ref5) {
       maxHeight: "88vh",
       overflowY: "auto",
       padding: 24
-    }
+    }, panelStyle)
   }, /*#__PURE__*/React.createElement("div", {
     style: {
       display: "flex",
@@ -2060,7 +2133,8 @@ function DNAModal(_ref5) {
       alignItems: "center",
       marginBottom: 16
     }
-  }, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
+  }, /*#__PURE__*/React.createElement("div", Object.assign({}, dragHandleProps, { style: Object.assign({ flex:1 }, dragHandleProps.style) }),
+    /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
     style: {
       color: "#d4942a",
       fontFamily: "monospace",
@@ -2072,7 +2146,7 @@ function DNAModal(_ref5) {
       color: "#8a7055",
       fontSize: "0.75rem"
     }
-  }, animal.name, " \xB7 ", animal.breed, " \xB7 ID: ", animal.id)), /*#__PURE__*/React.createElement("button", {
+  }, animal.name, " \xB7 ", animal.breed, " \xB7 ID: ", animal.id))), /*#__PURE__*/React.createElement("button", {
     onClick: onClose,
     style: {
       background: "none",
@@ -2855,17 +2929,19 @@ function PedigreeModal(_ref_ped) {
   // Mini ancestor card — compact but shows key stats
   function AncCard(props) {
     var a = props.a, gen = props.gen;
-    if (!a) return React.createElement("div", {
-      style: { background:"#1a1208", border:"1px dashed #3a2810", borderRadius:8,
-        padding:"8px 10px", minHeight:60, display:"flex", alignItems:"center", justifyContent:"center" }
-    }, React.createElement("span", { style:{ color:"#3a2810", fontSize:"0.72rem" } }, "–"));
+    var emptyStyle = { background:"#1a1208", border:"1px dashed #2e2218", borderRadius:8,
+      padding:"8px 10px", minHeight:72, display:"flex", alignItems:"center",
+      justifyContent:"center", flexDirection:"column", gap:4 };
 
-    if (a.unknown) return React.createElement("div", {
-      style: { background:"#1a1208", border:"1px dashed #3a2810", borderRadius:8,
-        padding:"8px 10px", minHeight:60, display:"flex", alignItems:"center", justifyContent:"center", flexDirection:"column", gap:3 }
-    },
-      React.createElement("span", { style:{ color:"#4a3a28", fontSize:"0.72rem" } }, "Unknown"),
-      React.createElement("span", { style:{ color:"#3a2810", fontSize:"0.65rem" } }, "Not in kennel")
+    if (!a) return React.createElement("div", { style: emptyStyle },
+      React.createElement("span", { style:{ color:"#2e2218", fontSize:"1rem" } }, "🐾"),
+      React.createElement("span", { style:{ color:"#3a2810", fontSize:"0.65rem" } }, "No record")
+    );
+
+    if (a.unknown) return React.createElement("div", { style: emptyStyle },
+      React.createElement("span", { style:{ color:"#3a2810", fontSize:"1rem" } }, "🐾"),
+      React.createElement("span", { style:{ color:"#4a3a28", fontSize:"0.7rem", fontWeight:"bold" } }, "Purchased"),
+      React.createElement("span", { style:{ color:"#3a2810", fontSize:"0.62rem" } }, "No lineage on file")
     );
 
     var sexColor = a.sex === "M" ? "#60a5fa" : "#f472b6";
@@ -2915,22 +2991,25 @@ function PedigreeModal(_ref_ped) {
     }, props.label);
   }
 
+  var _dragP = useDrag(), dragHandlePropsP = _dragP.dragHandleProps, panelStyleP = _dragP.panelStyle;
+
   return React.createElement("div", {
     style:{ position:"fixed", top:0, left:0, right:0, bottom:0, background:"rgba(0,0,0,0.88)",
-      zIndex:500, display:"flex", alignItems:"flex-end", justifyContent:"center" },
+      zIndex:500, display:"flex", alignItems:"center", justifyContent:"center" },
     onClick: onClose
   },
     React.createElement("div", {
-      style:{ background:"#1a1208", border:"1px solid #6a5238", borderRadius:"14px 14px 0 0",
-        width:"100%", maxWidth:700, height:"90vh", display:"flex", flexDirection:"column",
-        overflow:"hidden", boxShadow:"0 -8px 40px rgba(0,0,0,0.7)" },
+      style: Object.assign({ background:"#1a1208", border:"1px solid #6a5238", borderRadius:14,
+        width:"min(700px,96vw)", height:"90vh", display:"flex", flexDirection:"column",
+        overflow:"hidden", boxShadow:"0 8px 40px rgba(0,0,0,0.7)" }, panelStyleP),
       onClick: function(e){ e.stopPropagation(); }
     },
-      // Header
-      React.createElement("div", {
-        style:{ display:"flex", alignItems:"center", padding:"12px 16px",
-          borderBottom:"1px solid #2e2218", background:"#241810", flexShrink:0 }
-      },
+      // Header — drag handle
+      React.createElement("div", Object.assign({}, dragHandlePropsP, {
+        style: Object.assign({ display:"flex", alignItems:"center", padding:"12px 16px",
+          borderBottom:"1px solid #2e2218", background:"#241810", flexShrink:0,
+          userSelect:"none" }, dragHandlePropsP.style)
+      }),
         React.createElement("span", { style:{ fontSize:"1rem" } }, "🐾"),
         React.createElement("div", { style:{ flex:1, marginLeft:10 } },
           React.createElement("div", { style:{ color:"#f1f5f9", fontWeight:"bold", fontSize:"0.95rem" } },
@@ -2941,6 +3020,7 @@ function PedigreeModal(_ref_ped) {
         ),
         React.createElement("button", {
           onClick: onClose,
+          onMouseDown: function(e){ e.stopPropagation(); },
           style:{ background:"transparent", border:"1px solid #4a3a28", color:"#b09070",
             borderRadius:6, padding:"4px 10px", cursor:"pointer", fontSize:"0.8rem" }
         }, "✕ Close")
@@ -3493,6 +3573,7 @@ function ShearingModal(_ref) {
       onShearAll=_ref.onShearAll, gameStartDate=_ref.gameStartDate,
       hasShed=_ref.hasShed;
 
+  var _dragS = useDrag(), dragHandlePropsS = _dragS.dragHandleProps, panelStyleS = _dragS.panelStyle;
   var win = getShearingWindow(gameStartDate);
   var sheep = ownedLivestock.filter(function(a){ return a.species==="sheep" && a.sex==="F" && !a.retiredLivestock; });
 
@@ -3506,16 +3587,16 @@ function ShearingModal(_ref) {
     style:{position:"fixed",top:0,left:0,right:0,bottom:0,background:"rgba(0,0,0,0.85)",
       zIndex:1000,display:"flex",alignItems:"center",justifyContent:"center"}},
     React.createElement("div", {
-      style:{background:"#0a0f1e",border:"1px solid #4a3a28",borderRadius:14,
+      style: Object.assign({background:"#0a0f1e",border:"1px solid #4a3a28",borderRadius:14,
         width:"min(600px,95vw)",maxHeight:"85vh",display:"flex",flexDirection:"column",
-        overflow:"hidden",boxShadow:"0 20px 60px rgba(0,0,0,0.8)"}},
+        overflow:"hidden",boxShadow:"0 20px 60px rgba(0,0,0,0.8)"}, panelStyleS)},
 
-      // Header
-      React.createElement("div",{style:{display:"flex",alignItems:"center",padding:"14px 18px",
-        borderBottom:"1px solid #2e2218",gap:12}},
+      // Header — drag handle
+      React.createElement("div", Object.assign({}, dragHandlePropsS, {style:Object.assign({display:"flex",alignItems:"center",padding:"14px 18px",
+        borderBottom:"1px solid #2e2218",gap:12,userSelect:"none"}, dragHandlePropsS.style)}),
         React.createElement("div",{style:{fontSize:"1.1rem",fontWeight:"bold",color:"#f0e6d3",flex:1}},
           "\uD83D\uDC11 Shearing Shed"),
-        React.createElement("button",{onClick:onClose,
+        React.createElement("button",{onClick:onClose, onMouseDown:function(e){e.stopPropagation();},
           style:{background:"transparent",border:"1px solid #4a3a28",color:"#b09070",
             borderRadius:6,padding:"4px 10px",cursor:"pointer",fontSize:"0.8rem"}},"\u2715 Close")
       ),
@@ -3772,6 +3853,12 @@ var FACILITIES = {
       { name:"Standard",   capacity:50,  cost:5000,  upkeep:90  },
       { name:"Large",      capacity:100, cost:10000, upkeep:175 },
       { name:"Commercial", capacity:200, cost:20000, upkeep:320 }
+    ]
+  },
+  whelping_kennel: {
+    label:"Whelping Kennel", icon:"\uD83C\uDFE5", desc:"Unlocks the Whelping tab. Keep up to 2 litters at once and select up to 2 pups per litter.",
+    tiers:[
+      { name:"Standard", capacity:2, cost:1500, upkeep:30 }
     ]
   }
 };
@@ -4605,7 +4692,7 @@ function App() {
       setLitter(pups);
       setLitterSelected([]);
       setLitterIdx(0);
-      setTab("litter");
+      setTab("openlitter");
     }
     // Track stud daily breeding count
     var todayStr = new Date().toDateString();
@@ -4983,11 +5070,15 @@ function App() {
       return setTab("breed");
     }
   }, "\u26A1 Breed"), /*#__PURE__*/React.createElement("button", {
-    style: tabS("litter"),
+    style: tabS("openlitter"),
     onClick: function onClick() {
-      return setTab("litter");
+      return setTab("openlitter");
     }
-  }, "\uD83D\uDC3E Litter", litter.length > 0 ? " (".concat(litter.length, ")") : ""), /*#__PURE__*/React.createElement("button", {
+  }, "\uD83D\uDC3E Open Litters", litter.length > 0 ? " (".concat(litter.length, ")") : ""), /*#__PURE__*/React.createElement("button", {
+    style: _objectSpread(_objectSpread({}, tabS("whelping")), {}, { opacity: hasWhelpingKennel ? 1 : 0.4 }),
+    onClick: function(){ setTab("whelping"); },
+    title: hasWhelpingKennel ? "Whelping Kennel" : "Purchase a Whelping Kennel to unlock"
+  }, "\uD83C\uDFE5 Whelping", whelpingLitters.length > 0 ? " ("+whelpingLitters.length+"/2)" : " (0/2)"), /*#__PURE__*/React.createElement("button", {
     style: tabS("stud"),
     onClick: function(){ setTab("stud"); }
   }, "\uD83D\uDC3E Stud (", animals.filter(function(a){ return !a.retired && a.isStud && a.sex==="M"; }).length, ")"),
@@ -4997,11 +5088,6 @@ function App() {
       return setTab("log");
     }
   }, "\uD83D\uDCD3 Journal (", log.length, ")"),
-    /*#__PURE__*/React.createElement("button", {
-      style: _objectSpread(_objectSpread({}, tabS("whelping")), {}, { opacity: hasWhelpingKennel ? 1 : 0.4 }),
-      onClick: function(){ setTab("whelping"); },
-      title: hasWhelpingKennel ? "Whelping Kennel" : "Purchase a Whelping Kennel to unlock"
-    }, "\uD83C\uDFE5 Whelping", whelpingLitters.length > 0 ? " ("+whelpingLitters.length+"/2)" : " (0/2)"),
     holdingPups.length > 0 && /*#__PURE__*/React.createElement("button", {
       style: { background: tab==="holding"?"#2a1e14":"transparent", border:"1px solid #22c55e", color:"#22c55e",
         borderRadius:6, padding:"5px 14px", cursor:"pointer", fontSize:"0.82rem" },
@@ -5080,10 +5166,7 @@ function App() {
           borderRadius: 6, padding: "4px 10px", cursor: "pointer", fontSize: "0.72rem",
           marginLeft: "auto"
         }
-      }, "\uD83C\uDFD7 Facilities"),
-      /*#__PURE__*/React.createElement("span", {
-        style: { color: "#6b5038", fontSize: "0.68rem" }
-      }, "Aerial View \u00B7 Click \uD83C\uDFE0 Kennel to see cards")
+      }, "\uD83C\uDFD7 Facilities")
     ),
     showKennelMgr && /*#__PURE__*/React.createElement("div", {
       style: {
@@ -5492,15 +5575,22 @@ function App() {
       color: "#4ade80", borderRadius: 8, padding: "8px 12px",
       cursor: "pointer", fontSize: "0.78rem", fontWeight: "bold", letterSpacing: "0.03em"
     }
-  }, "\uD83D\uDCC5 DEV: Force +1 Day (ages dogs & litters)"), tab === "litter" && /*#__PURE__*/React.createElement("div", { style: { position: "relative", overflowY: "auto", maxHeight: "calc(100vh - 130px)" } },
-    litter.length === 0 && whelpingLitters.length === 0
-      ? /*#__PURE__*/React.createElement("div", { style: { textAlign:"center", color:"#6b5038", padding:"60px 0" } }, "No litter yet \u2014 go to the Breed tab!")
+  }, "\uD83D\uDCC5 DEV: Force +1 Day (ages dogs & litters)"), tab === "openlitter" && /*#__PURE__*/React.createElement("div", { style: { position: "relative", overflowY: "auto", maxHeight: "calc(100vh - 130px)" } },
+    litter.length === 0
+      ? /*#__PURE__*/React.createElement("div", { style: { textAlign:"center", color:"#6b5038", padding:"60px 0" } },
+          /*#__PURE__*/React.createElement("div", { style:{ fontSize:"2rem", marginBottom:10 } }, "\uD83D\uDC3E"),
+          /*#__PURE__*/React.createElement("div", { style:{ color:"#8a7055", fontSize:"0.85rem" } }, "No open litters \u2014 go breed some dogs!"),
+          /*#__PURE__*/React.createElement("div", { style:{ color:"#4a3a28", fontSize:"0.75rem", marginTop:6 } }, "Open litters allow you to keep 1 pup. Build a Whelping Kennel for up to 2.")
+        )
       : /*#__PURE__*/React.createElement(React.Fragment, null,
+          /*#__PURE__*/React.createElement("div", { style:{ color:"#c4956a", fontSize:"0.78rem", padding:"6px 2px 10px", fontStyle:"italic" } },
+            "Open litters \u2014 select 1 pup to keep, the rest will be rehomed."
+          ),
           litter.length > 0 && /*#__PURE__*/React.createElement("div", {
             style: { background:"#1a1410", border:"1px solid #d4860a", borderRadius:8, padding:"10px 14px", marginBottom:10 }
           },
             /*#__PURE__*/React.createElement("div", { style:{ color:"#f0c040", fontWeight:"bold", fontSize:"0.82rem", marginBottom:6 } },
-              "\uD83D\uDC3E Litter \u00B7 ", litter[0].sireBreed, " \xD7 ", litter[0].damBreed, " \u00B7 ", litter.length, " pups \u00B7 No Whelping Kennel \u2014 select 1 to keep"
+              "\uD83D\uDC3E ", litter[0].sireBreed, " \xD7 ", litter[0].damBreed, " \u00B7 ", litter.length, " pups \u00B7 pick 1 to keep"
             ),
             litter.map(function(pup){
               var sel = litterSelected.includes(pup.id);
@@ -5525,43 +5615,6 @@ function App() {
               style: { marginTop:8, width:"100%", background:"#0a2a15", border:"2px solid #22c55e", color:"#22c55e", borderRadius:8, padding:"8px 0", fontSize:"0.85rem", fontWeight:"bold", cursor:"pointer" }
             }, "\u2705 Keep ", litterSelected.length, " \u2014 Rehome rest (", litter.length-litterSelected.length, ")")
           ),
-          whelpingLitters.map(function(lit){
-            var ageDays = Math.floor((Date.now()-lit.bornDate)/(1000*60*60*24));
-            var canWean = ageDays >= 3;
-            return /*#__PURE__*/React.createElement("div", { key: lit.litterId,
-              style: { background:"#1a1410", border:"1px solid #6d28d9", borderRadius:8, padding:"10px 14px", marginBottom:10 }
-            },
-              /*#__PURE__*/React.createElement("div", { style:{ display:"flex", justifyContent:"space-between", alignItems:"center", marginBottom:6 } },
-                /*#__PURE__*/React.createElement("div", { style:{ color:"#c4956a", fontWeight:"bold", fontSize:"0.82rem" } },
-                  "\uD83C\uDFE5 ", lit.dam.name, " \u00B7 ", lit.pups.length, " pups \u00B7 Day ", ageDays, "/3 \u00B7 ", lit.selectedIds.length, "/2 selected"
-                ),
-                /*#__PURE__*/React.createElement("span", { style:{ fontSize:"0.72rem", color: canWean?"#22c55e":"#d4860a" } },
-                  canWean ? "\u2705 Ready to wean" : "\u23F3 "+(3-ageDays)+" day(s) left")
-              ),
-              lit.pups.map(function(pup){
-                var sel = lit.selectedIds.includes(pup.id);
-                return /*#__PURE__*/React.createElement("div", { key: pup.id,
-                  style: { display:"flex", alignItems:"center", gap:8, padding:"5px 8px", marginBottom:3,
-                    background: sel ? "#1a0a2e" : "#241a10", borderRadius:6,
-                    border: "1px solid " + (sel ? "#7c3aed" : "#2e2218"), cursor:"pointer" },
-                  onClick: function(){ setLitterViewPup(pup); }
-                },
-                  /*#__PURE__*/React.createElement("span", { style:{ color: sel?"#a78bfa":"#c4956a", fontWeight:"bold", fontSize:"0.8rem", minWidth:120 } }, pup.name || (pup.breed + " Pup")),
-                  /*#__PURE__*/React.createElement("span", { style:{ color:"#8a7055", fontSize:"0.72rem" } }, pup.breed),
-                  /*#__PURE__*/React.createElement("span", { style:{ color: pup.sex==="M"?"#60a5fa":"#f472b6", fontSize:"0.72rem" } }, pup.sex==="M"?"\u2642":"\u2640"),
-                  /*#__PURE__*/React.createElement("span", { style:{ color:"#6b5038", fontSize:"0.72rem", marginLeft:"auto" } }, "tap to view"),
-                  /*#__PURE__*/React.createElement("div", {
-                    style: { background: sel?"#7c3aed":"#4a3a28", color: sel?"#fff":"#8a7055", borderRadius:4, padding:"2px 8px", fontSize:"0.7rem", fontWeight:"bold" },
-                    onClick: function(e){ e.stopPropagation(); toggleWhelpSelect(lit.litterId, pup.id); }
-                  }, sel ? "\u2713 Keep" : "Select")
-                );
-              }),
-              canWean && /*#__PURE__*/React.createElement("button", {
-                onClick: function(){ finalizeWhelpingLitter(lit.litterId); },
-                style: { marginTop:8, width:"100%", background:"#1a0a2e", border:"2px solid #d4942a", color:"#d4942a", borderRadius:8, padding:"8px 0", fontSize:"0.85rem", fontWeight:"bold", cursor:"pointer" }
-              }, "\uD83C\uDFE0 Wean Litter \u2014 Keep ", lit.selectedIds.length, ", Rehome ", lit.pups.length-lit.selectedIds.length)
-            );
-          }),
           litterViewPup && /*#__PURE__*/React.createElement("div", {
             style: { position:"fixed", top:0, left:0, right:0, bottom:0, background:"rgba(0,0,0,0.82)", zIndex:200, display:"flex", alignItems:"center", justifyContent:"center" },
             onClick: function(){ setLitterViewPup(null); }
@@ -5577,10 +5630,78 @@ function App() {
               /*#__PURE__*/React.createElement(Card, { animal: litterViewPup })
             )
           )
-      )
+        )
   ),
-  tab === "whelping" && /*#__PURE__*/React.createElement("div", { style:{ textAlign:"center", color:"#6b5038", padding:"40px 0", fontSize:"0.85rem" } },
-    "Whelping litters have moved to the ", /*#__PURE__*/React.createElement("span", { style:{color:"#d4942a", cursor:"pointer", textDecoration:"underline"}, onClick:function(){ setTab("litter"); } }, "\uD83D\uDC3E Litter"), " tab."
+  tab === "whelping" && /*#__PURE__*/React.createElement("div", { style:{ overflowY:"auto", maxHeight:"calc(100vh - 130px)" } },
+    !hasWhelpingKennel
+      ? /*#__PURE__*/React.createElement("div", { style:{ textAlign:"center", color:"#6b5038", padding:"40px 20px" } },
+          /*#__PURE__*/React.createElement("div", { style:{ fontSize:"2rem", marginBottom:12 } }, "\uD83C\uDFE5"),
+          /*#__PURE__*/React.createElement("div", { style:{ color:"#b09070", fontWeight:"bold", fontSize:"0.95rem", marginBottom:8 } }, "Whelping Kennel not built"),
+          /*#__PURE__*/React.createElement("div", { style:{ color:"#6b5038", fontSize:"0.8rem" } }, "Purchase it from the \uD83C\uDFD7 Facilities menu.")
+        )
+      : whelpingLitters.length === 0
+        ? /*#__PURE__*/React.createElement("div", { style:{ textAlign:"center", color:"#6b5038", padding:"60px 0" } },
+            /*#__PURE__*/React.createElement("div", { style:{ fontSize:"2rem", marginBottom:10 } }, "\uD83C\uDFE5"),
+            /*#__PURE__*/React.createElement("div", { style:{ color:"#8a7055", fontSize:"0.85rem" } }, "No litters in the Whelping Kennel."),
+            /*#__PURE__*/React.createElement("div", { style:{ color:"#4a3a28", fontSize:"0.75rem", marginTop:6 } }, "Breed a pair \u2014 if slots are open they\u2019ll auto-route here.")
+          )
+        : /*#__PURE__*/React.createElement(React.Fragment, null,
+            /*#__PURE__*/React.createElement("div", { style:{ color:"#a78bfa", fontSize:"0.78rem", padding:"6px 2px 10px", fontStyle:"italic" } },
+              "Whelping Kennel \u2014 select up to 2 pups per litter. Wean after 3 days."
+            ),
+            whelpingLitters.map(function(lit){
+              var ageDays = Math.floor((Date.now()-lit.bornDate)/(1000*60*60*24));
+              var canWean = ageDays >= 3;
+              return /*#__PURE__*/React.createElement("div", { key: lit.litterId,
+                style: { background:"#1a1410", border:"1px solid #6d28d9", borderRadius:8, padding:"10px 14px", marginBottom:10 }
+              },
+                /*#__PURE__*/React.createElement("div", { style:{ display:"flex", justifyContent:"space-between", alignItems:"center", marginBottom:6 } },
+                  /*#__PURE__*/React.createElement("div", { style:{ color:"#c4956a", fontWeight:"bold", fontSize:"0.82rem" } },
+                    "\uD83C\uDFE5 ", lit.dam.name, " \u00B7 ", lit.pups.length, " pups \u00B7 Day ", ageDays, "/3 \u00B7 ", lit.selectedIds.length, "/2 selected"
+                  ),
+                  /*#__PURE__*/React.createElement("span", { style:{ fontSize:"0.72rem", color: canWean?"#22c55e":"#d4860a" } },
+                    canWean ? "\u2705 Ready to wean" : "\u23F3 "+(3-ageDays)+" day(s) left")
+                ),
+                lit.pups.map(function(pup){
+                  var sel = lit.selectedIds.includes(pup.id);
+                  return /*#__PURE__*/React.createElement("div", { key: pup.id,
+                    style: { display:"flex", alignItems:"center", gap:8, padding:"5px 8px", marginBottom:3,
+                      background: sel ? "#1a0a2e" : "#241a10", borderRadius:6,
+                      border: "1px solid " + (sel ? "#7c3aed" : "#2e2218"), cursor:"pointer" },
+                    onClick: function(){ setLitterViewPup(pup); }
+                  },
+                    /*#__PURE__*/React.createElement("span", { style:{ color: sel?"#a78bfa":"#c4956a", fontWeight:"bold", fontSize:"0.8rem", minWidth:120 } }, pup.name || (pup.breed + " Pup")),
+                    /*#__PURE__*/React.createElement("span", { style:{ color:"#8a7055", fontSize:"0.72rem" } }, pup.breed),
+                    /*#__PURE__*/React.createElement("span", { style:{ color: pup.sex==="M"?"#60a5fa":"#f472b6", fontSize:"0.72rem" } }, pup.sex==="M"?"\u2642":"\u2640"),
+                    /*#__PURE__*/React.createElement("span", { style:{ color:"#6b5038", fontSize:"0.72rem", marginLeft:"auto" } }, "tap to view"),
+                    /*#__PURE__*/React.createElement("div", {
+                      style: { background: sel?"#7c3aed":"#4a3a28", color: sel?"#fff":"#8a7055", borderRadius:4, padding:"2px 8px", fontSize:"0.7rem", fontWeight:"bold" },
+                      onClick: function(e){ e.stopPropagation(); toggleWhelpSelect(lit.litterId, pup.id); }
+                    }, sel ? "\u2713 Keep" : "Select")
+                  );
+                }),
+                canWean && /*#__PURE__*/React.createElement("button", {
+                  onClick: function(){ finalizeWhelpingLitter(lit.litterId); },
+                  style: { marginTop:8, width:"100%", background:"#1a0a2e", border:"2px solid #d4942a", color:"#d4942a", borderRadius:8, padding:"8px 0", fontSize:"0.85rem", fontWeight:"bold", cursor:"pointer" }
+                }, "\uD83C\uDFE0 Wean Litter \u2014 Keep ", lit.selectedIds.length, ", Rehome ", lit.pups.length-lit.selectedIds.length)
+              );
+            }),
+            litterViewPup && /*#__PURE__*/React.createElement("div", {
+              style: { position:"fixed", top:0, left:0, right:0, bottom:0, background:"rgba(0,0,0,0.82)", zIndex:200, display:"flex", alignItems:"center", justifyContent:"center" },
+              onClick: function(){ setLitterViewPup(null); }
+            },
+              /*#__PURE__*/React.createElement("div", {
+                style: { background:"#2a1e14", border:"1px solid #c4956a", borderRadius:10, padding:"12px", maxWidth:360, width:"92%", position:"relative" },
+                onClick: function(e){ e.stopPropagation(); }
+              },
+                /*#__PURE__*/React.createElement("button", {
+                  onClick: function(){ setLitterViewPup(null); },
+                  style: { position:"absolute", top:8, right:10, background:"transparent", border:"none", color:"#8a7055", fontSize:"1.2rem", cursor:"pointer", lineHeight:1 }
+                }, "\u2715"),
+                /*#__PURE__*/React.createElement(Card, { animal: litterViewPup })
+              )
+            )
+          )
   ),
   tab === "holding" && /*#__PURE__*/React.createElement("div", null,
     /*#__PURE__*/React.createElement("div", { style:{color:"#22c55e",fontWeight:"bold",fontSize:"1rem",marginBottom:10} }, "\uD83D\uDC3E Temporary Holding"),
@@ -5947,8 +6068,15 @@ showShearing && /*#__PURE__*/React.createElement(ShearingModal, {
   showFacilities && /*#__PURE__*/React.createElement(Facilities, {
     onClose: function(){ setShowFacilities(false); },
     money: money,
-    facilities: facilitiesOwned,
+    facilities: Object.assign({}, facilitiesOwned, hasWhelpingKennel ? { whelping_kennel: { tier: 0 } } : {}),
     onBuy: function(key, cost){
+      if (key === "whelping_kennel") {
+        setMoney(function(m){ return m-cost; });
+        setHasWhelpingKennel(true);
+        setLog(function(lg){ return [{ id:Date.now(), type:"financial",
+          name:"Built: Whelping Kennel", amount:-cost, date:new Date().toLocaleString() }].concat(lg); });
+        return;
+      }
       setMoney(function(m){ return m-cost; });
       setFacilitiesOwned(function(f){ var n=Object.assign({},f); n[key]={tier:0}; return n; });
       setLog(function(lg){ return [{ id:Date.now(), type:"financial",
@@ -6092,6 +6220,7 @@ function Facilities(_ref) {
       onBuy=_ref.onBuy, onUpgrade=_ref.onUpgrade;
 
   var _fa=_slicedToArray(useState(null),2),selected=_fa[0],setSelected=_fa[1];
+  var _dragF = useDrag(), dragHandlePropsF = _dragF.dragHandleProps, panelStyleF = _dragF.panelStyle;
 
   var keys = Object.keys(FACILITIES);
 
@@ -6099,14 +6228,14 @@ function Facilities(_ref) {
     style:{position:"fixed",top:0,left:0,right:0,bottom:0,background:"rgba(0,0,0,0.88)",
       zIndex:1000,display:"flex",alignItems:"center",justifyContent:"center"}},
     /*#__PURE__*/React.createElement("div",{
-      style:{background:"#0a0f1e",border:"1px solid #4a3a28",borderRadius:14,
+      style:Object.assign({background:"#0a0f1e",border:"1px solid #4a3a28",borderRadius:14,
         width:"min(860px,95vw)",maxHeight:"88vh",display:"flex",flexDirection:"column",
-        overflow:"hidden",boxShadow:"0 20px 60px rgba(0,0,0,0.9)"}},
+        overflow:"hidden",boxShadow:"0 20px 60px rgba(0,0,0,0.9)"}, panelStyleF)},
 
-      // Header
-      /*#__PURE__*/React.createElement("div",{
-        style:{display:"flex",alignItems:"center",padding:"14px 18px",
-          borderBottom:"1px solid #2e2218",gap:12}},
+      // Header — drag handle
+      /*#__PURE__*/React.createElement("div", Object.assign({}, dragHandlePropsF, {
+        style:Object.assign({display:"flex",alignItems:"center",padding:"14px 18px",
+          borderBottom:"1px solid #2e2218",gap:12,userSelect:"none"}, dragHandlePropsF.style)}),
         /*#__PURE__*/React.createElement("div",{style:{fontSize:"1.1rem",fontWeight:"bold",color:"#f0e6d3",flex:1}},
           "\uD83C\uDFD7 Facilities"),
         /*#__PURE__*/React.createElement("div",{style:{fontSize:"0.78rem",color:"#6b5038"}},
@@ -6114,7 +6243,7 @@ function Facilities(_ref) {
         /*#__PURE__*/React.createElement("div",{style:{fontSize:"0.88rem",fontWeight:"bold",
           color:money>=500?"#22c55e":money>=0?"#d4860a":"#ef4444"}},
           "$"+money.toLocaleString()),
-        /*#__PURE__*/React.createElement("button",{onClick:onClose,
+        /*#__PURE__*/React.createElement("button",{onClick:onClose, onMouseDown:function(e){e.stopPropagation();},
           style:{background:"transparent",border:"1px solid #4a3a28",color:"#b09070",
             borderRadius:6,padding:"4px 10px",cursor:"pointer",fontSize:"0.8rem",marginLeft:8}},
           "\u2715 Close")
