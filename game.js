@@ -15289,15 +15289,18 @@ function App() {
       var kept = lit.pups.filter(function(p){ return lit.selectedIds.includes(p.id); });
       var rehomed = lit.pups.filter(function(p){ return !lit.selectedIds.includes(p.id); });
       if (kept.length > 0) {
-        setHoldingPups(function(h) {
-          return h.concat(kept.map(function(p){ return _objectSpread(_objectSpread({}, p), {}, { heldSince: now, name: p.sireBreed.split(" ")[0]+"\xD7"+p.damBreed.split(" ")[0]+" Pup" }); }));
+        var kennelId = activeKennel ? activeKennel.id : (lit.dam.kennelId || null);
+        setAnimals(function(prev) {
+          return prev.concat(kept.map(function(p){
+            return Object.assign({}, p, { kennelId: kennelId, heldSince: null });
+          }));
         });
-        setLog(function(lg) { return [{ id: now, type: "pups_holding", count: kept.length, date: new Date().toLocaleString() }].concat(_toConsumableArray(lg)); });
+        setLog(function(lg) { return [{ id: now, type: "pups_kept", count: kept.length, date: new Date().toLocaleString() }].concat(_toConsumableArray(lg)); });
       }
       if (rehomed.length > 0) {
-        setLog(function(lg) { return [{ id: now+1, type: "rehome", name: rehomed.length+" pup(s) auto-rehomed", breed: lit.dam.breed, date: new Date().toLocaleString(), auto: true }].concat(_toConsumableArray(lg)); });
+        setLog(function(lg) { return [{ id: now+1, type: "rehome", name: rehomed.length+" pup(s) rehomed", breed: lit.dam.breed, date: new Date().toLocaleString() }].concat(_toConsumableArray(lg)); });
       }
-      setAnimals(function(a) { return a.map(function(animal){ return animal.id===lit.dam.id ? _objectSpread(_objectSpread({},animal),{},{inWhelping:false}) : animal; }); });
+      setAnimals(function(a) { return a.map(function(animal){ return animal.id===lit.dam.id ? Object.assign({},animal,{inWhelping:false}) : animal; }); });
       return prev.filter(function(l){ return l.litterId !== litterId; });
     });
   };
@@ -15306,11 +15309,14 @@ function App() {
     var kept = litter.filter(function(p){ return litterSelected.includes(p.id); });
     var rehomed = litter.filter(function(p){ return !litterSelected.includes(p.id); });
     if (kept.length > 0) {
-      setHoldingPups(function(h) { return h.concat(kept.map(function(p){ return _objectSpread(_objectSpread({},p),{},{heldSince:now,name:p.sireBreed.split(" ")[0]+"\xD7"+p.damBreed.split(" ")[0]+" Pup"}); })); });
-      setLog(function(lg) { return [{ id: now, type: "pups_holding", count: kept.length, date: new Date().toLocaleString() }].concat(_toConsumableArray(lg)); });
+      var kennelId = activeKennel ? activeKennel.id : null;
+      setAnimals(function(prev) {
+        return prev.concat(kept.map(function(p){ return Object.assign({}, p, { kennelId: kennelId }); }));
+      });
+      setLog(function(lg) { return [{ id: now, type: "pups_kept", count: kept.length, date: new Date().toLocaleString() }].concat(_toConsumableArray(lg)); });
     }
     if (rehomed.length > 0) {
-      setLog(function(lg) { return [{ id: now+1, type: "rehome", name: rehomed.length+" pup(s) auto-rehomed", breed: litter[0]?litter[0].damBreed:"", date: new Date().toLocaleString(), auto: true }].concat(_toConsumableArray(lg)); });
+      setLog(function(lg) { return [{ id: now+1, type: "rehome", name: rehomed.length+" pup(s) rehomed", breed: litter[0]?litter[0].damBreed:"", date: new Date().toLocaleString() }].concat(_toConsumableArray(lg)); });
     }
     setLitter([]); setLitterSelected([]); setLitterIdx(0); setTab("kennel");
   };
@@ -15973,14 +15979,37 @@ function App() {
   }, "\uD83E\uDDEA DEV: Force Breed (bypasses heat check)"),
   /*#__PURE__*/React.createElement("button", {
     onClick: function() {
+      var oneDayMs = 24 * 60 * 60 * 1000;
+      // Advance all dog ages by 1 month directly
+      setAnimals(function(prev) {
+        return prev.map(function(a) {
+          if (a.retired) return a;
+          var newAge = (a.ageMonths||0) + 1;
+          var maxAge = a.lifespan || 144;
+          if (newAge >= maxAge) return Object.assign({}, a, { ageMonths: newAge, retired: true, retireReason: "End of natural life" });
+          var sizeLockUpdate = {};
+          if (!a.sizeLocked) {
+            var mt = ({ XS:10, S:12, M:15, L:18, XL:24 }[a.size||"M"] || 15);
+            if ((a.ageMonths||0) < mt && newAge >= mt) {
+              var fs = getCurrentSize(Object.assign({}, a, { ageMonths: newAge }));
+              sizeLockUpdate = { adultWeight: fs.adultW, adultHeight: fs.adultH, sizeLocked: true };
+            }
+          }
+          return Object.assign({}, a, sizeLockUpdate, { ageMonths: newAge });
+        });
+      });
+      // Advance whelping litter bornDates back by 1 day
+      setWhelpingLitters(function(prev) {
+        return prev.map(function(lit) {
+          return Object.assign({}, lit, { bornDate: lit.bornDate - oneDayMs });
+        });
+      });
+      // Also tick the lastTick key so real tick stays in sync
       var key = "breedingSim_lastTick";
       var current = parseInt(localStorage.getItem(key) || "0");
-      var oneDayMs = 24 * 60 * 60 * 1000;
-      var newTick = current > 0 ? current - oneDayMs : Date.now() - oneDayMs;
-      localStorage.setItem(key, newTick.toString());
-      location.reload();
+      localStorage.setItem(key, (current > 0 ? current - oneDayMs : Date.now() - oneDayMs).toString());
     },
-    title: "DEV MODE: Forces one game day to pass and reloads",
+    title: "DEV MODE: Forces one game day to pass",
     style: {
       width: "100%", marginTop: 4,
       background: "#0a1a0a", border: "2px dashed #22c55e",
