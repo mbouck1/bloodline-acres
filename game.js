@@ -521,68 +521,68 @@ var getDesc = function(loci, loc, al) { return getLocusDesc(loci, loc, al); };
 // ── END GENETICS ENGINE ───────────────────────────────────────
 
 // ── SIZE & GROWTH ENGINE ──────────────────────────────────────
-// Height (inches) and weight (lbs) by size category
+// Height in inches (shoulder height), weight in lbs
+// XL bumped to reflect giant working breeds (Bully Kutta, CAS, Kangal ~30-32" shoulder)
 var SIZE_STANDARDS = {
   XS: { weightAvg: 8,   weightRange: [4,   12],  heightAvg: 9,  heightRange: [6,  11] },
   S:  { weightAvg: 18,  weightRange: [10,  25],  heightAvg: 13, heightRange: [10, 16] },
-  M:  { weightAvg: 40,  weightRange: [26,  55],  heightAvg: 18, heightRange: [16, 21] },
-  L:  { weightAvg: 70,  weightRange: [56,  90],  heightAvg: 23, heightRange: [21, 26] },
-  XL: { weightAvg: 120, weightRange: [91,  200], heightAvg: 28, heightRange: [26, 34] }
+  M:  { weightAvg: 40,  weightRange: [26,  55],  heightAvg: 19, heightRange: [16, 22] },
+  L:  { weightAvg: 70,  weightRange: [56,  90],  heightAvg: 24, heightRange: [22, 27] },
+  XL: { weightAvg: 130, weightRange: [91,  220], heightAvg: 30, heightRange: [27, 36] }
 };
 
 // Growth curve: returns 0.0-1.0 fraction of adult size at a given age in months
-// Dogs reach height faster than weight — height ~90% done at 12mo, weight at 18-24mo
+// Dogs reach height faster than weight — height ~90% done before weight
 function growthFraction(ageMonths, sizeCategory, type) {
-  // Larger breeds mature slower
-  var matureAge = { XS: 10, S: 12, M: 15, L: 18, XL: 24 }[sizeCategory] || 15;
+  var matureAge = { XS:10, S:12, M:15, L:18, XL:24 }[sizeCategory] || 15;
   if (type === "height") matureAge = Math.round(matureAge * 0.75);
-  if (ageMonths <= 0) return 0.08; // newborns ~8% of adult
+  if (ageMonths <= 0) return 0.08;
   if (ageMonths >= matureAge) return 1.0;
-  // Sigmoid-ish growth curve
   var t = ageMonths / matureAge;
   return Math.min(1.0, 0.08 + 0.92 * (3*t*t - 2*t*t*t));
 }
 
-// Calculate a pup's adult size potential from parents + mutation chance
+// Calculate a pup's adult size potential from parents — called ONCE, returns all three values
 function calcAdultSizePotential(sire, dam) {
-  var sireW = sire.adultWeight || sire.sizeAvg || SIZE_STANDARDS[sire.size||"M"].weightAvg;
-  var damW  = dam.adultWeight  || dam.sizeAvg  || SIZE_STANDARDS[dam.size||"M"].weightAvg;
-  var sireH = sire.adultHeight || SIZE_STANDARDS[sire.size||"M"].heightAvg;
-  var damH  = dam.adultHeight  || SIZE_STANDARDS[dam.size||"M"].heightAvg;
+  var std_s = getBreedHeightStd(sire.breed) || SIZE_STANDARDS[sire.size||"M"];
+  var std_d = getBreedHeightStd(dam.breed)  || SIZE_STANDARDS[dam.size||"M"];
+  var szStd_s = SIZE_STANDARDS[sire.size||"M"];
+  var szStd_d = SIZE_STANDARDS[dam.size||"M"];
+  // Clamp stored heights to sane range to guard against bad save data (>40" = impossible for dog)
+  var sireW = sire.adultWeight || sire.sizeAvg || szStd_s.weightAvg;
+  var damW  = dam.adultWeight  || dam.sizeAvg  || szStd_d.weightAvg;
+  var sireH = (sire.adultHeight && sire.adultHeight <= 40) ? sire.adultHeight : std_s.heightAvg;
+  var damH  = (dam.adultHeight  && dam.adultHeight  <= 40) ? dam.adultHeight  : std_d.heightAvg;
 
-  // Base potential = midpoint of parents + ±10% natural variance
   var baseW = (sireW + damW) / 2;
   var baseH = (sireH + damH) / 2;
-  var variance = (Math.random() - 0.5) * 0.2; // ±10%
+  var variance = (Math.random() - 0.5) * 0.2;
   var potentialW = Math.round(baseW * (1 + variance));
   var potentialH = Math.round(baseH * (1 + variance * 0.5));
 
-  // Size mutation flags
   var sizeVariant = null;
   var roll = Math.random();
   if (roll < 0.01) {
-    // True mutation — outside breed standard
     var direction = Math.random() < 0.5 ? 1 : -1;
     potentialW = Math.round(potentialW * (1 + direction * 0.35));
     potentialH = Math.round(potentialH * (1 + direction * 0.20));
     sizeVariant = direction > 0 ? "giant_variant" : "dwarf_variant";
   } else if (roll < 0.04) {
-    // Throwback — outside parents but within breed history
     var dir = Math.random() < 0.5 ? 1 : -1;
     potentialW = Math.round(potentialW * (1 + dir * 0.18));
     potentialH = Math.round(potentialH * (1 + dir * 0.10));
     sizeVariant = dir > 0 ? "large_throwback" : "small_throwback";
   }
-
   return { potentialW: potentialW, potentialH: potentialH, sizeVariant: sizeVariant };
 }
 
 // Get current weight/height for display based on age
+// Guards against bad saved height data (>40" is impossible for a dog)
 function getCurrentSize(animal) {
   var size = animal.size || "M";
   var std = SIZE_STANDARDS[size];
   var adultW = animal.adultWeight || animal.sizeAvg || std.weightAvg;
-  var adultH = animal.adultHeight || std.heightAvg;
+  var adultH = (animal.adultHeight && animal.adultHeight <= 40) ? animal.adultHeight : std.heightAvg;
   var age = animal.ageMonths || 0;
   var wFrac = growthFraction(age, size, "weight");
   var hFrac = growthFraction(age, size, "height");
@@ -596,12 +596,48 @@ function getCurrentSize(animal) {
 function getSizeVariantInfo(variant) {
   if (!variant) return null;
   var map = {
-    giant_variant:   { label: "⚡ Giant Variant",      color: "#f97316", health: "Joint/cardiac stress risk at maturity" },
-    dwarf_variant:   { label: "⚡ Dwarf Variant",       color: "#a78bfa", health: "Potential cardiac and joint issues" },
-    large_throwback: { label: "⚡ Large Throwback",     color: "#e8a020", health: "Monitor joints as adult" },
-    small_throwback: { label: "⚡ Small Throwback",     color: "#c4956a", health: "Monitor heart as adult" }
+    giant_variant:   { label: "\u26A1 Giant Variant",      color: "#f97316", health: "Joint/cardiac stress risk at maturity" },
+    dwarf_variant:   { label: "\u26A1 Dwarf Variant",       color: "#a78bfa", health: "Potential cardiac and joint issues" },
+    large_throwback: { label: "\u26A1 Large Throwback",     color: "#e8a020", health: "Monitor joints as adult" },
+    small_throwback: { label: "\u26A1 Small Throwback",     color: "#c4956a", health: "Monitor heart as adult" }
   };
   return map[variant] || null;
+}
+
+// Per-breed height overrides (shoulder height inches) for breeds that fall outside
+// their size category average. All others use SIZE_STANDARDS defaults.
+// Sources: AKC, FCI, UKC breed standards.
+var BREED_HEIGHT_STANDARDS = {
+  // True giants — tall & heavy
+  "Bully Kutta":              { heightAvg: 32, heightRange: [30, 36] },
+  "Central Asian Shepherd":   { heightAvg: 30, heightRange: [27, 34] },
+  "Kangal":                   { heightAvg: 30, heightRange: [28, 33] },
+  "Kangal Shepherd Dog":      { heightAvg: 30, heightRange: [28, 33] },
+  "Anatolian Shepherd":       { heightAvg: 29, heightRange: [27, 32] },
+  "Caucasian Shepherd":       { heightAvg: 29, heightRange: [27, 34] },
+  "Tibetan Mastiff":          { heightAvg: 27, heightRange: [24, 30] },
+  "Great Dane":               { heightAvg: 32, heightRange: [30, 36] }, // tallest breed
+  "Irish Wolfhound":          { heightAvg: 33, heightRange: [30, 36] }, // tallest by AKC
+  "Saint Bernard":            { heightAvg: 27, heightRange: [24, 30] },
+  "Leonberger":               { heightAvg: 28, heightRange: [25, 31] },
+  "Boerboel":                 { heightAvg: 25, heightRange: [22, 28] }, // stocky, not as tall
+  "Neapolitan Mastiff":       { heightAvg: 26, heightRange: [24, 31] },
+  "English Mastiff":          { heightAvg: 30, heightRange: [27, 36] },
+  "Mastiff":                  { heightAvg: 30, heightRange: [27, 36] },
+  "Dogue de Bordeaux":        { heightAvg: 25, heightRange: [23, 27] },
+  "Great Pyrenees":           { heightAvg: 28, heightRange: [25, 32] },
+  // Large but not extreme
+  "Dogo Argentino":           { heightAvg: 25, heightRange: [23, 27] },
+  "Rottweiler":               { heightAvg: 24, heightRange: [22, 27] },
+  "German Shepherd":          { heightAvg: 24, heightRange: [22, 26] },
+  "Doberman Pinscher":        { heightAvg: 27, heightRange: [24, 28] },
+  "Dobermann":                { heightAvg: 27, heightRange: [24, 28] },
+};
+
+// Get the correct height standard for a breed by name
+function getBreedHeightStd(breedName) {
+  if (!breedName) return null;
+  return BREED_HEIGHT_STANDARDS[breedName] || null;
 }
 // ── END SIZE ENGINE ───────────────────────────────────────────
 
@@ -642,7 +678,7 @@ function makeAnimal(breed, name, sex) {
     traits: breed.traits || null,
     aptitudes: breed.aptitudes || [],
     adultWeight: breed.sizeAvg || SIZE_STANDARDS[breed.size||"M"].weightAvg,
-    adultHeight: SIZE_STANDARDS[breed.size||"M"].heightAvg,
+    adultHeight: (getBreedHeightStd(breed.name) || SIZE_STANDARDS[breed.size||"M"]).heightAvg,
     sizeVariant: null,
     photoUrl: null,
     photoLoading: false
@@ -669,6 +705,7 @@ function breedPair(sire, dam) {
     var _calcHealthScore2 = calcHealthScore(g),
       hs = _calcHealthScore2.score,
       issues = _calcHealthScore2.issues;
+    var _szPotential = calcAdultSizePotential(sire, dam);
     return {
       id: mkId(),
       name: "Pup ".concat(i + 1),
@@ -701,9 +738,9 @@ function breedPair(sire, dam) {
         : (sire.lifespan || dam.lifespan || 144))
         + (mixedLifespanBonus(sire, dam) * 12),
       born: new Date().toLocaleDateString(),
-      adultWeight: (function(){ var s=calcAdultSizePotential(sire,dam); return s.potentialW; })(),
-      adultHeight: (function(){ var s=calcAdultSizePotential(sire,dam); return s.potentialH; })(),
-      sizeVariant: (function(){ var s=calcAdultSizePotential(sire,dam); return s.sizeVariant; })()
+      adultWeight: _szPotential.potentialW,
+      adultHeight: _szPotential.potentialH,
+      sizeVariant: _szPotential.sizeVariant
     };
   });
 }
@@ -13086,9 +13123,7 @@ function DNAModal(_ref5) {
     var sv = getSizeVariantInfo(animal.sizeVariant);
     if (!sv) return null;
     var sz = getCurrentSize(animal);
-    return /*#__PURE__*/React.createElement("div", {
-      style: { marginBottom: 18 }
-    },
+    return /*#__PURE__*/React.createElement("div", { style: { marginBottom: 18 } },
       /*#__PURE__*/React.createElement("div", {
         style: { color: sv.color, fontWeight: "bold", fontSize: "0.8rem",
           textTransform: "uppercase", marginBottom: 8 }
@@ -13098,7 +13133,7 @@ function DNAModal(_ref5) {
           borderRadius: 6, padding: "8px 12px", fontSize: "0.78rem" }
       },
         /*#__PURE__*/React.createElement("div", { style: { color: sv.color, fontWeight: "bold", marginBottom: 4 } },
-          "Est. Adult: ", sz.adultW, " lbs · ", sz.adultH, "\u2033"
+          "Est. Adult: ~", sz.adultW, " lbs \xB7 ~", sz.adultH, "\u2033"
         ),
         /*#__PURE__*/React.createElement("div", { style: { color: "#b09070" } }, "\u26A0\uFE0F ", sv.health)
       )
@@ -13891,14 +13926,14 @@ function Card(_ref0) {
     var variant = animal.sizeVariant ? getSizeVariantInfo(animal.sizeVariant) : null;
     return /*#__PURE__*/React.createElement("div", {
       style: { display: "flex", alignItems: "center", gap: 8, marginBottom: 6,
-        background: "#1a1410", borderRadius: 5, padding: "5px 8px" }
+        background: "#1a1410", borderRadius: 5, padding: "5px 8px", flexWrap: "wrap" }
     },
       /*#__PURE__*/React.createElement("span", { style: { fontSize: "0.82rem" } }, "\u2696\uFE0F"),
       sz.mature
         ? /*#__PURE__*/React.createElement("span", { style: { color: "#c4956a", fontSize: "0.82rem", fontWeight: "bold" } }, sz.currentW, " lbs")
         : /*#__PURE__*/React.createElement("span", { style: { color: "#8a7055", fontSize: "0.78rem" } },
             /*#__PURE__*/React.createElement("span", { style: { color: "#c4956a", fontWeight: "bold" } }, sz.currentW, " lbs"),
-            " \u2192 ", sz.adultW, " est."
+            " \u2192 ~", sz.adultW, " lbs"
           ),
       /*#__PURE__*/React.createElement("span", { style: { color: "#4a3a28" } }, "|"),
       /*#__PURE__*/React.createElement("span", { style: { fontSize: "0.82rem" } }, "\uD83D\uDCCF"),
@@ -13906,7 +13941,7 @@ function Card(_ref0) {
         ? /*#__PURE__*/React.createElement("span", { style: { color: "#c4956a", fontSize: "0.82rem", fontWeight: "bold" } }, sz.currentH, "\u2033")
         : /*#__PURE__*/React.createElement("span", { style: { color: "#8a7055", fontSize: "0.78rem" } },
             /*#__PURE__*/React.createElement("span", { style: { color: "#c4956a", fontWeight: "bold" } }, sz.currentH, "\u2033"),
-            " \u2192 ", sz.adultH, "\u2033 est."
+            " \u2192 ~", sz.adultH, "\u2033"
           ),
       variant && /*#__PURE__*/React.createElement("span", {
         style: { color: variant.color, fontSize: "0.72rem", fontWeight: "bold",
