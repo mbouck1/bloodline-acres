@@ -401,8 +401,33 @@ function breedGenomes(g1, g2) {
     ];
   });
   var mutations = [];
+  // Spontaneous coat color mutation (2%)
   if (Math.random() < 0.02) {
-    mutations.push({ loc:"E", type:"spontaneous", desc:"Spontaneous pigment mutation" });
+    mutations.push({ loc:"E", type:"spontaneous", desc:"Spontaneous pigment mutation — unexpected coat color expression" });
+  }
+  // Merle throwback (1.5% if either parent carries M locus alleles)
+  var sireM = sire && sire.genome && sire.genome.coat && sire.genome.coat.M;
+  var damM  = dam  && dam.genome  && dam.genome.coat  && dam.genome.coat.M;
+  if ((sireM || damM) && Math.random() < 0.015) {
+    mutations.push({ loc:"M", type:"throwback", desc:"Merle throwback — ancestral merle pattern re-expressed" });
+  }
+  // White/extreme piebald throwback (1%)
+  if (Math.random() < 0.01) {
+    mutations.push({ loc:"S", type:"throwback", desc:"Extreme white throwback — higher-than-expected white coverage" });
+  }
+  // Recessive black throwback (1%)
+  if (Math.random() < 0.01) {
+    mutations.push({ loc:"K", type:"throwback", desc:"Recessive black throwback — ancestral solid black expression" });
+  }
+  // Dilute throwback (0.8%)
+  if (Math.random() < 0.008) {
+    mutations.push({ loc:"D", type:"throwback", desc:"Dilute throwback — coat appears lighter than expected (blue/fawn)" });
+  }
+  // Health-flagged recessive surprise (1.5%)
+  if (Math.random() < 0.015) {
+    var healthFlags = ["MDR1","PRA","DM","vWD","JLPP","EIC","CEA"];
+    var flag = healthFlags[Math.floor(Math.random() * healthFlags.length)];
+    mutations.push({ loc:flag, type:"recessive_expression", desc: flag + " recessive — carrier parents produced an affected pup" });
   }
   return { coat:coat, health:health, perf:perf, mutations:mutations };
 }
@@ -785,6 +810,43 @@ var idCtr = 1;
 function mkId() {
   return "AN-".concat(String(idCtr++).padStart(4, "0"));
 }
+
+// ── DOG NAME GENERATOR ────────────────────────────────────────
+var DOG_NAME_POOLS = {
+  M: ["Ace","Atlas","Axel","Bandit","Bear","Blaze","Bo","Boone","Bowie","Bruno",
+      "Buck","Buddy","Cash","Chester","Chief","Cody","Cole","Cooper","Crew","Cruz",
+      "Dash","Denver","Diesel","Drake","Duke","Finn","Flint","Ford","Ghost","Gunner",
+      "Harley","Hawk","Heath","Hudson","Hunter","Jasper","Jax","Jesse","Jet","Knox",
+      "Leo","Loki","Lone","Maverick","Max","Miles","Milo","Moose","Murphy","Nash",
+      "Odin","Outlaw","Penn","Pete","Ranger","Rex","Ridge","Rio","Rocco","Rocky",
+      "Roscoe","Roux","Rowdy","Ruger","Rusty","Ryder","Sam","Scout","Silas","Slate",
+      "Smoke","Stone","Tanner","Thor","Timber","Titan","Tobias","Tucker","Wade",
+      "Walker","Weston","Wolf","Wyatt","York","Zeus","Zorro"],
+  F: ["Ada","Amber","Annie","Aspen","Autumn","Ava","Bea","Belle","Blair","Blondie",
+      "Blossom","Bonnie","Bree","Briar","Callie","Camille","Cedar","Chloe","Clea",
+      "Clover","Cora","Daisy","Dakota","Darcy","Dawn","Della","Delta","Demi","Dixie",
+      "Dolly","Dot","Dove","Eden","Ellie","Ember","Eve","Fawn","Fern","Flo","Flora",
+      "Gem","Georgia","Ginger","Gracie","Harper","Hazel","Holly","Honey","Iris","Ivy",
+      "Jade","Josie","June","Kay","Kit","Lacey","Layla","Lea","Lexi","Lily","Lola",
+      "Luna","Mabel","Maggie","Maple","Marigold","Marley","Meadow","Midge","Millie",
+      "Minnie","Molly","Nala","Nova","Opal","Pebbles","Penny","Piper","Poppy","Priya",
+      "Quinn","Raven","Reese","Riley","River","Rosa","Rose","Ruby","Rue","Sadie",
+      "Sage","Sandy","Scout","Sienna","Sierra","Sky","Stella","Sugar","Sunny","Tess",
+      "Violet","Willow","Winnie","Wren","Xena","Zara","Zelda","Zoe"]
+};
+function generateDogName(sex) {
+  var pool = DOG_NAME_POOLS[sex] || DOG_NAME_POOLS.M;
+  return pool[Math.floor(Math.random() * pool.length)];
+}
+function generateDogNameSuggestions(sex, count) {
+  var pool = (DOG_NAME_POOLS[sex] || DOG_NAME_POOLS.M).slice();
+  var out = [];
+  for (var i = 0; i < count && pool.length > 0; i++) {
+    var idx = Math.floor(Math.random() * pool.length);
+    out.push(pool.splice(idx, 1)[0]);
+  }
+  return out;
+}
 function makeAnimal(breed, name, sex) {
   var genome = generateGenome(breed);
   var _calcHealthScore = calcHealthScore(genome),
@@ -847,7 +909,7 @@ function breedPair(sire, dam) {
     var _szPotential = calcAdultSizePotential(sire, dam);
     return {
       id: mkId(),
-      name: "Pup ".concat(i + 1),
+      name: "Puppy " + (i + 1),
       sex: sex,
       breed: sire.breed === dam.breed ? sire.breed : "".concat(sire.breed, " \xD7 ").concat(dam.breed),
       sireBreed: sire.breed,
@@ -2442,6 +2504,10 @@ function DNAModal(_ref5) {
 }
 
 // ── DOG CEO PHOTO API ────────────────────────────────────────
+// Static breed photo overrides — add URLs here as we source them.
+// Falls back to Dog CEO API for anything not listed.
+var BREED_PHOTOS = {};
+
 var DOG_CEO_MAP = {
   // Retrievers
   "Golden Retriever":"retriever/golden","Labrador Retriever":"labrador",
@@ -2846,6 +2912,65 @@ function BreedPhotoModal(_ref_bpm) {
         width:36, height:36, fontSize:"1.1rem", cursor:"pointer",
         display:"flex", alignItems:"center", justifyContent:"center" }
     }, "✕")
+  );
+}
+
+// ── PUP NAME EDITOR ───────────────────────────────────────────
+// Inline name editor for litter pup rows. Shows a text input + 4 suggested names.
+function PupNameEditor(props) {
+  var pup = props.pup, onSave = props.onSave, onClose = props.onClose;
+  var _ns = _slicedToArray(useState(pup.name), 2), nameVal = _ns[0], setNameVal = _ns[1];
+  var _sg = _slicedToArray(useState(function(){ return generateDogNameSuggestions(pup.sex, 6); }), 2),
+    suggestions = _sg[0], setSuggestions = _sg[1];
+
+  function save() {
+    var n = nameVal.trim();
+    if (n) onSave(n);
+    onClose();
+  }
+
+  return React.createElement("div", {
+    style: { background:"#1e1408", border:"1px solid #6d28d9", borderRadius:8, padding:"10px 12px", marginTop:4 },
+    onClick: function(e){ e.stopPropagation(); }
+  },
+    React.createElement("div", { style:{ fontSize:"0.72rem", color:"#a78bfa", marginBottom:6, fontWeight:"bold" } }, "✏️ Name this pup"),
+    React.createElement("div", { style:{ display:"flex", gap:6, marginBottom:8 } },
+      React.createElement("input", {
+        value: nameVal,
+        onChange: function(e){ setNameVal(e.target.value); },
+        onKeyDown: function(e){ if (e.key==="Enter") save(); if (e.key==="Escape") onClose(); },
+        autoFocus: true,
+        placeholder: "Enter a name...",
+        style: { flex:1, background:"#2a1e14", border:"1px solid #4a3a28", color:"#f0e6d3",
+          borderRadius:5, padding:"4px 8px", fontSize:"0.82rem", outline:"none" }
+      }),
+      React.createElement("button", {
+        onClick: save,
+        style: { background:"#22c55e", border:"none", color:"#000", borderRadius:5, padding:"4px 10px",
+          cursor:"pointer", fontSize:"0.8rem", fontWeight:"bold" }
+      }, "Save")
+    ),
+    React.createElement("div", { style:{ fontSize:"0.68rem", color:"#6b5038", marginBottom:4 } }, "Suggestions:"),
+    React.createElement("div", { style:{ display:"flex", flexWrap:"wrap", gap:4, marginBottom:6 } },
+      suggestions.map(function(n){
+        return React.createElement("button", {
+          key: n,
+          onClick: function(){ setNameVal(n); },
+          style: { background:"#2a1e14", border:"1px solid #4a3a28", color:"#c4956a",
+            borderRadius:4, padding:"2px 8px", fontSize:"0.72rem", cursor:"pointer" }
+        }, n);
+      })
+    ),
+    React.createElement("button", {
+      onClick: function(){ setSuggestions(generateDogNameSuggestions(pup.sex, 6)); },
+      style: { background:"transparent", border:"none", color:"#4a3a28", fontSize:"0.68rem",
+        cursor:"pointer", padding:0, textDecoration:"underline" }
+    }, "↻ More names"),
+    React.createElement("button", {
+      onClick: onClose,
+      style: { background:"transparent", border:"none", color:"#4a3a28", fontSize:"0.68rem",
+        cursor:"pointer", padding:"0 0 0 12px", textDecoration:"underline" }
+    }, "Cancel")
   );
 }
 
@@ -4814,6 +4939,17 @@ function App() {
     }
     setLitter([]); setLitterSelected([]); setLitterIdx(0); setTab("kennel");
   };
+  // Rename a pup in the open litter
+  var renameLitterPup = function renameLitterPup(pupId, newName) {
+    setLitter(function(prev){ return prev.map(function(p){ return p.id===pupId ? Object.assign({},p,{name:newName}) : p; }); });
+  };
+  // Rename a pup in a whelping litter
+  var renameWhelpingPup = function renameWhelpingPup(litterId, pupId, newName) {
+    setWhelpingLitters(function(prev){ return prev.map(function(lit){
+      if (lit.litterId !== litterId) return lit;
+      return Object.assign({}, lit, { pups: lit.pups.map(function(p){ return p.id===pupId ? Object.assign({},p,{name:newName}) : p; }) });
+    }); });
+  };
   var placeHoldingPup = function placeHoldingPup(pupId) {
     if (!activeKennel) { alert("Select a kennel first!"); return; }
     if (isKennelFull(activeKennel.id)) { alert(activeKennel.name+" is full!"); return; }
@@ -5575,7 +5711,9 @@ function App() {
       color: "#4ade80", borderRadius: 8, padding: "8px 12px",
       cursor: "pointer", fontSize: "0.78rem", fontWeight: "bold", letterSpacing: "0.03em"
     }
-  }, "\uD83D\uDCC5 DEV: Force +1 Day (ages dogs & litters)"), tab === "openlitter" && /*#__PURE__*/React.createElement("div", { style: { position: "relative", overflowY: "auto", maxHeight: "calc(100vh - 130px)" } },
+  }, "\uD83D\uDCC5 DEV: Force +1 Day (ages dogs & litters)"), tab === "openlitter" && (function(){
+    var _editOL = _slicedToArray(useState(null), 2), editingPupId = _editOL[0], setEditingPupId = _editOL[1];
+    return /*#__PURE__*/React.createElement("div", { style: { position: "relative", overflowY: "auto", maxHeight: "calc(100vh - 130px)" } },
     litter.length === 0
       ? /*#__PURE__*/React.createElement("div", { style: { textAlign:"center", color:"#6b5038", padding:"60px 0" } },
           /*#__PURE__*/React.createElement("div", { style:{ fontSize:"2rem", marginBottom:10 } }, "\uD83D\uDC3E"),
@@ -5594,20 +5732,32 @@ function App() {
             ),
             litter.map(function(pup){
               var sel = litterSelected.includes(pup.id);
-              return /*#__PURE__*/React.createElement("div", { key: pup.id,
-                style: { display:"flex", alignItems:"center", gap:8, padding:"5px 8px", marginBottom:3,
-                  background: sel ? "#0a2a15" : "#241a10", borderRadius:6,
-                  border: "1px solid " + (sel ? "#22c55e" : "#2e2218"), cursor:"pointer" },
-                onClick: function(){ setLitterViewPup(pup); }
-              },
-                /*#__PURE__*/React.createElement("span", { style:{ color: sel?"#22c55e":"#c4956a", fontWeight:"bold", fontSize:"0.8rem", minWidth:120 } }, pup.name || (pup.breed + " Pup")),
-                /*#__PURE__*/React.createElement("span", { style:{ color:"#8a7055", fontSize:"0.72rem" } }, pup.breed),
-                /*#__PURE__*/React.createElement("span", { style:{ color: pup.sex==="M"?"#60a5fa":"#f472b6", fontSize:"0.72rem" } }, pup.sex==="M"?"\u2642":"\u2640"),
-                /*#__PURE__*/React.createElement("span", { style:{ color:"#6b5038", fontSize:"0.72rem", marginLeft:"auto" } }, "tap to view"),
+              var isEditing = editingPupId === pup.id;
+              return /*#__PURE__*/React.createElement("div", { key: pup.id, style:{ marginBottom:3 } },
                 /*#__PURE__*/React.createElement("div", {
-                  style: { background: sel?"#22c55e":"#4a3a28", color: sel?"#000":"#8a7055", borderRadius:4, padding:"2px 8px", fontSize:"0.7rem", fontWeight:"bold" },
-                  onClick: function(e){ e.stopPropagation(); toggleLitterSelect(pup.id); }
-                }, sel ? "\u2713 Keep" : "Select")
+                  style: { display:"flex", alignItems:"center", gap:8, padding:"5px 8px",
+                    background: sel ? "#0a2a15" : "#241a10", borderRadius:6,
+                    border: "1px solid " + (sel ? "#22c55e" : "#2e2218"), cursor:"pointer" },
+                  onClick: function(){ setLitterViewPup(pup); }
+                },
+                  /*#__PURE__*/React.createElement("span", { style:{ color: sel?"#22c55e":"#c4956a", fontWeight:"bold", fontSize:"0.8rem", minWidth:100 } }, pup.name),
+                  /*#__PURE__*/React.createElement("span", { style:{ color:"#8a7055", fontSize:"0.72rem" } }, pup.breed),
+                  /*#__PURE__*/React.createElement("span", { style:{ color: pup.sex==="M"?"#60a5fa":"#f472b6", fontSize:"0.72rem" } }, pup.sex==="M"?"\u2642":"\u2640"),
+                  /*#__PURE__*/React.createElement("button", {
+                    onClick: function(e){ e.stopPropagation(); setEditingPupId(isEditing ? null : pup.id); },
+                    style:{ background:"transparent", border:"none", color:"#6b5038", fontSize:"0.7rem",
+                      cursor:"pointer", padding:"0 4px", marginLeft:"auto" }
+                  }, "\u270F\uFE0F"),
+                  /*#__PURE__*/React.createElement("div", {
+                    style: { background: sel?"#22c55e":"#4a3a28", color: sel?"#000":"#8a7055", borderRadius:4, padding:"2px 8px", fontSize:"0.7rem", fontWeight:"bold" },
+                    onClick: function(e){ e.stopPropagation(); toggleLitterSelect(pup.id); }
+                  }, sel ? "\u2713 Keep" : "Select")
+                ),
+                isEditing && /*#__PURE__*/React.createElement(PupNameEditor, {
+                  pup: pup,
+                  onSave: function(n){ renameLitterPup(pup.id, n); },
+                  onClose: function(){ setEditingPupId(null); }
+                })
               );
             }),
             /*#__PURE__*/React.createElement("button", {
@@ -5631,8 +5781,10 @@ function App() {
             )
           )
         )
-  ),
-  tab === "whelping" && /*#__PURE__*/React.createElement("div", { style:{ overflowY:"auto", maxHeight:"calc(100vh - 130px)" } },
+  ); })(),
+  tab === "whelping" && (function(){
+    var _editWH = _slicedToArray(useState(null), 2), editingWHKey = _editWH[0], setEditingWHKey = _editWH[1];
+    return /*#__PURE__*/React.createElement("div", { style:{ overflowY:"auto", maxHeight:"calc(100vh - 130px)" } },
     !hasWhelpingKennel
       ? /*#__PURE__*/React.createElement("div", { style:{ textAlign:"center", color:"#6b5038", padding:"40px 20px" } },
           /*#__PURE__*/React.createElement("div", { style:{ fontSize:"2rem", marginBottom:12 } }, "\uD83C\uDFE5"),
@@ -5664,20 +5816,33 @@ function App() {
                 ),
                 lit.pups.map(function(pup){
                   var sel = lit.selectedIds.includes(pup.id);
-                  return /*#__PURE__*/React.createElement("div", { key: pup.id,
-                    style: { display:"flex", alignItems:"center", gap:8, padding:"5px 8px", marginBottom:3,
-                      background: sel ? "#1a0a2e" : "#241a10", borderRadius:6,
-                      border: "1px solid " + (sel ? "#7c3aed" : "#2e2218"), cursor:"pointer" },
-                    onClick: function(){ setLitterViewPup(pup); }
-                  },
-                    /*#__PURE__*/React.createElement("span", { style:{ color: sel?"#a78bfa":"#c4956a", fontWeight:"bold", fontSize:"0.8rem", minWidth:120 } }, pup.name || (pup.breed + " Pup")),
-                    /*#__PURE__*/React.createElement("span", { style:{ color:"#8a7055", fontSize:"0.72rem" } }, pup.breed),
-                    /*#__PURE__*/React.createElement("span", { style:{ color: pup.sex==="M"?"#60a5fa":"#f472b6", fontSize:"0.72rem" } }, pup.sex==="M"?"\u2642":"\u2640"),
-                    /*#__PURE__*/React.createElement("span", { style:{ color:"#6b5038", fontSize:"0.72rem", marginLeft:"auto" } }, "tap to view"),
+                  var whKey = lit.litterId + "_" + pup.id;
+                  var isEditingWH = editingWHKey === whKey;
+                  return /*#__PURE__*/React.createElement("div", { key: pup.id, style:{ marginBottom:3 } },
                     /*#__PURE__*/React.createElement("div", {
-                      style: { background: sel?"#7c3aed":"#4a3a28", color: sel?"#fff":"#8a7055", borderRadius:4, padding:"2px 8px", fontSize:"0.7rem", fontWeight:"bold" },
-                      onClick: function(e){ e.stopPropagation(); toggleWhelpSelect(lit.litterId, pup.id); }
-                    }, sel ? "\u2713 Keep" : "Select")
+                      style: { display:"flex", alignItems:"center", gap:8, padding:"5px 8px",
+                        background: sel ? "#1a0a2e" : "#241a10", borderRadius:6,
+                        border: "1px solid " + (sel ? "#7c3aed" : "#2e2218"), cursor:"pointer" },
+                      onClick: function(){ setLitterViewPup(pup); }
+                    },
+                      /*#__PURE__*/React.createElement("span", { style:{ color: sel?"#a78bfa":"#c4956a", fontWeight:"bold", fontSize:"0.8rem", minWidth:100 } }, pup.name),
+                      /*#__PURE__*/React.createElement("span", { style:{ color:"#8a7055", fontSize:"0.72rem" } }, pup.breed),
+                      /*#__PURE__*/React.createElement("span", { style:{ color: pup.sex==="M"?"#60a5fa":"#f472b6", fontSize:"0.72rem" } }, pup.sex==="M"?"\u2642":"\u2640"),
+                      /*#__PURE__*/React.createElement("button", {
+                        onClick: function(e){ e.stopPropagation(); setEditingWHKey(isEditingWH ? null : whKey); },
+                        style:{ background:"transparent", border:"none", color:"#6b5038", fontSize:"0.7rem",
+                          cursor:"pointer", padding:"0 4px", marginLeft:"auto" }
+                      }, "\u270F\uFE0F"),
+                      /*#__PURE__*/React.createElement("div", {
+                        style: { background: sel?"#7c3aed":"#4a3a28", color: sel?"#fff":"#8a7055", borderRadius:4, padding:"2px 8px", fontSize:"0.7rem", fontWeight:"bold" },
+                        onClick: function(e){ e.stopPropagation(); toggleWhelpSelect(lit.litterId, pup.id); }
+                      }, sel ? "\u2713 Keep" : "Select")
+                    ),
+                    isEditingWH && /*#__PURE__*/React.createElement(PupNameEditor, {
+                      pup: pup,
+                      onSave: function(n){ renameWhelpingPup(lit.litterId, pup.id, n); },
+                      onClose: function(){ setEditingWHKey(null); }
+                    })
                   );
                 }),
                 canWean && /*#__PURE__*/React.createElement("button", {
@@ -5702,7 +5867,7 @@ function App() {
               )
             )
           )
-  ),
+  ); })(),
   tab === "holding" && /*#__PURE__*/React.createElement("div", null,
     /*#__PURE__*/React.createElement("div", { style:{color:"#22c55e",fontWeight:"bold",fontSize:"1rem",marginBottom:10} }, "\uD83D\uDC3E Temporary Holding"),
     /*#__PURE__*/React.createElement("div", { style:{fontSize:"0.78rem",color:"#8a7055",marginBottom:12} }, "Pups here are aging. Move them to a kennel before they grow up unused!"),
