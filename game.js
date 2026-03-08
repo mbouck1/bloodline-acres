@@ -13607,10 +13607,7 @@ function Card(_ref0) {
     )
   ),
 
-  /*#__PURE__*/React.createElement("button", {
-    onClick: function onClick(e) { e.stopPropagation(); setShowDNA(true); },
-    style: { width: "100%", background: "none", border: "1px solid #3a2810", color: "#d4942a", borderRadius: 5, padding: "4px", cursor: "pointer", fontSize: "0.72rem" }
-  }, "View Full DNA Panel"));
+);
 }
 
 // ── MAIN APP ──────────────────────────────────────────────────
@@ -15183,7 +15180,7 @@ function App() {
   kennelOpen && /*#__PURE__*/React.createElement("div", {
     style: {
       position: "absolute", top: 0, left: 0, right: 0, bottom: 0,
-      background: "#2e2418", zIndex: 20, display: "flex", flexDirection: "column",
+      background: "#3d2f1e", zIndex: 20, display: "flex", flexDirection: "column",
       borderRadius: 10, overflow: "hidden"
     }
   },
@@ -15268,7 +15265,7 @@ function App() {
               onClick: function(e){ e.stopPropagation(); setKennelIdx(safeKennelIdx+dir); },
               disabled: disabled,
               style: { position:"absolute",top:8,left:dir<0?6:"auto",right:dir>0?6:"auto",
-                background:disabled?"rgba(15,23,42,0.3)":"rgba(15,23,42,0.85)",
+                background:disabled?"rgba(30,18,8,0.4)":"rgba(30,18,8,0.85)",
                 border:"1px solid "+(disabled?"#443828":"#4a3a28"),
                 color:disabled?"#3a2810":"#b09070",
                 borderRadius:8,width:38,height:38,cursor:disabled?"default":"pointer",
