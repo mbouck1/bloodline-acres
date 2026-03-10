@@ -6819,12 +6819,13 @@ function App() {
           var hs = a.healthScore || 0;
           var ps = a.performanceScore || 0;
           return /*#__PURE__*/React.createElement("div", { key: a.id,
-            style: { background: isSel ? "#4a3820" : "#352818", border: "1px solid "+(isSel?"#d4942a":reason?"#3a2e20":"#3a2e20"),
+            title: reason || "",
+            style: { background: isSel ? "#5a3e10" : "#352818", border: "2px solid "+(isSel?"#f0a030":reason?"#6a3a28":"#3a2e20"),
               borderRadius: 6, padding: "6px 8px", marginBottom: 4, cursor: reason?"not-allowed":"pointer",
-              opacity: reason ? 0.6 : 1 }
+              opacity: reason ? 0.55 : 1, boxShadow: isSel?"0 0 8px rgba(240,160,48,0.4)":"none" }
           },
             /*#__PURE__*/React.createElement("div", { style: { display: "flex", alignItems: "center", gap: 6 },
-              onClick: function(e){ e.stopPropagation(); if (!reason) { setSire(a); setBreedSireDna(null); } }
+              onClick: function(e){ e.stopPropagation(); selectAnimal(a); setBreedSireDna(null); }
             },
               /*#__PURE__*/React.createElement("span", { style: { fontSize: "1.1rem" } }, "\uD83D\uDC15"),
               /*#__PURE__*/React.createElement("div", { style: { flex: 1, minWidth: 0 } },
@@ -7063,12 +7064,13 @@ function App() {
           var ps = a.performanceScore || 0;
           var isPreg = !!(a.pregnantUntil && a.pregnantUntil > Date.now());
           return /*#__PURE__*/React.createElement("div", { key: a.id,
-            style: { background: isSel ? "#4a3820" : "#352818", border: "1px solid "+(isSel?"#f0c878":reason?"#3a2e20":"#3a2e20"),
+            title: reason || "",
+            style: { background: isSel ? "#5a3e10" : "#352818", border: "2px solid "+(isSel?"#f0a030":reason?"#6a3a28":"#3a2e20"),
               borderRadius: 6, padding: "6px 8px", marginBottom: 4, cursor: reason?"not-allowed":"pointer",
-              opacity: reason ? 0.6 : 1 }
+              opacity: reason ? 0.55 : 1, boxShadow: isSel?"0 0 8px rgba(240,160,48,0.4)":"none" }
           },
             /*#__PURE__*/React.createElement("div", { style: { display: "flex", alignItems: "center", gap: 6 },
-              onClick: function(e){ e.stopPropagation(); if (!reason) { setDam(a); setBreedDamDna(null); } }
+              onClick: function(e){ e.stopPropagation(); selectAnimal(a); setBreedDamDna(null); }
             },
               /*#__PURE__*/React.createElement("span", { style: { fontSize: "1.1rem" } }, "\uD83D\uDC29"),
               /*#__PURE__*/React.createElement("div", { style: { flex: 1, minWidth: 0 } },
