@@ -1138,7 +1138,7 @@ function HorsesView(props) {
 
   return React.createElement("div",{
     onClick:function(e){e.stopPropagation();},
-    style:{position:"fixed",inset:0,background:"#0e1208",zIndex:50,display:"flex",flexDirection:"column",overflow:"hidden"}
+    style:{position:"fixed",inset:0,background:"#0e1208",zIndex:80,display:"flex",flexDirection:"column",overflow:"hidden"}
   },
     // Header
     React.createElement("div",{style:{background:"#141008",borderBottom:"2px solid #2e4218",padding:"12px 18px",display:"flex",alignItems:"center",justifyContent:"space-between",flexShrink:0}},

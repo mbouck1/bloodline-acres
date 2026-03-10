@@ -6252,7 +6252,7 @@ function App() {
     }, "\uD83C\uDFD8 Farm"),
     /*#__PURE__*/React.createElement("button", {
       style: tabS("horses"),
-      onClick: function(){ setTab("horses"); }
+      onClick: function(e){ e.stopPropagation(); setTab("horses"); }
     }, "\uD83D\uDC0E Horses ("+(ownedLivestock||[]).filter(function(a){return a.species==="horse";}).length+")"),
     /*#__PURE__*/React.createElement("button", {
       style: tabS("shows"),
