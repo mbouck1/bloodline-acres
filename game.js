@@ -555,6 +555,19 @@ function interpretColor(genome) {
     if (merle) parts.push(dblM ? "Double Merle \u26A0\uFE0F" : "Merle");
   }
 
+  // Phantom/ghost tan — very faint tan expression on at dogs with low intensity (ii)
+  // Shows as a subtle trait note, not a full color override
+  var isAt = a1 === "at";
+  var lowIntensity = c.I && c.I[0] === "i" && c.I[1] === "i";
+  if (isAt && lowIntensity && !harl) {
+    // Replace "& Tan" with "& Ghost Tan" to signal pale/faint points
+    for (var pi = 0; pi < parts.length; pi++) {
+      if (parts[pi].indexOf("& Tan") !== -1) {
+        parts[pi] = parts[pi].replace("& Tan", "& Ghost Tan");
+      }
+    }
+  }
+
   // White spotting — ticking only on non-solid dogs
   if (c.S) {
     var s0=c.S[0],s1=c.S[1];
@@ -642,10 +655,28 @@ function calcPerfScore(genome) {
 function checkLethals(genome) {
   var w = [];
   var m = genome.coat.M;
-  if (m && m[0]==="M" && m[1]==="M") w.push("Double Merle: High risk of deafness/blindness");
+  var s = genome.coat.S;
   var h = genome.coat.H;
+  var e = genome.coat.E;
+
+  // Double merle
+  if (m && m[0]==="M" && m[1]==="M")
+    w.push({ msg:"Double Merle: High risk of deafness/blindness", sev:"high" });
+
+  // Harlequin + double merle = embryonic lethal risk
   if (h && (h[0]==="H"||h[1]==="H") && m && m[0]==="M" && m[1]==="M")
-    w.push("Harlequin + Double Merle: Embryonic lethal risk");
+    w.push({ msg:"Harlequin + Double Merle: Embryonic lethal risk", sev:"critical" });
+
+  // Extreme white (sw/sw) = deafness risk in pigmented breeds
+  if (s && s[0]==="sw" && s[1]==="sw")
+    w.push({ msg:"Extreme White: Deafness risk — lack of pigment in inner ear", sev:"high" });
+
+  // Cryptic merle: ee + M locus = recessive red that silently passes merle
+  var isEE = e && e[0]==="e" && e[1]==="e";
+  var hasMerle = m && (m[0]==="M" || m[1]==="M") && !(m[0]==="M" && m[1]==="M");
+  if (isEE && hasMerle)
+    w.push({ msg:"Cryptic Merle: Dog appears red/cream but carries merle — passes silently to offspring", sev:"warn" });
+
   return w;
 }
 
@@ -3034,11 +3065,28 @@ function BreedPhoto(_ref_bp) {
     fetchedUrl = _useState_bp3[0], setFetchedUrl = _useState_bp3[1];
   var breedName = animal.breed || "";
   var staticUrl = BREED_PHOTOS[breedName] || null;
+
+  // For mixed breeds, find the most common component breed and use that for photo
+  var photoBreed = breedName;
+  if (!staticUrl && breedName.includes("×")) {
+    var parts = breedName.split(" × ").map(function(s){ return s.trim(); });
+    var freq = {};
+    parts.forEach(function(b){ freq[b] = (freq[b] || 0) + 1; });
+    var dominant = parts.reduce(function(a, b){ return (freq[a]||0) >= (freq[b]||0) ? a : b; });
+    // Walk up sire/dam breed chain if dominant still mixed
+    if (dominant.includes("×")) dominant = dominant.split(" × ")[0].trim();
+    photoBreed = dominant;
+  }
+
   useEffect(function() {
-    if (!staticUrl && DOG_CEO_MAP[breedName]) {
-      fetchDogPhoto(breedName, function(url) { setFetchedUrl(url); }, function() {});
+    if (!staticUrl) {
+      if (DOG_CEO_MAP[photoBreed]) {
+        fetchDogPhoto(photoBreed, function(url) { setFetchedUrl(url); }, function() {});
+      } else if (photoBreed !== breedName && DOG_CEO_MAP[breedName]) {
+        fetchDogPhoto(breedName, function(url) { setFetchedUrl(url); }, function() {});
+      }
     }
-  }, [breedName]);
+  }, [breedName, photoBreed]);
   var photoUrl = staticUrl || fetchedUrl;
   if (!photoUrl || imgErr) {
     return /*#__PURE__*/React.createElement("div", {
@@ -3746,19 +3794,23 @@ function Card(_ref0) {
       }
     }, "\u26A0\uFE0F ", iss.name);
   }), (_animal$lethalWarning = animal.lethalWarnings) === null || _animal$lethalWarning === void 0 ? void 0 : _animal$lethalWarning.map(function (w, i) {
+    var wMsg = typeof w === "string" ? w : w.msg;
+    var wSev = typeof w === "string" ? "high" : (w.sev || "high");
+    var wCol = wSev === "critical" ? "#ff6b6b" : wSev === "warn" ? "#fde68a" : "#fca5a5";
+    var wBg  = wSev === "warn" ? "#2d1e00" : "#481808";
     return /*#__PURE__*/React.createElement("span", {
       key: i,
       style: {
         display: "inline-block",
-        background: "#481808",
-        color: "#fca5a5",
+        background: wBg,
+        color: wCol,
         fontSize: "0.62rem",
         borderRadius: 3,
         padding: "1px 5px",
         marginRight: 3,
         marginBottom: 3
       }
-    }, "\u2620\uFE0F ", w.msg);
+    }, wSev === "critical" ? "\u2620\uFE0F " : wSev === "warn" ? "\u26A0\uFE0F " : "\u2620\uFE0F ", wMsg);
   }), ((_animal$mutations2 = animal.mutations) === null || _animal$mutations2 === void 0 ? void 0 : _animal$mutations2.length) > 0 && animal.mutations.map(function (m, i) {
     return /*#__PURE__*/React.createElement("span", {
       key: i,
@@ -5075,7 +5127,7 @@ function App() {
       return [{ id: now, type: "breed", sire: sire.name, dam: dam.name, count: pups.length,
         date: new Date().toLocaleString(),
         muts: pups.flatMap(function(x){ return x.mutations; }).length,
-        critFlags: pups.filter(function(x){ var _w; return ((_w=x.lethalWarnings)===null||_w===void 0?void 0:_w.length)>0; }).length,
+        critFlags: pups.filter(function(x){ var _w; return ((_w=x.lethalWarnings)===null||_w===void 0?void 0:_w.some(function(w){ return (typeof w==="string"?w:w.sev)!=="warn"; })); }).length,
         stillborn: hadStillborn ? 1 : 0
       }].concat(_toConsumableArray(p));
     });
