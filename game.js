@@ -485,6 +485,7 @@ function interpretColor(genome) {
   var dilute = c.D && c.D[0]==="d" && c.D[1]==="d";
   var merle  = c.M && (c.M[0]==="M" || c.M[1]==="M");
   var dblM   = c.M && c.M[0]==="M" && c.M[1]==="M";
+  // Harlequin only valid with merle, and simplifies to just "Harlequin" (not "Black · Merle · Harlequin")
   var harl   = c.H && (c.H[0]==="H" || c.H[1]==="H") && merle;
 
   function eumelanin() {
@@ -500,15 +501,24 @@ function interpretColor(genome) {
   if (ee) {
     var intensity = c.I && c.I[0]==="i" && c.I[1]==="i";
     parts.push(intensity ? "Cream" : dilute ? "Yellow" : "Red/Yellow");
-    if (merle) parts.push(dblM ? "Double Merle \u26A0\uFE0F" : "Merle");
+    if (merle && !harl) parts.push(dblM ? "Double Merle \u26A0\uFE0F" : "Merle");
+    if (harl) parts.push("Harlequin");
+    if (dblM && harl) parts.push("Double Merle \u26A0\uFE0F");
     return parts.join(" \xB7 ");
   }
 
   // STEP 2: K — dominant black skips A
   if (hasKB) {
-    parts.push(kbrHet ? "Brindle" : eumelanin());
-    if (merle) parts.push(dblM ? "Double Merle \u26A0\uFE0F" : "Merle");
-    if (harl) parts.push("Harlequin");
+    if (harl) {
+      // Harlequin supersedes — just call it Harlequin
+      parts.push("Harlequin");
+      if (dblM) parts.push("Double Merle \u26A0\uFE0F");
+    } else {
+      var base = eumelanin();
+      // Brindle with base color prefix: "Black Brindle", "Blue Brindle", etc.
+      parts.push(kbrHet ? base + " Brindle" : base);
+      if (merle) parts.push(dblM ? "Double Merle \u26A0\uFE0F" : "Merle");
+    }
     return parts.join(" \xB7 ");
   }
 
@@ -517,35 +527,68 @@ function interpretColor(genome) {
   var saddle = c.As && (c.As[0]==="N" || c.As[1]==="N") && a1==="at";
   var base   = eumelanin();
 
-  if (kbrHet) {
-    parts.push("Brindle");
+  if (harl) {
+    parts.push("Harlequin");
+    if (dblM) parts.push("Double Merle \u26A0\uFE0F");
+  } else if (kbrHet) {
+    // Brindle on tan/fawn areas — prefix with base color
+    if (a1==="Ay") {
+      parts.push(dilute ? "Fawn Brindle" : "Sable Brindle");
+    } else if (a1==="at") {
+      parts.push(base + " Brindle & Tan");
+    } else {
+      parts.push(base + " Brindle");
+    }
+    if (merle) parts.push(dblM ? "Double Merle \u26A0\uFE0F" : "Merle");
   } else if (a1==="Ay") {
     parts.push(dilute ? "Fawn" : "Sable/Fawn");
+    if (merle) parts.push(dblM ? "Double Merle \u26A0\uFE0F" : "Merle");
   } else if (a1==="aw") {
     parts.push("Wolf Sable");
+    if (merle) parts.push(dblM ? "Double Merle \u26A0\uFE0F" : "Merle");
   } else if (a1==="at") {
     parts.push(saddle ? base+" & Tan (Saddle)" : base+" & Tan");
+    if (merle) parts.push(dblM ? "Double Merle \u26A0\uFE0F" : "Merle");
   } else {
-    parts.push(base); // aa recessive black
+    // aa = recessive black — label it explicitly
+    parts.push("Recessive Black");
+    if (merle) parts.push(dblM ? "Double Merle \u26A0\uFE0F" : "Merle");
   }
 
-  // Merle/harl overlay
-  if (merle) parts.push(dblM ? "Double Merle \u26A0\uFE0F" : "Merle");
-  if (harl) parts.push("Harlequin");
-
-  // White spotting
+  // White spotting — ticking only on non-solid dogs
   if (c.S) {
     var s0=c.S[0],s1=c.S[1];
     if (s0==="sw"||s1==="sw") parts.push("Mostly White");
     else if (s0==="sp"||s1==="sp") parts.push("Piebald");
   }
-  if (c.T) {
+  var hasWhite = parts.some(function(p){ return p==="Mostly White"||p==="Piebald"; });
+  if (c.T && hasWhite) {
     var t0=c.T[0],t1=c.T[1];
     if (t0==="TR"||t1==="TR") parts.push("Roan");
     else if (t0==="T"||t1==="T") parts.push("Ticked");
   }
 
   return parts.join(" \xB7 ") || "Unknown";
+}
+
+// Returns coat structure traits (length, texture, curl) as an array of label strings
+// Used by Card to render trait pills — separate from color so resolveBreedColor isn't polluted
+function getCoatTraits(genome) {
+  var c = genome.coat;
+  if (!c) return [];
+  var traits = [];
+  // Length — ll = long coat
+  if (c.L && c.L[0]==="l" && c.L[1]==="l") traits.push({ label: "Long Coat", icon: "\uD83E\uDDF6" });
+  // Wire/Furnishings — W_ = wire or furnishings (beard, eyebrows)
+  if (c.W && (c.W[0]==="W" || c.W[1]==="W")) traits.push({ label: "Wire/Furnishings", icon: "\uD83E\uDDA1" });
+  // Curl — CuCu = tight curl, Cucu = wavy
+  if (c.Cu) {
+    if (c.Cu[0]==="Cu" && c.Cu[1]==="Cu") traits.push({ label: "Curly", icon: "\uD83C\uDF00" });
+    else if (c.Cu[0]==="Cu" || c.Cu[1]==="Cu") traits.push({ label: "Wavy", icon: "\uD83C\uDF00" });
+  }
+  // Intensity — ii = cream/pale modifier worth noting as a trait
+  if (c.I && c.I[0]==="i" && c.I[1]==="i") traits.push({ label: "Pale Pigment", icon: "\u2728" });
+  return traits;
 }
 
 // ── HEALTH SCORE ──────────────────────────────────────────────
@@ -3445,7 +3488,23 @@ function Card(_ref0) {
       style: { display:"inline-block", background:"#1a1410", border:"1px solid #3a2810",
         borderRadius:4, padding:"3px 10px", fontSize:"0.82rem", color:"#b09070", marginRight:4 }
     }, animal.coatColor ? animal.coatColor.split(" \xB7 ").join(" \u00B7 ") : "Unknown")
-  ), (function() {
+  ),
+  // Coat structure trait pills (Long Coat, Wire, Curly, Wavy, Pale Pigment)
+  (function() {
+    if (!animal.genome) return null;
+    var traits = getCoatTraits(animal.genome);
+    if (!traits.length) return null;
+    return React.createElement("div", { style: { display:"flex", flexWrap:"wrap", gap:4, marginBottom:6 } },
+      traits.map(function(t, i) {
+        return React.createElement("span", {
+          key: i,
+          style: { display:"inline-block", background:"#1a1e2a", border:"1px solid #3a4a6a",
+            borderRadius:3, padding:"2px 7px", fontSize:"0.65rem", color:"#93c5fd",
+            fontWeight:"bold" }
+        }, t.icon + " " + t.label);
+      })
+    );
+  })(),
     var stage = getAgeStage(animal.ageMonths || 0);
     var lifespanYrs = animal.lifespan ? Math.round(animal.lifespan / 12 * 10) / 10 : "?";
     var ageYrs = animal.ageMonths ? Math.round(animal.ageMonths / 12 * 10) / 10 : 0;
@@ -5700,11 +5759,47 @@ function App() {
     else if (sameSex) warnings.push("⚠️ Both selected animals are the same sex");
     if (sireReason) warnings.push("⚠️ Sire ineligible: " + sireReason);
     if (damReason) warnings.push("⚠️ Dam ineligible: " + damReason);
+
+    // Health loci breeding warnings
+    if (sire && dam && sire.genome && dam.genome) {
+      var REC_HEALTH = ["MDR1","PRA","DM","vWD"];
+      var HEALTH_NAMES = { MDR1:"MDR1 Drug Sensitivity", PRA:"Progressive Retinal Atrophy", DM:"Degenerative Myelopathy", vWD:"von Willebrand Disease" };
+      REC_HEALTH.forEach(function(loc) {
+        var sh = sire.genome.health[loc];
+        var dh = dam.genome.health[loc];
+        if (!sh || !dh) return;
+        var sireAff = sh[0]==="n" && sh[1]==="n";
+        var damAff  = dh[0]==="n" && dh[1]==="n";
+        var sireCar = !sireAff && (sh[0]==="n" || sh[1]==="n");
+        var damCar  = !damAff  && (dh[0]==="n" || dh[1]==="n");
+        if (sireAff && damAff)        warnings.push("🔴 Both parents AFFECTED with " + loc + " (" + HEALTH_NAMES[loc] + ") — all pups affected");
+        else if (sireAff && damCar)   warnings.push("🔴 Sire AFFECTED × Dam CARRIER " + loc + " — 50% chance of affected pups");
+        else if (sireCar && damAff)   warnings.push("🔴 Sire CARRIER × Dam AFFECTED " + loc + " — 50% chance of affected pups");
+        else if (sireAff || damAff)   warnings.push("🟡 One parent AFFECTED with " + loc + " — 50% of pups will be carriers");
+        else if (sireCar && damCar)   warnings.push("🟡 Both parents CARRY " + loc + " (" + HEALTH_NAMES[loc] + ") — 25% chance of affected pups");
+      });
+      // Quality loci warnings
+      var QUAL_LOCI_W = ["HipQ","EyeQ","HeartQ","JointQ"];
+      var QUAL_NAMES = { HipQ:"Hip Quality", EyeQ:"Eye Health", HeartQ:"Cardiac Health", JointQ:"Joint Health" };
+      QUAL_LOCI_W.forEach(function(loc) {
+        var sh = sire.genome.health[loc];
+        var dh = dam.genome.health[loc];
+        if (!sh || !dh) return;
+        var sirePoor = sh[0]==="g" && sh[1]==="g";
+        var damPoor  = dh[0]==="g" && dh[1]==="g";
+        if (sirePoor && damPoor) warnings.push("🔴 Both parents have POOR " + QUAL_NAMES[loc] + " — high risk of affected offspring");
+      });
+    }
+
     if (warnings.length === 0) return null;
+    var hasCritical = warnings.some(function(w){ return w.startsWith("🔴"); });
     return /*#__PURE__*/React.createElement("div", {
       style: {
-        background: "#2d1a00", border: "1px solid #d4860a", borderRadius: 8,
-        padding: "10px 14px", marginBottom: 12, fontSize: "0.82rem", color: "#f0c040"
+        background: hasCritical ? "#2d0a00" : "#2d1a00",
+        border: "1px solid " + (hasCritical ? "#ef4444" : "#d4860a"),
+        borderRadius: 8,
+        padding: "10px 14px", marginBottom: 12, fontSize: "0.82rem",
+        color: hasCritical ? "#fca5a5" : "#f0c040"
       }
     }, warnings.map(function(w, i) {
       return /*#__PURE__*/React.createElement("div", { key: i }, w);
