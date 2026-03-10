@@ -2316,47 +2316,32 @@ function DNAModal(_ref5) {
     var al = animal.genome.health[loc];
     if (!al) return null;
     var d = getDesc(HEALTH_LOCI, loc, al);
-    var aff = d.includes("⚠️");
-    var car = d.includes("Carrier");
+    var isQual = ["HipQ","EyeQ","HeartQ","JointQ"].indexOf(loc) !== -1;
+    var statusLabel, statusColor, statusBg, borderCol;
+    if (isQual) {
+      if (al[0]==="g"&&al[1]==="g")      { statusLabel="Poor";      statusColor="#fca5a5"; statusBg="#481808"; borderCol="#ef4444"; }
+      else if (al[0]==="g"||al[1]==="g") { statusLabel="Good";      statusColor="#d9f99d"; statusBg="#1a1e0a"; borderCol="#65a30d"; }
+      else                                { statusLabel="Excellent"; statusColor="#86efac"; statusBg="#0f2010"; borderCol="#166534"; }
+    } else {
+      if (al[0]==="n"&&al[1]==="n")      { statusLabel="Affected";  statusColor="#fca5a5"; statusBg="#481808"; borderCol="#ef4444"; }
+      else if (al[0]==="n"||al[1]==="n") { statusLabel="Carrier";   statusColor="#fde68a"; statusBg="#2d1e00"; borderCol="#ca8a04"; }
+      else                                { statusLabel="Clear";     statusColor="#86efac"; statusBg="#0f2010"; borderCol="#166534"; }
+    }
     return /*#__PURE__*/React.createElement("div", {
       key: loc,
-      style: {
-        background: aff ? "#481808" : "#443828",
-        border: "1px solid ".concat(aff ? "#ef4444" : car ? "#ca8a04" : "#4a3a28"),
-        borderRadius: 6,
-        padding: 8
-      }
-    }, /*#__PURE__*/React.createElement("div", {
-      style: {
-        display: "flex",
-        justifyContent: "space-between",
-        alignItems: "center"
-      }
-    }, /*#__PURE__*/React.createElement("span", {
-      style: {
-        color: "#22c55e",
-        fontWeight: "bold",
-        fontSize: "0.78rem"
-      }
-    }, loc), /*#__PURE__*/React.createElement("span", {
-      style: {
-        fontFamily: "monospace",
-        color: "#f0e6d3",
-        fontSize: "0.82rem"
-      }
-    }, al[0], "/", al[1])), /*#__PURE__*/React.createElement("div", {
-      style: {
-        color: "#8a7055",
-        fontSize: "0.68rem",
-        marginTop: 2
-      }
-    }, ld.name), /*#__PURE__*/React.createElement("div", {
-      style: {
-        color: aff ? "#fca5a5" : car ? "#f5d870" : "#cbd5e1",
-        fontSize: "0.7rem",
-        marginTop: 2
-      }
-    }, d));
+      style: { background: statusBg, border: "1px solid " + borderCol, borderRadius: 6, padding: 8 }
+    },
+      React.createElement("div", { style: { display:"flex", justifyContent:"space-between", alignItems:"center", marginBottom:2 } },
+        React.createElement("span", { style: { color: statusColor, fontWeight:"bold", fontSize:"0.78rem" } }, loc),
+        React.createElement("span", { style: { fontFamily:"monospace", color:"#f0e6d3", fontSize:"0.82rem" } }, al[0], "/", al[1])
+      ),
+      React.createElement("div", { style: { display:"inline-block", background:"rgba(0,0,0,0.3)",
+        border:"1px solid "+borderCol, borderRadius:3, padding:"1px 6px",
+        fontSize:"0.68rem", color:statusColor, fontWeight:"bold", marginBottom:3 }
+      }, statusLabel),
+      React.createElement("div", { style: { color:"#8a7055", fontSize:"0.65rem", marginBottom:2 } }, ld.name),
+      React.createElement("div", { style: { color:"#b09070", fontSize:"0.68rem" } }, d)
+    );
   })), /*#__PURE__*/React.createElement("div", {
     style: {
       color: "#c4956a",
@@ -3626,6 +3611,91 @@ function Card(_ref0) {
       }
     }, "\u26A1 ", m.desc || m.loc, " (from ", m.src, ")");
   }),
+
+  (function() {
+    if (!animal.genome || !animal.genome.health) return null;
+    var h = animal.genome.health;
+
+    // Build status for each locus
+    function recStatus(loc) {
+      var al = h[loc]; if (!al) return null;
+      if (al[0]==="n" && al[1]==="n") return "affected";
+      if (al[0]==="n" || al[1]==="n") return "carrier";
+      return "clear";
+    }
+    function qualStatus(loc) {
+      var al = h[loc]; if (!al) return null;
+      if (al[0]==="g" && al[1]==="g") return "poor";
+      if (al[0]==="g" || al[1]==="g") return "good";
+      return "excellent";
+    }
+
+    var REC_LOCI = ["MDR1","PRA","DM","vWD"];
+    var QUAL_LOCI = ["HipQ","EyeQ","HeartQ","JointQ"];
+    var QUAL_LABELS = { HipQ:"Hips", EyeQ:"Eyes", HeartQ:"Heart", JointQ:"Joints" };
+
+    var STATUS_STYLE = {
+      affected: { bg:"#481808", border:"#ef4444", color:"#fca5a5", label:"Affected" },
+      carrier:  { bg:"#2d1e00", border:"#ca8a04", color:"#fde68a", label:"Carrier"  },
+      clear:    { bg:"#0f2010", border:"#166534", color:"#86efac", label:"Clear"    },
+      excellent:{ bg:"#0f2010", border:"#166534", color:"#86efac", label:"Excellent"},
+      good:     { bg:"#1a1e0a", border:"#65a30d", color:"#d9f99d", label:"Good"     },
+      poor:     { bg:"#481808", border:"#ef4444", color:"#fca5a5", label:"Poor"     }
+    };
+
+    var recBadges = REC_LOCI.map(function(loc) {
+      var st = recStatus(loc); if (!st) return null;
+      var s = STATUS_STYLE[st];
+      return React.createElement("span", {
+        key: loc,
+        title: loc + ": " + s.label,
+        style: { display:"inline-block", background:s.bg, border:"1px solid "+s.border,
+          color:s.color, borderRadius:3, padding:"1px 5px", fontSize:"0.62rem",
+          fontWeight:"bold", marginRight:3, marginBottom:3, cursor:"help" }
+      }, loc + " · " + s.label);
+    }).filter(Boolean);
+
+    var qualBadges = QUAL_LOCI.map(function(loc) {
+      var st = qualStatus(loc); if (!st) return null;
+      if (st === "excellent") return null; // only show if not perfect
+      var s = STATUS_STYLE[st];
+      return React.createElement("span", {
+        key: loc,
+        title: QUAL_LABELS[loc] + ": " + s.label,
+        style: { display:"inline-block", background:s.bg, border:"1px solid "+s.border,
+          color:s.color, borderRadius:3, padding:"1px 5px", fontSize:"0.62rem",
+          fontWeight:"bold", marginRight:3, marginBottom:3, cursor:"help" }
+      }, QUAL_LABELS[loc] + " · " + s.label);
+    }).filter(Boolean);
+
+    // Carrier warning strip — only show if any carriers or affected
+    var carriers = REC_LOCI.filter(function(loc){ return recStatus(loc)==="carrier"; });
+    var affected = REC_LOCI.filter(function(loc){ return recStatus(loc)==="affected"; });
+
+    var hasIssues = recBadges.some(function(b){ return b; }) || qualBadges.length > 0;
+    if (!hasIssues && carriers.length === 0 && affected.length === 0) return null;
+
+    return React.createElement(React.Fragment, null,
+      // Health genetics badge row
+      (recBadges.length > 0 || qualBadges.length > 0) && React.createElement("div", {
+        style: { display:"flex", flexWrap:"wrap", marginBottom:3 }
+      }, recBadges, qualBadges),
+
+      // Carrier/Affected strip at bottom of card
+      (carriers.length > 0 || affected.length > 0) && React.createElement("div", {
+        style: {
+          background: affected.length > 0 ? "#481808" : "#2d1e00",
+          border: "1px solid " + (affected.length > 0 ? "#ef4444" : "#ca8a04"),
+          borderRadius: 4, padding: "3px 8px", marginBottom: 4,
+          fontSize: "0.65rem", color: affected.length > 0 ? "#fca5a5" : "#fde68a"
+        }
+      },
+        affected.length > 0
+          ? "🔴 Affected: " + affected.join(", ") + (carriers.length > 0 ? " · 🟡 Carrier: " + carriers.join(", ") : "")
+          : "🟡 Carrier: " + carriers.join(", ")
+      )
+    );
+  })(),
 
   animal.aptitudes && animal.aptitudes.length > 0 && /*#__PURE__*/React.createElement("div", { style: { marginBottom: 10 } },
     /*#__PURE__*/React.createElement("div", { style: { color: "#8a7055", fontSize: "0.78rem", textTransform: "uppercase", letterSpacing: "0.05em", marginBottom: 5 } }, "Aptitudes"),
