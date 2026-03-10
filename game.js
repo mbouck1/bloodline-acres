@@ -939,7 +939,23 @@ function breedPair(sire, dam) {
   var damRange = LITTER_RANGES[dam.litterSize || "M"];
   var minN = Math.round((sireRange[0] + damRange[0]) / 2);
   var maxN = Math.round((sireRange[1] + damRange[1]) / 2);
+
+  // COI litter size penalty (Priority 3c)
+  var estCOI = (function() {
+    var avg = ((sire.coi || 0) + (dam.coi || 0)) / 2;
+    if (sire.sireId && (sire.sireId === dam.sireId || sire.sireId === dam.damId)) avg += 12.5;
+    if (sire.damId  && (sire.damId  === dam.sireId || sire.damId  === dam.damId))  avg += 12.5;
+    return Math.min(avg, 62.5);
+  })();
+  var stillbornRisk = false;
+  if (estCOI >= 50)        { minN = Math.max(1, minN - 2); maxN = Math.max(1, maxN - 3); stillbornRisk = true; }
+  else if (estCOI >= 25)   { minN = Math.max(1, minN - 1); maxN = Math.max(1, maxN - 2); }
+  else if (estCOI >= 12.5) { maxN = Math.max(minN, maxN - 1); }
+
   var n = minN + Math.floor(Math.random() * (maxN - minN + 1));
+  var hadStillborn = false;
+  if (stillbornRisk && Math.random() < 0.35 && n > 1) { n = n - 1; hadStillborn = true; }
+
   return Array.from({
     length: n
   }, function (_, i) {
@@ -4971,7 +4987,8 @@ function App() {
       return [{ id: now, type: "breed", sire: sire.name, dam: dam.name, count: pups.length,
         date: new Date().toLocaleString(),
         muts: pups.flatMap(function(x){ return x.mutations; }).length,
-        critFlags: pups.filter(function(x){ var _w; return ((_w=x.lethalWarnings)===null||_w===void 0?void 0:_w.length)>0; }).length
+        critFlags: pups.filter(function(x){ var _w; return ((_w=x.lethalWarnings)===null||_w===void 0?void 0:_w.length)>0; }).length,
+        stillborn: hadStillborn ? 1 : 0
       }].concat(_toConsumableArray(p));
     });
   };
@@ -5831,6 +5848,12 @@ function App() {
       color: (function(){ var coi = calcCOI(sire.id, dam.id, animals); return coi >= 25 ? "#ef4444" : coi >= 12.5 ? "#f97316" : coi >= 6 ? "#eab308" : "#22c55e"; })()
     } }, (function(){ var coi = calcCOI(sire.id, dam.id, animals); return coi + "% — " + (coi >= 25 ? "⚠️ Extreme" : coi >= 12.5 ? "⚠️ High" : coi >= 6 ? "⚡ Elevated" : "✅ Safe"); })())
   ),
+  (function(){
+    var coi = calcCOI(sire.id, dam.id, animals);
+    if (coi < 12.5) return null;
+    var msg = coi >= 50 ? "\uD83D\uDCA7 Extreme inbreeding \u2014 litter size reduced 2\u20133 pups, stillborn risk" : coi >= 25 ? "\uD83D\uDCA7 High COI \u2014 litter size reduced 1\u20132 pups" : "\uD83D\uDCA7 Elevated COI \u2014 litter may be 1 pup smaller";
+    return React.createElement("div", { style: { marginTop: 4, padding: "5px 14px", borderRadius: 6, fontSize: "0.75rem", background: "#2a1008", border: "1px solid #f97316", color: "#fdba74" } }, msg);
+  })(),
   sire && dam && sire.sex !== dam.sex && sire.id !== dam.id && /*#__PURE__*/React.createElement("button", {
     onClick: doBreed,
     title: "DEV MODE: Bypasses heat cycle and eligibility checks",
@@ -6161,7 +6184,8 @@ function App() {
                 /*#__PURE__*/React.createElement("div", { style: { display:"flex", gap:12, flexWrap:"wrap", marginTop:4 } },
                   /*#__PURE__*/React.createElement("span", { style: { color:"#22c55e", fontSize:"0.8rem" } }, "\uD83D\uDC36 " + e.count + " pups"),
                   e.muts > 0 && /*#__PURE__*/React.createElement("span", { style: { color:"#fb923c", fontSize:"0.8rem" } }, "\u26A1 " + e.muts + " mutation" + (e.muts!==1?"s":"")),
-                  e.critFlags > 0 && /*#__PURE__*/React.createElement("span", { style: { color:"#ef4444", fontSize:"0.8rem" } }, "\uD83D\uDEA8 " + e.critFlags + " critical health flag" + (e.critFlags!==1?"s":""))
+                  e.critFlags > 0 && /*#__PURE__*/React.createElement("span", { style: { color:"#ef4444", fontSize:"0.8rem" } }, "\uD83D\uDEA8 " + e.critFlags + " critical health flag" + (e.critFlags!==1?"s":"")),
+                  e.stillborn > 0 && /*#__PURE__*/React.createElement("span", { style: { color:"#94a3b8", fontSize:"0.8rem" } }, "\uD83D\uDCA7 1 stillborn (high COI)")
                 )
               ),
               // REHOME entry
