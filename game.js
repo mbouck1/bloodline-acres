@@ -3332,7 +3332,10 @@ function Card(_ref0) {
       height: fullHeight ? "100%" : "auto",
       boxSizing: "border-box",
       overflow: "auto",
-      boxShadow: isSelected ? "0 0 14px rgba(212,148,42,0.25)" : "0 2px 6px rgba(0,0,0,0.4)"
+      boxShadow: isSelected ? "0 0 14px rgba(212,148,42,0.25)" : "0 2px 6px rgba(0,0,0,0.4)",
+      resize: "both",
+      minWidth: 220,
+      minHeight: 120
     }
   },
   /*#__PURE__*/React.createElement("div", {
