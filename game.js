@@ -4463,7 +4463,8 @@ function ShowsView(_ref_sv) {
       onLog = _ref_sv.onLog || function(){},
       gameStartDate = _ref_sv.gameStartDate || Date.now(),
       lastShowDates = _ref_sv.lastShowDates || {},
-      onShowDatesUpdate = _ref_sv.onShowDatesUpdate || function(){};
+      onShowDatesUpdate = _ref_sv.onShowDatesUpdate || function(){},
+      onClose = _ref_sv.onClose || function(){};
 
   var _useState_sv1 = _slicedToArray(useState(null), 2), selectedDog = _useState_sv1[0], setSelectedDog = _useState_sv1[1];
   var _useState_sv2 = _slicedToArray(useState("conformation"), 2), selectedClass = _useState_sv2[0], setSelectedClass = _useState_sv2[1];
@@ -4542,8 +4543,13 @@ function ShowsView(_ref_sv) {
     React.createElement("div", { style:{ display:"flex", alignItems:"center", gap:12, marginBottom:16 } },
       React.createElement("span", { style:{ fontSize:"1.4rem" } }, "🎀"),
       React.createElement("h2", { style:{ margin:0, color:"#f5d870", fontSize:"1.1rem" } }, "Dog Shows"),
-      React.createElement("span", { style:{ marginLeft:"auto", color:"#b09070", fontSize:"0.8rem" } },
-        "Balance: ", React.createElement("strong", { style:{color:"#4ade80"} }, "$"+money.toLocaleString()))
+      React.createElement("span", { style:{ marginLeft:"auto", color:"#b09070", fontSize:"0.8rem", marginRight:12 } },
+        "Balance: ", React.createElement("strong", { style:{color:"#4ade80"} }, "$"+money.toLocaleString())),
+      React.createElement("button", {
+        onClick: onClose,
+        style:{ background:"#2a1a10", border:"1px solid #4a3a28", color:"#b09070",
+          borderRadius:6, padding:"4px 12px", cursor:"pointer", fontSize:"0.85rem" }
+      }, "\u2715 Close")
     ),
 
     // Class selector
@@ -6924,7 +6930,9 @@ function App() {
     }
   }, "\uD83E\uDDEC 8 coat loci \xB7 8 health loci \xB7 5 perf QTLs \xB7 0.5% mutation rate \xB7 COI tracking"),
   /*#__PURE__*/React.createElement(Clock, { gameStartDate: gameStartDate }),
-  tab === "shows" && /*#__PURE__*/React.createElement(ShowsView, {
+  tab === "shows" && /*#__PURE__*/React.createElement("div", {
+    style: { position:"fixed", inset:0, background:"#1a140e", zIndex:50, overflow:"auto", padding:12 }
+  }, /*#__PURE__*/React.createElement(ShowsView, {
     animals: animals.filter(function(a){ return !a.retired; }),
     money: money,
     onMoneyChange: setMoney,
@@ -6934,8 +6942,9 @@ function App() {
     onLog: function(entry){ setLog(function(lg){ return [entry].concat(_toConsumableArray(lg)); }); },
     gameStartDate: gameStartDate,
     lastShowDates: lastShowDates || {},
-    onShowDatesUpdate: setLastShowDates
-  }),
+    onShowDatesUpdate: setLastShowDates,
+    onClose: function(){ setTab("kennel"); }
+  })),
   tab === "farm" && /*#__PURE__*/React.createElement("div", {
     style: { position:"fixed", inset:0, background:"#141008", zIndex:50, overflow:"hidden", display:"flex", alignItems:"center", justifyContent:"center" }
   }, /*#__PURE__*/React.createElement(FarmView, {
