@@ -3618,6 +3618,70 @@ function Card(_ref0) {
       borderRadius:4, padding:"5px 0", marginBottom:7, cursor:"pointer",
       fontSize:"0.78rem", fontWeight:"bold", letterSpacing:"0.03em" }
   }, "\uD83D\uDC3E Pedigree"),
+  // QTL mini bars on card
+  (function() {
+    if (!animal.genome || !animal.genome.perf) return null;
+    var QTL_META = [
+      { key:"DRIVE",  icon:"\uD83C\uDFAF", label:"Drive"  },
+      { key:"INTEL",  icon:"\uD83E\uDDE0", label:"Intel"  },
+      { key:"NERVE",  icon:"\u26A1",        label:"Nerve"  },
+      { key:"SPEED",  icon:"\uD83D\uDCA8", label:"Speed"  },
+      { key:"MUSCLE", icon:"\uD83D\uDCAA", label:"Muscle" }
+    ];
+    var perf = animal.genome.perf;
+    return React.createElement("div", {
+      style: { background:"#1a1410", border:"1px solid #2e2218", borderRadius:5,
+        padding:"6px 8px", marginBottom:6 }
+    },
+      React.createElement("div", { style:{ display:"flex", justifyContent:"space-between",
+        alignItems:"center", marginBottom:4 } },
+        React.createElement("span", { style:{ color:"#6b5038", fontSize:"0.62rem",
+          textTransform:"uppercase", letterSpacing:"0.06em" } }, "Performance"),
+        React.createElement("span", { style:{ color:"#c4956a", fontSize:"0.68rem", fontWeight:"bold" } },
+          "\u26A1 " + (animal.perfScore || 0))
+      ),
+      React.createElement("div", { style:{ display:"flex", flexDirection:"column", gap:3 } },
+        QTL_META.map(function(q) {
+          var v = perf[q.key] || [3,3];
+          var avg = (v[0]+v[1])/2;
+          var pct = Math.round((avg/5)*100);
+          var col = avg >= 4.0 ? "#d4942a" : avg >= 3.0 ? "#6b9a5e" : "#4a5568";
+          var isTop = avg >= 4.5;
+          return React.createElement("div", { key:q.key,
+            style:{ display:"flex", alignItems:"center", gap:5 } },
+            React.createElement("span", { style:{ fontSize:"0.6rem", width:38,
+              color: col, fontWeight: isTop ? "bold" : "normal", flexShrink:0 } },
+              q.icon + " " + q.label),
+            React.createElement("div", { style:{ flex:1, background:"#2e2218",
+              borderRadius:2, height:4, overflow:"hidden" } },
+              React.createElement("div", { style:{ background:col,
+                width: pct + "%", height:"100%", borderRadius:2 } })
+            ),
+            React.createElement("span", { style:{ fontSize:"0.6rem", color:col,
+              fontWeight:"bold", width:18, textAlign:"right", flexShrink:0 } },
+              avg.toFixed(1))
+          );
+        })
+      ),
+      // Standout badges
+      (function(){
+        var tops = QTL_META.filter(function(q){
+          var v = perf[q.key]; return v && (v[0]+v[1])/2 >= 4.5;
+        });
+        if (!tops.length) return null;
+        return React.createElement("div", { style:{ display:"flex", flexWrap:"wrap",
+          gap:3, marginTop:5 } },
+          tops.map(function(q){
+            return React.createElement("span", { key:q.key,
+              style:{ background:"#2a1e08", border:"1px solid #d4942a",
+                color:"#d4942a", borderRadius:3, padding:"1px 5px",
+                fontSize:"0.6rem", fontWeight:"bold" } },
+              q.icon + " High " + q.label);
+          })
+        );
+      })()
+    );
+  })(),
   (function() {
     if (animal.sex !== "F" || animal.retired) return null;
     var hs = getHeatStatus(animal, Date.now());
@@ -5121,7 +5185,17 @@ function App() {
         setAnimals(function(prev){ return prev.map(function(a){ return a.id===id ? Object.assign({},a,{isStud:false,studFee:null,lockedToPlayer:null}) : a; }); });
       }
     } else {
-      var fee = prompt('List "' + animal.name + '" as stud\nEnter stud fee ($):', '150');
+      // Suggested fee based on health + perf scores
+      var effH = applyCoiPenalty(animal.healthScore || 80, animal.coi || 0);
+      var perf = animal.perfScore || 60;
+      var gen = animal.generation || 1;
+      var suggested = Math.round((effH * 0.6 + perf * 0.4) * 1.8 + (gen - 1) * 25);
+      suggested = Math.max(50, Math.min(2500, Math.round(suggested / 25) * 25));
+      var fee = prompt(
+        'List "' + animal.name + '" as stud\n'
+        + 'Health: ' + effH + ' | Perf: ' + perf + ' | Gen ' + gen + '\n'
+        + 'Suggested fee: $' + suggested + '\n'
+        + 'Enter stud fee ($):', suggested);
       if (fee && !isNaN(fee) && Number(fee) > 0) {
         setAnimals(function(prev){ return prev.map(function(a){ return a.id===id ? Object.assign({},a,{isStud:true,studFee:Number(fee),lockedToPlayer:null}) : a; }); });
         setTab("stud");
