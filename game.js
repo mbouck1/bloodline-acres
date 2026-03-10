@@ -3233,60 +3233,108 @@ function PupNameEditor(props) {
 }
 
 function BreedPhoto(_ref_bp) {
-  var animal = _ref_bp.animal;
-  var _useState_bp = _slicedToArray(useState(false), 2),
-    imgErr = _useState_bp[0], setImgErr = _useState_bp[1];
-  var _useState_bp2 = _slicedToArray(useState(false), 2),
-    showModal = _useState_bp2[0], setShowModal = _useState_bp2[1];
-  var _useState_bp3 = _slicedToArray(useState(null), 2),
-    fetchedUrl = _useState_bp3[0], setFetchedUrl = _useState_bp3[1];
-  var breedName = animal.breed || "";
-  var staticUrl = BREED_PHOTOS[breedName] || null;
+  var animal    = _ref_bp.animal;
+  var speciesKey = _ref_bp.species || "dog";
+  var _useState_bp  = _slicedToArray(useState(false), 2), imgErr     = _useState_bp[0],  setImgErr     = _useState_bp[1];
+  var _useState_bp2 = _slicedToArray(useState(false), 2), showModal  = _useState_bp2[0], setShowModal  = _useState_bp2[1];
+  var _useState_bp3 = _slicedToArray(useState(null),  2), fetchedUrl = _useState_bp3[0], setFetchedUrl = _useState_bp3[1];
+  var _useState_bp4 = _slicedToArray(useState(null),  2), supaUrl    = _useState_bp4[0], setSupaUrl    = _useState_bp4[1];
+  var _useState_bp5 = _slicedToArray(useState(false), 2), showUpload = _useState_bp5[0], setShowUpload = _useState_bp5[1];
+  var breedName  = animal.breed || "";
+  var staticUrl  = BREED_PHOTOS[breedName] || null;
 
-  // For mixed breeds, find the most common component breed and use that for photo
+  // Check Supabase for approved community image
+  useEffect(function() {
+    if (typeof baGetApprovedImage === "function") {
+      // If images already loaded, check immediately
+      if (typeof BA_IMAGES_LOADED !== "undefined" && BA_IMAGES_LOADED) {
+        setSupaUrl(baGetApprovedImage(speciesKey, breedName));
+      }
+    }
+  }, [breedName, speciesKey]);
+
+  // For mixed breeds fallback
   var photoBreed = breedName;
-  if (!staticUrl && breedName.includes("×")) {
+  if (!staticUrl && !supaUrl && breedName.includes("×")) {
     var parts = breedName.split(" × ").map(function(s){ return s.trim(); });
     var freq = {};
     parts.forEach(function(b){ freq[b] = (freq[b] || 0) + 1; });
     var dominant = parts.reduce(function(a, b){ return (freq[a]||0) >= (freq[b]||0) ? a : b; });
-    // Walk up sire/dam breed chain if dominant still mixed
     if (dominant.includes("×")) dominant = dominant.split(" × ")[0].trim();
     photoBreed = dominant;
   }
 
   useEffect(function() {
-    if (!staticUrl) {
-      if (DOG_CEO_MAP[photoBreed]) {
-        fetchDogPhoto(photoBreed, function(url) { setFetchedUrl(url); }, function() {});
-      } else if (photoBreed !== breedName && DOG_CEO_MAP[breedName]) {
-        fetchDogPhoto(breedName, function(url) { setFetchedUrl(url); }, function() {});
+    if (!staticUrl && !supaUrl) {
+      if (speciesKey === "dog") {
+        if (DOG_CEO_MAP[photoBreed]) {
+          fetchDogPhoto(photoBreed, function(url) { setFetchedUrl(url); }, function() {});
+        } else if (photoBreed !== breedName && DOG_CEO_MAP[breedName]) {
+          fetchDogPhoto(breedName, function(url) { setFetchedUrl(url); }, function() {});
+        }
       }
     }
-  }, [breedName, photoBreed]);
-  var photoUrl = staticUrl || fetchedUrl;
+  }, [breedName, photoBreed, supaUrl]);
+
+  var photoUrl = supaUrl || staticUrl || fetchedUrl;
+  var isCommunityPhoto = !!supaUrl;
+
+  // Upload panel shown inline
+  if (showUpload) {
+    return /*#__PURE__*/React.createElement("div", { style:{ marginBottom:6 } },
+      typeof BaImageUploader !== "undefined"
+        ? /*#__PURE__*/React.createElement(BaImageUploader, {
+            species: speciesKey,
+            breed: breedName,
+            onCancel: function(){ setShowUpload(false); }
+          })
+        : /*#__PURE__*/React.createElement("div",{style:{color:"#ef4444",fontSize:"0.72rem"}},"Uploader not loaded.")
+    );
+  }
+
   if (!photoUrl || imgErr) {
     return /*#__PURE__*/React.createElement("div", {
-      style: { display:"flex", justifyContent:"flex-end", marginBottom:6 }
-    }, /*#__PURE__*/React.createElement("span", {
-      style: { fontSize:"1.4rem", opacity:0.25 }
-    }, "🐕"));
+      style: { display:"flex", justifyContent:"flex-end", alignItems:"center", gap:6, marginBottom:6 }
+    },
+      /*#__PURE__*/React.createElement("button", {
+        onClick: function(e){ e.stopPropagation(); setShowUpload(true); },
+        title: "Submit a photo for " + breedName,
+        style: { background:"#071828", border:"1px solid #1e3a5f", borderRadius:6,
+          padding:"3px 8px", cursor:"pointer", color:"#38bdf8", fontSize:"0.72rem",
+          display:"flex", alignItems:"center", gap:3 }
+      }, "📸 Add Photo"),
+      /*#__PURE__*/React.createElement("span", { style:{ fontSize:"1.4rem", opacity:0.2 } }, speciesKey==="horse"?"🐴":"🐕")
+    );
   }
+
   return /*#__PURE__*/React.createElement(React.Fragment, null,
     showModal && /*#__PURE__*/React.createElement(BreedPhotoModal, {
       photoUrl: photoUrl, breedName: breedName,
       onClose: function(){ setShowModal(false); }
     }),
     /*#__PURE__*/React.createElement("div", {
-      style: { display:"flex", justifyContent:"flex-end", marginBottom:6 }
-    }, /*#__PURE__*/React.createElement("button", {
-      onClick: function(e){ e.stopPropagation(); setShowModal(true); },
-      title: "View " + breedName + " photo",
-      style: { background:"#1a1410", border:"1px solid #4a3a28",
-        borderRadius:6, padding:"3px 8px", cursor:"pointer",
-        color:"#b09070", fontSize:"0.75rem", display:"flex",
-        alignItems:"center", gap:4 }
-    }, "📷 Photo"))
+      style: { display:"flex", justifyContent:"flex-end", alignItems:"center", gap:6, marginBottom:6 }
+    },
+      isCommunityPhoto && /*#__PURE__*/React.createElement("span", {
+        title:"Community submitted photo",
+        style:{ fontSize:"0.62rem", color:"#38bdf8", background:"#071828",
+          border:"1px solid #1e3a5f", borderRadius:3, padding:"1px 5px" }
+      }, "👥 Community"),
+      /*#__PURE__*/React.createElement("button", {
+        onClick: function(e){ e.stopPropagation(); setShowModal(true); },
+        title: "View " + breedName + " photo",
+        style: { background:"#1a1410", border:"1px solid #4a3a28",
+          borderRadius:6, padding:"3px 8px", cursor:"pointer",
+          color:"#b09070", fontSize:"0.75rem", display:"flex",
+          alignItems:"center", gap:4 }
+      }, "📷 Photo"),
+      !isCommunityPhoto && /*#__PURE__*/React.createElement("button", {
+        onClick: function(e){ e.stopPropagation(); setShowUpload(true); },
+        title: "Submit a better photo for " + breedName,
+        style: { background:"#071828", border:"1px solid #1e3a5f", borderRadius:6,
+          padding:"3px 8px", cursor:"pointer", color:"#38bdf8", fontSize:"0.72rem" }
+      }, "📸")
+    )
   );
 }
 // ─────────────────────────────────────────────────────────────────────────────
@@ -5315,6 +5363,10 @@ function App() {
 
   // Daily farm income tick
   useEffect(function() {
+    // Load community-submitted approved images from Supabase
+    if (typeof baLoadApprovedImages === "function") {
+      baLoadApprovedImages(function(){});
+    }
     var now = Date.now();
     var oneDayMs = 24 * 60 * 60 * 1000;
     if (!lastIncomeTick || (now - lastIncomeTick) >= oneDayMs) {
