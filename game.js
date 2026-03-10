@@ -2289,7 +2289,24 @@ function DNAModal(_ref5) {
       color: "#6b5038",
       wordBreak: "break-all"
     }
-  }, "\uD83E\uDDEC ", animal.vinStr), /*#__PURE__*/React.createElement("div", {
+  /*#__PURE__*/React.createElement("div", {
+    style: { display:"flex", gap:6, alignItems:"center", marginBottom:16 }
+  },
+    React.createElement("div", {
+      style: { flex:1, fontFamily:"monospace", fontSize:"0.62rem", background:"#443828",
+        borderRadius:6, padding:"8px 12px", color:"#6b5038", wordBreak:"break-all" }
+    }, "\uD83E\uDDEC ", animal.vinStr),
+    React.createElement("button", {
+      onClick: function(){
+        navigator.clipboard && navigator.clipboard.writeText(animal.vinStr || "");
+      },
+      title: "Copy VIN",
+      style: { background:"#2e2218", border:"1px solid #4a3a28", color:"#b09070",
+        borderRadius:5, padding:"6px 10px", cursor:"pointer", fontSize:"0.78rem",
+        flexShrink:0 }
+    }, "\uD83D\uDCCB Copy VIN")
+  ),
+  /*#__PURE__*/React.createElement("div", {
     style: {
       color: "#d4860a",
       fontWeight: "bold",
@@ -3611,7 +3628,28 @@ function Card(_ref0) {
       textOverflow: "ellipsis", whiteSpace: "nowrap", fontWeight: "bold", letterSpacing: "0.04em",
       border: "1px solid #3a2810", cursor: "pointer" },
     title: "Click to view Full DNA Panel"
-  }, "\uD83E\uDDEC ", animal.vinStr),
+  /*#__PURE__*/React.createElement("div", {
+    style: { display:"flex", gap:4, marginBottom:4, alignItems:"stretch" }
+  },
+    React.createElement("div", {
+      onClick: function(e){ e.stopPropagation(); setShowDNA(true); },
+      title: "VIN: E=Extension K=Dominant R=Red/Recessive | Br=Brindle A=Agouti: Fy=Fawn Wf=Wolf Tp=TanPts Bk=RecBlack | B=Brown D=Dilute M=Merle\nClick to open full DNA panel",
+      style: { flex:1, fontFamily:"monospace", fontSize:"0.78rem", color:"#d4942a",
+        background:"#1a1410", borderRadius:4, padding:"5px 10px", overflow:"hidden",
+        textOverflow:"ellipsis", whiteSpace:"nowrap", fontWeight:"bold",
+        letterSpacing:"0.04em", border:"1px solid #3a2810", cursor:"pointer" }
+    }, "\uD83E\uDDEC ", animal.vinStr),
+    React.createElement("button", {
+      onClick: function(e){
+        e.stopPropagation();
+        navigator.clipboard && navigator.clipboard.writeText(animal.vinStr || "");
+      },
+      title: "Copy VIN to clipboard",
+      style: { background:"#1a1410", border:"1px solid #3a2810", color:"#6b5038",
+        borderRadius:4, padding:"0 8px", cursor:"pointer", fontSize:"0.75rem",
+        flexShrink:0 }
+    }, "\uD83D\uDCCB")
+  ),
   /*#__PURE__*/React.createElement("button", {
     onClick: function(e){ e.stopPropagation(); setShowPedigree(true); },
     style: { width:"100%", background:"#1a1208", border:"1px solid #4a3820", color:"#b09070",
@@ -5580,6 +5618,37 @@ function App() {
       /*#__PURE__*/React.createElement("div", { style: { color: "#8a7055", fontSize: "0.72rem", textTransform: "uppercase", letterSpacing: "0.05em", marginBottom: 10 } },
         "\uD83D\uDC15 " + (activeKennel ? activeKennel.name : "Kennel") + " \u00B7 Dogs"
       ),
+      // Genetic diversity score (3d)
+      (function(){
+        var kDogs = animals.filter(function(a){ return !a.retired && a.kennelId === (activeKennel ? activeKennel.id : null); });
+        if (kDogs.length < 2) return null;
+        var avgCOI = kDogs.reduce(function(s,a){ return s + (a.coi||0); }, 0) / kDogs.length;
+        avgCOI = Math.round(avgCOI * 10) / 10;
+        // Check if all dogs share same sire or dam (warning sign)
+        var sireIds = kDogs.map(function(a){ return a.sireId; }).filter(Boolean);
+        var uniqueSires = new Set(sireIds).size;
+        var tooRelated = sireIds.length >= 3 && uniqueSires === 1;
+        var label, col, bg, border;
+        if (avgCOI < 6)       { label="High Diversity";     col="#22c55e"; bg="#0f2010"; border="#166534"; }
+        else if (avgCOI < 15) { label="Moderate Diversity"; col="#d4942a"; bg="#1a1408"; border="#92400e"; }
+        else if (avgCOI < 25) { label="Low Diversity";      col="#f97316"; bg="#2a1008"; border="#c2410c"; }
+        else                  { label="Critical Inbreeding"; col="#ef4444"; bg="#2d0808"; border="#991b1b"; }
+        return React.createElement("div", {
+          style: { display:"flex", alignItems:"center", justifyContent:"space-between",
+            background:bg, border:"1px solid "+border, borderRadius:6,
+            padding:"6px 10px", marginBottom:10, fontSize:"0.75rem" }
+        },
+          React.createElement("span", { style:{ color:col, fontWeight:"bold" } },
+            "\uD83E\uDDEC Genetic Diversity: " + label),
+          React.createElement("div", { style:{ display:"flex", flexDirection:"column", alignItems:"flex-end", gap:2 } },
+            React.createElement("span", { style:{ color:col, fontWeight:"bold", fontSize:"0.8rem" } },
+              "Avg COI: " + avgCOI + "%"),
+            tooRelated && React.createElement("span", {
+              style:{ color:"#fca5a5", fontSize:"0.65rem" }
+            }, "\u26A0\uFE0F All from same sire")
+          )
+        );
+      })(),
       (function(){
         var kennelDogs = animals.filter(function(a){ return !a.retired && a.kennelId === (activeKennel ? activeKennel.id : null); });
         if (kennelDogs.length === 0) {
