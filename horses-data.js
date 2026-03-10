@@ -4,7 +4,7 @@
 // ═══════════════════════════════════════════════════════════════
 
 // ── HORSE BREEDS ──────────────────────────────────────────────
-var HORSE_BREEDS = [
+var HORSE_BREED_DEFS = [
   // Light / Sport
   { name:"Thoroughbred",       group:"Racing",       size:"L",  heightAvg:16.1, weightAvg:1000, colors:["Bay","Dark Bay","Chestnut","Gray","Roan"], desc:"The gold standard of speed. Bred for flat racing." },
   { name:"Arabian",            group:"Light",        size:"M",  heightAvg:15.0, weightAvg:900,  colors:["Bay","Chestnut","Gray","Black","Roan"], desc:"Ancient desert breed. Incredible endurance and beauty." },
@@ -73,7 +73,7 @@ var HORSE_PERF_QTLS = ["SPEED","STAMINA","MUSCLE","TEMP","AGILITY"];
 
 // ── GENOME GENERATION ─────────────────────────────────────────
 function generateHorseGenome(breedName) {
-  var breed = HORSE_BREEDS.find(function(b){ return b.name === breedName; }) || HORSE_BREEDS[0];
+  var breed = HORSE_BREED_DEFS.find(function(b){ return b.name === breedName; }) || HORSE_BREED_DEFS[0];
   var g = breed.group || "Light";
 
   // Base coat allele frequencies by group
@@ -255,7 +255,7 @@ function calcHorsePerfScore(genome) {
 
 // ── HORSE CREATION ────────────────────────────────────────────
 function createHorse(breedName, sex, ageMonths) {
-  var breed = HORSE_BREEDS.find(function(b){ return b.name === breedName; }) || HORSE_BREEDS[0];
+  var breed = HORSE_BREED_DEFS.find(function(b){ return b.name === breedName; }) || HORSE_BREED_DEFS[0];
   var genome = generateHorseGenome(breedName);
   var coatColor = interpretHorseColor(genome);
   var healthScore = calcHorseHealthScore(genome);
@@ -663,7 +663,7 @@ function HorseShowsView(props) {
 function normalizeHorse(horse) {
   if (!horse) return horse;
   var breed = horse.breed || "Quarter Horse";
-  var breedDef = HORSE_BREEDS.find(function(b){ return b.name===breed; }) || HORSE_BREEDS[0];
+  var breedDef = HORSE_BREED_DEFS.find(function(b){ return b.name===breed; }) || HORSE_BREED_DEFS[0];
   var genome = horse.genome || generateHorseGenome(breed);
   var coatColor = horse.coatColor || interpretHorseColor(genome);
   var healthScore = horse.healthScore != null ? horse.healthScore : calcHorseHealthScore(genome);
