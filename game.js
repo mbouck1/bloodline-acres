@@ -6495,8 +6495,8 @@ function App() {
               key: key,
               onClick: function(){ if(active){ setKennelListDir(function(d){ return d==="asc"?"desc":"asc"; }); } else { setKennelListSort(key); setKennelListDir("asc"); } },
               style: { padding: "4px 8px", textAlign: "left", cursor: "pointer", userSelect: "none", whiteSpace: "nowrap",
-                color: active?"#d4942a":"#8a7055", fontWeight: active?"bold":"normal", fontSize: "0.72rem",
-                borderBottom: "1px solid #4a3a28", background: "#1a1410" }
+                color: active?"#d4942a":"#5a3e28", fontWeight: active?"bold":"normal", fontSize: "0.72rem",
+                borderBottom: "1px solid #4a3a28", background: "#f5ede0" }
             }, label + (active ? (kennelListDir==="asc"?" ▲":" ▼") : ""));
           };
           return /*#__PURE__*/React.createElement("div", { style: { display: "flex", flexDirection: "column", gap: 0 } },
@@ -6508,8 +6508,8 @@ function App() {
                   colHdr("sex","Sex"),
                   colHdr("health","\u2764\uFE0F Hlth"),
                   colHdr("perf","\u26A1 Perf"),
-                  /*#__PURE__*/React.createElement("th", { style: { padding:"4px 8px", color:"#6b5038", fontSize:"0.72rem", borderBottom:"1px solid #4a3a28", background:"#1a1410" } }, "Age"),
-                  /*#__PURE__*/React.createElement("th", { style: { padding:"4px 8px", color:"#6b5038", fontSize:"0.72rem", borderBottom:"1px solid #4a3a28", background:"#1a1410" } }, "")
+                  /*#__PURE__*/React.createElement("th", { style: { padding:"4px 8px", color:"#4a2e10", fontSize:"0.72rem", borderBottom:"1px solid #4a3a28", background:"#f5ede0" } }, "Age"),
+                  /*#__PURE__*/React.createElement("th", { style: { padding:"4px 8px", color:"#4a2e10", fontSize:"0.72rem", borderBottom:"1px solid #4a3a28", background:"#f5ede0" } }, "")
                 )
               ),
               /*#__PURE__*/React.createElement("tbody", null,
@@ -6519,17 +6519,17 @@ function App() {
                   var hs = a.healthScore||0; var ps = a.performanceScore||0;
                   return /*#__PURE__*/React.createElement("tr", { key: a.id,
                     onClick: function(){ setKennelListSelected(isSel ? null : a.id); },
-                    style: { background: isSel?"#3a2810":"#241a10", cursor: "pointer",
+                    style: { background: isSel?"#dfc8a8":"#f0e4d0", cursor: "pointer",
                       borderBottom: "1px solid #2e2218" }
                   },
-                    /*#__PURE__*/React.createElement("td", { style: { padding:"5px 8px", color:"#c4956a", fontWeight:"bold" } },
+                    /*#__PURE__*/React.createElement("td", { style: { padding:"5px 8px", color:"#7a4a1e", fontWeight:"bold" } },
                       (a.name||a.breed) + (isPreg?" \uD83E\uDD30":"")
                     ),
-                    /*#__PURE__*/React.createElement("td", { style: { padding:"5px 8px", color:"#8a7055", fontSize:"0.72rem" } }, a.breed),
+                    /*#__PURE__*/React.createElement("td", { style: { padding:"5px 8px", color:"#5a3e28", fontSize:"0.72rem" } }, a.breed),
                     /*#__PURE__*/React.createElement("td", { style: { padding:"5px 8px", color: a.sex==="M"?"#60a5fa":"#f472b6", fontSize:"0.75rem" } }, a.sex==="M"?"\u2642":"\u2640"),
                     /*#__PURE__*/React.createElement("td", { style: { padding:"5px 8px" } },
                       /*#__PURE__*/React.createElement("div", { style: { display:"flex", alignItems:"center", gap:4 } },
-                        /*#__PURE__*/React.createElement("div", { style: { width:40, height:5, background:"#1a1410", borderRadius:2 } },
+                        /*#__PURE__*/React.createElement("div", { style: { width:40, height:5, background:"#f5ede0", borderRadius:2 } },
                           /*#__PURE__*/React.createElement("div", { style: { height:"100%", width:Math.min(100,hs)+"%", background:"#22c55e", borderRadius:2 } })
                         ),
                         /*#__PURE__*/React.createElement("span", { style: { color:"#4ade80", fontSize:"0.68rem" } }, hs)
@@ -6537,17 +6537,17 @@ function App() {
                     ),
                     /*#__PURE__*/React.createElement("td", { style: { padding:"5px 8px" } },
                       /*#__PURE__*/React.createElement("div", { style: { display:"flex", alignItems:"center", gap:4 } },
-                        /*#__PURE__*/React.createElement("div", { style: { width:40, height:5, background:"#1a1410", borderRadius:2 } },
+                        /*#__PURE__*/React.createElement("div", { style: { width:40, height:5, background:"#f5ede0", borderRadius:2 } },
                           /*#__PURE__*/React.createElement("div", { style: { height:"100%", width:Math.min(100,ps)+"%", background:"#3b82f6", borderRadius:2 } })
                         ),
                         /*#__PURE__*/React.createElement("span", { style: { color:"#60a5fa", fontSize:"0.68rem" } }, ps)
                       )
                     ),
-                    /*#__PURE__*/React.createElement("td", { style: { padding:"5px 8px", color:"#6b5038", fontSize:"0.72rem" } }, Math.round((a.ageMonths||0)/12*10)/10+"y"),
+                    /*#__PURE__*/React.createElement("td", { style: { padding:"5px 8px", color:"#4a2e10", fontSize:"0.72rem" } }, Math.round((a.ageMonths||0)/12*10)/10+"y"),
                     /*#__PURE__*/React.createElement("td", { style: { padding:"5px 8px" } },
                       /*#__PURE__*/React.createElement("button", {
                         onClick: function(e){ e.stopPropagation(); handleSellListing(a.id); },
-                        style: { background:"transparent", border:"1px solid #4a3a28", color:"#8a7055", borderRadius:4,
+                        style: { background:"transparent", border:"1px solid #4a3a28", color:"#5a3e28", borderRadius:4,
                           padding:"1px 6px", cursor:"pointer", fontSize:"0.68rem" }
                       }, "Sell")
                     )
@@ -6556,13 +6556,13 @@ function App() {
               )
             ),
             selDog && /*#__PURE__*/React.createElement("div", {
-              style: { marginTop: 8, background:"#2a1e14", border:"1px solid #c4956a", borderRadius:10, padding:"12px", position:"relative" },
+              style: { marginTop: 8, background:"#eddcca", border:"1px solid #c4956a", borderRadius:10, padding:"12px", position:"relative" },
               onClick: function(e){ e.stopPropagation(); }
             },
               /*#__PURE__*/React.createElement("button", {
                 onClick: function(){ setKennelListSelected(null); },
                 style: { position:"absolute", top:8, right:10, background:"transparent", border:"none",
-                  color:"#8a7055", fontSize:"1.1rem", cursor:"pointer" }
+                  color:"#5a3e28", fontSize:"1.1rem", cursor:"pointer" }
               }, "\u2715"),
               /*#__PURE__*/React.createElement(Card, { animal: selDog, onSelect: selectAnimal,
                 isSelected: (sire&&sire.id===selDog.id)||(dam&&dam.id===selDog.id),
@@ -6768,23 +6768,23 @@ function App() {
 
   // ── LEFT: Sire picker ─────────────────────────────────────────────────
   /*#__PURE__*/React.createElement("div", {
-    style: { display: "flex", flexDirection: "column", background: "#1a1410", border: "1px solid #4a3a28", borderRadius: 10, overflow: "hidden" }
+    style: { display: "flex", flexDirection: "column", background: "#f5ede0", border: "1px solid #4a3a28", borderRadius: 10, overflow: "hidden" }
   },
     // header
     /*#__PURE__*/React.createElement("div", {
-      style: { background: "#2a1e14", borderBottom: "1px solid #4a3a28", padding: "8px 10px", display: "flex", flexDirection: "column", gap: 6, flexShrink: 0 }
+      style: { background: "#eddcca", borderBottom: "1px solid #4a3a28", padding: "8px 10px", display: "flex", flexDirection: "column", gap: 6, flexShrink: 0 }
     },
       /*#__PURE__*/React.createElement("div", { style: { display: "flex", alignItems: "center", justifyContent: "space-between" } },
         /*#__PURE__*/React.createElement("span", { style: { color: "#d4942a", fontWeight: "bold", fontSize: "0.82rem" } }, "\u2642 Sire"),
         sire && /*#__PURE__*/React.createElement("button", {
           onClick: function(e){ e.stopPropagation(); setSire(null); setBreedSireDna(null); },
-          style: { background: "transparent", border: "none", color: "#8a7055", cursor: "pointer", fontSize: "0.75rem" }
+          style: { background: "transparent", border: "none", color: "#5a3e28", cursor: "pointer", fontSize: "0.75rem" }
         }, "\u2715 Clear")
       ),
       /*#__PURE__*/React.createElement("input", {
         type: "text", placeholder: "Search name or breed\u2026", value: breedSireSearch,
         onChange: function(e){ setBreedSireSearch(e.target.value); },
-        style: { background: "#241a10", border: "1px solid #4a3a28", color: "#c4956a", borderRadius: 5,
+        style: { background: "#f0e4d0", border: "1px solid #4a3a28", color: "#7a4a1e", borderRadius: 5,
           padding: "4px 8px", fontSize: "0.78rem", width: "100%", boxSizing: "border-box" }
       }),
       /*#__PURE__*/React.createElement("div", { style: { display: "flex", gap: 4 } },
@@ -6792,8 +6792,8 @@ function App() {
           var k = pair[0], lbl = pair[1];
           return /*#__PURE__*/React.createElement("button", {
             key: k, onClick: function(){ setBreedSireSort(k); },
-            style: { flex: 1, background: breedSireSort===k?"#3a2810":"transparent", border: "1px solid "+(breedSireSort===k?"#d4942a":"#4a3a28"),
-              color: breedSireSort===k?"#d4942a":"#8a7055", borderRadius: 4, padding: "2px 0", cursor: "pointer", fontSize: "0.7rem" }
+            style: { flex: 1, background: breedSireSort===k?"#dfc8a8":"transparent", border: "1px solid "+(breedSireSort===k?"#d4942a":"#c8a878"),
+              color: breedSireSort===k?"#d4942a":"#5a3e28", borderRadius: 4, padding: "2px 0", cursor: "pointer", fontSize: "0.7rem" }
           }, lbl);
         })
       )
@@ -6811,7 +6811,7 @@ function App() {
           if (breedSireSort === "health") return (b.healthScore||0) - (a.healthScore||0);
           return (a.name||"").localeCompare(b.name||"");
         });
-        if (sorted.length === 0) return /*#__PURE__*/React.createElement("div", { style: { color: "#4a3a28", fontSize: "0.8rem", textAlign: "center", padding: "20px 0" } }, "No males available");
+        if (sorted.length === 0) return /*#__PURE__*/React.createElement("div", { style: { color: "#c8a878", fontSize: "0.8rem", textAlign: "center", padding: "20px 0" } }, "No males available");
         return sorted.map(function(a){
           var reason = breedingIneligibleReason(a);
           var isSel = sire && sire.id === a.id;
@@ -6819,7 +6819,7 @@ function App() {
           var hs = a.healthScore || 0;
           var ps = a.performanceScore || 0;
           return /*#__PURE__*/React.createElement("div", { key: a.id,
-            style: { background: isSel ? "#3a2810" : "#241a10", border: "1px solid "+(isSel?"#d4942a":reason?"#3a2218":"#2e2010"),
+            style: { background: isSel ? "#dfc8a8" : "#f0e4d0", border: "1px solid "+(isSel?"#d4942a":reason?"#e8d8be":"#e8d8be"),
               borderRadius: 6, padding: "6px 8px", marginBottom: 4, cursor: reason?"not-allowed":"pointer",
               opacity: reason ? 0.6 : 1 }
           },
@@ -6829,20 +6829,20 @@ function App() {
               /*#__PURE__*/React.createElement("span", { style: { fontSize: "1.1rem" } }, "\uD83D\uDC15"),
               /*#__PURE__*/React.createElement("div", { style: { flex: 1, minWidth: 0 } },
                 /*#__PURE__*/React.createElement("div", { style: { display: "flex", alignItems: "center", gap: 4 } },
-                  /*#__PURE__*/React.createElement("span", { style: { color: "#c4956a", fontWeight: "bold", fontSize: "0.8rem", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" } }, a.name||a.breed),
+                  /*#__PURE__*/React.createElement("span", { style: { color: "#7a4a1e", fontWeight: "bold", fontSize: "0.8rem", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" } }, a.name||a.breed),
                   reason && /*#__PURE__*/React.createElement("span", { title: reason, style: { fontSize: "0.7rem" } }, "\u26A0\uFE0F")
                 ),
-                /*#__PURE__*/React.createElement("div", { style: { color: "#8a7055", fontSize: "0.68rem" } }, a.breed + " \u00B7 " + Math.round((a.ageMonths||0)/12*10)/10 + "y"),
+                /*#__PURE__*/React.createElement("div", { style: { color: "#5a3e28", fontSize: "0.68rem" } }, a.breed + " \u00B7 " + Math.round((a.ageMonths||0)/12*10)/10 + "y"),
                 /*#__PURE__*/React.createElement("div", { style: { display: "flex", gap: 4, marginTop: 3 } },
                   /*#__PURE__*/React.createElement("div", { style: { flex: 1 } },
                     /*#__PURE__*/React.createElement("div", { style: { fontSize: "0.6rem", color: "#60a5fa", marginBottom: 1 } }, "\u26A1 "+ps),
-                    /*#__PURE__*/React.createElement("div", { style: { height: 4, background: "#1a1410", borderRadius: 2 } },
+                    /*#__PURE__*/React.createElement("div", { style: { height: 4, background: "#f5ede0", borderRadius: 2 } },
                       /*#__PURE__*/React.createElement("div", { style: { height: "100%", width: Math.min(100,ps)+"%", background: "#3b82f6", borderRadius: 2 } })
                     )
                   ),
                   /*#__PURE__*/React.createElement("div", { style: { flex: 1 } },
                     /*#__PURE__*/React.createElement("div", { style: { fontSize: "0.6rem", color: "#4ade80", marginBottom: 1 } }, "\u2764\uFE0F "+hs),
-                    /*#__PURE__*/React.createElement("div", { style: { height: 4, background: "#1a1410", borderRadius: 2 } },
+                    /*#__PURE__*/React.createElement("div", { style: { height: 4, background: "#f5ede0", borderRadius: 2 } },
                       /*#__PURE__*/React.createElement("div", { style: { height: "100%", width: Math.min(100,hs)+"%", background: "#22c55e", borderRadius: 2 } })
                     )
                   )
@@ -6850,26 +6850,26 @@ function App() {
               ),
               /*#__PURE__*/React.createElement("button", {
                 onClick: function(e){ e.stopPropagation(); setBreedSireDna(isDna ? null : a.id); setBreedDamDna(null); },
-                style: { background: isDna?"#2a1e3a":"transparent", border: "1px solid "+(isDna?"#7c3aed":"#4a3a28"),
-                  color: isDna?"#a78bfa":"#6b5038", borderRadius: 4, padding: "2px 5px", cursor: "pointer", fontSize: "0.65rem", flexShrink: 0 }
+                style: { background: isDna?"#e8dff5":"transparent", border: "1px solid "+(isDna?"#7c3aed":"#c8a878"),
+                  color: isDna?"#a78bfa":"#4a2e10", borderRadius: 4, padding: "2px 5px", cursor: "pointer", fontSize: "0.65rem", flexShrink: 0 }
               }, "\uD83E\uDDEC")
             ),
             // inline DNA panel
             isDna && /*#__PURE__*/React.createElement("div", {
-              style: { marginTop: 6, background: "#1a1410", border: "1px solid #3a2a4a", borderRadius: 6, padding: "8px 10px", fontSize: "0.72rem" }
+              style: { marginTop: 6, background: "#f5ede0", border: "1px solid #3a2a4a", borderRadius: 6, padding: "8px 10px", fontSize: "0.72rem" }
             },
               /*#__PURE__*/React.createElement("div", { style: { color: "#a78bfa", fontWeight: "bold", marginBottom: 6 } }, "\uD83E\uDDEC DNA \u2014 " + (a.name||a.breed)),
               a.genome && /*#__PURE__*/React.createElement(React.Fragment, null,
-                /*#__PURE__*/React.createElement("div", { style: { color: "#8a7055", marginBottom: 4 } }, "Coat: ",
+                /*#__PURE__*/React.createElement("div", { style: { color: "#5a3e28", marginBottom: 4 } }, "Coat: ",
                   Object.entries(a.genome.coat||{}).map(function(e){ return e[0]+"("+e[1].join("")+")"; }).join(" ")
                 ),
-                /*#__PURE__*/React.createElement("div", { style: { color: "#8a7055", marginBottom: 4 } }, "Health: ",
+                /*#__PURE__*/React.createElement("div", { style: { color: "#5a3e28", marginBottom: 4 } }, "Health: ",
                   Object.entries(a.genome.health||{}).filter(function(e){ return ["MDR1","PRA","DM","vWD"].includes(e[0]); }).map(function(e){
                     var alleles = e[1]; var aff = alleles[0]==="n"&&alleles[1]==="n"; var car = !aff&&(alleles[0]==="n"||alleles[1]==="n");
                     return /*#__PURE__*/React.createElement("span", { key: e[0], style: { color: aff?"#ef4444":car?"#f97316":"#4ade80", marginRight: 4 } }, e[0]+(aff?" AFFECTED":car?" Carrier":" Clear"));
                   })
                 ),
-                /*#__PURE__*/React.createElement("div", { style: { color: "#8a7055" } }, "COI: ",
+                /*#__PURE__*/React.createElement("div", { style: { color: "#5a3e28" } }, "COI: ",
                   /*#__PURE__*/React.createElement("span", { style: { color: (a.coi||0)>=25?"#ef4444":(a.coi||0)>=12?"#f97316":"#4ade80" } }, (a.coi||0)+"%")
                 )
               )
@@ -6886,12 +6886,12 @@ function App() {
   },
     // Selected pair summary
     /*#__PURE__*/React.createElement("div", {
-      style: { background: "#2a1e14", border: "1px solid #4a3a28", borderRadius: 8, padding: "10px 8px", textAlign: "center" }
+      style: { background: "#eddcca", border: "1px solid #4a3a28", borderRadius: 8, padding: "10px 8px", textAlign: "center" }
     },
       /*#__PURE__*/React.createElement("div", { style: { color: "#d4942a", fontSize: "0.75rem", fontWeight: "bold", marginBottom: 4 } }, "\u2642 Sire"),
-      /*#__PURE__*/React.createElement("div", { style: { color: sire?"#c4956a":"#4a3a28", fontSize: "0.78rem", marginBottom: 8, fontStyle: sire?"normal":"italic" } }, sire ? (sire.name||sire.breed) : "— none —"),
-      /*#__PURE__*/React.createElement("div", { style: { color: "#c4956a", fontSize: "0.75rem", fontWeight: "bold", marginBottom: 4 } }, "\u2640 Dam"),
-      /*#__PURE__*/React.createElement("div", { style: { color: dam?"#c4956a":"#4a3a28", fontSize: "0.78rem", fontStyle: dam?"normal":"italic" } }, dam ? (dam.name||dam.breed) : "— none —")
+      /*#__PURE__*/React.createElement("div", { style: { color: sire?"#7a4a1e":"#c8a878", fontSize: "0.78rem", marginBottom: 8, fontStyle: sire?"normal":"italic" } }, sire ? (sire.name||sire.breed) : "— none —"),
+      /*#__PURE__*/React.createElement("div", { style: { color: "#7a4a1e", fontSize: "0.75rem", fontWeight: "bold", marginBottom: 4 } }, "\u2640 Dam"),
+      /*#__PURE__*/React.createElement("div", { style: { color: dam?"#7a4a1e":"#c8a878", fontSize: "0.78rem", fontStyle: dam?"normal":"italic" } }, dam ? (dam.name||dam.breed) : "— none —")
     ),
     // COI readout
     sire && dam && sire.sex !== dam.sex && sire.id !== dam.id && /*#__PURE__*/React.createElement("div", {
@@ -6899,11 +6899,11 @@ function App() {
         border: "1px solid "+(function(){ var coi=calcCOI(sire.id,dam.id,animals); return coi>=25?"#ef4444":coi>=12.5?"#f97316":coi>=6?"#eab308":"#22c55e"; })(),
         borderRadius: 8, padding: "8px", textAlign: "center", fontSize: "0.75rem" }
     },
-      /*#__PURE__*/React.createElement("div", { style: { color: "#8a7055", marginBottom: 2 } }, "Projected COI"),
+      /*#__PURE__*/React.createElement("div", { style: { color: "#5a3e28", marginBottom: 2 } }, "Projected COI"),
       /*#__PURE__*/React.createElement("div", { style: { fontWeight: "bold", fontSize: "1rem",
         color: (function(){ var coi=calcCOI(sire.id,dam.id,animals); return coi>=25?"#ef4444":coi>=12.5?"#f97316":coi>=6?"#eab308":"#22c55e"; })()
       } }, (function(){ var coi=calcCOI(sire.id,dam.id,animals); return coi+"%"; })()),
-      /*#__PURE__*/React.createElement("div", { style: { fontSize: "0.7rem", color: "#8a7055", marginTop: 2 } },
+      /*#__PURE__*/React.createElement("div", { style: { fontSize: "0.7rem", color: "#5a3e28", marginTop: 2 } },
         (function(){ var coi=calcCOI(sire.id,dam.id,animals); return coi>=25?"\u26A0\uFE0F Extreme":coi>=12.5?"\u26A0\uFE0F High":coi>=6?"\u26A1 Elevated":"\u2705 Safe"; })()
       )
     ),
@@ -6955,7 +6955,7 @@ function App() {
       onClick: doBreed,
       disabled: !sire || !dam || !!(sire && breedingIneligibleReason(sire)) || !!(dam && breedingIneligibleReason(dam)) || (sire && dam && sire.id === dam.id) || (sire && dam && sire.sex === dam.sex),
       style: { background: sire&&dam?"linear-gradient(135deg,#3a2810,#362210)":"#443828",
-        border: "2px solid "+(sire&&dam?"#d4942a":"#4a3a28"), color: sire&&dam?"#f0e6d3":"#6b5038",
+        border: "2px solid "+(sire&&dam?"#d4942a":"#c8a878"), color: sire&&dam?"#f0e6d3":"#4a2e10",
         borderRadius: 8, padding: "10px 6px", cursor: (sire&&dam)?"pointer":"not-allowed",
         fontSize: "0.85rem", fontWeight: "bold", letterSpacing: "0.03em", width: "100%", textAlign: "center" }
     }, sire&&dam ? "\uD83E\uDDEC BREED" : "Pick\n\u2642 & \u2640"),
@@ -7011,23 +7011,23 @@ function App() {
 
   // ── RIGHT: Dam picker ─────────────────────────────────────────────────
   /*#__PURE__*/React.createElement("div", {
-    style: { display: "flex", flexDirection: "column", background: "#1a1410", border: "1px solid #4a3a28", borderRadius: 10, overflow: "hidden" }
+    style: { display: "flex", flexDirection: "column", background: "#f5ede0", border: "1px solid #4a3a28", borderRadius: 10, overflow: "hidden" }
   },
     // header
     /*#__PURE__*/React.createElement("div", {
-      style: { background: "#2a1e14", borderBottom: "1px solid #4a3a28", padding: "8px 10px", display: "flex", flexDirection: "column", gap: 6, flexShrink: 0 }
+      style: { background: "#eddcca", borderBottom: "1px solid #4a3a28", padding: "8px 10px", display: "flex", flexDirection: "column", gap: 6, flexShrink: 0 }
     },
       /*#__PURE__*/React.createElement("div", { style: { display: "flex", alignItems: "center", justifyContent: "space-between" } },
-        /*#__PURE__*/React.createElement("span", { style: { color: "#c4956a", fontWeight: "bold", fontSize: "0.82rem" } }, "\u2640 Dam"),
+        /*#__PURE__*/React.createElement("span", { style: { color: "#7a4a1e", fontWeight: "bold", fontSize: "0.82rem" } }, "\u2640 Dam"),
         dam && /*#__PURE__*/React.createElement("button", {
           onClick: function(e){ e.stopPropagation(); setDam(null); setBreedDamDna(null); },
-          style: { background: "transparent", border: "none", color: "#8a7055", cursor: "pointer", fontSize: "0.75rem" }
+          style: { background: "transparent", border: "none", color: "#5a3e28", cursor: "pointer", fontSize: "0.75rem" }
         }, "\u2715 Clear")
       ),
       /*#__PURE__*/React.createElement("input", {
         type: "text", placeholder: "Search name or breed\u2026", value: breedDamSearch,
         onChange: function(e){ setBreedDamSearch(e.target.value); },
-        style: { background: "#241a10", border: "1px solid #4a3a28", color: "#c4956a", borderRadius: 5,
+        style: { background: "#f0e4d0", border: "1px solid #4a3a28", color: "#7a4a1e", borderRadius: 5,
           padding: "4px 8px", fontSize: "0.78rem", width: "100%", boxSizing: "border-box" }
       }),
       /*#__PURE__*/React.createElement("div", { style: { display: "flex", gap: 4 } },
@@ -7035,8 +7035,8 @@ function App() {
           var k = pair[0], lbl = pair[1];
           return /*#__PURE__*/React.createElement("button", {
             key: k, onClick: function(){ setBreedDamSort(k); },
-            style: { flex: 1, background: breedDamSort===k?"#3a2810":"transparent", border: "1px solid "+(breedDamSort===k?"#d4942a":"#4a3a28"),
-              color: breedDamSort===k?"#d4942a":"#8a7055", borderRadius: 4, padding: "2px 0", cursor: "pointer", fontSize: "0.7rem" }
+            style: { flex: 1, background: breedDamSort===k?"#dfc8a8":"transparent", border: "1px solid "+(breedDamSort===k?"#d4942a":"#c8a878"),
+              color: breedDamSort===k?"#d4942a":"#5a3e28", borderRadius: 4, padding: "2px 0", cursor: "pointer", fontSize: "0.7rem" }
           }, lbl);
         })
       )
@@ -7054,7 +7054,7 @@ function App() {
           if (breedDamSort === "health") return (b.healthScore||0) - (a.healthScore||0);
           return (a.name||"").localeCompare(b.name||"");
         });
-        if (sorted.length === 0) return /*#__PURE__*/React.createElement("div", { style: { color: "#4a3a28", fontSize: "0.8rem", textAlign: "center", padding: "20px 0" } }, "No females available");
+        if (sorted.length === 0) return /*#__PURE__*/React.createElement("div", { style: { color: "#c8a878", fontSize: "0.8rem", textAlign: "center", padding: "20px 0" } }, "No females available");
         return sorted.map(function(a){
           var reason = breedingIneligibleReason(a);
           var isSel = dam && dam.id === a.id;
@@ -7063,7 +7063,7 @@ function App() {
           var ps = a.performanceScore || 0;
           var isPreg = !!(a.pregnantUntil && a.pregnantUntil > Date.now());
           return /*#__PURE__*/React.createElement("div", { key: a.id,
-            style: { background: isSel ? "#3a2810" : "#241a10", border: "1px solid "+(isSel?"#c4956a":reason?"#3a2218":"#2e2010"),
+            style: { background: isSel ? "#dfc8a8" : "#f0e4d0", border: "1px solid "+(isSel?"#7a4a1e":reason?"#e8d8be":"#e8d8be"),
               borderRadius: 6, padding: "6px 8px", marginBottom: 4, cursor: reason?"not-allowed":"pointer",
               opacity: reason ? 0.6 : 1 }
           },
@@ -7073,21 +7073,21 @@ function App() {
               /*#__PURE__*/React.createElement("span", { style: { fontSize: "1.1rem" } }, "\uD83D\uDC29"),
               /*#__PURE__*/React.createElement("div", { style: { flex: 1, minWidth: 0 } },
                 /*#__PURE__*/React.createElement("div", { style: { display: "flex", alignItems: "center", gap: 4 } },
-                  /*#__PURE__*/React.createElement("span", { style: { color: "#c4956a", fontWeight: "bold", fontSize: "0.8rem", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" } }, a.name||a.breed),
+                  /*#__PURE__*/React.createElement("span", { style: { color: "#7a4a1e", fontWeight: "bold", fontSize: "0.8rem", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" } }, a.name||a.breed),
                   reason && /*#__PURE__*/React.createElement("span", { title: reason, style: { fontSize: "0.7rem" } }, "\u26A0\uFE0F"),
                   isPreg && /*#__PURE__*/React.createElement("span", { title: "Pregnant", style: { fontSize: "0.7rem" } }, "\uD83E\uDD30")
                 ),
-                /*#__PURE__*/React.createElement("div", { style: { color: "#8a7055", fontSize: "0.68rem" } }, a.breed + " \u00B7 " + Math.round((a.ageMonths||0)/12*10)/10 + "y"),
+                /*#__PURE__*/React.createElement("div", { style: { color: "#5a3e28", fontSize: "0.68rem" } }, a.breed + " \u00B7 " + Math.round((a.ageMonths||0)/12*10)/10 + "y"),
                 /*#__PURE__*/React.createElement("div", { style: { display: "flex", gap: 4, marginTop: 3 } },
                   /*#__PURE__*/React.createElement("div", { style: { flex: 1 } },
                     /*#__PURE__*/React.createElement("div", { style: { fontSize: "0.6rem", color: "#60a5fa", marginBottom: 1 } }, "\u26A1 "+ps),
-                    /*#__PURE__*/React.createElement("div", { style: { height: 4, background: "#1a1410", borderRadius: 2 } },
+                    /*#__PURE__*/React.createElement("div", { style: { height: 4, background: "#f5ede0", borderRadius: 2 } },
                       /*#__PURE__*/React.createElement("div", { style: { height: "100%", width: Math.min(100,ps)+"%", background: "#3b82f6", borderRadius: 2 } })
                     )
                   ),
                   /*#__PURE__*/React.createElement("div", { style: { flex: 1 } },
                     /*#__PURE__*/React.createElement("div", { style: { fontSize: "0.6rem", color: "#4ade80", marginBottom: 1 } }, "\u2764\uFE0F "+hs),
-                    /*#__PURE__*/React.createElement("div", { style: { height: 4, background: "#1a1410", borderRadius: 2 } },
+                    /*#__PURE__*/React.createElement("div", { style: { height: 4, background: "#f5ede0", borderRadius: 2 } },
                       /*#__PURE__*/React.createElement("div", { style: { height: "100%", width: Math.min(100,hs)+"%", background: "#22c55e", borderRadius: 2 } })
                     )
                   )
@@ -7095,26 +7095,26 @@ function App() {
               ),
               /*#__PURE__*/React.createElement("button", {
                 onClick: function(e){ e.stopPropagation(); setBreedDamDna(isDna ? null : a.id); setBreedSireDna(null); },
-                style: { background: isDna?"#2a1e3a":"transparent", border: "1px solid "+(isDna?"#7c3aed":"#4a3a28"),
-                  color: isDna?"#a78bfa":"#6b5038", borderRadius: 4, padding: "2px 5px", cursor: "pointer", fontSize: "0.65rem", flexShrink: 0 }
+                style: { background: isDna?"#e8dff5":"transparent", border: "1px solid "+(isDna?"#7c3aed":"#c8a878"),
+                  color: isDna?"#a78bfa":"#4a2e10", borderRadius: 4, padding: "2px 5px", cursor: "pointer", fontSize: "0.65rem", flexShrink: 0 }
               }, "\uD83E\uDDEC")
             ),
             // inline DNA panel
             isDna && /*#__PURE__*/React.createElement("div", {
-              style: { marginTop: 6, background: "#1a1410", border: "1px solid #3a2a4a", borderRadius: 6, padding: "8px 10px", fontSize: "0.72rem" }
+              style: { marginTop: 6, background: "#f5ede0", border: "1px solid #3a2a4a", borderRadius: 6, padding: "8px 10px", fontSize: "0.72rem" }
             },
               /*#__PURE__*/React.createElement("div", { style: { color: "#a78bfa", fontWeight: "bold", marginBottom: 6 } }, "\uD83E\uDDEC DNA \u2014 " + (a.name||a.breed)),
               a.genome && /*#__PURE__*/React.createElement(React.Fragment, null,
-                /*#__PURE__*/React.createElement("div", { style: { color: "#8a7055", marginBottom: 4 } }, "Coat: ",
+                /*#__PURE__*/React.createElement("div", { style: { color: "#5a3e28", marginBottom: 4 } }, "Coat: ",
                   Object.entries(a.genome.coat||{}).map(function(e){ return e[0]+"("+e[1].join("")+")"; }).join(" ")
                 ),
-                /*#__PURE__*/React.createElement("div", { style: { color: "#8a7055", marginBottom: 4 } }, "Health: ",
+                /*#__PURE__*/React.createElement("div", { style: { color: "#5a3e28", marginBottom: 4 } }, "Health: ",
                   Object.entries(a.genome.health||{}).filter(function(e){ return ["MDR1","PRA","DM","vWD"].includes(e[0]); }).map(function(e){
                     var alleles = e[1]; var aff = alleles[0]==="n"&&alleles[1]==="n"; var car = !aff&&(alleles[0]==="n"||alleles[1]==="n");
                     return /*#__PURE__*/React.createElement("span", { key: e[0], style: { color: aff?"#ef4444":car?"#f97316":"#4ade80", marginRight: 4 } }, e[0]+(aff?" AFFECTED":car?" Carrier":" Clear"));
                   })
                 ),
-                /*#__PURE__*/React.createElement("div", { style: { color: "#8a7055" } }, "COI: ",
+                /*#__PURE__*/React.createElement("div", { style: { color: "#5a3e28" } }, "COI: ",
                   /*#__PURE__*/React.createElement("span", { style: { color: (a.coi||0)>=25?"#ef4444":(a.coi||0)>=12?"#f97316":"#4ade80" } }, (a.coi||0)+"%")
                 )
               )
