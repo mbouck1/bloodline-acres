@@ -1533,6 +1533,13 @@ function generateLivestockStock() {
           coatColor:interpretHorseColorInline(hGenome),
           healthScore:calcHorseHealthInline(hGenome),
           ageMonths:Math.floor(Math.random()*60)+24 };
+        ha.sex = ha.sex; // already set
+        ha.name = (function(s){
+          var mn = typeof HORSE_NAMES_M !== "undefined" ? HORSE_NAMES_M : ["Thunder","Blaze","Shadow","Midnight","Storm","Duke","Maverick","Scout"];
+          var fn = typeof HORSE_NAMES_F !== "undefined" ? HORSE_NAMES_F : ["Luna","Stella","Misty","Ivory","Sierra","Maple","Sage","Lady"];
+          var pool = s==="M" ? mn : fn;
+          return pool[Math.floor(Math.random()*pool.length)];
+        })(ha.sex);
         ha.perfScore = calcHorsePerfInline(hGenome);
         ha.price = calcHorsePrice(ha);
         stock[sp.key].push(ha);
