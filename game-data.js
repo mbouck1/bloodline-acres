@@ -1267,7 +1267,7 @@ var LIVESTOCK_SPECIES = [
 ];
 
 var LIVESTOCK_QTY = {
-  horse:   function(){ return Math.floor(Math.random()*10)+1; },
+  horse:   function(){ return Math.floor(Math.random()*13)+8; },
   cow:     function(){ return Math.floor(Math.random()*6)+20; },
   sheep:   function(){ return Math.floor(Math.random()*21)+30; },
   goat:    function(){ return Math.floor(Math.random()*6)+3; },
