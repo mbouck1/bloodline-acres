@@ -5343,6 +5343,48 @@ function App() {
     _useStateLVP2 = _slicedToArray(_useStateLVP, 2),
     litterViewPup = _useStateLVP2[0],
     setLitterViewPup = _useStateLVP2[1];
+  // ── Breed tab picker state ─────────────────────────────────────────────
+  var _useStateBTS = useState(""),
+    _useStateBTS2 = _slicedToArray(_useStateBTS, 2),
+    breedSireSearch = _useStateBTS2[0],
+    setBreedSireSearch = _useStateBTS2[1];
+  var _useStateBTD = useState(""),
+    _useStateBTD2 = _slicedToArray(_useStateBTD, 2),
+    breedDamSearch = _useStateBTD2[0],
+    setBreedDamSearch = _useStateBTD2[1];
+  var _useStateBTSS = useState("perf"),
+    _useStateBTSS2 = _slicedToArray(_useStateBTSS, 2),
+    breedSireSort = _useStateBTSS2[0],
+    setBreedSireSort = _useStateBTSS2[1];
+  var _useStateBTDS = useState("perf"),
+    _useStateBTDS2 = _slicedToArray(_useStateBTDS, 2),
+    breedDamSort = _useStateBTDS2[0],
+    setBreedDamSort = _useStateBTDS2[1];
+  var _useStateBTSDNA = useState(null),
+    _useStateBTSDNA2 = _slicedToArray(_useStateBTSDNA, 2),
+    breedSireDna = _useStateBTSDNA2[0],
+    setBreedSireDna = _useStateBTSDNA2[1];
+  var _useStateBTDDNA = useState(null),
+    _useStateBTDDNA2 = _slicedToArray(_useStateBTDDNA, 2),
+    breedDamDna = _useStateBTDDNA2[0],
+    setBreedDamDna = _useStateBTDDNA2[1];
+  // ── Kennel list/grid view ──────────────────────────────────────────────
+  var _useStateKLV = useState("grid"),
+    _useStateKLV2 = _slicedToArray(_useStateKLV, 2),
+    kennelViewMode = _useStateKLV2[0],
+    setKennelViewMode = _useStateKLV2[1];
+  var _useStateKLS = useState("name"),
+    _useStateKLS2 = _slicedToArray(_useStateKLS, 2),
+    kennelListSort = _useStateKLS2[0],
+    setKennelListSort = _useStateKLS2[1];
+  var _useStateKLD = useState("asc"),
+    _useStateKLD2 = _slicedToArray(_useStateKLD, 2),
+    kennelListDir = _useStateKLD2[0],
+    setKennelListDir = _useStateKLD2[1];
+  var _useStateKLSR = useState(null),
+    _useStateKLSR2 = _slicedToArray(_useStateKLSR, 2),
+    kennelListSelected = _useStateKLSR2[0],
+    setKennelListSelected = _useStateKLSR2[1];
   var _useStateSHED = useState(false),
     _useStateSHED2 = _slicedToArray(_useStateSHED, 2),
     showShearing = _useStateSHED2[0],
@@ -6382,8 +6424,20 @@ function App() {
     /*#__PURE__*/React.createElement("div", {
       style: { flex: 1, background: "#1a1410", borderRadius: 12, border: "1px solid #2e2218", padding: "14px 18px", overflowY: "auto" }
     },
-      /*#__PURE__*/React.createElement("div", { style: { color: "#8a7055", fontSize: "0.72rem", textTransform: "uppercase", letterSpacing: "0.05em", marginBottom: 10 } },
-        "\uD83D\uDC15 " + (activeKennel ? activeKennel.name : "Kennel") + " \u00B7 Dogs"
+      /*#__PURE__*/React.createElement("div", { style: { display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 10 } },
+        /*#__PURE__*/React.createElement("div", { style: { color: "#8a7055", fontSize: "0.72rem", textTransform: "uppercase", letterSpacing: "0.05em" } },
+          "\uD83D\uDC15 " + (activeKennel ? activeKennel.name : "Kennel") + " \u00B7 Dogs"
+        ),
+        /*#__PURE__*/React.createElement("div", { style: { display: "flex", gap: 4 } },
+          [["grid","\u229E"],["list","\u2630"]].map(function(pair){
+            var v = pair[0], ico = pair[1];
+            return /*#__PURE__*/React.createElement("button", {
+              key: v, onClick: function(){ setKennelViewMode(v); setKennelListSelected(null); },
+              style: { background: kennelViewMode===v?"#3a2810":"transparent", border: "1px solid "+(kennelViewMode===v?"#d4942a":"#4a3a28"),
+                color: kennelViewMode===v?"#d4942a":"#8a7055", borderRadius: 4, padding: "2px 7px", cursor: "pointer", fontSize: "0.85rem" }
+            }, ico);
+          })
+        )
       ),
       // Genetic diversity score (3d)
       (function(){
@@ -6423,6 +6477,105 @@ function App() {
         }
         var allChecked = kennelDogs.length > 0 && kennelDogs.every(function(a){ return kennelChecked.includes(a.id); });
         var otherKennels = kennels.filter(function(k){ return k.id !== (activeKennel ? activeKennel.id : null); });
+        // ── List view ───────────────────────────────────────────────────
+        if (kennelViewMode === "list") {
+          var sortedListDogs = kennelDogs.slice().sort(function(a,b){
+            var dir = kennelListDir === "asc" ? 1 : -1;
+            if (kennelListSort === "name") return dir * (a.name||"").localeCompare(b.name||"");
+            if (kennelListSort === "breed") return dir * a.breed.localeCompare(b.breed);
+            if (kennelListSort === "health") return dir * ((a.healthScore||0) - (b.healthScore||0));
+            if (kennelListSort === "perf") return dir * ((a.performanceScore||0) - (b.performanceScore||0));
+            if (kennelListSort === "sex") return dir * a.sex.localeCompare(b.sex);
+            return 0;
+          });
+          var selDog = kennelListSelected ? kennelDogs.find(function(a){ return a.id === kennelListSelected; }) : null;
+          var colHdr = function(key, label) {
+            var active = kennelListSort === key;
+            return /*#__PURE__*/React.createElement("th", {
+              key: key,
+              onClick: function(){ if(active){ setKennelListDir(function(d){ return d==="asc"?"desc":"asc"; }); } else { setKennelListSort(key); setKennelListDir("asc"); } },
+              style: { padding: "4px 8px", textAlign: "left", cursor: "pointer", userSelect: "none", whiteSpace: "nowrap",
+                color: active?"#d4942a":"#8a7055", fontWeight: active?"bold":"normal", fontSize: "0.72rem",
+                borderBottom: "1px solid #4a3a28", background: "#1a1410" }
+            }, label + (active ? (kennelListDir==="asc"?" ▲":" ▼") : ""));
+          };
+          return /*#__PURE__*/React.createElement("div", { style: { display: "flex", flexDirection: "column", gap: 0 } },
+            /*#__PURE__*/React.createElement("table", { style: { width: "100%", borderCollapse: "collapse", fontSize: "0.78rem" } },
+              /*#__PURE__*/React.createElement("thead", null,
+                /*#__PURE__*/React.createElement("tr", null,
+                  colHdr("name","Name"),
+                  colHdr("breed","Breed"),
+                  colHdr("sex","Sex"),
+                  colHdr("health","\u2764\uFE0F Hlth"),
+                  colHdr("perf","\u26A1 Perf"),
+                  /*#__PURE__*/React.createElement("th", { style: { padding:"4px 8px", color:"#6b5038", fontSize:"0.72rem", borderBottom:"1px solid #4a3a28", background:"#1a1410" } }, "Age"),
+                  /*#__PURE__*/React.createElement("th", { style: { padding:"4px 8px", color:"#6b5038", fontSize:"0.72rem", borderBottom:"1px solid #4a3a28", background:"#1a1410" } }, "")
+                )
+              ),
+              /*#__PURE__*/React.createElement("tbody", null,
+                sortedListDogs.map(function(a){
+                  var isSel = kennelListSelected === a.id;
+                  var isPreg = !!(a.pregnantUntil && a.pregnantUntil > Date.now());
+                  var hs = a.healthScore||0; var ps = a.performanceScore||0;
+                  return /*#__PURE__*/React.createElement("tr", { key: a.id,
+                    onClick: function(){ setKennelListSelected(isSel ? null : a.id); },
+                    style: { background: isSel?"#3a2810":"#241a10", cursor: "pointer",
+                      borderBottom: "1px solid #2e2218" }
+                  },
+                    /*#__PURE__*/React.createElement("td", { style: { padding:"5px 8px", color:"#c4956a", fontWeight:"bold" } },
+                      (a.name||a.breed) + (isPreg?" \uD83E\uDD30":"")
+                    ),
+                    /*#__PURE__*/React.createElement("td", { style: { padding:"5px 8px", color:"#8a7055", fontSize:"0.72rem" } }, a.breed),
+                    /*#__PURE__*/React.createElement("td", { style: { padding:"5px 8px", color: a.sex==="M"?"#60a5fa":"#f472b6", fontSize:"0.75rem" } }, a.sex==="M"?"\u2642":"\u2640"),
+                    /*#__PURE__*/React.createElement("td", { style: { padding:"5px 8px" } },
+                      /*#__PURE__*/React.createElement("div", { style: { display:"flex", alignItems:"center", gap:4 } },
+                        /*#__PURE__*/React.createElement("div", { style: { width:40, height:5, background:"#1a1410", borderRadius:2 } },
+                          /*#__PURE__*/React.createElement("div", { style: { height:"100%", width:Math.min(100,hs)+"%", background:"#22c55e", borderRadius:2 } })
+                        ),
+                        /*#__PURE__*/React.createElement("span", { style: { color:"#4ade80", fontSize:"0.68rem" } }, hs)
+                      )
+                    ),
+                    /*#__PURE__*/React.createElement("td", { style: { padding:"5px 8px" } },
+                      /*#__PURE__*/React.createElement("div", { style: { display:"flex", alignItems:"center", gap:4 } },
+                        /*#__PURE__*/React.createElement("div", { style: { width:40, height:5, background:"#1a1410", borderRadius:2 } },
+                          /*#__PURE__*/React.createElement("div", { style: { height:"100%", width:Math.min(100,ps)+"%", background:"#3b82f6", borderRadius:2 } })
+                        ),
+                        /*#__PURE__*/React.createElement("span", { style: { color:"#60a5fa", fontSize:"0.68rem" } }, ps)
+                      )
+                    ),
+                    /*#__PURE__*/React.createElement("td", { style: { padding:"5px 8px", color:"#6b5038", fontSize:"0.72rem" } }, Math.round((a.ageMonths||0)/12*10)/10+"y"),
+                    /*#__PURE__*/React.createElement("td", { style: { padding:"5px 8px" } },
+                      /*#__PURE__*/React.createElement("button", {
+                        onClick: function(e){ e.stopPropagation(); handleSellListing(a.id); },
+                        style: { background:"transparent", border:"1px solid #4a3a28", color:"#8a7055", borderRadius:4,
+                          padding:"1px 6px", cursor:"pointer", fontSize:"0.68rem" }
+                      }, "Sell")
+                    )
+                  );
+                })
+              )
+            ),
+            selDog && /*#__PURE__*/React.createElement("div", {
+              style: { marginTop: 8, background:"#2a1e14", border:"1px solid #c4956a", borderRadius:10, padding:"12px", position:"relative" },
+              onClick: function(e){ e.stopPropagation(); }
+            },
+              /*#__PURE__*/React.createElement("button", {
+                onClick: function(){ setKennelListSelected(null); },
+                style: { position:"absolute", top:8, right:10, background:"transparent", border:"none",
+                  color:"#8a7055", fontSize:"1.1rem", cursor:"pointer" }
+              }, "\u2715"),
+              /*#__PURE__*/React.createElement(Card, { animal: selDog, onSelect: selectAnimal,
+                isSelected: (sire&&sire.id===selDog.id)||(dam&&dam.id===selDog.id),
+                ineligibleReason: breedingIneligibleReason(selDog),
+                onRemove: function(id){ setActionModalId(id); },
+                onRename: renameAnimal, fullHeight: false,
+                onStud: function(a){ toggleStud(a.id); },
+                onSell: function(a){ handleSellListing(a.id); },
+                onRetire: function(a){ retireAnimal(a.id); }
+              })
+            )
+          );
+        }
         return /*#__PURE__*/React.createElement("div", { style: { display: "flex", flexDirection: "column", gap: 4 } },
           // ── Bulk action toolbar ──────────────────────────────────────
           /*#__PURE__*/React.createElement("div", { style: { display: "flex", alignItems: "center", gap: 8, marginBottom: 4,
@@ -6606,215 +6759,372 @@ function App() {
   )
     )
   ), tab === "breed" && /*#__PURE__*/React.createElement("div", {
-    style: {
-      maxWidth: 800, overflowY: "auto", maxHeight: "calc(100vh - 130px)", paddingBottom: 20
-    }
-  }, /*#__PURE__*/React.createElement("div", {
-    style: {
-      display: "grid",
-      gridTemplateColumns: "1fr 1fr",
-      gap: 14,
-      marginBottom: 14
-    }
-  }, /*#__PURE__*/React.createElement("div", {
-    style: {
-      background: "#443828",
-      border: "1px solid #4a3a28",
-      borderRadius: 10,
-      padding: 14
-    }
-  }, /*#__PURE__*/React.createElement("div", {
-    style: {
-      color: "#d4942a",
-      fontSize: "0.82rem",
-      fontWeight: "bold",
-      textTransform: "uppercase",
-      marginBottom: 10
-    }
-  }, "\u2642 Sire"), sire ? /*#__PURE__*/React.createElement(Card, {
-    animal: sire,
-    isSelected: true
-  }) : /*#__PURE__*/React.createElement("div", {
-    style: {
-      color: "#6b5038",
-      textAlign: "center",
-      padding: "30px 0",
-      fontSize: "0.85rem"
-    }
-  }, "Go to Kennel \u2192 click a male")), /*#__PURE__*/React.createElement("div", {
-    style: {
-      background: "#443828",
-      border: "1px solid #4a3a28",
-      borderRadius: 10,
-      padding: 14
-    }
-  }, /*#__PURE__*/React.createElement("div", {
-    style: {
-      color: "#c4956a",
-      fontSize: "0.82rem",
-      fontWeight: "bold",
-      textTransform: "uppercase",
-      marginBottom: 10
-    }
-  }, "\u2640 Dam"), dam ? /*#__PURE__*/React.createElement(Card, {
-    animal: dam,
-    isSelected: true
-  }) : /*#__PURE__*/React.createElement("div", {
-    style: {
-      color: "#6b5038",
-      textAlign: "center",
-      padding: "30px 0",
-      fontSize: "0.85rem"
-    }
-  }, "Go to Kennel \u2192 click a female"))), sire && dam && (((_sire$genome$coat$M = sire.genome.coat.M) === null || _sire$genome$coat$M === void 0 ? void 0 : _sire$genome$coat$M[0]) === "M" || ((_sire$genome$coat$M2 = sire.genome.coat.M) === null || _sire$genome$coat$M2 === void 0 ? void 0 : _sire$genome$coat$M2[1]) === "M") && (((_dam$genome$coat$M = dam.genome.coat.M) === null || _dam$genome$coat$M === void 0 ? void 0 : _dam$genome$coat$M[0]) === "M" || ((_dam$genome$coat$M2 = dam.genome.coat.M) === null || _dam$genome$coat$M2 === void 0 ? void 0 : _dam$genome$coat$M2[1]) === "M") && /*#__PURE__*/React.createElement("div", {
-    style: {
-      background: "#481808",
-      border: "1px solid #ef4444",
-      borderRadius: 8,
-      padding: "10px 14px",
-      marginBottom: 12,
-      color: "#fca5a5",
-      fontSize: "0.82rem"
-    }
-  }, "\u26A0\uFE0F MERLE \xD7 MERLE \u2014 25% chance of double merle (deaf/blind) pups!"), (function() {
-    var sireReason = sire ? breedingIneligibleReason(sire) : null;
-    var damReason = dam ? breedingIneligibleReason(dam) : null;
-    var sameSex = sire && dam && sire.sex === dam.sex;
-    var sameAnimal = sire && dam && sire.id === dam.id;
-    var warnings = [];
-    if (sameAnimal) warnings.push("⚠️ Same animal selected as both sire and dam");
-    else if (sameSex) warnings.push("⚠️ Both selected animals are the same sex");
-    if (sireReason) warnings.push("⚠️ Sire ineligible: " + sireReason);
-    if (damReason) warnings.push("⚠️ Dam ineligible: " + damReason);
-
-    // Health loci breeding warnings
-    if (sire && dam && sire.genome && dam.genome) {
-      var REC_HEALTH = ["MDR1","PRA","DM","vWD"];
-      var HEALTH_NAMES = { MDR1:"MDR1 Drug Sensitivity", PRA:"Progressive Retinal Atrophy", DM:"Degenerative Myelopathy", vWD:"von Willebrand Disease" };
-      REC_HEALTH.forEach(function(loc) {
-        var sh = sire.genome.health[loc];
-        var dh = dam.genome.health[loc];
-        if (!sh || !dh) return;
-        var sireAff = sh[0]==="n" && sh[1]==="n";
-        var damAff  = dh[0]==="n" && dh[1]==="n";
-        var sireCar = !sireAff && (sh[0]==="n" || sh[1]==="n");
-        var damCar  = !damAff  && (dh[0]==="n" || dh[1]==="n");
-        if (sireAff && damAff)        warnings.push("🔴 Both parents AFFECTED with " + loc + " (" + HEALTH_NAMES[loc] + ") — all pups affected");
-        else if (sireAff && damCar)   warnings.push("🔴 Sire AFFECTED × Dam CARRIER " + loc + " — 50% chance of affected pups");
-        else if (sireCar && damAff)   warnings.push("🔴 Sire CARRIER × Dam AFFECTED " + loc + " — 50% chance of affected pups");
-        else if (sireAff || damAff)   warnings.push("🟡 One parent AFFECTED with " + loc + " — 50% of pups will be carriers");
-        else if (sireCar && damCar)   warnings.push("🟡 Both parents CARRY " + loc + " (" + HEALTH_NAMES[loc] + ") — 25% chance of affected pups");
-      });
-      // Quality loci warnings
-      var QUAL_LOCI_W = ["HipQ","EyeQ","HeartQ","JointQ"];
-      var QUAL_NAMES = { HipQ:"Hip Quality", EyeQ:"Eye Health", HeartQ:"Cardiac Health", JointQ:"Joint Health" };
-      QUAL_LOCI_W.forEach(function(loc) {
-        var sh = sire.genome.health[loc];
-        var dh = dam.genome.health[loc];
-        if (!sh || !dh) return;
-        var sirePoor = sh[0]==="g" && sh[1]==="g";
-        var damPoor  = dh[0]==="g" && dh[1]==="g";
-        if (sirePoor && damPoor) warnings.push("🔴 Both parents have POOR " + QUAL_NAMES[loc] + " — high risk of affected offspring");
-      });
-    }
-
-    if (warnings.length === 0) return null;
-    var hasCritical = warnings.some(function(w){ return w.startsWith("🔴"); });
-    return /*#__PURE__*/React.createElement("div", {
-      style: {
-        background: hasCritical ? "#2d0a00" : "#2d1a00",
-        border: "1px solid " + (hasCritical ? "#ef4444" : "#d4860a"),
-        borderRadius: 8,
-        padding: "10px 14px", marginBottom: 12, fontSize: "0.82rem",
-        color: hasCritical ? "#fca5a5" : "#f0c040"
-      }
-    }, warnings.map(function(w, i) {
-      return /*#__PURE__*/React.createElement("div", { key: i }, w);
-    }));
-  })(), /*#__PURE__*/React.createElement("button", {
-    onClick: doBreed,
-    disabled: !sire || !dam || !!(sire && breedingIneligibleReason(sire)) || !!(dam && breedingIneligibleReason(dam)) || (sire && dam && sire.id === dam.id) || (sire && dam && sire.sex === dam.sex),
-    style: {
-      width: "100%",
-      background: sire && dam ? "linear-gradient(135deg,#3a2810,#362210)" : "#443828",
-      border: "2px solid ".concat(sire && dam ? "#d4942a" : "#4a3a28"),
-      color: sire && dam ? "#f0e6d3" : "#6b5038",
-      borderRadius: 8,
-      padding: 12,
-      cursor: (sire && dam) ? "pointer" : "not-allowed",
-      fontSize: "0.95rem",
-      fontWeight: "bold",
-      letterSpacing: "0.03em"
-    }
-  }, sire && dam ? "🧬 BREED SELECTED PAIR" : "Select a sire ♂ and dam ♀ to breed"),
-  sire && dam && sire.sex !== dam.sex && /*#__PURE__*/React.createElement("div", {
-    style: { marginTop: 6, padding: "8px 14px", borderRadius: 8,
-      background: (function(){ var coi = calcCOI(sire.id, dam.id, animals); return coi >= 25 ? "#2a0a0a" : coi >= 12.5 ? "#2a1a08" : coi >= 6 ? "#1a1a08" : "#0a1a10"; })(),
-      border: "1px solid " + (function(){ var coi = calcCOI(sire.id, dam.id, animals); return coi >= 25 ? "#ef4444" : coi >= 12.5 ? "#f97316" : coi >= 6 ? "#eab308" : "#22c55e"; })(),
-      fontSize: "0.8rem", display: "flex", justifyContent: "space-between", alignItems: "center" }
+    style: { display: "flex", flexDirection: "column", height: "calc(100vh - 130px)", overflow: "hidden", maxWidth: 1100 }
   },
-    /*#__PURE__*/React.createElement("span", { style: { color: "#8a7055" } }, "Projected pup COI"),
-    /*#__PURE__*/React.createElement("span", { style: { fontWeight: "bold", fontSize: "0.95rem",
-      color: (function(){ var coi = calcCOI(sire.id, dam.id, animals); return coi >= 25 ? "#ef4444" : coi >= 12.5 ? "#f97316" : coi >= 6 ? "#eab308" : "#22c55e"; })()
-    } }, (function(){ var coi = calcCOI(sire.id, dam.id, animals); return coi + "% — " + (coi >= 25 ? "⚠️ Extreme" : coi >= 12.5 ? "⚠️ High" : coi >= 6 ? "⚡ Elevated" : "✅ Safe"); })())
-  ),
-  (function(){
-    if (!sire || !dam) return null;
-    var coi = calcCOI(sire.id, dam.id, animals);
-    if (coi < 12.5) return null;
-    var msg = coi >= 50 ? "\uD83D\uDCA7 Extreme inbreeding \u2014 litter size reduced 2\u20133 pups, stillborn risk" : coi >= 25 ? "\uD83D\uDCA7 High COI \u2014 litter size reduced 1\u20132 pups" : "\uD83D\uDCA7 Elevated COI \u2014 litter may be 1 pup smaller";
-    return React.createElement("div", { style: { marginTop: 4, padding: "5px 14px", borderRadius: 6, fontSize: "0.75rem", background: "#2a1008", border: "1px solid #f97316", color: "#fdba74" } }, msg);
-  })(),
-  sire && dam && sire.sex !== dam.sex && sire.id !== dam.id && /*#__PURE__*/React.createElement("button", {
-    onClick: doBreed,
-    title: "DEV MODE: Bypasses heat cycle and eligibility checks",
-    style: {
-      width: "100%", marginTop: 6,
-      background: "#1a0a2e", border: "2px dashed #7c3aed",
-      color: "#a78bfa", borderRadius: 8, padding: "8px 12px",
-      cursor: "pointer", fontSize: "0.78rem", fontWeight: "bold", letterSpacing: "0.03em"
-    }
-  }, "\uD83E\uDDEA DEV: Force Breed (bypasses heat check)")),
-  /*#__PURE__*/React.createElement("button", {
-    onClick: function() {
-      var oneDayMs = 24 * 60 * 60 * 1000;
-      // Advance all dog ages by 1 month directly
-      setAnimals(function(prev) {
-        return prev.map(function(a) {
-          if (a.retired) return a;
-          var newAge = (a.ageMonths||0) + 1;
-          var maxAge = a.lifespan || 144;
-          if (newAge >= maxAge) return Object.assign({}, a, { ageMonths: newAge, retired: true, retireReason: "End of natural life", retiredAt: Date.now() });
-          var sizeLockUpdate = {};
-          if (!a.sizeLocked) {
-            var mt = ({ XS:10, S:12, M:15, L:18, XL:24 }[a.size||"M"] || 15);
-            if ((a.ageMonths||0) < mt && newAge >= mt) {
-              var fs = getCurrentSize(Object.assign({}, a, { ageMonths: newAge }));
-              sizeLockUpdate = { adultWeight: fs.adultW, adultHeight: fs.adultH, sizeLocked: true };
-            }
-          }
-          return Object.assign({}, a, sizeLockUpdate, { ageMonths: newAge });
-        });
-      });
-      // Advance whelping litter bornDates back by 1 day
-      setWhelpingLitters(function(prev) {
-        return prev.map(function(lit) {
-          return Object.assign({}, lit, { bornDate: lit.bornDate - oneDayMs });
-        });
-      });
-      // Also tick the lastTick key so real tick stays in sync
-      var key = "breedingSim_lastTick";
-      var current = parseInt(localStorage.getItem(key) || "0");
-      localStorage.setItem(key, (current > 0 ? current - oneDayMs : Date.now() - oneDayMs).toString());
+  // ── 3-column picker layout ───────────────────────────────────────────
+  /*#__PURE__*/React.createElement("div", {
+    style: { display: "grid", gridTemplateColumns: "1fr 220px 1fr", gap: 10, flex: 1, overflow: "hidden", minHeight: 0 }
+  },
+
+  // ── LEFT: Sire picker ─────────────────────────────────────────────────
+  /*#__PURE__*/React.createElement("div", {
+    style: { display: "flex", flexDirection: "column", background: "#1a1410", border: "1px solid #4a3a28", borderRadius: 10, overflow: "hidden" }
+  },
+    // header
+    /*#__PURE__*/React.createElement("div", {
+      style: { background: "#2a1e14", borderBottom: "1px solid #4a3a28", padding: "8px 10px", display: "flex", flexDirection: "column", gap: 6, flexShrink: 0 }
     },
-    title: "DEV MODE: Forces one game day to pass",
-    style: {
-      width: "100%", marginTop: 4,
-      background: "#0a1a0a", border: "2px dashed #22c55e",
-      color: "#4ade80", borderRadius: 8, padding: "8px 12px",
-      cursor: "pointer", fontSize: "0.78rem", fontWeight: "bold", letterSpacing: "0.03em"
-    }
-  }, "\uD83D\uDCC5 DEV: Force +1 Day (ages dogs & litters)"), tab === "openlitter" && /*#__PURE__*/React.createElement("div", { style: { position: "relative", overflowY: "auto", maxHeight: "calc(100vh - 130px)" } },
+      /*#__PURE__*/React.createElement("div", { style: { display: "flex", alignItems: "center", justifyContent: "space-between" } },
+        /*#__PURE__*/React.createElement("span", { style: { color: "#d4942a", fontWeight: "bold", fontSize: "0.82rem" } }, "\u2642 Sire"),
+        sire && /*#__PURE__*/React.createElement("button", {
+          onClick: function(e){ e.stopPropagation(); setSire(null); setBreedSireDna(null); },
+          style: { background: "transparent", border: "none", color: "#8a7055", cursor: "pointer", fontSize: "0.75rem" }
+        }, "\u2715 Clear")
+      ),
+      /*#__PURE__*/React.createElement("input", {
+        type: "text", placeholder: "Search name or breed\u2026", value: breedSireSearch,
+        onChange: function(e){ setBreedSireSearch(e.target.value); },
+        style: { background: "#241a10", border: "1px solid #4a3a28", color: "#c4956a", borderRadius: 5,
+          padding: "4px 8px", fontSize: "0.78rem", width: "100%", boxSizing: "border-box" }
+      }),
+      /*#__PURE__*/React.createElement("div", { style: { display: "flex", gap: 4 } },
+        [["perf","\u26A1 Perf"],["health","\u2764\uFE0F Health"],["name","A-Z"]].map(function(pair){
+          var k = pair[0], lbl = pair[1];
+          return /*#__PURE__*/React.createElement("button", {
+            key: k, onClick: function(){ setBreedSireSort(k); },
+            style: { flex: 1, background: breedSireSort===k?"#3a2810":"transparent", border: "1px solid "+(breedSireSort===k?"#d4942a":"#4a3a28"),
+              color: breedSireSort===k?"#d4942a":"#8a7055", borderRadius: 4, padding: "2px 0", cursor: "pointer", fontSize: "0.7rem" }
+          }, lbl);
+        })
+      )
+    ),
+    // list
+    /*#__PURE__*/React.createElement("div", { style: { overflowY: "auto", flex: 1, padding: "6px 6px" } },
+      (function(){
+        var males = animals.filter(function(a){ return !a.retired && a.sex === "M"; });
+        var filtered = males.filter(function(a){
+          var q = breedSireSearch.toLowerCase();
+          return !q || (a.name||"").toLowerCase().includes(q) || a.breed.toLowerCase().includes(q);
+        });
+        var sorted = filtered.slice().sort(function(a,b){
+          if (breedSireSort === "perf") return (b.performanceScore||0) - (a.performanceScore||0);
+          if (breedSireSort === "health") return (b.healthScore||0) - (a.healthScore||0);
+          return (a.name||"").localeCompare(b.name||"");
+        });
+        if (sorted.length === 0) return /*#__PURE__*/React.createElement("div", { style: { color: "#4a3a28", fontSize: "0.8rem", textAlign: "center", padding: "20px 0" } }, "No males available");
+        return sorted.map(function(a){
+          var reason = breedingIneligibleReason(a);
+          var isSel = sire && sire.id === a.id;
+          var isDna = breedSireDna === a.id;
+          var hs = a.healthScore || 0;
+          var ps = a.performanceScore || 0;
+          return /*#__PURE__*/React.createElement("div", { key: a.id,
+            style: { background: isSel ? "#3a2810" : "#241a10", border: "1px solid "+(isSel?"#d4942a":reason?"#3a2218":"#2e2010"),
+              borderRadius: 6, padding: "6px 8px", marginBottom: 4, cursor: reason?"not-allowed":"pointer",
+              opacity: reason ? 0.6 : 1 }
+          },
+            /*#__PURE__*/React.createElement("div", { style: { display: "flex", alignItems: "center", gap: 6 },
+              onClick: function(e){ e.stopPropagation(); if (!reason) { setSire(a); setBreedSireDna(null); } }
+            },
+              /*#__PURE__*/React.createElement("span", { style: { fontSize: "1.1rem" } }, "\uD83D\uDC15"),
+              /*#__PURE__*/React.createElement("div", { style: { flex: 1, minWidth: 0 } },
+                /*#__PURE__*/React.createElement("div", { style: { display: "flex", alignItems: "center", gap: 4 } },
+                  /*#__PURE__*/React.createElement("span", { style: { color: "#c4956a", fontWeight: "bold", fontSize: "0.8rem", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" } }, a.name||a.breed),
+                  reason && /*#__PURE__*/React.createElement("span", { title: reason, style: { fontSize: "0.7rem" } }, "\u26A0\uFE0F")
+                ),
+                /*#__PURE__*/React.createElement("div", { style: { color: "#8a7055", fontSize: "0.68rem" } }, a.breed + " \u00B7 " + Math.round((a.ageMonths||0)/12*10)/10 + "y"),
+                /*#__PURE__*/React.createElement("div", { style: { display: "flex", gap: 4, marginTop: 3 } },
+                  /*#__PURE__*/React.createElement("div", { style: { flex: 1 } },
+                    /*#__PURE__*/React.createElement("div", { style: { fontSize: "0.6rem", color: "#60a5fa", marginBottom: 1 } }, "\u26A1 "+ps),
+                    /*#__PURE__*/React.createElement("div", { style: { height: 4, background: "#1a1410", borderRadius: 2 } },
+                      /*#__PURE__*/React.createElement("div", { style: { height: "100%", width: Math.min(100,ps)+"%", background: "#3b82f6", borderRadius: 2 } })
+                    )
+                  ),
+                  /*#__PURE__*/React.createElement("div", { style: { flex: 1 } },
+                    /*#__PURE__*/React.createElement("div", { style: { fontSize: "0.6rem", color: "#4ade80", marginBottom: 1 } }, "\u2764\uFE0F "+hs),
+                    /*#__PURE__*/React.createElement("div", { style: { height: 4, background: "#1a1410", borderRadius: 2 } },
+                      /*#__PURE__*/React.createElement("div", { style: { height: "100%", width: Math.min(100,hs)+"%", background: "#22c55e", borderRadius: 2 } })
+                    )
+                  )
+                )
+              ),
+              /*#__PURE__*/React.createElement("button", {
+                onClick: function(e){ e.stopPropagation(); setBreedSireDna(isDna ? null : a.id); setBreedDamDna(null); },
+                style: { background: isDna?"#2a1e3a":"transparent", border: "1px solid "+(isDna?"#7c3aed":"#4a3a28"),
+                  color: isDna?"#a78bfa":"#6b5038", borderRadius: 4, padding: "2px 5px", cursor: "pointer", fontSize: "0.65rem", flexShrink: 0 }
+              }, "\uD83E\uDDEC")
+            ),
+            // inline DNA panel
+            isDna && /*#__PURE__*/React.createElement("div", {
+              style: { marginTop: 6, background: "#1a1410", border: "1px solid #3a2a4a", borderRadius: 6, padding: "8px 10px", fontSize: "0.72rem" }
+            },
+              /*#__PURE__*/React.createElement("div", { style: { color: "#a78bfa", fontWeight: "bold", marginBottom: 6 } }, "\uD83E\uDDEC DNA \u2014 " + (a.name||a.breed)),
+              a.genome && /*#__PURE__*/React.createElement(React.Fragment, null,
+                /*#__PURE__*/React.createElement("div", { style: { color: "#8a7055", marginBottom: 4 } }, "Coat: ",
+                  Object.entries(a.genome.coat||{}).map(function(e){ return e[0]+"("+e[1].join("")+")"; }).join(" ")
+                ),
+                /*#__PURE__*/React.createElement("div", { style: { color: "#8a7055", marginBottom: 4 } }, "Health: ",
+                  Object.entries(a.genome.health||{}).filter(function(e){ return ["MDR1","PRA","DM","vWD"].includes(e[0]); }).map(function(e){
+                    var alleles = e[1]; var aff = alleles[0]==="n"&&alleles[1]==="n"; var car = !aff&&(alleles[0]==="n"||alleles[1]==="n");
+                    return /*#__PURE__*/React.createElement("span", { key: e[0], style: { color: aff?"#ef4444":car?"#f97316":"#4ade80", marginRight: 4 } }, e[0]+(aff?" AFFECTED":car?" Carrier":" Clear"));
+                  })
+                ),
+                /*#__PURE__*/React.createElement("div", { style: { color: "#8a7055" } }, "COI: ",
+                  /*#__PURE__*/React.createElement("span", { style: { color: (a.coi||0)>=25?"#ef4444":(a.coi||0)>=12?"#f97316":"#4ade80" } }, (a.coi||0)+"%")
+                )
+              )
+            )
+          );
+        });
+      })()
+    )
+  ),
+
+  // ── CENTER: COI + breed controls ──────────────────────────────────────
+  /*#__PURE__*/React.createElement("div", {
+    style: { display: "flex", flexDirection: "column", gap: 8, padding: "8px 4px", overflowY: "auto" }
+  },
+    // Selected pair summary
+    /*#__PURE__*/React.createElement("div", {
+      style: { background: "#2a1e14", border: "1px solid #4a3a28", borderRadius: 8, padding: "10px 8px", textAlign: "center" }
+    },
+      /*#__PURE__*/React.createElement("div", { style: { color: "#d4942a", fontSize: "0.75rem", fontWeight: "bold", marginBottom: 4 } }, "\u2642 Sire"),
+      /*#__PURE__*/React.createElement("div", { style: { color: sire?"#c4956a":"#4a3a28", fontSize: "0.78rem", marginBottom: 8, fontStyle: sire?"normal":"italic" } }, sire ? (sire.name||sire.breed) : "— none —"),
+      /*#__PURE__*/React.createElement("div", { style: { color: "#c4956a", fontSize: "0.75rem", fontWeight: "bold", marginBottom: 4 } }, "\u2640 Dam"),
+      /*#__PURE__*/React.createElement("div", { style: { color: dam?"#c4956a":"#4a3a28", fontSize: "0.78rem", fontStyle: dam?"normal":"italic" } }, dam ? (dam.name||dam.breed) : "— none —")
+    ),
+    // COI readout
+    sire && dam && sire.sex !== dam.sex && sire.id !== dam.id && /*#__PURE__*/React.createElement("div", {
+      style: { background: (function(){ var coi=calcCOI(sire.id,dam.id,animals); return coi>=25?"#2a0a0a":coi>=12.5?"#2a1a08":coi>=6?"#1a1a08":"#0a1a10"; })(),
+        border: "1px solid "+(function(){ var coi=calcCOI(sire.id,dam.id,animals); return coi>=25?"#ef4444":coi>=12.5?"#f97316":coi>=6?"#eab308":"#22c55e"; })(),
+        borderRadius: 8, padding: "8px", textAlign: "center", fontSize: "0.75rem" }
+    },
+      /*#__PURE__*/React.createElement("div", { style: { color: "#8a7055", marginBottom: 2 } }, "Projected COI"),
+      /*#__PURE__*/React.createElement("div", { style: { fontWeight: "bold", fontSize: "1rem",
+        color: (function(){ var coi=calcCOI(sire.id,dam.id,animals); return coi>=25?"#ef4444":coi>=12.5?"#f97316":coi>=6?"#eab308":"#22c55e"; })()
+      } }, (function(){ var coi=calcCOI(sire.id,dam.id,animals); return coi+"%"; })()),
+      /*#__PURE__*/React.createElement("div", { style: { fontSize: "0.7rem", color: "#8a7055", marginTop: 2 } },
+        (function(){ var coi=calcCOI(sire.id,dam.id,animals); return coi>=25?"\u26A0\uFE0F Extreme":coi>=12.5?"\u26A0\uFE0F High":coi>=6?"\u26A1 Elevated":"\u2705 Safe"; })()
+      )
+    ),
+    // Merle warning
+    sire && dam && ((sire.genome&&sire.genome.coat&&sire.genome.coat.M&&(sire.genome.coat.M[0]==="M"||sire.genome.coat.M[1]==="M")) &&
+      (dam.genome&&dam.genome.coat&&dam.genome.coat.M&&(dam.genome.coat.M[0]==="M"||dam.genome.coat.M[1]==="M"))) &&
+      /*#__PURE__*/React.createElement("div", { style: { background: "#481808", border: "1px solid #ef4444", borderRadius: 6, padding: "6px 8px", fontSize: "0.7rem", color: "#fca5a5", textAlign: "center" } },
+        "\u26A0\uFE0F MERLE \xD7 MERLE\n25% double merle risk!"
+      ),
+    // Health warnings block
+    (function(){
+      if (!sire || !dam) return null;
+      var sireReason = breedingIneligibleReason(sire);
+      var damReason = breedingIneligibleReason(dam);
+      var sameSex = sire.sex === dam.sex;
+      var sameAnimal = sire.id === dam.id;
+      var warnings = [];
+      if (sameAnimal) warnings.push("\u26A0\uFE0F Same animal");
+      else if (sameSex) warnings.push("\u26A0\uFE0F Same sex");
+      if (sireReason) warnings.push("\u26A0\uFE0F Sire: "+sireReason);
+      if (damReason) warnings.push("\u26A0\uFE0F Dam: "+damReason);
+      if (sire.genome && dam.genome) {
+        var REC = ["MDR1","PRA","DM","vWD"];
+        var RN = { MDR1:"MDR1",PRA:"PRA",DM:"DM",vWD:"vWD" };
+        REC.forEach(function(loc){
+          var sh=sire.genome.health[loc]; var dh=dam.genome.health[loc];
+          if (!sh||!dh) return;
+          var sA=sh[0]==="n"&&sh[1]==="n"; var dA=dh[0]==="n"&&dh[1]==="n";
+          var sC=!sA&&(sh[0]==="n"||sh[1]==="n"); var dC=!dA&&(dh[0]==="n"||dh[1]==="n");
+          if (sA&&dA) warnings.push("\uD83D\uDD34 Both AFFECTED "+RN[loc]);
+          else if ((sA&&dC)||(sC&&dA)) warnings.push("\uD83D\uDD34 50% affected "+RN[loc]);
+          else if (sC&&dC) warnings.push("\uD83D\uDFE1 25% affected "+RN[loc]);
+        });
+        ["HipQ","EyeQ","HeartQ","JointQ"].forEach(function(loc){
+          var sh=sire.genome.health[loc]; var dh=dam.genome.health[loc];
+          if (!sh||!dh) return;
+          if (sh[0]==="g"&&sh[1]==="g"&&dh[0]==="g"&&dh[1]==="g") warnings.push("\uD83D\uDD34 Both poor "+loc);
+        });
+      }
+      if (warnings.length===0) return null;
+      var crit = warnings.some(function(w){ return w.startsWith("\uD83D\uDD34"); });
+      return /*#__PURE__*/React.createElement("div", {
+        style: { background: crit?"#2d0a00":"#2d1a00", border: "1px solid "+(crit?"#ef4444":"#d4860a"),
+          borderRadius: 6, padding: "6px 8px", fontSize: "0.7rem", color: crit?"#fca5a5":"#f0c040" }
+      }, warnings.map(function(w,i){ return /*#__PURE__*/React.createElement("div", {key:i}, w); }));
+    })(),
+    // BREED button
+    /*#__PURE__*/React.createElement("button", {
+      onClick: doBreed,
+      disabled: !sire || !dam || !!(sire && breedingIneligibleReason(sire)) || !!(dam && breedingIneligibleReason(dam)) || (sire && dam && sire.id === dam.id) || (sire && dam && sire.sex === dam.sex),
+      style: { background: sire&&dam?"linear-gradient(135deg,#3a2810,#362210)":"#443828",
+        border: "2px solid "+(sire&&dam?"#d4942a":"#4a3a28"), color: sire&&dam?"#f0e6d3":"#6b5038",
+        borderRadius: 8, padding: "10px 6px", cursor: (sire&&dam)?"pointer":"not-allowed",
+        fontSize: "0.85rem", fontWeight: "bold", letterSpacing: "0.03em", width: "100%", textAlign: "center" }
+    }, sire&&dam ? "\uD83E\uDDEC BREED" : "Pick\n\u2642 & \u2640"),
+    // COI warning
+    (function(){
+      if (!sire||!dam) return null;
+      var coi = calcCOI(sire.id,dam.id,animals);
+      if (coi < 12.5) return null;
+      var msg = coi>=50?"\uD83D\uDCA7 Extreme \u2014 litter \u22122\u20133":coi>=25?"\uD83D\uDCA7 High \u2014 litter \u22121\u20132":"\uD83D\uDCA7 Elevated \u2014 may \u22121 pup";
+      return /*#__PURE__*/React.createElement("div", { style: { background:"#2a1008",border:"1px solid #f97316",borderRadius:6,padding:"5px 8px",fontSize:"0.7rem",color:"#fdba74",textAlign:"center" } }, msg);
+    })(),
+    // DEV force breed
+    sire&&dam&&sire.sex!==dam.sex&&sire.id!==dam.id && /*#__PURE__*/React.createElement("button", {
+      onClick: doBreed, title: "DEV MODE: Bypasses heat cycle",
+      style: { width:"100%", background:"#1a0a2e", border:"2px dashed #7c3aed", color:"#a78bfa",
+        borderRadius:8, padding:"6px", cursor:"pointer", fontSize:"0.68rem", fontWeight:"bold" }
+    }, "\uD83E\uDDEA DEV\nForce Breed"),
+    // DEV +1 day
+    /*#__PURE__*/React.createElement("button", {
+      onClick: function() {
+        var oneDayMs = 24 * 60 * 60 * 1000;
+        setAnimals(function(prev) {
+          return prev.map(function(a) {
+            if (a.retired) return a;
+            var newAge = (a.ageMonths||0) + 1;
+            var maxAge = a.lifespan || 144;
+            if (newAge >= maxAge) return Object.assign({}, a, { ageMonths: newAge, retired: true, retireReason: "End of natural life", retiredAt: Date.now() });
+            var sizeLockUpdate = {};
+            if (!a.sizeLocked) {
+              var mt = ({ XS:10, S:12, M:15, L:18, XL:24 }[a.size||"M"] || 15);
+              if ((a.ageMonths||0) < mt && newAge >= mt) {
+                var fs = getCurrentSize(Object.assign({}, a, { ageMonths: newAge }));
+                sizeLockUpdate = { adultWeight: fs.adultW, adultHeight: fs.adultH, sizeLocked: true };
+              }
+            }
+            return Object.assign({}, a, sizeLockUpdate, { ageMonths: newAge });
+          });
+        });
+        setWhelpingLitters(function(prev) {
+          return prev.map(function(lit) {
+            return Object.assign({}, lit, { bornDate: lit.bornDate - oneDayMs });
+          });
+        });
+        var key = "breedingSim_lastTick";
+        var current = parseInt(localStorage.getItem(key) || "0");
+        localStorage.setItem(key, (current > 0 ? current - oneDayMs : Date.now() - oneDayMs).toString());
+      },
+      title: "DEV MODE: Forces one game day to pass",
+      style: { width:"100%", background:"#0a1a0a", border:"2px dashed #22c55e", color:"#4ade80",
+        borderRadius:8, padding:"6px", cursor:"pointer", fontSize:"0.68rem", fontWeight:"bold" }
+    }, "\uD83D\uDCC5 DEV\n+1 Day")
+  ),
+
+  // ── RIGHT: Dam picker ─────────────────────────────────────────────────
+  /*#__PURE__*/React.createElement("div", {
+    style: { display: "flex", flexDirection: "column", background: "#1a1410", border: "1px solid #4a3a28", borderRadius: 10, overflow: "hidden" }
+  },
+    // header
+    /*#__PURE__*/React.createElement("div", {
+      style: { background: "#2a1e14", borderBottom: "1px solid #4a3a28", padding: "8px 10px", display: "flex", flexDirection: "column", gap: 6, flexShrink: 0 }
+    },
+      /*#__PURE__*/React.createElement("div", { style: { display: "flex", alignItems: "center", justifyContent: "space-between" } },
+        /*#__PURE__*/React.createElement("span", { style: { color: "#c4956a", fontWeight: "bold", fontSize: "0.82rem" } }, "\u2640 Dam"),
+        dam && /*#__PURE__*/React.createElement("button", {
+          onClick: function(e){ e.stopPropagation(); setDam(null); setBreedDamDna(null); },
+          style: { background: "transparent", border: "none", color: "#8a7055", cursor: "pointer", fontSize: "0.75rem" }
+        }, "\u2715 Clear")
+      ),
+      /*#__PURE__*/React.createElement("input", {
+        type: "text", placeholder: "Search name or breed\u2026", value: breedDamSearch,
+        onChange: function(e){ setBreedDamSearch(e.target.value); },
+        style: { background: "#241a10", border: "1px solid #4a3a28", color: "#c4956a", borderRadius: 5,
+          padding: "4px 8px", fontSize: "0.78rem", width: "100%", boxSizing: "border-box" }
+      }),
+      /*#__PURE__*/React.createElement("div", { style: { display: "flex", gap: 4 } },
+        [["perf","\u26A1 Perf"],["health","\u2764\uFE0F Health"],["name","A-Z"]].map(function(pair){
+          var k = pair[0], lbl = pair[1];
+          return /*#__PURE__*/React.createElement("button", {
+            key: k, onClick: function(){ setBreedDamSort(k); },
+            style: { flex: 1, background: breedDamSort===k?"#3a2810":"transparent", border: "1px solid "+(breedDamSort===k?"#d4942a":"#4a3a28"),
+              color: breedDamSort===k?"#d4942a":"#8a7055", borderRadius: 4, padding: "2px 0", cursor: "pointer", fontSize: "0.7rem" }
+          }, lbl);
+        })
+      )
+    ),
+    // list
+    /*#__PURE__*/React.createElement("div", { style: { overflowY: "auto", flex: 1, padding: "6px 6px" } },
+      (function(){
+        var females = animals.filter(function(a){ return !a.retired && a.sex === "F"; });
+        var filtered = females.filter(function(a){
+          var q = breedDamSearch.toLowerCase();
+          return !q || (a.name||"").toLowerCase().includes(q) || a.breed.toLowerCase().includes(q);
+        });
+        var sorted = filtered.slice().sort(function(a,b){
+          if (breedDamSort === "perf") return (b.performanceScore||0) - (a.performanceScore||0);
+          if (breedDamSort === "health") return (b.healthScore||0) - (a.healthScore||0);
+          return (a.name||"").localeCompare(b.name||"");
+        });
+        if (sorted.length === 0) return /*#__PURE__*/React.createElement("div", { style: { color: "#4a3a28", fontSize: "0.8rem", textAlign: "center", padding: "20px 0" } }, "No females available");
+        return sorted.map(function(a){
+          var reason = breedingIneligibleReason(a);
+          var isSel = dam && dam.id === a.id;
+          var isDna = breedDamDna === a.id;
+          var hs = a.healthScore || 0;
+          var ps = a.performanceScore || 0;
+          var isPreg = !!(a.pregnantUntil && a.pregnantUntil > Date.now());
+          return /*#__PURE__*/React.createElement("div", { key: a.id,
+            style: { background: isSel ? "#3a2810" : "#241a10", border: "1px solid "+(isSel?"#c4956a":reason?"#3a2218":"#2e2010"),
+              borderRadius: 6, padding: "6px 8px", marginBottom: 4, cursor: reason?"not-allowed":"pointer",
+              opacity: reason ? 0.6 : 1 }
+          },
+            /*#__PURE__*/React.createElement("div", { style: { display: "flex", alignItems: "center", gap: 6 },
+              onClick: function(e){ e.stopPropagation(); if (!reason) { setDam(a); setBreedDamDna(null); } }
+            },
+              /*#__PURE__*/React.createElement("span", { style: { fontSize: "1.1rem" } }, "\uD83D\uDC29"),
+              /*#__PURE__*/React.createElement("div", { style: { flex: 1, minWidth: 0 } },
+                /*#__PURE__*/React.createElement("div", { style: { display: "flex", alignItems: "center", gap: 4 } },
+                  /*#__PURE__*/React.createElement("span", { style: { color: "#c4956a", fontWeight: "bold", fontSize: "0.8rem", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" } }, a.name||a.breed),
+                  reason && /*#__PURE__*/React.createElement("span", { title: reason, style: { fontSize: "0.7rem" } }, "\u26A0\uFE0F"),
+                  isPreg && /*#__PURE__*/React.createElement("span", { title: "Pregnant", style: { fontSize: "0.7rem" } }, "\uD83E\uDD30")
+                ),
+                /*#__PURE__*/React.createElement("div", { style: { color: "#8a7055", fontSize: "0.68rem" } }, a.breed + " \u00B7 " + Math.round((a.ageMonths||0)/12*10)/10 + "y"),
+                /*#__PURE__*/React.createElement("div", { style: { display: "flex", gap: 4, marginTop: 3 } },
+                  /*#__PURE__*/React.createElement("div", { style: { flex: 1 } },
+                    /*#__PURE__*/React.createElement("div", { style: { fontSize: "0.6rem", color: "#60a5fa", marginBottom: 1 } }, "\u26A1 "+ps),
+                    /*#__PURE__*/React.createElement("div", { style: { height: 4, background: "#1a1410", borderRadius: 2 } },
+                      /*#__PURE__*/React.createElement("div", { style: { height: "100%", width: Math.min(100,ps)+"%", background: "#3b82f6", borderRadius: 2 } })
+                    )
+                  ),
+                  /*#__PURE__*/React.createElement("div", { style: { flex: 1 } },
+                    /*#__PURE__*/React.createElement("div", { style: { fontSize: "0.6rem", color: "#4ade80", marginBottom: 1 } }, "\u2764\uFE0F "+hs),
+                    /*#__PURE__*/React.createElement("div", { style: { height: 4, background: "#1a1410", borderRadius: 2 } },
+                      /*#__PURE__*/React.createElement("div", { style: { height: "100%", width: Math.min(100,hs)+"%", background: "#22c55e", borderRadius: 2 } })
+                    )
+                  )
+                )
+              ),
+              /*#__PURE__*/React.createElement("button", {
+                onClick: function(e){ e.stopPropagation(); setBreedDamDna(isDna ? null : a.id); setBreedSireDna(null); },
+                style: { background: isDna?"#2a1e3a":"transparent", border: "1px solid "+(isDna?"#7c3aed":"#4a3a28"),
+                  color: isDna?"#a78bfa":"#6b5038", borderRadius: 4, padding: "2px 5px", cursor: "pointer", fontSize: "0.65rem", flexShrink: 0 }
+              }, "\uD83E\uDDEC")
+            ),
+            // inline DNA panel
+            isDna && /*#__PURE__*/React.createElement("div", {
+              style: { marginTop: 6, background: "#1a1410", border: "1px solid #3a2a4a", borderRadius: 6, padding: "8px 10px", fontSize: "0.72rem" }
+            },
+              /*#__PURE__*/React.createElement("div", { style: { color: "#a78bfa", fontWeight: "bold", marginBottom: 6 } }, "\uD83E\uDDEC DNA \u2014 " + (a.name||a.breed)),
+              a.genome && /*#__PURE__*/React.createElement(React.Fragment, null,
+                /*#__PURE__*/React.createElement("div", { style: { color: "#8a7055", marginBottom: 4 } }, "Coat: ",
+                  Object.entries(a.genome.coat||{}).map(function(e){ return e[0]+"("+e[1].join("")+")"; }).join(" ")
+                ),
+                /*#__PURE__*/React.createElement("div", { style: { color: "#8a7055", marginBottom: 4 } }, "Health: ",
+                  Object.entries(a.genome.health||{}).filter(function(e){ return ["MDR1","PRA","DM","vWD"].includes(e[0]); }).map(function(e){
+                    var alleles = e[1]; var aff = alleles[0]==="n"&&alleles[1]==="n"; var car = !aff&&(alleles[0]==="n"||alleles[1]==="n");
+                    return /*#__PURE__*/React.createElement("span", { key: e[0], style: { color: aff?"#ef4444":car?"#f97316":"#4ade80", marginRight: 4 } }, e[0]+(aff?" AFFECTED":car?" Carrier":" Clear"));
+                  })
+                ),
+                /*#__PURE__*/React.createElement("div", { style: { color: "#8a7055" } }, "COI: ",
+                  /*#__PURE__*/React.createElement("span", { style: { color: (a.coi||0)>=25?"#ef4444":(a.coi||0)>=12?"#f97316":"#4ade80" } }, (a.coi||0)+"%")
+                )
+              )
+            )
+          );
+        });
+      })()
+    )
+  )
+  )), tab === "openlitter" && /*#__PURE__*/React.createElement("div", { style: { position: "relative", overflowY: "auto", maxHeight: "calc(100vh - 130px)" } },
     litter.length === 0
       ? /*#__PURE__*/React.createElement("div", { style: { textAlign:"center", color:"#6b5038", padding:"60px 0" } },
           /*#__PURE__*/React.createElement("div", { style:{ fontSize:"2rem", marginBottom:10 } }, "\uD83D\uDC3E"),
