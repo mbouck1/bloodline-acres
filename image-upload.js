@@ -98,7 +98,7 @@ function baSubmitImage(species, breed, file, submitterName, onSuccess, onError) 
       throw new Error(e.message || e.error || "DB insert failed"); 
     });
     console.log("BA DB OK");
-    return r.json();
+    return r.text();
   })
   .then(function(){ onSuccess(); })
   .catch(function(e){ console.error("BA FINAL ERROR:", e.message); onError(e.message || "Submission failed."); });
