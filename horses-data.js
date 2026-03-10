@@ -977,7 +977,7 @@ function HorseDNAModal(props) {
         })
       )
     )
-  );
+  ;
 
   if (inline) return innerContent;
   return React.createElement("div",{
