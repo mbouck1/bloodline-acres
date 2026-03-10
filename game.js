@@ -4455,14 +4455,15 @@ var FACILITIES = {
 // SHOWS VIEW COMPONENT
 // ═══════════════════════════════════════════════════════════════
 function ShowsView(_ref_sv) {
-  var animals = _ref_sv.animals,
-      money = _ref_sv.money,
-      onMoneyChange = _ref_sv.onMoneyChange,
-      onAnimalUpdate = _ref_sv.onAnimalUpdate,
-      onLog = _ref_sv.onLog,
-      gameStartDate = _ref_sv.gameStartDate,
-      lastShowDates = _ref_sv.lastShowDates,
-      onShowDatesUpdate = _ref_sv.onShowDatesUpdate;
+  if (!_ref_sv) return null;
+  var animals = _ref_sv.animals || [],
+      money = _ref_sv.money || 0,
+      onMoneyChange = _ref_sv.onMoneyChange || function(){},
+      onAnimalUpdate = _ref_sv.onAnimalUpdate || function(){},
+      onLog = _ref_sv.onLog || function(){},
+      gameStartDate = _ref_sv.gameStartDate || Date.now(),
+      lastShowDates = _ref_sv.lastShowDates || {},
+      onShowDatesUpdate = _ref_sv.onShowDatesUpdate || function(){};
 
   var _useState_sv1 = _slicedToArray(useState(null), 2), selectedDog = _useState_sv1[0], setSelectedDog = _useState_sv1[1];
   var _useState_sv2 = _slicedToArray(useState("conformation"), 2), selectedClass = _useState_sv2[0], setSelectedClass = _useState_sv2[1];
@@ -4533,7 +4534,9 @@ function ShowsView(_ref_sv) {
     borderRadius:4, padding:"4px 12px", cursor:"pointer", fontSize:"0.78rem" };
   var activeBtnStyle = Object.assign({}, btnStyle, { background:"#6a4a28", border:"1px solid #d4942a", color:"#f5d870", fontWeight:"bold" });
 
-  return /*#__PURE__*/React.createElement("div", { style:{ padding:12, maxWidth:900, margin:"0 auto" } },
+  try {
+  return /*#__PURE__*/React.createElement("div", { style:{ padding:12, maxWidth:900, margin:"0 auto",
+    flex:1, overflow:"auto", background:"#1a140e", minHeight:"100%" } },
 
     // Header
     React.createElement("div", { style:{ display:"flex", alignItems:"center", gap:12, marginBottom:16 } },
@@ -4699,6 +4702,10 @@ function ShowsView(_ref_sv) {
           )
     )
   );
+  } catch(e) {
+    return React.createElement("div", { style:{ padding:20, color:"#ef4444", background:"#1a140e", flex:1 } },
+      "Shows error: ", String(e && e.message ? e.message : e));
+  }
 }
 
 // ── FARM VIEW ─────────────────────────────────────────────────────────────────
@@ -6917,9 +6924,7 @@ function App() {
     }
   }, "\uD83E\uDDEC 8 coat loci \xB7 8 health loci \xB7 5 perf QTLs \xB7 0.5% mutation rate \xB7 COI tracking"),
   /*#__PURE__*/React.createElement(Clock, { gameStartDate: gameStartDate }),
-  tab === "shows" && /*#__PURE__*/React.createElement("div", {
-    style: { flex:1, overflow:"auto", padding:12, background:"#1a140e" }
-  }, /*#__PURE__*/React.createElement(ShowsView, {
+  tab === "shows" && /*#__PURE__*/React.createElement(ShowsView, {
     animals: animals.filter(function(a){ return !a.retired; }),
     money: money,
     onMoneyChange: setMoney,
@@ -6928,9 +6933,9 @@ function App() {
     },
     onLog: function(entry){ setLog(function(lg){ return [entry].concat(_toConsumableArray(lg)); }); },
     gameStartDate: gameStartDate,
-    lastShowDates: lastShowDates,
+    lastShowDates: lastShowDates || {},
     onShowDatesUpdate: setLastShowDates
-  })),
+  }),
   tab === "farm" && /*#__PURE__*/React.createElement("div", {
     style: { position:"fixed", inset:0, background:"#141008", zIndex:50, overflow:"hidden", display:"flex", alignItems:"center", justifyContent:"center" }
   }, /*#__PURE__*/React.createElement(FarmView, {
