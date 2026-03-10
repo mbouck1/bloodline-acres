@@ -370,17 +370,33 @@ var HORSE_NAMES_M = [
   "Thunder","Blaze","Shadow","Midnight","Storm","Ranger","Duke","Maverick",
   "Apache","Cheyenne","Dakota","Comanche","Bandit","Rebel","Outlaw","Scout",
   "Ace","Atlas","Titan","Zeus","Orion","Comet","Eclipse","Solstice",
-  "Copper","Rusty","Dusty","Smoky","Ash","Coal","Ember","Flint"
+  "Copper","Rusty","Dusty","Smoky","Ash","Coal","Ember","Flint",
+  "Rio","Cisco","Bronco","Wrangler","Lasso","Rodeo","Buck","Colt",
+  "Major","Colonel","Captain","Sarge","Chief","Warrior","Brave","Noble",
+  "Granite","Cobalt","Steele","Arrow","Bolt","Cannon","Rocket","Turbo",
+  "Lynx","Hawk","Falcon","Eagle","Condor","Raven","Fox","Wolf",
+  "Hercules","Ajax","Hector","Achilles","Caesar","Brutus","Nero","Magnus",
+  "Sundance","Tonto","Lone Star","Desperado","Outpost","Frontier","Stampede","Lariat"
 ];
 var HORSE_NAMES_F = [
   "Luna","Stella","Willow","Daisy","Rosie","Pearl","Misty","Crystal",
   "Aurora","Celeste","Ivory","Sierra","Sahara","Savannah","Prairie","Mesa",
   "Maple","Amber","Honey","Cinnamon","Ginger","Clover","Heather","Sage",
-  "Duchess","Countess","Lady","Grace","Belle","Ivy","Violet","Hazel"
+  "Duchess","Countess","Lady","Grace","Belle","Ivy","Violet","Hazel",
+  "Sienna","Scarlett","Ruby","Jasmine","Lily","Magnolia","Wisteria","Azalea",
+  "Nova","Lyra","Vega","Cassidy","Andromeda","Calypso","Selene","Phoebe",
+  "Bonita","Chica","Paloma","Estrella","Dulce","Mariposa","Brisa","Canela",
+  "Tara","Fiona","Nora","Bridget","Skye","Briar","Fern","Meadow",
+  "Destiny","Harmony","Serenity","Journey","Liberty","Charity","Faith","Hope",
+  "Duchess","Baroness","Marchesa","Viscountess","Princess","Marquise","Empress","Regina"
 ];
-function generateHorseName(sex) {
+function generateHorseName(sex, existingNames) {
   var pool = sex === "M" ? HORSE_NAMES_M : HORSE_NAMES_F;
-  return pool[Math.floor(Math.random()*pool.length)];
+  var used = existingNames || [];
+  // Try to find an unused name first
+  var unused = pool.filter(function(n){ return used.indexOf(n) === -1; });
+  var src = unused.length > 0 ? unused : pool;
+  return src[Math.floor(Math.random()*src.length)];
 }
 
 // ── HORSE SHOW CLASSES ────────────────────────────────────────
@@ -727,7 +743,7 @@ function HorseShowsView(props) {
 // ── NORMALIZE MARKET-BOUGHT HORSES ───────────────────────────
 // Horses bought from Livestock Market have minimal fields.
 // This fills in genetics + display fields so HorsesView never crashes.
-function normalizeHorse(horse) {
+function normalizeHorse(horse, existingNames) {
   if (!horse) return horse;
   var breed = horse.breed || "Quarter Horse";
   var breedDef = HORSE_BREED_DEFS.find(function(b){ return b.name===breed; }) || HORSE_BREED_DEFS[0];
@@ -737,7 +753,7 @@ function normalizeHorse(horse) {
   var perfScore = horse.perfScore != null ? horse.perfScore : calcHorsePerfScore(genome);
   return Object.assign({
     id: horse.id || ("horse_"+Date.now()),
-    name: horse.name || generateHorseName(horse.sex||"F"),
+    name: horse.name || generateHorseName(horse.sex||"F", existingNames),
     breed: breed,
     group: breedDef.group || "Western",
     sex: horse.sex || "F",

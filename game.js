@@ -7502,7 +7502,8 @@ showShearing && /*#__PURE__*/React.createElement(ShearingModal, {
         var animalWithIncome = attachIncomeData(animal, species);
         var finalAnimal = Object.assign({},animalWithIncome,{purchasePrice:animal.price||0});
         if (species==="horse" && typeof normalizeHorse === "function") {
-          finalAnimal = normalizeHorse(finalAnimal);
+          var existingHorseNames = (ownedLivestock||[]).filter(function(a){ return a.species==="horse"; }).map(function(a){ return a.name; }).filter(Boolean);
+          finalAnimal = normalizeHorse(finalAnimal, existingHorseNames);
         }
         setOwnedLivestock(function(prev){ return prev.concat([finalAnimal]); });
         setMarketSession(function(sess){ return sess.concat([{ species:species, price:animal.price||0, sex:animal.sex||"F" }]); });
