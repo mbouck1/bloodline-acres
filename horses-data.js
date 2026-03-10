@@ -1152,7 +1152,7 @@ function HorsesView(props) {
           style:{background:"#0a2a15",border:"1px solid #22c55e",color:"#22c55e",borderRadius:6,padding:"5px 14px",cursor:"pointer",fontSize:"0.8rem",fontWeight:"bold"}
         },"🏇 Horse Shows"),
         horses.length>=2 && React.createElement("button",{
-          onClick:function(){ setShowBreeding(true); },
+          onClick:function(e){ e.stopPropagation(); setShowBreeding(true); },
           disabled:!canBreed,
           style:{background:canBreed?"#2a1e08":"#141008",border:"1px solid "+(canBreed?"#d4942a":"#2a2a18"),
             color:canBreed?"#d4942a":"#3a3a28",borderRadius:6,padding:"5px 14px",
