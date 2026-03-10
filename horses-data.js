@@ -1316,7 +1316,7 @@ function HorseBreedingModal(props) {
     var norm = normalizeHorse(h);
     return React.createElement("div", {
       key: h.id,
-      onClick: onClick,
+      onClick: function(e){ e.stopPropagation(); onClick(); },
       style: {
         background: selected ? "#1a3a0a" : "#141008",
         border: "1px solid " + (selected ? "#84cc16" : "#2a3a18"),
@@ -1405,7 +1405,7 @@ function HorseBreedingModal(props) {
       // Confirm button
       React.createElement("button", {
         disabled: !sire || !dam,
-        onClick: function(){ if(sire && dam) onConfirm(sire.id, dam.id); },
+        onClick: function(e){ e.stopPropagation(); if(sire && dam) onConfirm(sire.id, dam.id); },
         style: {
           width:"100%", padding:"12px 0", borderRadius:8, cursor: sire&&dam ? "pointer" : "not-allowed",
           background: sire&&dam ? "#1a3a0a" : "#0a1208",
