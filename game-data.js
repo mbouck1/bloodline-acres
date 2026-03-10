@@ -1377,94 +1377,96 @@ var LIVESTOCK_SPECIES = [
 
 
 // ═══════════════════════════════════════════════════════════════
-// HORSE GENETICS ENGINE (inline — mirrors horses-data.js logic)
+// HORSE GENETICS ENGINE
 // ═══════════════════════════════════════════════════════════════
-
-var HORSE_PERF_QTLS = ["SPEED","STAMINA","MUSCLE","TEMP","AGILITY"];
-
-var HORSE_GROUP_BY_TYPE = {
-  light:"Light", warmblood:"Sport", gaited:"Gaited", draft:"Draft", pony:"Pony"
-};
+var HORSE_PERF_QTLS_MKT = ["SPEED","STAMINA","MUSCLE","TEMP","AGILITY"];
 
 function generateHorseGenomeInline(breedType) {
-  var g = HORSE_GROUP_BY_TYPE[breedType] || "Light";
   var freqs = {
-    Light:   { E:0.65, A:0.75, Cr:0.1,  D:0.1,  G:0.2,  Rn:0.15, TO:0.05, Sv:0.05, Z:0.05, Ch:0.05 },
-    Sport:   { E:0.7,  A:0.8,  Cr:0.05, D:0.05, G:0.2,  Rn:0.05, TO:0.0,  Sv:0.0,  Z:0.0,  Ch:0.0  },
-    Gaited:  { E:0.6,  A:0.65, Cr:0.2,  D:0.1,  G:0.15, Rn:0.2,  TO:0.1,  Sv:0.1,  Z:0.0,  Ch:0.05 },
-    Draft:   { E:0.7,  A:0.75, Cr:0.05, D:0.05, G:0.2,  Rn:0.2,  TO:0.0,  Sv:0.0,  Z:0.1,  Ch:0.0  },
-    Pony:    { E:0.55, A:0.6,  Cr:0.15, D:0.2,  G:0.2,  Rn:0.25, TO:0.1,  Sv:0.1,  Z:0.05, Ch:0.05 }
+    light:    {E:0.65,A:0.75,Cr:0.10,D:0.10,G:0.20,Rn:0.15,TO:0.05,Sv:0.04,Z:0.05,Ch:0.05},
+    warmblood:{E:0.70,A:0.80,Cr:0.05,D:0.05,G:0.20,Rn:0.05,TO:0.00,Sv:0.00,Z:0.00,Ch:0.00},
+    gaited:   {E:0.60,A:0.65,Cr:0.20,D:0.10,G:0.15,Rn:0.20,TO:0.10,Sv:0.08,Z:0.00,Ch:0.05},
+    draft:    {E:0.70,A:0.75,Cr:0.05,D:0.05,G:0.20,Rn:0.20,TO:0.00,Sv:0.00,Z:0.10,Ch:0.00},
+    pony:     {E:0.55,A:0.60,Cr:0.15,D:0.20,G:0.20,Rn:0.25,TO:0.10,Sv:0.08,Z:0.05,Ch:0.05}
   };
-  var f = freqs[g] || freqs.Light;
-  function dip(freq) { return [Math.random()<freq?"1":"0", Math.random()<freq?"1":"0"]; }
-  function hdip(q)   { return [Math.random()<q?"Q":"g",   Math.random()<q?"Q":"g"]; }
   var hb = {
-    Light:   {HipQ:0.80,BoneQ:0.80,LungQ:0.80,HeartQ:0.82,HoofQ:0.80},
-    Sport:   {HipQ:0.75,BoneQ:0.85,LungQ:0.80,HeartQ:0.78,HoofQ:0.80},
-    Gaited:  {HipQ:0.80,BoneQ:0.80,LungQ:0.80,HeartQ:0.82,HoofQ:0.82},
-    Draft:   {HipQ:0.70,BoneQ:0.90,LungQ:0.75,HeartQ:0.75,HoofQ:0.80},
-    Pony:    {HipQ:0.85,BoneQ:0.85,LungQ:0.82,HeartQ:0.85,HoofQ:0.85}
-  }[g] || {HipQ:0.80,BoneQ:0.80,LungQ:0.80,HeartQ:0.80,HoofQ:0.80};
+    light:    {HipQ:0.80,BoneQ:0.80,LungQ:0.80,HeartQ:0.82,HoofQ:0.80},
+    warmblood:{HipQ:0.75,BoneQ:0.85,LungQ:0.80,HeartQ:0.78,HoofQ:0.80},
+    gaited:   {HipQ:0.80,BoneQ:0.80,LungQ:0.80,HeartQ:0.82,HoofQ:0.82},
+    draft:    {HipQ:0.70,BoneQ:0.90,LungQ:0.75,HeartQ:0.75,HoofQ:0.80},
+    pony:     {HipQ:0.85,BoneQ:0.85,LungQ:0.82,HeartQ:0.85,HoofQ:0.85}
+  };
   var pb = {
-    Light:   {SPEED:3.5,STAMINA:3.5,MUSCLE:3.0,TEMP:3.2,AGILITY:3.5},
-    Sport:   {SPEED:3.3,STAMINA:3.5,MUSCLE:3.5,TEMP:3.8,AGILITY:4.0},
-    Gaited:  {SPEED:3.0,STAMINA:3.8,MUSCLE:3.0,TEMP:4.2,AGILITY:3.2},
-    Draft:   {SPEED:2.0,STAMINA:4.0,MUSCLE:5.0,TEMP:4.5,AGILITY:2.0},
-    Pony:    {SPEED:3.0,STAMINA:3.8,MUSCLE:3.2,TEMP:4.0,AGILITY:3.8}
-  }[g] || {SPEED:3.0,STAMINA:3.0,MUSCLE:3.0,TEMP:3.0,AGILITY:3.0};
-  function pp(base) {
+    light:    {SPEED:3.5,STAMINA:3.5,MUSCLE:3.0,TEMP:3.2,AGILITY:3.5},
+    warmblood:{SPEED:3.3,STAMINA:3.5,MUSCLE:3.5,TEMP:3.8,AGILITY:4.0},
+    gaited:   {SPEED:3.0,STAMINA:3.8,MUSCLE:3.0,TEMP:4.2,AGILITY:3.2},
+    draft:    {SPEED:2.0,STAMINA:4.0,MUSCLE:5.0,TEMP:4.5,AGILITY:2.0},
+    pony:     {SPEED:3.0,STAMINA:3.8,MUSCLE:3.2,TEMP:4.0,AGILITY:3.8}
+  };
+  var f=freqs[breedType]||freqs.light, h=hb[breedType]||hb.light, p=pb[breedType]||pb.light;
+  function dip(q){return [Math.random()<q?"1":"0",Math.random()<q?"1":"0"];}
+  function hdip(q){return [Math.random()<q?"Q":"g",Math.random()<q?"Q":"g"];}
+  function pp(base){
     var lo=Math.max(1,Math.min(5,Math.round(base-1+Math.random()*2)));
     var hi=Math.max(1,Math.min(5,Math.round(base-1+Math.random()*2)));
     return [lo,hi];
   }
-  var coat={}, health={}, perf={};
-  Object.keys(f).forEach(function(loc){ coat[loc]=dip(f[loc]); });
-  Object.keys(hb).forEach(function(loc){ health[loc]=hdip(hb[loc]); });
-  HORSE_PERF_QTLS.forEach(function(q){ perf[q]=pp(pb[q]||3); });
-  return { coat:coat, health:health, perf:perf };
+  var coat={},health={},perf={};
+  Object.keys(f).forEach(function(l){coat[l]=dip(f[l]);});
+  Object.keys(h).forEach(function(l){health[l]=hdip(h[l]);});
+  HORSE_PERF_QTLS_MKT.forEach(function(q){perf[q]=pp(p[q]||3);});
+  return {coat:coat,health:health,perf:perf};
 }
 
 function interpretHorseColorInline(genome) {
-  if (!genome||!genome.coat) return "Bay";
+  if(!genome||!genome.coat) return "Bay";
   var c=genome.coat;
-  var hasE  = (c.E||[])[0]==="1"  || (c.E||[])[1]==="1";
-  var hasA  = (c.A||[])[0]==="1"  || (c.A||[])[1]==="1";
-  var crCopies = ((c.Cr||[])[0]==="1"?1:0)+((c.Cr||[])[1]==="1"?1:0);
-  var hasDun = (c.D||[])[0]==="1" || (c.D||[])[1]==="1";
-  var hasGrey= (c.G||[])[0]==="1" || (c.G||[])[1]==="1";
-  var hasRn  = (c.Rn||[])[0]==="1"|| (c.Rn||[])[1]==="1";
-  var hasTO  = (c.TO||[])[0]==="1"|| (c.TO||[])[1]==="1";
-  var hasSv  = (c.Sv||[])[0]==="1"|| (c.Sv||[])[1]==="1";
-  var hasZ   = (c.Z||[])[0]==="1" || (c.Z||[])[1]==="1";
-  var hasCh  = (c.Ch||[])[0]==="1"|| (c.Ch||[])[1]==="1";
-  var base = !hasE ? "Chestnut" : hasA ? "Bay" : "Black";
-  if (hasCh) base = base==="Bay"?"Amber Champagne":base==="Chestnut"?"Gold Champagne":"Classic Champagne";
-  if (crCopies===2) base = base==="Bay"||base==="Amber Champagne"?"Perlino":base==="Chestnut"||base==="Gold Champagne"?"Cremello":"Smoky Cream";
-  else if (crCopies===1) base = base==="Bay"?"Buckskin":base==="Chestnut"?"Palomino":base==="Black"?"Smoky Black":base;
-  if (hasDun && crCopies===0) base = base==="Bay"||base==="Buckskin"?"Dun":base==="Black"||base==="Smoky Black"?"Grulla":base==="Chestnut"||base==="Palomino"?"Red Dun":base;
-  if (hasZ && (base==="Black"||base==="Bay")) base = base==="Bay"?"Silver Bay":"Silver Black";
-  var pattern = hasTO&&hasSv?"Tovero":hasTO?"Tobiano":hasSv?"Overo":"";
-  if (hasGrey) return "Grey ("+base+")";
-  var result = pattern ? pattern+" "+base : base;
-  if (hasRn && !pattern) result += " Roan";
+  var hasE =(c.E||[])[0]==="1"||(c.E||[])[1]==="1";
+  var hasA =(c.A||[])[0]==="1"||(c.A||[])[1]==="1";
+  var crN  =((c.Cr||[])[0]==="1"?1:0)+((c.Cr||[])[1]==="1"?1:0);
+  var hasDun=(c.D||[])[0]==="1"||(c.D||[])[1]==="1";
+  var hasGr=(c.G||[])[0]==="1"||(c.G||[])[1]==="1";
+  var hasRn=(c.Rn||[])[0]==="1"||(c.Rn||[])[1]==="1";
+  var hasTO=(c.TO||[])[0]==="1"||(c.TO||[])[1]==="1";
+  var hasSv=(c.Sv||[])[0]==="1"||(c.Sv||[])[1]==="1";
+  var hasZ =(c.Z||[])[0]==="1"||(c.Z||[])[1]==="1";
+  var hasCh=(c.Ch||[])[0]==="1"||(c.Ch||[])[1]==="1";
+  var base=!hasE?"Chestnut":hasA?"Bay":"Black";
+  if(hasCh) base=base==="Bay"?"Amber Champagne":base==="Chestnut"?"Gold Champagne":"Classic Champagne";
+  if(crN===2) base=base==="Bay"||base==="Amber Champagne"?"Perlino":base==="Chestnut"||base==="Gold Champagne"?"Cremello":"Smoky Cream";
+  else if(crN===1) base=base==="Bay"?"Buckskin":base==="Chestnut"?"Palomino":base==="Black"?"Smoky Black":base;
+  if(hasDun&&crN===0) base=base==="Bay"||base==="Buckskin"?"Dun":base==="Black"||base==="Smoky Black"?"Grulla":base==="Chestnut"||base==="Palomino"?"Red Dun":base;
+  if(hasZ&&(base==="Black"||base==="Bay")) base=base==="Bay"?"Silver Bay":"Silver Black";
+  var pat=hasTO&&hasSv?"Tovero":hasTO?"Tobiano":hasSv?"Overo":"";
+  if(hasGr) return "Grey ("+base+")";
+  var result=pat?pat+" "+base:base;
+  if(hasRn&&!pat) result+=" Roan";
   return result;
 }
 
 function calcHorseHealthInline(genome) {
-  if (!genome||!genome.health) return 50;
-  var h=genome.health, score=0, count=0;
-  Object.keys(h).forEach(function(loc){
-    var al=h[loc]; if(!al) return;
-    score += ((al[0]==="Q"?1:0)+(al[1]==="Q"?1:0))/2*100; count++;
-  });
-  return count ? Math.round(score/count) : 50;
+  if(!genome||!genome.health) return 50;
+  var h=genome.health,s=0,n=0;
+  Object.keys(h).forEach(function(l){var a=h[l];if(!a)return;s+=((a[0]==="Q"?1:0)+(a[1]==="Q"?1:0))/2*100;n++;});
+  return n?Math.round(s/n):50;
 }
 
 function calcHorsePerfInline(genome) {
-  if (!genome||!genome.perf) return 50;
-  var p=genome.perf, total=0;
-  HORSE_PERF_QTLS.forEach(function(q){ var v=p[q]; if(v) total+=(v[0]+v[1])/2; });
-  return Math.round((total/(HORSE_PERF_QTLS.length*5))*100);
+  if(!genome||!genome.perf) return 50;
+  var p=genome.perf,t=0;
+  HORSE_PERF_QTLS_MKT.forEach(function(q){var v=p[q];if(v)t+=(v[0]+v[1])/2;});
+  return Math.round((t/(HORSE_PERF_QTLS_MKT.length*5))*100);
+}
+
+// Count health warnings for badge
+function countHorseHealthWarnings(genome) {
+  if(!genome||!genome.health) return 0;
+  var n=0;
+  ["HipQ","BoneQ","LungQ","HeartQ","HoofQ"].forEach(function(l){
+    var a=(genome.health||{})[l]||["g","g"];
+    if(a[0]==="g"&&a[1]==="g") n++;
+  });
+  return n;
 }
 
 var LIVESTOCK_QTY = {
@@ -1516,6 +1518,7 @@ function generateLivestockStock() {
     stock[sp.key] = [];
     if (sp.key === "horse") {
       var horseTypes = ["light","warmblood","gaited","draft","pony"];
+      // weighted: light 35%, warmblood 25%, gaited 15%, draft 15%, pony 10%
       var horseWeights = [0.35, 0.60, 0.75, 0.90, 1.0];
       for (var i=0; i<qty; i++) {
         var r = Math.random();
@@ -1523,13 +1526,14 @@ function generateLivestockStock() {
         for (var wi=0; wi<horseWeights.length; wi++) { if (r < horseWeights[wi]) { type = horseTypes[wi]; break; } }
         var breeds = HORSE_BREEDS[type];
         var breed = breeds[Math.floor(Math.random()*breeds.length)];
-        var genome = generateHorseGenomeInline(type);
-        var healthScore = calcHorseHealthInline(genome);
-        var coatColor = interpretHorseColorInline(genome);
-        var ha = { id:lsId(), type:type, breed:breed.name,
+        var hGenome = generateHorseGenomeInline(type);
+        var ha = { id:lsId(), type:type, breed:breed.name, species:"horse",
           aptitudes:breed.aptitudes, sex:randomSex(), price:0,
-          species:"horse", genome:genome, healthScore:healthScore,
-          coatColor:coatColor, ageMonths:Math.floor(Math.random()*60)+24 };
+          genome:hGenome,
+          coatColor:interpretHorseColorInline(hGenome),
+          healthScore:calcHorseHealthInline(hGenome),
+          ageMonths:Math.floor(Math.random()*60)+24 };
+        ha.perfScore = calcHorsePerfInline(hGenome);
         ha.price = calcHorsePrice(ha);
         stock[sp.key].push(ha);
       }
@@ -1566,17 +1570,15 @@ function calcHorsePrice(animal) {
   var premiums = { light:3500, warmblood:5000, gaited:2000, draft:2500, pony:1200 };
   var mids     = { light:2000, warmblood:3000, gaited:1200, draft:1200, pony:700 };
   var base = bases[animal.type] || 1500;
-  // Use real perf score from genome if available, else random
-  var perfScore = animal.genome ? calcHorsePerfInline(animal.genome) : Math.floor(Math.random()*100);
-  animal.perfScore = perfScore;
-  // Health modifier: bad health = up to 20% discount
+  var perf = animal.perfScore != null ? animal.perfScore : Math.floor(Math.random()*100);
+  animal.perfScore = perf;
   var healthMod = animal.healthScore != null ? (0.8 + (animal.healthScore/100)*0.2) : 1.0;
   var premium = premiums[animal.type] || 3500;
   var mid = mids[animal.type] || 2000;
   var raw;
-  if (perfScore >= 80) raw = base + Math.floor(Math.random()*1000) + premium;
-  else if (perfScore >= 60) raw = base + Math.floor(Math.random()*800) + mid;
-  else if (perfScore >= 40) raw = base + Math.floor(Math.random()*500) + 500;
+  if (perf >= 80) raw = base + Math.floor(Math.random()*1000) + premium;
+  else if (perf >= 60) raw = base + Math.floor(Math.random()*800) + mid;
+  else if (perf >= 40) raw = base + Math.floor(Math.random()*500) + 500;
   else raw = base + Math.floor(Math.random()*300);
   return Math.round(raw * healthMod / 50) * 50;
 }
@@ -1638,6 +1640,125 @@ function getListingPrice(species, animal) {
   var p = LIVESTOCK_PRICES[species];
   if (typeof p === "function") return p(animal);
   return p || 0;
+}
+
+
+// ── MARKET HORSE CARD (stateful — has DNA modal toggle) ──────
+function MarketHorseCard(props) {
+  var animal=props.animal, sp=props.sp, sellBack=props.sellBack;
+  var canAfford=props.canAfford, isHorse=props.isHorse;
+  var hs=props.hs, ps=props.ps, hsCol=props.hsCol, psCol=props.psCol;
+  var hWarn=props.hWarn, perfIcons=props.perfIcons;
+  var onBuy=props.onBuy, setStock=props.setStock, setSess=props.setSess;
+  var species=props.species;
+
+  var _dn=React.useState(false), showDNA=_dn[0], setShowDNA=_dn[1];
+
+  return React.createElement("div",{
+    style:{background:isHorse?"#0c1408":"#0f172a",
+      border:"1px solid "+(isHorse?"#2a3a18":"#1e293b"),
+      borderRadius:8,padding:"10px 12px",display:"flex",flexDirection:"column",gap:5}},
+
+    // Header row
+    React.createElement("div",{style:{display:"flex",alignItems:"center",gap:6}},
+      React.createElement("span",{style:{fontSize:"1.2rem"}},sp.icon),
+      React.createElement("div",{style:{flex:1}},
+        React.createElement("div",{style:{fontWeight:"bold",fontSize:"0.82rem",color:"#e2e8f0"}},
+          animal.breed||sp.label),
+        isHorse&&animal.coatColor
+          ? React.createElement("div",{style:{fontSize:"0.68rem",color:"#c4956a"}},animal.coatColor)
+          : animal.type&&React.createElement("div",{style:{fontSize:"0.68rem",color:"#64748b"}},
+              animal.type.charAt(0).toUpperCase()+animal.type.slice(1))
+      ),
+      React.createElement("span",{style:{fontSize:"0.72rem",fontWeight:"bold",
+        color:animal.sex==="F"?"#f472b6":"#38bdf8",background:"#0a0f1a",
+        border:"1px solid "+(animal.sex==="F"?"#f472b6":"#38bdf8"),
+        borderRadius:4,padding:"2px 5px"}},
+        animal.sex==="F"?"♀":"♂")
+    ),
+
+    // Horse stats row
+    isHorse&&hs!=null&&ps!=null&&React.createElement("div",{
+      style:{display:"flex",gap:8,fontSize:"0.7rem",alignItems:"center",flexWrap:"wrap"}},
+      React.createElement("span",{style:{color:hsCol,fontWeight:"bold"}},"❤️ "+hs),
+      React.createElement("span",{style:{color:psCol,fontWeight:"bold"}},"⚡ "+ps),
+      animal.ageMonths&&React.createElement("span",{style:{color:"#64748b"}},
+        Math.round(animal.ageMonths/12*10)/10+" yrs"),
+      hWarn>0&&React.createElement("span",{style:{background:"#481808",border:"1px solid #ef4444",
+        color:"#fca5a5",borderRadius:3,padding:"1px 5px",fontSize:"0.62rem",fontWeight:"bold"}},
+        "⚠️ "+hWarn+" health concern"+(hWarn>1?"s":""))
+    ),
+
+    // Perf bars (horses only)
+    isHorse&&animal.genome&&animal.genome.perf&&React.createElement("div",{
+      style:{background:"#080e04",border:"1px solid #1e2e14",borderRadius:4,padding:"5px 7px"}},
+      React.createElement("div",{style:{display:"flex",flexDirection:"column",gap:2}},
+        HORSE_PERF_QTLS_MKT.map(function(q){
+          var v=animal.genome.perf[q]||[3,3];
+          var avg=(v[0]+v[1])/2, pct=Math.round((avg/5)*100);
+          var col=avg>=4?"#d4942a":avg>=3?"#22c55e":"#475569";
+          return React.createElement("div",{key:q,style:{display:"flex",alignItems:"center",gap:4}},
+            React.createElement("span",{style:{fontSize:"0.58rem",width:52,color:col,flexShrink:0}},
+              perfIcons[q]+" "+q),
+            React.createElement("div",{style:{flex:1,background:"#1e293b",borderRadius:2,height:3,overflow:"hidden"}},
+              React.createElement("div",{style:{background:col,width:pct+"%",height:"100%"}})
+            ),
+            React.createElement("span",{style:{fontSize:"0.58rem",color:col,width:16,textAlign:"right",flexShrink:0}},
+              avg.toFixed(1))
+          );
+        })
+      )
+    ),
+
+    // Aptitudes (non-horse plain, horse green)
+    animal.aptitudes&&React.createElement("div",{style:{display:"flex",flexWrap:"wrap",gap:3}},
+      animal.aptitudes.map(function(apt){
+        return React.createElement("span",{key:apt,
+          style:{fontSize:"0.6rem",
+            background:isHorse?"#0a1a08":"#1e293b",
+            border:"1px solid "+(isHorse?"#2a4018":"#334155"),
+            color:isHorse?"#84cc16":"#94a3b8",
+            borderRadius:3,padding:"1px 4px"}},apt);
+      })
+    ),
+
+    // Price row
+    React.createElement("div",{style:{display:"flex",justifyContent:"space-between",fontSize:"0.75rem",marginTop:2}},
+      React.createElement("span",{style:{color:"#22c55e",fontWeight:"bold"}},
+        "Buy: $"+(animal.price||0).toLocaleString()),
+      React.createElement("span",{style:{color:"#94a3b8"}},
+        "Sell back: $"+sellBack.toLocaleString())
+    ),
+
+    // Buttons
+    React.createElement("div",{style:{display:"flex",gap:5}},
+      isHorse&&animal.genome&&React.createElement("button",{
+        onClick:function(){setShowDNA(true);},
+        style:{flex:"0 0 auto",background:"#0a1a08",border:"1px solid #2a4a18",color:"#84cc16",
+          borderRadius:5,padding:"5px 10px",cursor:"pointer",fontSize:"0.72rem",fontWeight:"bold"}},
+        "🧬 DNA"),
+      React.createElement("button",{
+        onClick:function(){
+          var ok=onBuy(species,animal);
+          if(ok){
+            setStock(function(prev){
+              var nx=Object.assign({},prev);
+              nx[species]=(prev[species]||[]).filter(function(a){return a.id!==animal.id;});
+              return nx;
+            });
+            setSess(function(s){return {bought:s.bought+1,bAmt:s.bAmt+(animal.price||0),sold:s.sold,sAmt:s.sAmt};});
+          }
+        },
+        style:{flex:1,background:canAfford?"#0f2d1e":"#1a0a0a",
+          border:"1px solid "+(canAfford?"#22c55e":"#ef4444"),
+          color:canAfford?"#22c55e":"#ef4444",
+          borderRadius:5,padding:"5px 0",cursor:"pointer",fontSize:"0.75rem",fontWeight:"bold"}},
+        canAfford?"Buy":"Can't Afford")
+    ),
+
+    // DNA modal
+    showDNA&&React.createElement(HorseDNAModal,{horse:animal,onClose:function(){setShowDNA(false);}})
+  );
 }
 
 function LivestockMarket(_ref) {
@@ -1771,94 +1892,18 @@ function LivestockMarket(_ref) {
                   var sp=LIVESTOCK_SPECIES.find(function(s){return s.key===species;});
                   var sellBack=Math.floor((animal.price||0)*0.5);
                   var canAfford=money>=(animal.price||0);
-                  var isHorse = species==="horse";
-                  var hs = animal.healthScore;
-                  var ps = animal.perfScore;
-                  var hsColor = hs>=80?"#22c55e":hs>=60?"#d4942a":"#ef4444";
-                  var psColor = ps>=80?"#22c55e":ps>=60?"#d4942a":"#ef4444";
-                  var perfIcons = {SPEED:"💨",STAMINA:"🫁",MUSCLE:"💪",TEMP:"🧠",AGILITY:"🌀"};
-                  return /*#__PURE__*/React.createElement("div",{key:animal.id,
-                    style:{background:"#0f172a",border:"1px solid "+(isHorse?"#2a3a18":"#1e293b"),borderRadius:8,
-                      padding:"10px 12px",display:"flex",flexDirection:"column",gap:5}},
-                    /*#__PURE__*/React.createElement("div",{style:{display:"flex",alignItems:"center",gap:6}},
-                      /*#__PURE__*/React.createElement("span",{style:{fontSize:"1.2rem"}},sp.icon),
-                      /*#__PURE__*/React.createElement("div",{style:{flex:1}},
-                        /*#__PURE__*/React.createElement("div",{style:{fontWeight:"bold",fontSize:"0.82rem",color:"#e2e8f0"}},
-                          animal.breed||sp.label),
-                        isHorse && animal.coatColor
-                          ? /*#__PURE__*/React.createElement("div",{style:{fontSize:"0.68rem",color:"#c4956a"}}, animal.coatColor)
-                          : animal.type&&/*#__PURE__*/React.createElement("div",{style:{fontSize:"0.68rem",color:"#64748b"}},
-                              animal.type.charAt(0).toUpperCase()+animal.type.slice(1))
-                      ),
-                      /*#__PURE__*/React.createElement("span",{style:{fontSize:"0.72rem",fontWeight:"bold",
-                        color:animal.sex==="F"?"#f472b6":"#38bdf8",background:"#0a0f1a",
-                        border:"1px solid "+(animal.sex==="F"?"#f472b6":"#38bdf8"),
-                        borderRadius:4,padding:"2px 5px"}},
-                        animal.sex==="F"?"\u2640":"\u2642")
-                    ),
-                    isHorse && hs!=null && ps!=null && /*#__PURE__*/React.createElement("div",{
-                      style:{display:"flex",gap:8,fontSize:"0.7rem",padding:"3px 0"}},
-                      /*#__PURE__*/React.createElement("span",{style:{color:hsColor,fontWeight:"bold"}},"❤️ "+hs),
-                      /*#__PURE__*/React.createElement("span",{style:{color:psColor,fontWeight:"bold"}},"⚡ "+ps),
-                      animal.ageMonths&&/*#__PURE__*/React.createElement("span",{style:{color:"#64748b"}},
-                        Math.round(animal.ageMonths/12*10)/10+" yrs")
-                    ),
-                    isHorse && animal.genome && animal.genome.perf && /*#__PURE__*/React.createElement("div",{
-                      style:{background:"#080e1a",border:"1px solid #1e293b",borderRadius:4,padding:"5px 7px"}},
-                      /*#__PURE__*/React.createElement("div",{style:{display:"flex",flexDirection:"column",gap:2}},
-                        HORSE_PERF_QTLS.map(function(q){
-                          var v=animal.genome.perf[q]||[3,3];
-                          var avg=(v[0]+v[1])/2;
-                          var pct=Math.round((avg/5)*100);
-                          var col=avg>=4?"#d4942a":avg>=3?"#22c55e":"#475569";
-                          return /*#__PURE__*/React.createElement("div",{key:q,style:{display:"flex",alignItems:"center",gap:4}},
-                            /*#__PURE__*/React.createElement("span",{style:{fontSize:"0.58rem",width:52,color:col,flexShrink:0}},perfIcons[q]+" "+q),
-                            /*#__PURE__*/React.createElement("div",{style:{flex:1,background:"#1e293b",borderRadius:2,height:3,overflow:"hidden"}},
-                              /*#__PURE__*/React.createElement("div",{style:{background:col,width:pct+"%",height:"100%"}})
-                            ),
-                            /*#__PURE__*/React.createElement("span",{style:{fontSize:"0.58rem",color:col,width:16,textAlign:"right",flexShrink:0}},avg.toFixed(1))
-                          );
-                        })
-                      )
-                    ),
-                    !isHorse && animal.aptitudes&&/*#__PURE__*/React.createElement("div",{style:{display:"flex",flexWrap:"wrap",gap:3}},
-                      animal.aptitudes.map(function(apt){
-                        return /*#__PURE__*/React.createElement("span",{key:apt,
-                          style:{fontSize:"0.6rem",background:"#1e293b",border:"1px solid #334155",
-                            color:"#94a3b8",borderRadius:3,padding:"1px 4px"}},apt);
-                      })
-                    ),
-                    isHorse && animal.aptitudes&&/*#__PURE__*/React.createElement("div",{style:{display:"flex",flexWrap:"wrap",gap:3}},
-                      animal.aptitudes.map(function(apt){
-                        return /*#__PURE__*/React.createElement("span",{key:apt,
-                          style:{fontSize:"0.6rem",background:"#0a1a08",border:"1px solid #2a4018",
-                            color:"#84cc16",borderRadius:3,padding:"1px 4px"}},apt);
-                      })
-                    ),
-                    /*#__PURE__*/React.createElement("div",{style:{display:"flex",justifyContent:"space-between",
-                      fontSize:"0.75rem",marginTop:2}},
-                      /*#__PURE__*/React.createElement("span",{style:{color:"#22c55e",fontWeight:"bold"}},
-                        "Buy: $"+(animal.price||0).toLocaleString()),
-                      /*#__PURE__*/React.createElement("span",{style:{color:"#94a3b8"}},
-                        "Sell back: $"+sellBack.toLocaleString())
-                    ),
-                    /*#__PURE__*/React.createElement("button",{
-                      onClick:function(){
-                        var ok=onBuy(species,animal);
-                        if(ok){
-                          setStock(function(prev){
-                            var nx=Object.assign({},prev);
-                            nx[species]=(prev[species]||[]).filter(function(a){return a.id!==animal.id;});
-                            return nx;
-                          });
-                          setSess(function(s){return {bought:s.bought+1,bAmt:s.bAmt+(animal.price||0),sold:s.sold,sAmt:s.sAmt};});
-                        }
-                      },
-                      style:{background:canAfford?"#0f2d1e":"#1a0a0a",
-                        border:"1px solid "+(canAfford?"#22c55e":"#ef4444"),
-                        color:canAfford?"#22c55e":"#ef4444",
-                        borderRadius:5,padding:"5px 0",cursor:"pointer",fontSize:"0.75rem",fontWeight:"bold"}},
-                      canAfford?"Buy":"Can't Afford")
+                  var isHorse=species==="horse";
+                  var hs=animal.healthScore, ps=animal.perfScore;
+                  var hsCol=hs>=80?"#22c55e":hs>=60?"#d4942a":"#ef4444";
+                  var psCol=ps>=80?"#22c55e":ps>=60?"#d4942a":"#ef4444";
+                  var hWarn=isHorse&&animal.genome?countHorseHealthWarnings(animal.genome):0;
+                  var perfIcons={SPEED:"💨",STAMINA:"🫁",MUSCLE:"💪",TEMP:"🧠",AGILITY:"🌀"};
+                  return /*#__PURE__*/React.createElement(React.Fragment,{key:animal.id},
+                    React.createElement(MarketHorseCard,{
+                      animal:animal,sp:sp,sellBack:sellBack,canAfford:canAfford,
+                      isHorse:isHorse,hs:hs,ps:ps,hsCol:hsCol,psCol:psCol,hWarn:hWarn,
+                      perfIcons:perfIcons,onBuy:onBuy,setStock:setStock,setSess:setSess,species:species
+                    })
                   );
                 })
               )

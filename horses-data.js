@@ -692,6 +692,230 @@ function normalizeHorse(horse) {
   });
 }
 
+
+// ════════════════════════════════════════════════════════════════
+// HORSE DNA PANEL
+// ════════════════════════════════════════════════════════════════
+
+function buildHorseVIN(genome) {
+  if (!genome) return "NO-GENOME";
+  var c = genome.coat||{}, h = genome.health||{}, p = genome.perf||{};
+  function cd(l){ var a=c[l]||["0","0"]; return a[0]+a[1]; }
+  function hd(l){ var a=h[l]||["g","g"]; return a[0]+a[1]; }
+  function pd(l){ var a=p[l]||[3,3]; return a[0]+""+a[1]; }
+  return "E"+cd("E")+"A"+cd("A")+"Cr"+cd("Cr")+"D"+cd("D")+"G"+cd("G")+"Rn"+cd("Rn")+"TO"+cd("TO")+"Sv"+cd("Sv")+"Z"+cd("Z")+"Ch"+cd("Ch")+
+    "|Hip"+hd("HipQ")+"Bn"+hd("BoneQ")+"Lg"+hd("LungQ")+"Ht"+hd("HeartQ")+"Hf"+hd("HoofQ")+
+    "|SP"+pd("SPEED")+"ST"+pd("STAMINA")+"MU"+pd("MUSCLE")+"TE"+pd("TEMP")+"AG"+pd("AGILITY");
+}
+
+var HORSE_COAT_LOCUS_INFO = {
+  E:{name:"Extension (MC1R)", desc:function(a){
+    if(a[0]==="1"&&a[1]==="1") return "EE — Homozygous black-based. All offspring carry E.";
+    if(a[0]==="1"||a[1]==="1") return "Ee — Black-based, red carrier. 50% chance red offspring.";
+    return "ee — Recessive red/chestnut. No black pigment possible.";
+  }},
+  A:{name:"Agouti (ASIP)", desc:function(a){
+    if(a[0]==="0"&&a[1]==="0") return "aa — Non-agouti. Unrestricted black pigment.";
+    if(a[0]==="1"&&a[1]==="1") return "AA — Homozygous agouti. Black restricted to points = bay.";
+    return "Aa — Agouti carrier. Bay expression, but can throw black foals.";
+  }},
+  Cr:{name:"Cream (SLC45A2)", desc:function(a){
+    var n=(a[0]==="1"?1:0)+(a[1]==="1"?1:0);
+    if(n===2) return "⚠️ CrCr — Double cream. Cremello/Perlino/Smoky Cream. Blue eyes, UV sensitivity.";
+    if(n===1) return "Ccr — Single cream. Palomino (chestnut), Buckskin (bay), Smoky Black (black).";
+    return "cc — No cream. Base color unaffected.";
+  }},
+  D:{name:"Dun (TBX3)", desc:function(a){
+    if(a[0]==="1"||a[1]==="1") return "D+ — Dun factor. Body diluted, primitive markings preserved (dorsal stripe, leg barring).";
+    return "dd — No dun factor.";
+  }},
+  G:{name:"Grey (STX17)", desc:function(a){
+    if(a[0]==="1"&&a[1]==="1") return "GG — Homozygous grey. Will grey completely. All offspring grey.";
+    if(a[0]==="1"||a[1]==="1") return "Gg — Heterozygous grey. Progressively greys out. 50% offspring grey.";
+    return "gg — No grey gene. Color stable for life.";
+  }},
+  Rn:{name:"Roan (KIT)", desc:function(a){
+    if(a[0]==="1"||a[1]==="1") return "Rn+ — Classic roan. White hairs mixed into body; head and legs stay base color.";
+    return "rn/rn — No roan.";
+  }},
+  TO:{name:"Tobiano (KIT)", desc:function(a){
+    if(a[0]==="1"&&a[1]==="1") return "TOTO — Homozygous tobiano. Bold white crossing topline. All offspring tobiano.";
+    if(a[0]==="1"||a[1]==="1") return "TOto — Heterozygous tobiano. White patches cross the back. 50% tobiano offspring.";
+    return "toto — No tobiano patterning.";
+  }},
+  Sv:{name:"Sabino/Splashed (SB1/SW)", desc:function(a){
+    if(a[0]==="1"&&a[1]==="1") return "⚠️ Homozygous Sabino/Splashed — Risk of deafness or lethal white foal syndrome.";
+    if(a[0]==="1"||a[1]==="1") return "Sv+ — Sabino/splashed white. Irregular white markings, bold face, high stockings.";
+    return "sv/sv — No sabino/splashed white.";
+  }},
+  Z:{name:"Silver (PMEL17)", desc:function(a){
+    if(a[0]==="1"||a[1]==="1") return "⚠️ Z+ — Silver dilution. Lightens mane/tail on black-based horses. Linked to MCOA eye anomaly.";
+    return "zz — No silver gene.";
+  }},
+  Ch:{name:"Champagne (SLC36A1)", desc:function(a){
+    if(a[0]==="1"&&a[1]==="1") return "ChCh — Homozygous champagne. Strong dilution, amber/hazel eyes.";
+    if(a[0]==="1"||a[1]==="1") return "Chch — Champagne carrier. Classic, Amber, or Gold Champagne depending on base.";
+    return "chch — No champagne gene.";
+  }}
+};
+
+var HORSE_HEALTH_LOCUS_INFO = {
+  HipQ: {name:"Hip & Joint Quality",   risk:"g/g — Arthritis, lameness, shortened career risk."},
+  BoneQ:{name:"Bone Density",          risk:"g/g — Fracture and stress injury risk."},
+  LungQ:{name:"Respiratory Health",    risk:"g/g — Exercise intolerance, heaves (COPD) risk."},
+  HeartQ:{name:"Cardiac Health",       risk:"g/g — Fatigue and arrhythmia risk."},
+  HoofQ:{name:"Hoof Quality",          risk:"g/g — Chronic lameness and thrush susceptibility."}
+};
+
+var HORSE_PERF_QTL_INFO = {
+  SPEED:  {icon:"💨",full:"Speed",    desc:"Acceleration & top velocity. Key for Racing, Jumping."},
+  STAMINA:{icon:"🫁",full:"Stamina",  desc:"Sustained effort & recovery. Key for Endurance, Cross Country."},
+  MUSCLE: {icon:"💪",full:"Muscle",   desc:"Raw power & mass. Dominates Halter, Draft, Pulling."},
+  TEMP:   {icon:"🧠",full:"Temperament",desc:"Trainability & focus. Highest weight in Dressage, Western."},
+  AGILITY:{icon:"🌀",full:"Agility", desc:"Balance & collection. Key for Reining, Jumping, Dressage."}
+};
+
+function HorseDNAModal(props) {
+  var horse = props.horse, onClose = props.onClose;
+  if (!horse || !horse.genome) return null;
+  var g = horse.genome;
+  var vin = buildHorseVIN(g);
+  var coatColor = horse.coatColor || interpretHorseColor(g);
+
+  // Count warnings
+  var healthWarn = 0, coatWarn = 0;
+  ["HipQ","BoneQ","LungQ","HeartQ","HoofQ"].forEach(function(l){
+    var al=(g.health||{})[l]||["g","g"];
+    if(al[0]==="g"&&al[1]==="g") healthWarn++;
+  });
+  var sv=(g.coat||{}).Sv||["0","0"]; if(sv[0]==="1"&&sv[1]==="1") coatWarn++;
+  var z=(g.coat||{}).Z||["0","0"];   if(z[0]==="1"||z[1]==="1")   coatWarn++;
+  var cr=(g.coat||{}).Cr||["0","0"]; if(cr[0]==="1"&&cr[1]==="1") coatWarn++;
+
+  function CoatCard(loc) {
+    var ld=HORSE_COAT_LOCUS_INFO[loc];
+    var al=(g.coat||{})[loc]||["0","0"];
+    var desc=ld.desc(al);
+    var warn=desc.indexOf("⚠️")!==-1;
+    return React.createElement("div",{key:loc,style:{
+      background:warn?"#2d1e00":"#141008",
+      border:"1px solid "+(warn?"#ca8a04":"#2a3a18"),
+      borderRadius:6,padding:"8px 10px"}},
+      React.createElement("div",{style:{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:2}},
+        React.createElement("span",{style:{color:warn?"#fde68a":"#84cc16",fontWeight:"bold",fontSize:"0.78rem"}},loc),
+        React.createElement("span",{style:{fontFamily:"monospace",color:"#f0e6d3",fontSize:"0.8rem"}},al[0]+"/"+al[1])
+      ),
+      React.createElement("div",{style:{color:"#4a6a28",fontSize:"0.65rem",marginBottom:2}},ld.name),
+      React.createElement("div",{style:{color:warn?"#fde68a":"#6a8a58",fontSize:"0.67rem",lineHeight:1.3}},desc)
+    );
+  }
+
+  function HealthCard(loc) {
+    var ld=HORSE_HEALTH_LOCUS_INFO[loc];
+    var al=(g.health||{})[loc]||["g","g"];
+    var both=al[0]==="Q"&&al[1]==="Q", one=al[0]!==al[1], bad=al[0]==="g"&&al[1]==="g";
+    var label=both?"Excellent":one?"Carrier":"Poor";
+    var col=both?"#86efac":one?"#fde68a":"#fca5a5";
+    var bg=both?"#0f2010":one?"#2d1e00":"#481808";
+    var bdr=both?"#166534":one?"#ca8a04":"#ef4444";
+    return React.createElement("div",{key:loc,style:{background:bg,border:"1px solid "+bdr,borderRadius:6,padding:"8px 10px"}},
+      React.createElement("div",{style:{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:3}},
+        React.createElement("span",{style:{color:col,fontWeight:"bold",fontSize:"0.78rem"}},loc),
+        React.createElement("span",{style:{fontFamily:"monospace",color:"#f0e6d3",fontSize:"0.8rem"}},al[0]+"/"+al[1])
+      ),
+      React.createElement("div",{style:{display:"inline-block",background:"rgba(0,0,0,0.3)",
+        border:"1px solid "+bdr,borderRadius:3,padding:"1px 6px",
+        fontSize:"0.68rem",color:col,fontWeight:"bold",marginBottom:3}},label),
+      React.createElement("div",{style:{color:"#8a9a78",fontSize:"0.65rem",marginBottom:bad?3:0}},ld.name),
+      bad&&React.createElement("div",{style:{color:"#fca5a5",fontSize:"0.65rem"}},"⚠️ "+ld.risk)
+    );
+  }
+
+  return React.createElement("div",{
+    onClick:onClose,
+    style:{position:"fixed",inset:0,background:"rgba(0,0,0,0.92)",zIndex:1200,
+      display:"flex",alignItems:"center",justifyContent:"center",padding:16}
+  },
+    React.createElement("div",{
+      onClick:function(e){e.stopPropagation();},
+      style:{background:"#0e1208",border:"1px solid #2a3a18",borderRadius:12,
+        width:"100%",maxWidth:740,maxHeight:"90vh",overflowY:"auto",padding:22}
+    },
+      // ── Header ──
+      React.createElement("div",{style:{display:"flex",justifyContent:"space-between",alignItems:"flex-start",marginBottom:14}},
+        React.createElement("div",{},
+          React.createElement("div",{style:{color:"#84cc16",fontWeight:"bold",fontSize:"1.05rem"}},"🧬 Horse DNA Panel"),
+          React.createElement("div",{style:{color:"#4a6a28",fontSize:"0.72rem",marginTop:2}},
+            (horse.name||"Market Horse")+" · "+(horse.breed||"Unknown")+" · "+(horse.sex==="M"?"♂ Stallion":"♀ Mare")),
+          React.createElement("div",{style:{color:"#c4956a",fontSize:"0.78rem",marginTop:2}},
+            "🎨 Expressed Color: ",React.createElement("span",{style:{fontWeight:"bold",color:"#f0e6d3"}},coatColor)),
+          (healthWarn>0||coatWarn>0)&&React.createElement("div",{style:{marginTop:5,display:"flex",gap:6,flexWrap:"wrap"}},
+            healthWarn>0&&React.createElement("span",{style:{background:"#481808",border:"1px solid #ef4444",color:"#fca5a5",
+              borderRadius:4,padding:"2px 7px",fontSize:"0.65rem",fontWeight:"bold"}},
+              "⚠️ "+healthWarn+" health concern"+(healthWarn>1?"s":"")),
+            coatWarn>0&&React.createElement("span",{style:{background:"#2d1e00",border:"1px solid #ca8a04",color:"#fde68a",
+              borderRadius:4,padding:"2px 7px",fontSize:"0.65rem",fontWeight:"bold"}},
+              "⚠️ "+coatWarn+" coat warning"+(coatWarn>1?"s":""))
+          )
+        ),
+        React.createElement("button",{onClick:onClose,
+          style:{background:"none",border:"1px solid #2a3a18",color:"#4a6a28",
+            borderRadius:5,padding:"4px 12px",cursor:"pointer",fontSize:"0.85rem"}},"✕ Close")
+      ),
+
+      // ── VIN ──
+      React.createElement("div",{style:{display:"flex",gap:6,alignItems:"center",marginBottom:16}},
+        React.createElement("div",{style:{flex:1,fontFamily:"monospace",fontSize:"0.55rem",
+          background:"#141008",border:"1px solid #2a3a18",borderRadius:6,
+          padding:"7px 10px",color:"#4a6a28",wordBreak:"break-all"}},"🧬 "+vin),
+        React.createElement("button",{
+          onClick:function(){navigator.clipboard&&navigator.clipboard.writeText(vin);},
+          style:{background:"#1a2a0a",border:"1px solid #2a3a18",color:"#84cc16",
+            borderRadius:5,padding:"6px 10px",cursor:"pointer",fontSize:"0.72rem",flexShrink:0}},
+          "📋 Copy VIN")
+      ),
+
+      // ── Coat loci ──
+      React.createElement("div",{style:{color:"#c4956a",fontWeight:"bold",fontSize:"0.78rem",
+        textTransform:"uppercase",letterSpacing:"0.05em",marginBottom:8}},"Coat Color Loci"),
+      React.createElement("div",{style:{display:"grid",gridTemplateColumns:"1fr 1fr",gap:6,marginBottom:16}},
+        Object.keys(HORSE_COAT_LOCUS_INFO).map(function(loc){return CoatCard(loc);})
+      ),
+
+      // ── Health panel ──
+      React.createElement("div",{style:{color:"#22c55e",fontWeight:"bold",fontSize:"0.78rem",
+        textTransform:"uppercase",letterSpacing:"0.05em",marginBottom:8}},"Health Panel"),
+      React.createElement("div",{style:{display:"grid",gridTemplateColumns:"1fr 1fr",gap:6,marginBottom:16}},
+        Object.keys(HORSE_HEALTH_LOCUS_INFO).map(function(loc){return HealthCard(loc);})
+      ),
+
+      // ── Performance QTLs ──
+      React.createElement("div",{style:{color:"#d4942a",fontWeight:"bold",fontSize:"0.78rem",
+        textTransform:"uppercase",letterSpacing:"0.05em",marginBottom:8}},"Performance QTLs"),
+      React.createElement("div",{style:{display:"grid",gridTemplateColumns:"repeat(5,1fr)",gap:6}},
+        HORSE_PERF_QTLS.map(function(q){
+          var info=HORSE_PERF_QTL_INFO[q];
+          var v=(g.perf||{})[q]||[3,3];
+          var avg=(v[0]+v[1])/2;
+          var pct=Math.round((avg/5)*100);
+          var col=avg>=4?"#d4942a":avg>=3?"#22c55e":"#64748b";
+          return React.createElement("div",{key:q,style:{background:"#141008",border:"1px solid #2a3a18",
+            borderRadius:6,padding:"8px 6px",textAlign:"center"}},
+            React.createElement("div",{style:{fontSize:"1.1rem",marginBottom:3}},info.icon),
+            React.createElement("div",{style:{fontSize:"0.62rem",color:col,fontWeight:"bold",marginBottom:4}},info.full),
+            React.createElement("div",{style:{background:"#0a1008",borderRadius:3,height:6,overflow:"hidden",marginBottom:4}},
+              React.createElement("div",{style:{background:col,width:pct+"%",height:"100%"}})
+            ),
+            React.createElement("div",{style:{fontFamily:"monospace",fontSize:"0.7rem",color:"#f0e6d3",marginBottom:2}},v[0]+"/"+v[1]),
+            React.createElement("div",{style:{fontSize:"0.6rem",color:"#4a6a28"}},"avg "+avg.toFixed(1)),
+            React.createElement("div",{style:{fontSize:"0.58rem",color:"#364a24",marginTop:3,lineHeight:1.3}},info.desc)
+          );
+        })
+      )
+    )
+  );
+}
+
 // ── HORSE VIEW COMPONENT ──────────────────────────────────────
 function HorseCard(props) {
   var horse = props.horse;
@@ -703,6 +927,7 @@ function HorseCard(props) {
 
   var _en = React.useState(false), editing = _en[0], setEditing = _en[1];
   var _nv = React.useState(horse.name||""), nameVal = _nv[0], setNameVal = _nv[1];
+  var _dn = React.useState(false), showDNA = _dn[0], setShowDNA = _dn[1];
 
   var sexColor = horse.sex==="M" ? "#60a5fa" : "#f472b6";
   var title = getHorseShowTitle(horse.showPoints);
@@ -798,12 +1023,20 @@ function HorseCard(props) {
       )
     ),
 
-    // Sell button
-    onSell && React.createElement("button",{
-      onClick:function(e){e.stopPropagation();onSell(horse);},
-      style:{width:"100%",background:"#1a0a00",border:"1px solid #d4860a",color:"#d4860a",
-        borderRadius:6,padding:"5px 0",cursor:"pointer",fontSize:"0.78rem",marginTop:4}
-    }, "💰 Sell")
+    // Action buttons row
+    React.createElement("div",{style:{display:"flex",gap:5,marginTop:4}},
+      React.createElement("button",{
+        onClick:function(e){e.stopPropagation();setShowDNA(true);},
+        style:{flex:1,background:"#0a1a08",border:"1px solid #2a4a18",color:"#84cc16",
+          borderRadius:6,padding:"5px 0",cursor:"pointer",fontSize:"0.75rem",fontWeight:"bold"}
+      },"🧬 DNA"),
+      onSell && React.createElement("button",{
+        onClick:function(e){e.stopPropagation();onSell(horse);},
+        style:{flex:1,background:"#1a0a00",border:"1px solid #d4860a",color:"#d4860a",
+          borderRadius:6,padding:"5px 0",cursor:"pointer",fontSize:"0.78rem"}
+      },"💰 Sell")
+    ),
+    showDNA && React.createElement(HorseDNAModal,{horse:horse, onClose:function(){setShowDNA(false);}})
   );
 }
 
