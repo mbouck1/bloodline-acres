@@ -5291,7 +5291,7 @@ function App() {
     _useStateSHED2 = _slicedToArray(_useStateSHED, 2),
     showShearing = _useStateSHED2[0],
     setShowShearing = _useStateSHED2[1];
-  var _useStateOL = useState([]),
+  var _useStateOL = useState(_savedState ? _savedState.ownedLivestock || [] : []),
     _useStateOL2 = _slicedToArray(_useStateOL, 2),
     ownedLivestock = _useStateOL2[0],
     setOwnedLivestock = _useStateOL2[1];
@@ -7125,6 +7125,9 @@ function App() {
     horses: (ownedLivestock||[]).filter(function(a){ return a.species==="horse"; }),
     money: money,
     lastShowDates: horseShowDates,
+    onRename: function(horse, newName){
+      setOwnedLivestock(function(prev){ return prev.map(function(a){ return a.id===horse.id ? Object.assign({},a,{name:newName}) : a; }); });
+    },
     onSell: function(horse){
       var sellPrice = Math.round((horse.price||500)*0.6);
       if (confirm("Sell "+horse.name+" ("+horse.breed+") for $"+sellPrice.toLocaleString()+"?")) {

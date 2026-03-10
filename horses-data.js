@@ -698,18 +698,28 @@ function HorseCard(props) {
   var onSelect = props.onSelect;
   var isSelected = props.isSelected;
   var onSell = props.onSell;
+  var onRename = props.onRename;
   if (!horse) return null;
+
+  var _en = React.useState(false), editing = _en[0], setEditing = _en[1];
+  var _nv = React.useState(horse.name||""), nameVal = _nv[0], setNameVal = _nv[1];
 
   var sexColor = horse.sex==="M" ? "#60a5fa" : "#f472b6";
   var title = getHorseShowTitle(horse.showPoints);
   var ageYrs = Math.round((horse.ageMonths||0)/12*10)/10;
 
+  function saveName() {
+    var trimmed = nameVal.trim();
+    if (trimmed && onRename) onRename(horse, trimmed);
+    setEditing(false);
+  }
+
   return React.createElement("div",{
-    onClick:onSelect ? function(){ onSelect(horse); } : null,
+    onClick:onSelect && !editing ? function(){ onSelect(horse); } : null,
     style:{
       background: isSelected?"#1a3a1a":"#1a1410",
       border:"1px solid "+(isSelected?"#22c55e":"#2e2218"),
-      borderRadius:10, padding:14, cursor:onSelect?"pointer":"default",
+      borderRadius:10, padding:14, cursor:onSelect&&!editing?"pointer":"default",
       transition:"border-color 0.15s"
     }
   },
@@ -723,10 +733,34 @@ function HorseCard(props) {
       )
     ),
 
-    // Name + sex + age
-    React.createElement("div",{style:{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:4}},
-      React.createElement("div",{style:{color:"#f0e6d3",fontWeight:"bold",fontSize:"0.95rem"}}, horse.name),
-      React.createElement("span",{style:{color:sexColor,fontSize:"0.8rem"}}, horse.sex==="M"?"♂":"♀")
+    // Name + sex + edit
+    React.createElement("div",{style:{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:4,gap:6}},
+      editing
+        ? React.createElement("div",{style:{display:"flex",gap:4,flex:1},onClick:function(e){e.stopPropagation();}},
+            React.createElement("input",{
+              autoFocus:true, value:nameVal,
+              onChange:function(e){setNameVal(e.target.value);},
+              onKeyDown:function(e){if(e.key==="Enter")saveName();if(e.key==="Escape")setEditing(false);},
+              style:{flex:1,background:"#0a1a0a",border:"1px solid #22c55e",color:"#f0e6d3",
+                borderRadius:4,padding:"2px 6px",fontSize:"0.88rem",fontWeight:"bold"}
+            }),
+            React.createElement("button",{onClick:saveName,
+              style:{background:"#0a2a15",border:"1px solid #22c55e",color:"#22c55e",borderRadius:4,padding:"2px 7px",cursor:"pointer",fontSize:"0.75rem"}
+            },"✓"),
+            React.createElement("button",{onClick:function(e){e.stopPropagation();setEditing(false);},
+              style:{background:"transparent",border:"1px solid #4a3a28",color:"#6b5038",borderRadius:4,padding:"2px 7px",cursor:"pointer",fontSize:"0.75rem"}
+            },"✕")
+          )
+        : React.createElement(React.Fragment,null,
+            React.createElement("div",{style:{color:"#f0e6d3",fontWeight:"bold",fontSize:"0.95rem",flex:1}},
+              horse.name || React.createElement("span",{style:{color:"#4a3a28",fontStyle:"italic"}},"(unnamed)")
+            ),
+            React.createElement("button",{
+              onClick:function(e){e.stopPropagation();setNameVal(horse.name||"");setEditing(true);},
+              style:{background:"transparent",border:"none",color:"#4a3a28",cursor:"pointer",fontSize:"0.8rem",padding:"0 2px",lineHeight:1}
+            },"✏️")
+          ),
+      !editing && React.createElement("span",{style:{color:sexColor,fontSize:"0.8rem",flexShrink:0}}, horse.sex==="M"?"♂":"♀")
     ),
 
     // Breed + color
@@ -777,6 +811,7 @@ function HorsesView(props) {
   var horses = (props.horses || []).map(normalizeHorse);
   var money = props.money || 0;
   var onSell = props.onSell;
+  var onRename = props.onRename;
   var onShowsOpen = props.onShowsOpen;
   var onClose = props.onClose;
   var lastShowDates = props.lastShowDates || {};
@@ -837,6 +872,7 @@ function HorsesView(props) {
                 key:h.id, horse:h,
                 isSelected:selectedHorse&&selectedHorse.id===h.id,
                 onSelect:setSelectedHorse,
+                onRename:onRename,
                 onSell:onSell
               });
             })
@@ -851,7 +887,7 @@ function HorsesView(props) {
           React.createElement("button",{onClick:function(){setSelectedHorse(null);},
             style:{background:"transparent",border:"none",color:"#4a6a18",cursor:"pointer",fontSize:"1.1rem"}},"×")
         ),
-        React.createElement(HorseCard,{horse:selectedHorse,onSell:onSell})
+        React.createElement(HorseCard,{horse:selectedHorse,onRename:onRename,onSell:onSell})
       )
     )
   );
