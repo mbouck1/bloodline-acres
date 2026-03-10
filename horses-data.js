@@ -1133,6 +1133,7 @@ function HorsesView(props) {
   var filtered = filterGroup==="all" ? horses : horses.filter(function(h){return h.group===filterGroup;});
 
   return React.createElement("div",{
+    onClick:function(e){e.stopPropagation();},
     style:{position:"fixed",inset:0,background:"#0e1208",zIndex:50,display:"flex",flexDirection:"column",overflow:"hidden"}
   },
     // Header
