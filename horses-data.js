@@ -1066,7 +1066,11 @@ function HorseCard(props) {
       React.createElement("span",{style:{color:"#d4942a",fontSize:"0.72rem",fontWeight:"bold"}},"⚡ "+horse.perfScore),
       React.createElement("span",{style:{color:"#8a7055",fontSize:"0.72rem"}},ageYrs+" yrs"),
       React.createElement("span",{style:{color:"#8a7055",fontSize:"0.72rem"}},(horse.heightHands||15.0)+" hh"),
-      horse.showPoints > 0 && React.createElement("span",{style:{color:"#fbbf24",fontSize:"0.72rem"}},"🎀 "+horse.showPoints+"pts")
+      horse.showPoints > 0 && React.createElement("span",{style:{color:"#fbbf24",fontSize:"0.72rem"}},"🎀 "+horse.showPoints+"pts"),
+      horse.pregnantUntil && (function(){
+        var daysLeft = Math.max(0, Math.ceil((horse.pregnantUntil - Date.now()) / (24*60*60*1000)));
+        return React.createElement("span",{style:{color:"#f472b6",fontSize:"0.72rem",fontWeight:"bold"}},"🤰 "+daysLeft+"d");
+      })()
     ),
 
     // Performance bars
@@ -1113,11 +1117,17 @@ function HorsesView(props) {
   var onSell = props.onSell;
   var onRename = props.onRename;
   var onShowsOpen = props.onShowsOpen;
+  var onBreed = props.onBreed;
   var onClose = props.onClose;
   var lastShowDates = props.lastShowDates || {};
 
   var _s0 = React.useState(null), selectedHorse = _s0[0], setSelectedHorse = _s0[1];
   var _s1 = React.useState("all"), filterGroup = _s1[0], setFilterGroup = _s1[1];
+  var _s2 = React.useState(false), showBreeding = _s2[0], setShowBreeding = _s2[1];
+
+  var hasStallion = horses.some(function(h){ return h.sex==="M" && !h.pregnantUntil; });
+  var hasMare = horses.some(function(h){ return h.sex==="F" && !h.pregnantUntil; });
+  var canBreed = hasStallion && hasMare;
 
   var groups = ["all"].concat(Array.from(new Set(horses.map(function(h){return h.group;}))).sort());
   var filtered = filterGroup==="all" ? horses : horses.filter(function(h){return h.group===filterGroup;});
@@ -1141,6 +1151,13 @@ function HorsesView(props) {
           onClick:onShowsOpen,
           style:{background:"#0a2a15",border:"1px solid #22c55e",color:"#22c55e",borderRadius:6,padding:"5px 14px",cursor:"pointer",fontSize:"0.8rem",fontWeight:"bold"}
         },"🏇 Horse Shows"),
+        horses.length>=2 && React.createElement("button",{
+          onClick:function(){ setShowBreeding(true); },
+          disabled:!canBreed,
+          style:{background:canBreed?"#2a1e08":"#141008",border:"1px solid "+(canBreed?"#d4942a":"#2a2a18"),
+            color:canBreed?"#d4942a":"#3a3a28",borderRadius:6,padding:"5px 14px",
+            cursor:canBreed?"pointer":"not-allowed",fontSize:"0.8rem",fontWeight:"bold"}
+        },"🤝 Breed"),
         React.createElement("button",{onClick:onClose,
           style:{background:"transparent",border:"1px solid #4a3a28",color:"#8a7055",borderRadius:6,padding:"5px 12px",cursor:"pointer",fontSize:"0.8rem"}
         },"✕ Close")
@@ -1189,6 +1206,214 @@ function HorsesView(props) {
         ),
         React.createElement(HorseCard,{horse:selectedHorse,onRename:onRename,onSell:onSell})
       )
+    ),
+    showBreeding && React.createElement(HorseBreedingModal,{
+      horses: horses,
+      onClose: function(){ setShowBreeding(false); },
+      onConfirm: function(sireId, damId){
+        if (onBreed) onBreed(sireId, damId);
+        setShowBreeding(false);
+      }
+    })
+  );
+}
+
+// ════════════════════════════════════════════════════════════════
+// HORSE BREEDING
+// ════════════════════════════════════════════════════════════════
+
+// Mendelian inheritance for a single diploid locus
+function inheritLocus(sireAlleles, damAlleles) {
+  var s = sireAlleles[Math.random() < 0.5 ? 0 : 1];
+  var d = damAlleles[Math.random() < 0.5 ? 0 : 1];
+  return [s, d];
+}
+
+// Blend two horse genomes into a foal genome
+function breedHorseGenomes(sireGenome, damGenome) {
+  var sc = sireGenome.coat || {}, dc = damGenome.coat || {};
+  var sh = sireGenome.health || {}, dh = damGenome.health || {};
+  var sp = sireGenome.perf || {}, dp = damGenome.perf || {};
+
+  var coat = {};
+  ["E","A","Cr","D","G","Rn","TO","Sv","Z","Ch"].forEach(function(loc) {
+    coat[loc] = inheritLocus(sc[loc]||["0","0"], dc[loc]||["0","0"]);
+  });
+
+  var health = {};
+  ["HipQ","BoneQ","LungQ","HeartQ","HoofQ"].forEach(function(loc) {
+    health[loc] = inheritLocus(sh[loc]||["g","g"], dh[loc]||["g","g"]);
+  });
+
+  var perf = {};
+  ["SPEED","STAMINA","MUSCLE","TEMP","AGILITY"].forEach(function(q) {
+    var sa = sp[q]||[3,3], da = dp[q]||[3,3];
+    var v0 = sa[Math.random()<0.5?0:1];
+    var v1 = da[Math.random()<0.5?0:1];
+    // Small mutation chance
+    if (Math.random() < 0.005) v0 = Math.max(1, Math.min(5, v0 + (Math.random()<0.5?1:-1)));
+    if (Math.random() < 0.005) v1 = Math.max(1, Math.min(5, v1 + (Math.random()<0.5?1:-1)));
+    perf[q] = [v0, v1];
+  });
+
+  return { coat: coat, health: health, perf: perf };
+}
+
+// Create a foal object from sire + dam
+function createFoal(sire, dam, foalNumber) {
+  var genome = breedHorseGenomes(sire.genome, dam.genome);
+  var breed = sire.breed === dam.breed ? dam.breed : "Crossbred";
+  var breedDef = HORSE_BREED_DEFS.find(function(b){ return b.name===breed; }) || HORSE_BREED_DEFS[0];
+  var sex = Math.random() < 0.5 ? "M" : "F";
+  var coatColor = interpretHorseColor(genome);
+  var healthScore = calcHorseHealthScore(genome);
+  var perfScore = calcHorsePerfScore(genome);
+  return {
+    id: "horse_foal_" + Date.now() + "_" + Math.random().toString(36).substring(2,6),
+    name: "Foal #" + foalNumber,
+    breed: breed,
+    group: breedDef.group || dam.group || "Western",
+    species: "horse",
+    type: dam.type || "light",
+    sex: sex,
+    ageMonths: 0,
+    heightHands: breedDef.heightAvg || 14.0,
+    weightLbs: Math.round((breedDef.weightAvg || 800) * 0.15),
+    genome: genome,
+    coatColor: coatColor,
+    healthScore: healthScore,
+    perfScore: perfScore,
+    showPoints: 0,
+    showHistory: [],
+    coi: 0,
+    sireId: sire.id,
+    damId: dam.id,
+    price: Math.round(calcFoalValue(healthScore, perfScore) / 50) * 50,
+    generation: Math.max(sire.generation||1, dam.generation||1) + 1
+  };
+}
+
+function calcFoalValue(healthScore, perfScore) {
+  return 500 + Math.round((healthScore + perfScore) / 2 * 20);
+}
+
+// ── HORSE BREEDING MODAL ───────────────────────────────────────
+function HorseBreedingModal(props) {
+  var horses = props.horses || [];
+  var onClose = props.onClose;
+  var onConfirm = props.onConfirm; // fn(sireId, damId)
+
+  var stallions = horses.filter(function(h){ return h.sex==="M" && !h.pregnantUntil; });
+  var mares = horses.filter(function(h){ return h.sex==="F" && !h.pregnantUntil; });
+
+  var _ss = React.useState(null), selectedSire = _ss[0], setSelectedSire = _ss[1];
+  var _sd = React.useState(null), selectedDam = _sd[0], setSelectedDam = _sd[1];
+
+  var sire = selectedSire ? horses.find(function(h){ return h.id===selectedSire; }) : null;
+  var dam  = selectedDam  ? horses.find(function(h){ return h.id===selectedDam;  }) : null;
+
+  function HorseOption(h, selected, onClick) {
+    var norm = normalizeHorse(h);
+    return React.createElement("div", {
+      key: h.id,
+      onClick: onClick,
+      style: {
+        background: selected ? "#1a3a0a" : "#141008",
+        border: "1px solid " + (selected ? "#84cc16" : "#2a3a18"),
+        borderRadius: 8, padding: "10px 12px", cursor: "pointer",
+        marginBottom: 6, transition: "border-color 0.15s"
+      }
+    },
+      React.createElement("div", { style: { display:"flex", justifyContent:"space-between", alignItems:"center" } },
+        React.createElement("div", {},
+          React.createElement("div", { style: { color:"#f0e6d3", fontWeight:"bold", fontSize:"0.88rem" } }, norm.name),
+          React.createElement("div", { style: { color:"#8a7055", fontSize:"0.7rem" } }, norm.breed + " · " + norm.coatColor)
+        ),
+        React.createElement("div", { style: { textAlign:"right" } },
+          React.createElement("div", { style: { fontSize:"0.7rem", color:"#22c55e" } }, "❤️ " + norm.healthScore),
+          React.createElement("div", { style: { fontSize:"0.7rem", color:"#d4942a" } }, "⚡ " + norm.perfScore)
+        )
+      )
+    );
+  }
+
+  return React.createElement("div", {
+    onClick: onClose,
+    style: { position:"fixed", inset:0, background:"rgba(0,0,0,0.92)", zIndex:1300,
+      display:"flex", alignItems:"center", justifyContent:"center", padding:16 }
+  },
+    React.createElement("div", {
+      onClick: function(e){ e.stopPropagation(); },
+      style: { background:"#0e1208", border:"1px solid #2a3a18", borderRadius:12,
+        width:"100%", maxWidth:680, maxHeight:"88vh", overflowY:"auto", padding:22 }
+    },
+      // Header
+      React.createElement("div", { style: { display:"flex", justifyContent:"space-between", alignItems:"center", marginBottom:18 } },
+        React.createElement("div", {},
+          React.createElement("div", { style: { color:"#d4942a", fontWeight:"bold", fontSize:"1.05rem" } }, "🤝 Breed Horses"),
+          React.createElement("div", { style: { color:"#6a5a38", fontSize:"0.72rem", marginTop:2 } }, "Gestation: 11 days · Foal arrives unnamed")
+        ),
+        React.createElement("button", { onClick:onClose,
+          style: { background:"none", border:"1px solid #2a3a18", color:"#4a6a28",
+            borderRadius:5, padding:"4px 12px", cursor:"pointer", fontSize:"0.85rem" } }, "✕ Close")
+      ),
+
+      // Two-column picker
+      React.createElement("div", { style: { display:"grid", gridTemplateColumns:"1fr 1fr", gap:16, marginBottom:18 } },
+
+        // Stallion column
+        React.createElement("div", {},
+          React.createElement("div", { style: { color:"#60a5fa", fontWeight:"bold", fontSize:"0.78rem",
+            textTransform:"uppercase", letterSpacing:"0.05em", marginBottom:8 } }, "♂ Select Stallion"),
+          stallions.length === 0
+            ? React.createElement("div", { style: { color:"#4a3a28", fontSize:"0.78rem", padding:"16px 0" } }, "No available stallions")
+            : stallions.map(function(h){ return HorseOption(h, selectedSire===h.id, function(){ setSelectedSire(h.id); }); })
+        ),
+
+        // Mare column
+        React.createElement("div", {},
+          React.createElement("div", { style: { color:"#f472b6", fontWeight:"bold", fontSize:"0.78rem",
+            textTransform:"uppercase", letterSpacing:"0.05em", marginBottom:8 } }, "♀ Select Mare"),
+          mares.length === 0
+            ? React.createElement("div", { style: { color:"#4a3a28", fontSize:"0.78rem", padding:"16px 0" } }, "No available mares")
+            : mares.map(function(h){ return HorseOption(h, selectedDam===h.id, function(){ setSelectedDam(h.id); }); })
+        )
+      ),
+
+      // Pairing preview
+      sire && dam && React.createElement("div", { style: { background:"#141008", border:"1px solid #2a4a18",
+        borderRadius:8, padding:"12px 16px", marginBottom:16 } },
+        React.createElement("div", { style: { color:"#84cc16", fontWeight:"bold", fontSize:"0.78rem", marginBottom:8 } }, "🧬 Pairing Preview"),
+        React.createElement("div", { style: { display:"flex", alignItems:"center", gap:12, flexWrap:"wrap" } },
+          React.createElement("div", { style: { flex:1, minWidth:160 } },
+            React.createElement("div", { style: { color:"#60a5fa", fontSize:"0.7rem", fontWeight:"bold" } }, "♂ " + sire.name),
+            React.createElement("div", { style: { color:"#8a7055", fontSize:"0.68rem" } }, sire.breed + " · " + sire.coatColor),
+            React.createElement("div", { style: { color:"#22c55e", fontSize:"0.68rem" } }, "❤️ " + sire.healthScore + "  ⚡ " + sire.perfScore)
+          ),
+          React.createElement("div", { style: { color:"#d4942a", fontSize:"1.2rem" } }, "×"),
+          React.createElement("div", { style: { flex:1, minWidth:160 } },
+            React.createElement("div", { style: { color:"#f472b6", fontSize:"0.7rem", fontWeight:"bold" } }, "♀ " + dam.name),
+            React.createElement("div", { style: { color:"#8a7055", fontSize:"0.68rem" } }, dam.breed + " · " + dam.coatColor),
+            React.createElement("div", { style: { color:"#22c55e", fontSize:"0.68rem" } }, "❤️ " + dam.healthScore + "  ⚡ " + dam.perfScore)
+          )
+        ),
+        sire.breed !== dam.breed && React.createElement("div", { style: { color:"#fde68a", fontSize:"0.68rem", marginTop:8 } },
+          "⚠️ Different breeds — foal will be registered as Crossbred"
+        )
+      ),
+
+      // Confirm button
+      React.createElement("button", {
+        disabled: !sire || !dam,
+        onClick: function(){ if(sire && dam) onConfirm(sire.id, dam.id); },
+        style: {
+          width:"100%", padding:"12px 0", borderRadius:8, cursor: sire&&dam ? "pointer" : "not-allowed",
+          background: sire&&dam ? "#1a3a0a" : "#0a1208",
+          border: "1px solid " + (sire&&dam ? "#84cc16" : "#2a3a18"),
+          color: sire&&dam ? "#84cc16" : "#2a4a18",
+          fontWeight:"bold", fontSize:"0.9rem"
+        }
+      }, sire && dam ? "🤝 Confirm Breeding — Foal due in 11 days" : "Select a stallion and mare to continue")
     )
   );
 }

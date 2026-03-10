@@ -5319,6 +5319,14 @@ function App() {
     _useStateHSD2 = _slicedToArray(_useStateHSD, 2),
     horseShowDates = _useStateHSD2[0],
     setHorseShowDates = _useStateHSD2[1];
+  var _useStatePF = useState(_savedState ? _savedState.pendingFoals || [] : []),
+    _useStatePF2 = _slicedToArray(_useStatePF, 2),
+    pendingFoals = _useStatePF2[0],
+    setPendingFoals = _useStatePF2[1];
+  var _useStateFC = useState(_savedState ? _savedState.foalCount || 0 : 0),
+    _useStateFC2 = _slicedToArray(_useStateFC, 2),
+    foalCount = _useStateFC2[0],
+    setFoalCount = _useStateFC2[1];
   var _useStateCL = useState(false),
     _useStateCL2 = _slicedToArray(_useStateCL, 2),
     showCatLady = _useStateCL2[0],
@@ -5425,6 +5433,31 @@ function App() {
       }
       setLastIncomeTick(now);
       localStorage.setItem("ba_lastIncomeTick", String(now));
+    }
+    // Check for foals ready to be born
+    if (pendingFoals && pendingFoals.length > 0) {
+      var readyFoals = pendingFoals.filter(function(pf){ return pf.dueDate <= Date.now(); });
+      if (readyFoals.length > 0) {
+        var remainingFoals = pendingFoals.filter(function(pf){ return pf.dueDate > Date.now(); });
+        setPendingFoals(remainingFoals);
+        // Clear pregnantUntil from mares that just gave birth
+        var bornDamIds = readyFoals.map(function(pf){ return pf.damId; });
+        setOwnedLivestock(function(prev){
+          var updated = prev.map(function(a){
+            if (bornDamIds.indexOf(a.id) !== -1) return Object.assign({},a,{pregnantUntil:null});
+            return a;
+          });
+          readyFoals.forEach(function(pf){
+            updated = updated.concat([pf.foal]);
+          });
+          return updated;
+        });
+        readyFoals.forEach(function(pf){
+          setLog(function(lg){ return [{ id:Date.now()+Math.random(), type:"breeding",
+            name:"🐴 "+pf.foal.name+" born! ("+pf.foal.breed+" · "+pf.foal.coatColor+" · "+(pf.foal.sex==="M"?"♂":"♀")+")",
+            date: new Date().toLocaleString() }].concat(_toConsumableArray(lg)); });
+        });
+      }
     }
   }, []);
 
@@ -5587,6 +5620,8 @@ function App() {
           sheepSheared: sheepSheared,
           lastShowDates: lastShowDates,
           horseShowDates: horseShowDates,
+          pendingFoals: pendingFoals,
+          foalCount: foalCount,
           gameStartDate: gameStartDate,
           gameVersion: GAME_VERSION,
           savedAt: Date.now()
@@ -5597,7 +5632,7 @@ function App() {
     doSave();
     var interval = setInterval(doSave, 60000);
     return function() { clearInterval(interval); };
-  }, [animals, kennels, log, money, hasWhelpingKennel, whelpingLitters, holdingPups, facilitiesOwned, ownedLivestock, commodities, sheepSheared, lastShowDates, horseShowDates]);
+  }, [animals, kennels, log, money, hasWhelpingKennel, whelpingLitters, holdingPups, facilitiesOwned, ownedLivestock, commodities, sheepSheared, lastShowDates, horseShowDates, pendingFoals, foalCount]);
   var loadFile = function loadFile(e) {
     var file = e.target.files[0];
     if (!file) return;
@@ -7191,6 +7226,24 @@ function App() {
       }
     },
     onShowsOpen: function(){ setTab("horseShows"); },
+    onBreed: function(sireId, damId){
+      var horses = (ownedLivestock||[]).filter(function(a){ return a.species==="horse"; });
+      var sire = horses.find(function(h){ return h.id===sireId; });
+      var dam  = horses.find(function(h){ return h.id===damId;  });
+      if (!sire || !dam) return;
+      var newFoalCount = foalCount + 1;
+      setFoalCount(newFoalCount);
+      var foal = createFoal(sire, dam, newFoalCount);
+      var dueDate = Date.now() + (11 * 24 * 60 * 60 * 1000);
+      setPendingFoals(function(prev){ return prev.concat([{ foal:foal, dueDate:dueDate, sireId:sireId, damId:damId }]); });
+      // Mark mare as pregnant
+      setOwnedLivestock(function(prev){ return prev.map(function(a){
+        return a.id===damId ? Object.assign({},a,{pregnantUntil:dueDate}) : a;
+      }); });
+      setLog(function(lg){ return [{ id:Date.now(), type:"breeding",
+        name:"🤝 Bred "+sire.name+" × "+dam.name+" — foal due in 11 days",
+        date: new Date().toLocaleString() }].concat(_toConsumableArray(lg)); });
+    },
     onClose: function(){ setTab("kennel"); }
   }),
   tab === "horseShows" && /*#__PURE__*/React.createElement("div", {
