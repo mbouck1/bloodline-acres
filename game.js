@@ -5267,6 +5267,10 @@ function App() {
     _useStateLSD2 = _slicedToArray(_useStateLSD, 2),
     lastShowDates = _useStateLSD2[0],
     setLastShowDates = _useStateLSD2[1];
+  var _useStateHSD = useState(_savedState ? _savedState.horseShowDates || {} : {}),
+    _useStateHSD2 = _slicedToArray(_useStateHSD, 2),
+    horseShowDates = _useStateHSD2[0],
+    setHorseShowDates = _useStateHSD2[1];
   var _useStateCL = useState(false),
     _useStateCL2 = _slicedToArray(_useStateCL, 2),
     showCatLady = _useStateCL2[0],
@@ -5530,6 +5534,7 @@ function App() {
           commodities: commodities,
           sheepSheared: sheepSheared,
           lastShowDates: lastShowDates,
+          horseShowDates: horseShowDates,
           gameStartDate: gameStartDate,
           gameVersion: GAME_VERSION,
           savedAt: Date.now()
@@ -5540,7 +5545,7 @@ function App() {
     doSave();
     var interval = setInterval(doSave, 60000);
     return function() { clearInterval(interval); };
-  }, [animals, kennels, log, money, hasWhelpingKennel, whelpingLitters, holdingPups, facilitiesOwned, ownedLivestock, commodities, sheepSheared, lastShowDates]);
+  }, [animals, kennels, log, money, hasWhelpingKennel, whelpingLitters, holdingPups, facilitiesOwned, ownedLivestock, commodities, sheepSheared, lastShowDates, horseShowDates]);
   var loadFile = function loadFile(e) {
     var file = e.target.files[0];
     if (!file) return;
@@ -6158,6 +6163,10 @@ function App() {
       style: tabS("farm"),
       onClick: function(){ setTab("farm"); }
     }, "\uD83C\uDFD8 Farm"),
+    /*#__PURE__*/React.createElement("button", {
+      style: tabS("horses"),
+      onClick: function(){ setTab("horses"); }
+    }, "\uD83D\uDC0E Horses ("+(ownedLivestock||[]).filter(function(a){return a.species==="horse";}).length+")"),
     /*#__PURE__*/React.createElement("button", {
       style: tabS("shows"),
       onClick: function(){ setTab("shows"); }
@@ -7111,6 +7120,37 @@ function App() {
     lastShowDates: lastShowDates || {},
     onShowDatesUpdate: setLastShowDates,
     onClose: function(){ setTab("kennel"); }
+  })),
+  tab === "horses" && /*#__PURE__*/React.createElement(HorsesView, {
+    horses: (ownedLivestock||[]).filter(function(a){ return a.species==="horse"; }),
+    money: money,
+    lastShowDates: horseShowDates,
+    onSell: function(horse){
+      var sellPrice = Math.round((horse.price||500)*0.6);
+      if (confirm("Sell "+horse.name+" ("+horse.breed+") for $"+sellPrice.toLocaleString()+"?")) {
+        setMoney(function(m){ return m+sellPrice; });
+        setOwnedLivestock(function(prev){ return prev.filter(function(a){ return a.id!==horse.id; }); });
+        setLog(function(lg){ return [{ id:Date.now(), type:"financial",
+          name:"\uD83D\uDC0E Sold "+horse.name+" ("+horse.breed+") \u2014 +$"+sellPrice.toLocaleString(),
+          amount:sellPrice, date:new Date().toLocaleString() }].concat(lg); });
+      }
+    },
+    onShowsOpen: function(){ setTab("horseShows"); },
+    onClose: function(){ setTab("kennel"); }
+  }),
+  tab === "horseShows" && /*#__PURE__*/React.createElement("div", {
+    style:{ position:"fixed", inset:0, background:"#0a1008", zIndex:50, overflow:"auto", padding:14 }
+  }, /*#__PURE__*/React.createElement(HorseShowsView, {
+    horses: (ownedLivestock||[]).filter(function(a){ return a.species==="horse"; }),
+    money: money,
+    onMoneyChange: setMoney,
+    onHorseUpdate: function(updated){
+      setOwnedLivestock(function(prev){ return prev.map(function(a){ return a.id===updated.id ? updated : a; }); });
+    },
+    onLog: function(entry){ setLog(function(lg){ return [entry].concat(_toConsumableArray(lg)); }); },
+    lastShowDates: horseShowDates,
+    onShowDatesUpdate: setHorseShowDates,
+    onClose: function(){ setTab("horses"); }
   })),
   tab === "farm" && /*#__PURE__*/React.createElement("div", {
     style: { position:"fixed", inset:0, background:"#141008", zIndex:50, overflow:"hidden", display:"flex", alignItems:"center", justifyContent:"center" }
