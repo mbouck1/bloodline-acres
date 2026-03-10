@@ -48,7 +48,8 @@ function baSubmitImage(species, breed, file, submitterName, onSuccess, onError) 
   // Sanitize filename
   var ext = file.name.split(".").pop().toLowerCase() || "jpg";
   var safe = (species + "_" + breed).replace(/[^a-zA-Z0-9_-]/g, "_").toLowerCase();
-  var filename = safe + "_" + Date.now() + "." + ext;
+  var rand = Math.random().toString(36).substring(2, 8);
+  var filename = safe + "_" + Date.now() + "_" + rand + "." + ext;
   var storagePath = "submissions/" + filename;
 
   // Upload to Storage
@@ -63,7 +64,11 @@ function baSubmitImage(species, breed, file, submitterName, onSuccess, onError) 
     body: file
   })
   .then(function(r){
-    if (!r.ok) return r.json().then(function(e){ throw new Error(e.message || "Upload failed"); });
+    if (!r.ok) return r.json().then(function(e){ 
+      console.error("BA STORAGE ERROR:", JSON.stringify(e));
+      throw new Error(e.message || e.error || "Upload failed"); 
+    });
+    console.log("BA STORAGE OK");
     return r.json();
   })
   .then(function(){
@@ -88,11 +93,15 @@ function baSubmitImage(species, breed, file, submitterName, onSuccess, onError) 
     });
   })
   .then(function(r){
-    if (!r.ok) return r.json().then(function(e){ throw new Error(e.message || "DB insert failed"); });
+    if (!r.ok) return r.json().then(function(e){ 
+      console.error("BA DB ERROR:", JSON.stringify(e));
+      throw new Error(e.message || e.error || "DB insert failed"); 
+    });
+    console.log("BA DB OK");
     return r.json();
   })
   .then(function(){ onSuccess(); })
-  .catch(function(e){ onError(e.message || "Submission failed."); });
+  .catch(function(e){ console.error("BA FINAL ERROR:", e.message); onError(e.message || "Submission failed."); });
 }
 
 // ── DRAG-DROP UPLOAD WIDGET (used on animal cards) ─────────────────────────
