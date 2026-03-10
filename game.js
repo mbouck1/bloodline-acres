@@ -7500,7 +7500,11 @@ showShearing && /*#__PURE__*/React.createElement(ShearingModal, {
       if (confirm("Purchase "+name+" for $"+(animal.price||0).toLocaleString()+"?")) {
         setMoney(function(m){ return m-(animal.price||0); });
         var animalWithIncome = attachIncomeData(animal, species);
-        setOwnedLivestock(function(prev){ return prev.concat([Object.assign({},animalWithIncome,{purchasePrice:animal.price||0})]); });
+        var finalAnimal = Object.assign({},animalWithIncome,{purchasePrice:animal.price||0});
+        if (species==="horse" && typeof normalizeHorse === "function") {
+          finalAnimal = normalizeHorse(finalAnimal);
+        }
+        setOwnedLivestock(function(prev){ return prev.concat([finalAnimal]); });
         setMarketSession(function(sess){ return sess.concat([{ species:species, price:animal.price||0, sex:animal.sex||"F" }]); });
         return true;
       }

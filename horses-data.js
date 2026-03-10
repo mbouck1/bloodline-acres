@@ -523,7 +523,7 @@ function getHorseShowCooldownText(lastShowDates, classKey, level) {
 
 // ── HORSE SHOWS VIEW COMPONENT ────────────────────────────────
 function HorseShowsView(props) {
-  var horses = (props.horses || []).map(normalizeHorse);
+  var horses = props.horses || [];
   var money = props.money || 0;
   var onMoneyChange = props.onMoneyChange;
   var onHorseUpdate = props.onHorseUpdate;
@@ -1112,7 +1112,7 @@ function HorseCard(props) {
 }
 
 function HorsesView(props) {
-  var horses = (props.horses || []).map(normalizeHorse);
+  var horses = props.horses || [];
   var money = props.money || 0;
   var onSell = props.onSell;
   var onRename = props.onRename;
@@ -1314,7 +1314,7 @@ function HorseBreedingModal(props) {
   var dam  = selectedDam  ? horses.find(function(h){ return h.id===selectedDam;  }) : null;
 
   function HorseOption(h, selected, onClick) {
-    var norm = normalizeHorse(h);
+    var norm = h;
     return React.createElement("div", {
       key: h.id,
       onClick: function(e){ e.stopPropagation(); onClick(); },
