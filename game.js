@@ -6663,6 +6663,7 @@ function App() {
     } }, (function(){ var coi = calcCOI(sire.id, dam.id, animals); return coi + "% — " + (coi >= 25 ? "⚠️ Extreme" : coi >= 12.5 ? "⚠️ High" : coi >= 6 ? "⚡ Elevated" : "✅ Safe"); })())
   ),
   (function(){
+    if (!sire || !dam) return null;
     var coi = calcCOI(sire.id, dam.id, animals);
     if (coi < 12.5) return null;
     var msg = coi >= 50 ? "\uD83D\uDCA7 Extreme inbreeding \u2014 litter size reduced 2\u20133 pups, stillborn risk" : coi >= 25 ? "\uD83D\uDCA7 High COI \u2014 litter size reduced 1\u20132 pups" : "\uD83D\uDCA7 Elevated COI \u2014 litter may be 1 pup smaller";
