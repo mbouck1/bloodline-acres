@@ -1230,26 +1230,135 @@ function assignGeneticProfile(breed) {
 }
 var HORSE_BREEDS = {
   light: [
-    { name:"Thoroughbred", aptitudes:["Racing","Hunt Seat","Cross Country"] },
-    { name:"Arabian", aptitudes:["Racing","Endurance","Show"] },
-    { name:"Quarter Horse", aptitudes:["Racing","Western","Trail"] },
-    { name:"Morgan", aptitudes:["Western","Trail","Pleasure"] },
-    { name:"Standardbred", aptitudes:["Racing","Pleasure"] },
-    { name:"Tennessee Walker", aptitudes:["Gaited","Pleasure","Trail"] },
-    { name:"Appaloosa", aptitudes:["Western","Trail","Show"] },
-    { name:"Paint", aptitudes:["Western","Trail","Show"] },
-    { name:"Andalusian", aptitudes:["Dressage","Show Jumping","Show"] },
-    { name:"Friesian", aptitudes:["Dressage","Show","Pleasure"] },
-    { name:"Hanoverian", aptitudes:["Dressage","Show Jumping","Cross Country"] },
-    { name:"Warmblood", aptitudes:["Dressage","Show Jumping","Hunt Seat"] }
+    // American stock & color breeds
+    { name:"Quarter Horse",        aptitudes:["Racing","Western","Trail"] },
+    { name:"Paint Horse",          aptitudes:["Western","Trail","Show"] },
+    { name:"Appaloosa",            aptitudes:["Western","Trail","Show"] },
+    { name:"Palomino",             aptitudes:["Western","Show","Pleasure"] },
+    { name:"Buckskin",             aptitudes:["Western","Trail","Show"] },
+    { name:"Mustang",              aptitudes:["Trail","Western","Endurance"] },
+    { name:"American Saddlebred",  aptitudes:["Show","Pleasure","Gaited"] },
+    { name:"Standardbred",         aptitudes:["Racing","Harness","Pleasure"] },
+    { name:"Morgan",               aptitudes:["Western","Trail","Pleasure"] },
+    { name:"National Show Horse",  aptitudes:["Show","Pleasure","Gaited"] },
+    // Thoroughbred & racing
+    { name:"Thoroughbred",         aptitudes:["Racing","Hunt Seat","Cross Country"] },
+    { name:"Anglo-Arabian",        aptitudes:["Racing","Endurance","Cross Country"] },
+    // Arabian family
+    { name:"Arabian",              aptitudes:["Endurance","Racing","Show"] },
+    { name:"Half-Arabian",         aptitudes:["Endurance","Show","Trail"] },
+    { name:"Shagya Arabian",       aptitudes:["Endurance","Show","Dressage"] },
+    // Baroque & Iberian
+    { name:"Andalusian",           aptitudes:["Dressage","Show Jumping","Show"] },
+    { name:"Lusitano",             aptitudes:["Dressage","Bullfighting","Show"] },
+    { name:"Lipizzaner",           aptitudes:["Dressage","Show","Pleasure"] },
+    { name:"Friesian",             aptitudes:["Dressage","Show","Pleasure"] },
+    { name:"Friesian Sport Horse", aptitudes:["Dressage","Show Jumping","Show"] },
+    // Sport & event
+    { name:"Irish Sport Horse",    aptitudes:["Cross Country","Show Jumping","Hunt Seat"] },
+    { name:"Irish Draught",        aptitudes:["Cross Country","Hunt Seat","Farm Work"] },
+    { name:"Akhal-Teke",           aptitudes:["Endurance","Racing","Dressage"] },
+    // Heritage & exotic
+    { name:"Marwari",              aptitudes:["Endurance","Show","Trail"] },
+    { name:"Kathiawari",           aptitudes:["Endurance","Trail","Show"] },
+    { name:"Criollo",              aptitudes:["Endurance","Western","Trail"] },
+    { name:"Camargue",             aptitudes:["Trail","Endurance","Western"] },
+    { name:"Barb",                 aptitudes:["Endurance","Racing","Trail"] },
+    { name:"Turkoman",             aptitudes:["Racing","Endurance","Show"] },
+    { name:"Kiger Mustang",        aptitudes:["Trail","Western","Show"] }
+  ],
+  warmblood: [
+    // German
+    { name:"Hanoverian",           aptitudes:["Dressage","Show Jumping","Cross Country"] },
+    { name:"Oldenburg",            aptitudes:["Dressage","Show Jumping","Show"] },
+    { name:"Trakehner",            aptitudes:["Dressage","Cross Country","Show Jumping"] },
+    { name:"Westphalian",          aptitudes:["Show Jumping","Dressage","Cross Country"] },
+    { name:"Holsteiner",           aptitudes:["Show Jumping","Dressage","Cross Country"] },
+    { name:"Rhinelander",          aptitudes:["Dressage","Show Jumping","Show"] },
+    { name:"Baden-Württemberg",    aptitudes:["Dressage","Show Jumping","Cross Country"] },
+    // Dutch & Belgian
+    { name:"Dutch Warmblood",      aptitudes:["Dressage","Show Jumping","Hunt Seat"] },
+    { name:"Belgian Warmblood",    aptitudes:["Show Jumping","Dressage","Hunt Seat"] },
+    { name:"KWPN",                 aptitudes:["Dressage","Show Jumping","Cross Country"] },
+    // Scandinavian
+    { name:"Swedish Warmblood",    aptitudes:["Dressage","Show Jumping","Cross Country"] },
+    { name:"Danish Warmblood",     aptitudes:["Dressage","Show Jumping","Cross Country"] },
+    // French
+    { name:"Selle Français",       aptitudes:["Show Jumping","Cross Country","Hunt Seat"] },
+    // Other European
+    { name:"Zangersheide",         aptitudes:["Show Jumping","Cross Country","Hunt Seat"] },
+    { name:"Latvian Warmblood",    aptitudes:["Dressage","Show Jumping","Cross Country"] },
+    { name:"Czech Warmblood",      aptitudes:["Show Jumping","Dressage","Cross Country"] },
+    { name:"Australian Warmblood", aptitudes:["Show Jumping","Dressage","Cross Country"] }
+  ],
+  gaited: [
+    // American gaited
+    { name:"Tennessee Walking Horse", aptitudes:["Gaited","Pleasure","Trail"] },
+    { name:"Missouri Fox Trotter",    aptitudes:["Gaited","Trail","Pleasure"] },
+    { name:"American Standardbred",   aptitudes:["Gaited","Harness","Racing"] },
+    { name:"Racking Horse",           aptitudes:["Gaited","Pleasure","Show"] },
+    { name:"Spotted Saddle Horse",    aptitudes:["Gaited","Show","Pleasure"] },
+    { name:"Rocky Mountain Horse",    aptitudes:["Gaited","Trail","Pleasure"] },
+    { name:"Kentucky Mountain Horse", aptitudes:["Gaited","Trail","Pleasure"] },
+    { name:"Single-Footing Horse",    aptitudes:["Gaited","Trail","Endurance"] },
+    // Latin American gaited
+    { name:"Paso Fino",               aptitudes:["Gaited","Show","Pleasure"] },
+    { name:"Peruvian Paso",           aptitudes:["Gaited","Trail","Show"] },
+    { name:"Mangalarga Marchador",    aptitudes:["Gaited","Endurance","Trail"] },
+    { name:"Campolina",               aptitudes:["Gaited","Pleasure","Show"] },
+    // European gaited
+    { name:"Icelandic Horse",         aptitudes:["Gaited","Trail","Endurance"] },
+    { name:"Standardbred (Trotter)",  aptitudes:["Gaited","Harness","Racing"] },
+    { name:"Frederiksborg",           aptitudes:["Gaited","Show","Pleasure"] }
   ],
   draft: [
-    { name:"Percheron", aptitudes:["Show","Pulling","Farm Work"] },
-    { name:"Clydesdale", aptitudes:["Show","Pulling","Farm Work"] },
-    { name:"Belgian", aptitudes:["Pulling","Farm Work","Show"] },
-    { name:"Shire", aptitudes:["Show","Pulling","Farm Work"] },
-    { name:"Suffolk Punch", aptitudes:["Farm Work","Pulling"] },
-    { name:"Haflinger", aptitudes:["Farm Work","Trail","Show"] }
+    // Heavy European
+    { name:"Shire",                aptitudes:["Show","Pulling","Farm Work"] },
+    { name:"Clydesdale",           aptitudes:["Show","Pulling","Farm Work"] },
+    { name:"Percheron",            aptitudes:["Show","Pulling","Farm Work"] },
+    { name:"Belgian Draft",        aptitudes:["Pulling","Farm Work","Show"] },
+    { name:"Brabant",              aptitudes:["Pulling","Farm Work"] },
+    { name:"Suffolk Punch",        aptitudes:["Farm Work","Pulling"] },
+    { name:"Jutland",              aptitudes:["Farm Work","Pulling","Show"] },
+    { name:"Boulonnais",           aptitudes:["Pulling","Farm Work","Show"] },
+    { name:"Breton",               aptitudes:["Farm Work","Pulling","Show"] },
+    { name:"Comtois",              aptitudes:["Farm Work","Pulling"] },
+    // Light draft / multipurpose
+    { name:"Haflinger",            aptitudes:["Farm Work","Trail","Show"] },
+    { name:"Norwegian Fjord",      aptitudes:["Farm Work","Trail","Show"] },
+    { name:"American Cream Draft", aptitudes:["Show","Pulling","Farm Work"] },
+    { name:"Black Forest Horse",   aptitudes:["Farm Work","Trail","Show"] },
+    { name:"Noriker",              aptitudes:["Farm Work","Pulling","Trail"] },
+    { name:"Auxois",               aptitudes:["Pulling","Farm Work"] },
+    { name:"Ardennais",            aptitudes:["Farm Work","Pulling"] },
+    { name:"Rhenish German",       aptitudes:["Pulling","Farm Work","Show"] }
+  ],
+  pony: [
+    // British Isles mountain & moorland
+    { name:"Connemara",            aptitudes:["Show Jumping","Trail","Show"] },
+    { name:"Welsh Section A",      aptitudes:["Show","Pleasure","Driving"] },
+    { name:"Welsh Section B",      aptitudes:["Show","Show Jumping","Pleasure"] },
+    { name:"Welsh Section C",      aptitudes:["Trail","Show","Driving"] },
+    { name:"Welsh Section D",      aptitudes:["Show Jumping","Trail","Farm Work"] },
+    { name:"Shetland Pony",        aptitudes:["Show","Pleasure","Driving"] },
+    { name:"Dartmoor Pony",        aptitudes:["Trail","Pleasure","Show"] },
+    { name:"Exmoor Pony",          aptitudes:["Trail","Endurance","Show"] },
+    { name:"New Forest Pony",      aptitudes:["Trail","Show","Pleasure"] },
+    { name:"Fell Pony",            aptitudes:["Trail","Driving","Show"] },
+    { name:"Dales Pony",           aptitudes:["Driving","Trail","Farm Work"] },
+    { name:"Highland Pony",        aptitudes:["Trail","Farm Work","Show"] },
+    // European ponies
+    { name:"Hackney Pony",         aptitudes:["Driving","Show","Pleasure"] },
+    { name:"Fjord Pony",           aptitudes:["Trail","Farm Work","Driving"] },
+    { name:"Haflinger Pony",       aptitudes:["Trail","Show","Pleasure"] },
+    { name:"Landais Pony",         aptitudes:["Trail","Pleasure","Show"] },
+    { name:"Gotland Pony",         aptitudes:["Trail","Show","Pleasure"] },
+    // American & miniature
+    { name:"Miniature Horse",      aptitudes:["Show","Driving","Pleasure"] },
+    { name:"American Miniature",   aptitudes:["Show","Driving","Pleasure"] },
+    { name:"Pony of the Americas", aptitudes:["Western","Trail","Show"] },
+    { name:"Chincoteague Pony",    aptitudes:["Trail","Show","Pleasure"] },
+    { name:"Assateague Pony",      aptitudes:["Trail","Endurance","Show"] }
   ]
 };
 
@@ -1314,8 +1423,13 @@ function generateLivestockStock() {
     var qty = LIVESTOCK_QTY[sp.key]();
     stock[sp.key] = [];
     if (sp.key === "horse") {
+      var horseTypes = ["light","warmblood","gaited","draft","pony"];
+      // weighted: light 35%, warmblood 25%, gaited 15%, draft 15%, pony 10%
+      var horseWeights = [0.35, 0.60, 0.75, 0.90, 1.0];
       for (var i=0; i<qty; i++) {
-        var type = Math.random()<0.5?"light":"draft";
+        var r = Math.random();
+        var type = "light";
+        for (var wi=0; wi<horseWeights.length; wi++) { if (r < horseWeights[wi]) { type = horseTypes[wi]; break; } }
         var breeds = HORSE_BREEDS[type];
         var breed = breeds[Math.floor(Math.random()*breeds.length)];
         var ha = { id:lsId(), type:type, breed:breed.name,
@@ -1352,13 +1466,16 @@ function generateLivestockStock() {
 }
 
 function calcHorsePrice(animal) {
-  // Base by category
-  var base = animal.type === "draft" ? 1200 : 1500;
-  // Simulate a genetic score 0-100 using random (will tie to real genetics when horse genetics built)
+  var bases = { light:1500, warmblood:2500, gaited:1200, draft:1200, pony:600 };
+  var premiums = { light:3500, warmblood:5000, gaited:2000, draft:2500, pony:1200 };
+  var mids     = { light:2000, warmblood:3000, gaited:1200, draft:1200, pony:700 };
+  var base = bases[animal.type] || 1500;
   var score = animal.perfScore || Math.floor(Math.random()*100);
   animal.perfScore = score;
-  if (score >= 80) return base + Math.floor(Math.random()*1000) + (animal.type==="draft"?2500:3500);
-  if (score >= 60) return base + Math.floor(Math.random()*800) + (animal.type==="draft"?1200:2000);
+  var premium = premiums[animal.type] || 3500;
+  var mid = mids[animal.type] || 2000;
+  if (score >= 80) return base + Math.floor(Math.random()*1000) + premium;
+  if (score >= 60) return base + Math.floor(Math.random()*800) + mid;
   if (score >= 40) return base + Math.floor(Math.random()*500) + 500;
   return base + Math.floor(Math.random()*300);
 }
@@ -1527,7 +1644,7 @@ function LivestockMarket(_ref) {
         style:{display:"flex",gap:6,padding:"6px 18px",borderBottom:"1px solid #1e293b",alignItems:"center"}},
         /*#__PURE__*/React.createElement("span",{style:{color:"#64748b",fontSize:"0.75rem"}},
           species==="cow"?"Type:":"Category:"),
-        (species==="cow"?["all","beef","dairy"]:["all","light","draft"]).map(function(f){
+        (species==="cow"?["all","beef","dairy"]:["all","light","warmblood","gaited","draft","pony"]).map(function(f){
           var active=species==="cow"?cowF===f:horseF===f;
           return /*#__PURE__*/React.createElement("button",{key:f,
             onClick:function(){species==="cow"?setCowF(f):setHorseF(f);},
