@@ -456,7 +456,7 @@ function getHorseShowCooldownText(lastShowDates, classKey, level) {
 
 // ── HORSE SHOWS VIEW COMPONENT ────────────────────────────────
 function HorseShowsView(props) {
-  var horses = props.horses || [];
+  var horses = (props.horses || []).map(normalizeHorse);
   var money = props.money || 0;
   var onMoneyChange = props.onMoneyChange;
   var onHorseUpdate = props.onHorseUpdate;
@@ -656,6 +656,42 @@ function HorseShowsView(props) {
   );
 }
 
+
+// ── NORMALIZE MARKET-BOUGHT HORSES ───────────────────────────
+// Horses bought from Livestock Market have minimal fields.
+// This fills in genetics + display fields so HorsesView never crashes.
+function normalizeHorse(horse) {
+  if (!horse) return horse;
+  var breed = horse.breed || "Quarter Horse";
+  var breedDef = HORSE_BREEDS.find(function(b){ return b.name===breed; }) || HORSE_BREEDS[0];
+  var genome = horse.genome || generateHorseGenome(breed);
+  var coatColor = horse.coatColor || interpretHorseColor(genome);
+  var healthScore = horse.healthScore != null ? horse.healthScore : calcHorseHealthScore(genome);
+  var perfScore = horse.perfScore != null ? horse.perfScore : calcHorsePerfScore(genome);
+  return Object.assign({
+    id: horse.id || ("horse_"+Date.now()),
+    name: horse.name || generateHorseName(horse.sex||"F"),
+    breed: breed,
+    group: breedDef.group || "Western",
+    sex: horse.sex || "F",
+    ageMonths: horse.ageMonths || 36,
+    price: horse.price || 1000,
+    heightHands: horse.heightHands || breedDef.heightAvg || 15.0,
+    weightLbs: horse.weightLbs || breedDef.weightAvg || 1000,
+    showPoints: horse.showPoints || 0,
+    showHistory: horse.showHistory || [],
+    coi: horse.coi || 0,
+    sireId: horse.sireId || null,
+    damId: horse.damId || null
+  }, horse, {
+    genome: genome,
+    coatColor: coatColor,
+    healthScore: healthScore,
+    perfScore: perfScore,
+    group: horse.group || breedDef.group || "Western"
+  });
+}
+
 // ── HORSE VIEW COMPONENT ──────────────────────────────────────
 function HorseCard(props) {
   var horse = props.horse;
@@ -738,7 +774,7 @@ function HorseCard(props) {
 }
 
 function HorsesView(props) {
-  var horses = props.horses || [];
+  var horses = (props.horses || []).map(normalizeHorse);
   var money = props.money || 0;
   var onSell = props.onSell;
   var onShowsOpen = props.onShowsOpen;
