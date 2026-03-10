@@ -9,10 +9,10 @@ var BA_IMAGES_LOADED   = false;
 
 // Load all approved images from Supabase on startup
 function baLoadApprovedImages(callback) {
-  fetch(BA_SUPABASE_URL + "/rest/v1/animal_images?status=eq.approved&select=species,breed,image_url", {
+  fetch(BA_SUPABASE_URL + "/rest/v1/animal_images?status=eq.approved&select=species,breed,image_url&apikey=" + BA_SUPABASE_ANON, {
     headers: {
       "apikey": BA_SUPABASE_ANON,
-      "Authorization": "Bearer " + BA_SUPABASE_ANON
+      "authorization": "Bearer " + BA_SUPABASE_ANON
     }
   })
   .then(function(r){ return r.json(); })
@@ -56,9 +56,9 @@ function baSubmitImage(species, breed, file, submitterName, onSuccess, onError) 
     method: "POST",
     headers: {
       "apikey": BA_SUPABASE_ANON,
-      "Authorization": "Bearer " + BA_SUPABASE_ANON,
+      "authorization": "Bearer " + BA_SUPABASE_ANON,
       "Content-Type": file.type,
-      "x-upsert": "false"
+      "x-upsert": "true"
     },
     body: file
   })
@@ -69,13 +69,14 @@ function baSubmitImage(species, breed, file, submitterName, onSuccess, onError) 
   .then(function(){
     var publicUrl = BA_SUPABASE_URL + "/storage/v1/object/public/animal-images/" + storagePath;
     // Insert record into DB as pending
-    return fetch(BA_SUPABASE_URL + "/rest/v1/animal_images", {
+    return fetch(BA_SUPABASE_URL + "/rest/v1/animal_images?apikey=" + BA_SUPABASE_ANON, {
       method: "POST",
       headers: {
         "apikey": BA_SUPABASE_ANON,
-        "Authorization": "Bearer " + BA_SUPABASE_ANON,
-        "Content-Type": "application/json",
-        "Prefer": "return=representation"
+        "authorization": "Bearer " + BA_SUPABASE_ANON,
+        "content-type": "application/json",
+        "prefer": "return=minimal",
+        "accept": "application/json"
       },
       body: JSON.stringify({
         species: species,
