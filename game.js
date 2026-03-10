@@ -3583,7 +3583,7 @@ function Card(_ref0) {
       }
     }, isSelected ? "✓ Selected" : "Select")
   )),
-  (onStud || onSell || onRetire) && /*#__PURE__*/React.createElement("div", {
+  !animal.retired && (onStud || onSell || onRetire) && /*#__PURE__*/React.createElement("div", {
     style: { display:"flex", gap:4, marginBottom:8 },
     onClick: function(e){ e.stopPropagation(); }
   },
@@ -4451,6 +4451,158 @@ var FACILITIES = {
 };
 
 
+
+// ═══════════════════════════════════════════════════════════════
+// RETIRED / LEGACY VIEW
+// ═══════════════════════════════════════════════════════════════
+function RetiredView(_ref_rv) {
+  if (!_ref_rv) return null;
+  var animals = _ref_rv.animals || [],
+      onClose = _ref_rv.onClose || function(){};
+
+  var _useState_rv1 = _slicedToArray(useState(null), 2),
+    selectedDog = _useState_rv1[0], setSelectedDog = _useState_rv1[1];
+  var _useState_rv2 = _slicedToArray(useState(""), 2),
+    search = _useState_rv2[0], setSearch = _useState_rv2[1];
+
+  // Sort: titled dogs first, then by retire date desc
+  var sorted = animals.slice().sort(function(a, b) {
+    var aTitle = a.showPoints || 0;
+    var bTitle = b.showPoints || 0;
+    if (bTitle !== aTitle) return bTitle - aTitle;
+    return (b.retiredAt || 0) - (a.retiredAt || 0);
+  });
+
+  var filtered2 = search
+    ? sorted.filter(function(a){ return (a.name||"").toLowerCase().includes(search.toLowerCase()) || a.breed.toLowerCase().includes(search.toLowerCase()); })
+    : sorted;
+
+  var retireReasonColor = { "End of natural life":"#4ade80", "Injury":"#fbbf24", "Illness":"#f97316" };
+
+  return React.createElement("div", { style:{ display:"flex", flexDirection:"column", height:"100vh" } },
+
+    // Header bar
+    React.createElement("div", { style:{ display:"flex", alignItems:"center", gap:12, padding:"10px 16px",
+      background:"#1a1008", borderBottom:"1px solid #3a2810", flexShrink:0 } },
+      React.createElement("span", { style:{ fontSize:"1.3rem" } }, "🏛️"),
+      React.createElement("h2", { style:{ margin:0, color:"#f5d870", fontSize:"1.05rem" } }, "Legacy — Retired Dogs"),
+      React.createElement("span", { style:{ color:"#6b5038", fontSize:"0.8rem", marginLeft:4 } },
+        animals.length + " dog" + (animals.length !== 1 ? "s" : "")),
+      React.createElement("input", {
+        placeholder: "Search name or breed...",
+        value: search,
+        onChange: function(e){ setSearch(e.target.value); },
+        style:{ marginLeft:"auto", background:"#241a10", border:"1px solid #3a2810",
+          color:"#d4c4a8", borderRadius:6, padding:"4px 10px", fontSize:"0.8rem", width:180 }
+      }),
+      React.createElement("button", {
+        onClick: onClose,
+        style:{ background:"#2a1a10", border:"1px solid #4a3a28", color:"#b09070",
+          borderRadius:6, padding:"4px 12px", cursor:"pointer", fontSize:"0.85rem", marginLeft:8 }
+      }, "✕ Close")
+    ),
+
+    // Body — split list + card
+    React.createElement("div", { style:{ display:"flex", flex:1, overflow:"hidden" } },
+
+      // Left — dog list
+      React.createElement("div", { style:{ width:280, flexShrink:0, borderRight:"1px solid #2a1e10",
+        overflow:"auto", background:"#141008" } },
+        filtered2.length === 0
+          ? React.createElement("div", { style:{ padding:20, color:"#4a3a28", fontStyle:"italic", fontSize:"0.82rem" } },
+              animals.length === 0 ? "No retired dogs yet." : "No matches.")
+          : filtered2.map(function(a) {
+              var title = getAnimalTitle(a.showPoints);
+              var isSelected = selectedDog && selectedDog.id === a.id;
+              var ageYrs = ((a.ageMonths || 0) / 12).toFixed(1);
+              return React.createElement("div", { key: a.id,
+                onClick: function(){ setSelectedDog(a); },
+                style:{ padding:"8px 12px", cursor:"pointer",
+                  background: isSelected ? "#2a1e14" : "transparent",
+                  borderBottom:"1px solid #1e1408",
+                  borderLeft: isSelected ? "3px solid #d4942a" : "3px solid transparent" }
+              },
+                // Name + title
+                React.createElement("div", { style:{ display:"flex", alignItems:"center", gap:6, marginBottom:2 } },
+                  title && React.createElement("span", { style:{ color:"#fbbf24", fontSize:"0.72rem",
+                    background:"#2a1e08", border:"1px solid #6a4a10", borderRadius:3, padding:"0 4px" } },
+                    title.prefix.trim()),
+                  React.createElement("span", { style:{ color: isSelected?"#f5d870":"#c4956a",
+                    fontWeight:"bold", fontSize:"0.85rem" } }, a.name || a.breed)
+                ),
+                // Breed
+                React.createElement("div", { style:{ color:"#8a6a48", fontSize:"0.72rem",
+                  whiteSpace:"nowrap", overflow:"hidden", textOverflow:"ellipsis", maxWidth:240 } },
+                  a.breed),
+                // Stats row
+                React.createElement("div", { style:{ display:"flex", gap:8, marginTop:3, fontSize:"0.7rem" } },
+                  React.createElement("span", { style:{ color:"#6b8a6b" } }, ageYrs + " yrs"),
+                  React.createElement("span", { style:{ color:"#6b7a8a" } },
+                    a.sex === "M" ? "♂" : "♀"),
+                  a.showPoints > 0 && React.createElement("span", { style:{ color:"#fbbf24" } },
+                    "🎀 " + a.showPoints + "pts"),
+                  React.createElement("span", { style:{ color: retireReasonColor[a.retireReason] || "#6b5038",
+                    fontSize:"0.68rem" } }, a.retireReason || "Retired")
+                )
+              );
+            })
+      ),
+
+      // Right — dog card or empty state
+      React.createElement("div", { style:{ flex:1, overflow:"auto", padding:16, background:"#1a1208" } },
+        !selectedDog
+          ? React.createElement("div", { style:{ display:"flex", flexDirection:"column", alignItems:"center",
+              justifyContent:"center", height:"100%", color:"#4a3a28", gap:8 } },
+              React.createElement("span", { style:{ fontSize:"2.5rem", opacity:0.3 } }, "🏛️"),
+              React.createElement("span", { style:{ fontSize:"0.85rem", fontStyle:"italic" } },
+                "Select a dog to view their record")
+            )
+          : React.createElement("div", { style:{ maxWidth:700 } },
+              // Retired banner
+              React.createElement("div", { style:{ background:"#1a1008", border:"1px solid #3a2810",
+                borderRadius:6, padding:"6px 12px", marginBottom:12, display:"flex",
+                alignItems:"center", gap:8, fontSize:"0.8rem" } },
+                React.createElement("span", { style:{ color:"#6b5038" } }, "🏛️ RETIRED"),
+                React.createElement("span", { style:{ color: retireReasonColor[selectedDog.retireReason] || "#6b5038" } },
+                  selectedDog.retireReason || "Retired"),
+                selectedDog.showPoints > 0 && React.createElement("span", { style:{ marginLeft:"auto",
+                  color:"#fbbf24", fontWeight:"bold" } },
+                  "🎀 " + selectedDog.showPoints + " career show points")
+              ),
+              // Show the card — read only (no onStud/onSell/onRetire)
+              React.createElement(Card, {
+                animal: selectedDog,
+                isSelected: false,
+                fullHeight: false
+              }),
+              // Show history
+              selectedDog.showHistory && selectedDog.showHistory.length > 0 &&
+                React.createElement("div", { style:{ marginTop:12, background:"#141008",
+                  border:"1px solid #2a1e10", borderRadius:6, padding:"10px 12px" } },
+                  React.createElement("div", { style:{ color:"#b09070", fontSize:"0.75rem",
+                    marginBottom:8, fontWeight:"bold" } }, "🎀 SHOW RECORD"),
+                  selectedDog.showHistory.map(function(h, i) {
+                    var cls = SHOW_CLASSES.find(function(c){ return c.key === h.classKey; });
+                    return React.createElement("div", { key:i,
+                      style:{ display:"flex", gap:8, fontSize:"0.78rem", color:"#8a7060",
+                        padding:"3px 0", borderBottom:"1px solid #1a1410" } },
+                      React.createElement("span", null,
+                        h.placement===1?"🥇":h.placement===2?"🥈":h.placement===3?"🥉":"📋",
+                        " "+h.placement+"/"+h.total),
+                      React.createElement("span", { style:{flex:1} }, cls ? cls.label : h.classKey,
+                        " · ", h.level),
+                      h.prize > 0 && React.createElement("span", { style:{color:"#4ade80"} }, "+$"+h.prize),
+                      React.createElement("span", { style:{color:"#fbbf24"} }, "+"+h.points+"pts"),
+                      React.createElement("span", { style:{color:"#4a3a28", fontSize:"0.7rem"} }, h.date)
+                    );
+                  })
+                )
+            )
+      )
+    )
+  );
+}
+
 // ═══════════════════════════════════════════════════════════════
 // SHOWS VIEW COMPONENT
 // ═══════════════════════════════════════════════════════════════
@@ -5241,7 +5393,7 @@ function App() {
               var logEntry = {id:Date.now()+Math.random(), type:"retire_age", name:a.name, breed:a.breed, ageMonths:newAge, date:new Date().toLocaleString()};
               setTimeout(function(){ setLog(function(p){ return [logEntry].concat(_toConsumableArray(p)); }); }, 0);
             })();
-            return Object.assign({}, a, studReset, {ageMonths: newAge, retired: true, retireReason: "End of natural life"});
+            return Object.assign({}, a, studReset, {ageMonths: newAge, retired: true, retireReason: "End of natural life", retiredAt: now});
           }
           // Size locking: when a dog first reaches mature age, lock their final size permanently
           var sizeLockUpdate = {};
@@ -5268,7 +5420,7 @@ function App() {
                 var entry = { id: now+Math.random(), type:"incident", name: (a.name||a.breed)+" suffered a bloat episode", breed: a.breed, date: new Date().toLocaleString() };
                 setTimeout(function(){ setLog(function(p){ return [entry].concat(_toConsumableArray(p)); }); }, 0);
               })();
-              return Object.assign({}, a, studReset, sizeLockUpdate, { ageMonths: newAge, retired: true, retireReason: "Bloat episode", lastUpdated: now });
+              return Object.assign({}, a, studReset, sizeLockUpdate, { ageMonths: newAge, retired: true, retireReason: "Bloat episode", retiredAt: now, lastUpdated: now });
             }
           }
 
@@ -5280,7 +5432,7 @@ function App() {
                 var entry = { id: now+Math.random(), type:"incident", name: (a.name||a.breed)+" lost to cancer", breed: a.breed, date: new Date().toLocaleString() };
                 setTimeout(function(){ setLog(function(p){ return [entry].concat(_toConsumableArray(p)); }); }, 0);
               })();
-              return Object.assign({}, a, studReset, sizeLockUpdate, { ageMonths: newAge, retired: true, retireReason: "Cancer", lastUpdated: now });
+              return Object.assign({}, a, studReset, sizeLockUpdate, { ageMonths: newAge, retired: true, retireReason: "Cancer", retiredAt: now, lastUpdated: now });
             }
           }
 
@@ -5724,7 +5876,7 @@ function App() {
   };
     var toggleStud = function toggleStud(id) {
     var animal = animals.find(function(a){ return a.id===id; });
-    if (!animal) return;
+    if (!animal || animal.retired) return;
     if (animal.isStud) {
       if (confirm('Remove "' + animal.name + '" from stud listings?')) {
         setAnimals(function(prev){ return prev.map(function(a){ return a.id===id ? Object.assign({},a,{isStud:false,studFee:null,lockedToPlayer:null}) : a; }); });
@@ -5750,6 +5902,9 @@ function App() {
   var handleSellListing = function handleSellListing(id) {
     var animal = animals.find(function(a){ return a.id===id; });
     if (!animal) return;
+    if (animal.retired) { alert("Retired dogs cannot be listed for sale."); return; }
+    var stage = getAgeStage(animal.ageMonths || 0);
+    if (stage && stage.label === "Puppy") { alert("Puppies cannot be sold at the livestock market. Use the Holding tab to sell pups."); return; }
     if (animal.forSale) {
       if (confirm('Remove "' + animal.name + '" from sale listings?')) {
         setAnimals(function(prev){ return prev.map(function(a){ return a.id===id ? Object.assign({},a,{forSale:false,salePrice:null,listedDate:null}) : a; }); });
@@ -5764,9 +5919,9 @@ function App() {
   };
   var retireAnimal = function retireAnimal(id) {
     var animal = animals.find(function(a){ return a.id===id; });
-    if (!animal) return;
+    if (!animal || animal.retired) return;
     if (confirm('Retire "' + animal.name + '"?\nThey will move to retirement and free up a kennel slot.')) {
-      setAnimals(function(prev){ return prev.map(function(a){ return a.id===id ? Object.assign({},a,{retired:true,retireReason:"Player retired"}) : a; }); });
+      setAnimals(function(prev){ return prev.map(function(a){ return a.id===id ? Object.assign({},a,{retired:true,retireReason:"Player retired",retiredAt:Date.now()}) : a; }); });
       setLog(function(lg){ return [{ id:Date.now(), type:"retire_player", name:animal.name, breed:animal.breed, date: new Date().toLocaleString() }].concat(lg); });
     }
   };
@@ -5790,6 +5945,7 @@ function App() {
     });
   };
   var filtered = animals.filter(function (a) {
+    if (a.retired) return false;
     return filterSex === "All" || a.sex === filterSex;
   });
   // clamp index if list shrinks
@@ -6005,7 +6161,11 @@ function App() {
     /*#__PURE__*/React.createElement("button", {
       style: tabS("shows"),
       onClick: function(){ setTab("shows"); }
-    }, "\uD83C\uDF80 Shows")
+    }, "\uD83C\uDF80 Shows"),
+    /*#__PURE__*/React.createElement("button", {
+      style: tabS("retired"),
+      onClick: function(){ setTab("retired"); }
+    }, "\uD83C\uDFDB\uFE0F Legacy (", animals.filter(function(a){ return a.retired; }).length, ")")
   ), tab === "kennel" && /*#__PURE__*/React.createElement("div", {
     style: { display: "flex", flexDirection: "column", flex: 1, overflow: "hidden" }
   },
@@ -6527,7 +6687,7 @@ function App() {
           if (a.retired) return a;
           var newAge = (a.ageMonths||0) + 1;
           var maxAge = a.lifespan || 144;
-          if (newAge >= maxAge) return Object.assign({}, a, { ageMonths: newAge, retired: true, retireReason: "End of natural life" });
+          if (newAge >= maxAge) return Object.assign({}, a, { ageMonths: newAge, retired: true, retireReason: "End of natural life", retiredAt: Date.now() });
           var sizeLockUpdate = {};
           if (!a.sizeLocked) {
             var mt = ({ XS:10, S:12, M:15, L:18, XL:24 }[a.size||"M"] || 15);
@@ -6930,6 +7090,12 @@ function App() {
     }
   }, "\uD83E\uDDEC 8 coat loci \xB7 8 health loci \xB7 5 perf QTLs \xB7 0.5% mutation rate \xB7 COI tracking"),
   /*#__PURE__*/React.createElement(Clock, { gameStartDate: gameStartDate }),
+  tab === "retired" && /*#__PURE__*/React.createElement("div", {
+    style: { position:"fixed", inset:0, background:"#141008", zIndex:50, overflow:"auto" }
+  }, /*#__PURE__*/React.createElement(RetiredView, {
+    animals: animals.filter(function(a){ return a.retired; }),
+    onClose: function(){ setTab("kennel"); }
+  })),
   tab === "shows" && /*#__PURE__*/React.createElement("div", {
     style: { position:"fixed", inset:0, background:"#1a140e", zIndex:50, overflow:"auto", padding:12 }
   }, /*#__PURE__*/React.createElement(ShowsView, {
