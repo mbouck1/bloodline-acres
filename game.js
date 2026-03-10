@@ -2279,17 +2279,6 @@ function DNAModal(_ref5) {
       fontSize: "0.85rem"
     }
   }, "\u2715 Close")), /*#__PURE__*/React.createElement("div", {
-    style: {
-      fontFamily: "monospace",
-      fontSize: "0.62rem",
-      background: "#443828",
-      borderRadius: 6,
-      padding: "8px 12px",
-      marginBottom: 16,
-      color: "#6b5038",
-      wordBreak: "break-all"
-    }
-  /*#__PURE__*/React.createElement("div", {
     style: { display:"flex", gap:6, alignItems:"center", marginBottom:16 }
   },
     React.createElement("div", {
@@ -3538,6 +3527,7 @@ function Card(_ref0) {
       })
     );
   })(),
+  (function() {
     var stage = getAgeStage(animal.ageMonths || 0);
     var lifespanYrs = animal.lifespan ? Math.round(animal.lifespan / 12 * 10) / 10 : "?";
     var ageYrs = animal.ageMonths ? Math.round(animal.ageMonths / 12 * 10) / 10 : 0;
@@ -3621,13 +3611,6 @@ function Card(_ref0) {
       }, variant.label)
     );
   })(),
-  /*#__PURE__*/React.createElement("div", {
-    onClick: function(e){ e.stopPropagation(); setShowDNA(true); },
-    style: { fontFamily: "monospace", fontSize: "0.78rem", color: "#d4942a", background: "#1a1410",
-      borderRadius: 4, padding: "5px 10px", marginBottom: 4, overflow: "hidden",
-      textOverflow: "ellipsis", whiteSpace: "nowrap", fontWeight: "bold", letterSpacing: "0.04em",
-      border: "1px solid #3a2810", cursor: "pointer" },
-    title: "Click to view Full DNA Panel"
   /*#__PURE__*/React.createElement("div", {
     style: { display:"flex", gap:4, marginBottom:4, alignItems:"stretch" }
   },
