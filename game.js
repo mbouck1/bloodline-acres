@@ -4736,16 +4736,39 @@ function App() {
         setLog(function(lg){ return [{ id: Date.now()+Math.random(), type: "income",
           name: line, date: new Date().toLocaleString() }].concat(_toConsumableArray(lg)); });
       });
-      // Honey production from Apiary
+      // Honey production from Apiary — no production in winter (Dec/Jan/Feb)
       if (facilitiesOwned.apiary) {
-        var hiveCount = FACILITIES.apiary.tiers[facilitiesOwned.apiary.tier].capacity;
-        var honeyPerDay = Math.round(hiveCount * 5 * 10) / 10;
-        if (honeyPerDay > 0) {
-          setCommodities(function(c){ return Object.assign({}, c, { honey: Math.round((c.honey + honeyPerDay) * 10) / 10 }); });
+        var _apiaryMonthIdx = (2 + Math.floor((now - gameStartDate) / (24*60*60*1000))) % 12;
+        var _isWinter = _apiaryMonthIdx === 0 || _apiaryMonthIdx === 1 || _apiaryMonthIdx === 11;
+        if (!_isWinter) {
+          var hiveCount = FACILITIES.apiary.tiers[facilitiesOwned.apiary.tier].capacity;
+          var honeyPerDay = Math.round(hiveCount * 5 * 10) / 10;
+          if (honeyPerDay > 0) {
+            setCommodities(function(c){ return Object.assign({}, c, { honey: Math.round((c.honey + honeyPerDay) * 10) / 10 }); });
+            setLog(function(lg){ return [{ id: Date.now()+Math.random(), type: "income",
+              name: "\uD83D\uDC1D Apiary (" + hiveCount + " hives) — honey: +" + honeyPerDay + " lbs",
+              date: new Date().toLocaleString() }].concat(_toConsumableArray(lg)); });
+          }
+        } else {
           setLog(function(lg){ return [{ id: Date.now()+Math.random(), type: "income",
-            name: "\uD83D\uDC1D Apiary (" + hiveCount + " hives) — honey: +" + honeyPerDay + " lbs",
+            name: "\u2744\uFE0F Apiary — bees dormant (winter, no honey production)",
             date: new Date().toLocaleString() }].concat(_toConsumableArray(lg)); });
         }
+      }
+      // Facility upkeep — deduct daily upkeep for all owned facilities
+      var _totalUpkeep = 0;
+      Object.keys(facilitiesOwned).forEach(function(fKey) {
+        var fOwned = facilitiesOwned[fKey];
+        var fDef = FACILITIES[fKey];
+        if (fOwned && fDef && fDef.tiers && fDef.tiers[fOwned.tier]) {
+          _totalUpkeep += fDef.tiers[fOwned.tier].upkeep || 0;
+        }
+      });
+      if (_totalUpkeep > 0) {
+        setMoney(function(m){ return Math.max(0, m - _totalUpkeep); });
+        setLog(function(lg){ return [{ id: Date.now()+Math.random(), type: "expense",
+          name: "\uD83C\uDFD7\uFE0F Facility upkeep — -$" + _totalUpkeep.toLocaleString(),
+          date: new Date().toLocaleString() }].concat(_toConsumableArray(lg)); });
       }
       setLastIncomeTick(now);
       localStorage.setItem("ba_lastIncomeTick", String(now));
