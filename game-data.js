@@ -1780,7 +1780,7 @@ function LivestockMarket(_ref) {
   var _e=_slicedToArray(useState(function(){return generateLivestockStock();}),2),stock=_e[0],setStock=_e[1];
   var _f=_slicedToArray(useState(Date.now()),2),lastRef=_f[0],setLastRef=_f[1];
   var _g=_slicedToArray(useState({bought:0,bAmt:0,sold:0,sAmt:0}),2),sess=_g[0],setSess=_g[1];
-  var _h=_slicedToArray(useState("dog"),2),sellSp=_h[0],setSellSp=_h[1];
+  var _h=_slicedToArray(useState("horse"),2),sellSp=_h[0],setSellSp=_h[1];
 
   useState(function(){
     var t=setInterval(function(){
@@ -1917,10 +1917,6 @@ function LivestockMarket(_ref) {
         ):(
           (function(){
             var SELLABLE=[
-              {key:"dog",    label:"Dogs",     icon:"\uD83D\uDC15",
-                getItems:function(){return ownedAnimals.filter(function(a){return !a.retired&&!a.isCat;});},
-                buyPrice:function(a){return (Math.floor(((a.perfScore||50)/100)*300)+100)*2;},
-                sellPrice:function(a){return Math.floor(((a.perfScore||50)/100)*300)+100;}},
               {key:"horse",  label:"Horses",   icon:"\uD83D\uDC0E",
                 getItems:function(){return ownedLivestock.filter(function(a){return a.species==="horse";});},
                 buyPrice:function(a){return a.price||1000;},
