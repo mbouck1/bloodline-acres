@@ -1144,6 +1144,8 @@ function HorsesView(props) {
   var _s0 = React.useState(null), selectedHorse = _s0[0], setSelectedHorse = _s0[1];
   var _s1 = React.useState("all"), filterGroup = _s1[0], setFilterGroup = _s1[1];
   var _s2 = React.useState(false), showBreeding = _s2[0], setShowBreeding = _s2[1];
+  var _s3 = React.useState("grid"), viewMode = _s3[0], setViewMode = _s3[1];
+  var _s4 = React.useState("name"), listSort = _s4[0], setListSort = _s4[1];
 
   var hasStallion = horses.some(function(h){ return h.sex==="M" && !h.pregnantUntil; });
   var hasMare = horses.some(function(h){ return h.sex==="F" && !h.pregnantUntil; });
@@ -1151,6 +1153,90 @@ function HorsesView(props) {
 
   var groups = ["all"].concat(Array.from(new Set(horses.map(function(h){return h.group;}))).sort());
   var filtered = filterGroup==="all" ? horses : horses.filter(function(h){return h.group===filterGroup;});
+
+  // Sort for list view
+  var listSorted = filtered.slice().sort(function(a,b){
+    if (listSort==="name")   return (a.name||"").localeCompare(b.name||"");
+    if (listSort==="breed")  return (a.breed||"").localeCompare(b.breed||"");
+    if (listSort==="health") return (b.healthScore||0)-(a.healthScore||0);
+    if (listSort==="perf")   return (b.perfScore||0)-(a.perfScore||0);
+    if (listSort==="sex")    return (a.sex||"").localeCompare(b.sex||"");
+    return 0;
+  });
+
+  function SortHeader(label, key) {
+    var active = listSort===key;
+    return React.createElement("th", {
+      onClick: function(){ setListSort(key); },
+      style:{ padding:"5px 10px", textAlign:"left", fontSize:"0.68rem", fontWeight:"bold",
+        color: active?"#84cc16":"#4a6a18", cursor:"pointer", whiteSpace:"nowrap",
+        borderBottom:"1px solid #1a2a0a", background:"#0a1208",
+        userSelect:"none" }
+    }, label + (active?" ▾":""));
+  }
+
+  function ListRow(h) {
+    var warn = 0;
+    if (h.genome && h.genome.health) {
+      Object.values(h.genome.health).forEach(function(al){ if(al&&al[0]==="g"&&al[1]==="g") warn++; });
+    }
+    var perf = h.genome && h.genome.perf;
+    var icons = {SPEED:"💨",STAMINA:"🫁",MUSCLE:"💪",TEMP:"🧠",AGILITY:"🌀"};
+    var isPreg = !!h.pregnantUntil;
+    var daysLeft = isPreg ? Math.max(0, Math.ceil((h.pregnantUntil - Date.now()) / 86400000)) : 0;
+
+    return React.createElement("tr", {
+      key: h.id,
+      onClick: function(e){ e.stopPropagation(); setSelectedHorse(selectedHorse&&selectedHorse.id===h.id?null:h); },
+      style:{ background: selectedHorse&&selectedHorse.id===h.id?"#1a2a08":"transparent",
+        cursor:"pointer", borderBottom:"1px solid #111a08" }
+    },
+      // Sex
+      React.createElement("td", { style:{padding:"6px 8px", fontSize:"0.75rem", color: h.sex==="M"?"#60a5fa":"#f472b6"} },
+        h.sex==="M"?"♂":"♀"),
+      // Name
+      React.createElement("td", { style:{padding:"6px 8px", fontSize:"0.78rem", color:"#f0e6d3", fontWeight:"bold", whiteSpace:"nowrap"} },
+        h.name,
+        isPreg && React.createElement("span",{style:{marginLeft:5,fontSize:"0.62rem",color:"#f472b6"}},"🤰"+daysLeft+"d"),
+        warn>0 && React.createElement("span",{style:{marginLeft:4,fontSize:"0.6rem",background:"#481808",border:"1px solid #ef4444",color:"#fca5a5",borderRadius:3,padding:"0 3px"}},"⚠️"+warn)
+      ),
+      // Breed
+      React.createElement("td", { style:{padding:"6px 8px", fontSize:"0.68rem", color:"#8a7055", whiteSpace:"nowrap"} }, h.breed||"—"),
+      // Color
+      React.createElement("td", { style:{padding:"6px 8px", fontSize:"0.68rem", color:"#a07040", whiteSpace:"nowrap"} }, h.coatColor||"—"),
+      // Health
+      React.createElement("td", { style:{padding:"6px 8px", fontSize:"0.72rem", color:"#22c55e", fontWeight:"bold", textAlign:"right"} }, h.healthScore||"—"),
+      // Perf
+      React.createElement("td", { style:{padding:"6px 8px", fontSize:"0.72rem", color:"#d4942a", fontWeight:"bold", textAlign:"right"} }, h.perfScore||"—"),
+      // QTL mini bars
+      React.createElement("td", { style:{padding:"4px 8px"} },
+        perf
+          ? React.createElement("div",{style:{display:"flex",gap:3,alignItems:"center"}},
+              (HORSE_PERF_QTLS||["SPEED","STAMINA","MUSCLE","TEMP","AGILITY"]).map(function(q){
+                var v=perf[q]||[3,3]; var avg=(v[0]+v[1])/2;
+                var col=avg>=4?"#d4942a":avg>=3?"#22c55e":"#4a5568";
+                return React.createElement("div",{key:q,style:{display:"flex",flexDirection:"column",alignItems:"center",width:18}},
+                  React.createElement("div",{style:{fontSize:"0.5rem",color:col}},icons[q]),
+                  React.createElement("div",{style:{background:"#1a2a0a",borderRadius:2,height:4,width:16,overflow:"hidden"}},
+                    React.createElement("div",{style:{background:col,width:Math.round((avg/5)*100)+"%",height:"100%"}})
+                  )
+                );
+              })
+            )
+          : React.createElement("span",{style:{color:"#2a3a18",fontSize:"0.65rem"}},"—")
+      ),
+      // Actions
+      React.createElement("td", { style:{padding:"4px 8px", whiteSpace:"nowrap"},
+        onClick:function(e){e.stopPropagation();}
+      },
+        React.createElement("button",{
+          onClick:function(e){ e.stopPropagation(); if(onSell) onSell(h); },
+          style:{background:"#2a0a0a",border:"1px solid #5a2a2a",color:"#ef4444",
+            borderRadius:4,padding:"2px 8px",cursor:"pointer",fontSize:"0.62rem"}
+        },"💰 Sell")
+      )
+    );
+  }
 
   return React.createElement("div",{
     onClick:function(e){e.stopPropagation();},
@@ -1167,7 +1253,22 @@ function HorsesView(props) {
           )
         )
       ),
-      React.createElement("div",{style:{display:"flex",gap:8}},
+      React.createElement("div",{style:{display:"flex",gap:8,alignItems:"center"}},
+        // View toggle
+        React.createElement("div",{style:{display:"flex",border:"1px solid #2a3a18",borderRadius:6,overflow:"hidden"}},
+          React.createElement("button",{
+            onClick:function(e){e.stopPropagation();setViewMode("grid");},
+            title:"Card view",
+            style:{background:viewMode==="grid"?"#1a3a0a":"transparent",border:"none",
+              color:viewMode==="grid"?"#84cc16":"#4a6a18",padding:"4px 10px",cursor:"pointer",fontSize:"0.85rem"}
+          },"⊞"),
+          React.createElement("button",{
+            onClick:function(e){e.stopPropagation();setViewMode("list");},
+            title:"List view",
+            style:{background:viewMode==="list"?"#1a3a0a":"transparent",border:"none",
+              color:viewMode==="list"?"#84cc16":"#4a6a18",padding:"4px 10px",cursor:"pointer",fontSize:"0.85rem"}
+          },"☰")
+        ),
         horses.length>0 && React.createElement("button",{
           onClick:onShowsOpen,
           style:{background:"#0a2a15",border:"1px solid #22c55e",color:"#22c55e",borderRadius:6,padding:"5px 14px",cursor:"pointer",fontSize:"0.8rem",fontWeight:"bold"}
@@ -1195,10 +1296,8 @@ function HorsesView(props) {
       })
     ),
 
-    // Content
-    React.createElement("div",{style:{flex:1,overflow:"hidden",display:"flex",gap:0}},
-
-      // Horse list
+    // ── GRID VIEW ──
+    viewMode==="grid" && React.createElement("div",{style:{flex:1,overflow:"hidden",display:"flex",gap:0}},
       React.createElement("div",{style:{flex:1,overflowY:"auto",padding:"14px 18px",display:"grid",gridTemplateColumns:"repeat(auto-fill,minmax(260px,1fr))",gap:12,alignContent:"start"}},
         filtered.length===0
           ? React.createElement("div",{style:{gridColumn:"1/-1",textAlign:"center",color:"#2e4218",padding:"60px 0"}},
@@ -1215,8 +1314,6 @@ function HorsesView(props) {
               });
             })
       ),
-
-      // Selected detail panel (if selected)
       selectedHorse && React.createElement("div",{
         style:{width:300,borderLeft:"1px solid #1a2a0a",background:"#0a1008",overflowY:"auto",padding:14,flexShrink:0}
       },
@@ -1228,6 +1325,45 @@ function HorsesView(props) {
         React.createElement(HorseCard,{horse:selectedHorse,onRename:onRename,onSell:onSell})
       )
     ),
+
+    // ── LIST VIEW ──
+    viewMode==="list" && React.createElement("div",{style:{flex:1,overflowY:"auto"}},
+      filtered.length===0
+        ? React.createElement("div",{style:{textAlign:"center",color:"#2e4218",padding:"60px 0"}},
+            React.createElement("div",{style:{fontSize:"2rem",marginBottom:8}},"🐴"),
+            React.createElement("div",{style:{fontSize:"0.85rem",color:"#4a6a18"}},"No horses yet — visit the 🛒 Livestock Market to buy some!")
+          )
+        : React.createElement("table",{style:{width:"100%",borderCollapse:"collapse"}},
+            React.createElement("thead",{},
+              React.createElement("tr",{},
+                SortHeader("","sex"),
+                SortHeader("Name","name"),
+                SortHeader("Breed","breed"),
+                SortHeader("Color","color"),
+                SortHeader("❤️","health"),
+                SortHeader("⚡","perf"),
+                React.createElement("th",{style:{padding:"5px 10px",fontSize:"0.68rem",color:"#4a6a18",borderBottom:"1px solid #1a2a0a",background:"#0a1208"}},"QTLs"),
+                React.createElement("th",{style:{padding:"5px 10px",fontSize:"0.68rem",color:"#4a6a18",borderBottom:"1px solid #1a2a0a",background:"#0a1208"}},""  )
+              )
+            ),
+            React.createElement("tbody",{},
+              listSorted.map(function(h){ return ListRow(h); })
+            )
+          ),
+
+      // Inline detail panel when row selected in list view
+      selectedHorse && React.createElement("div",{
+        style:{borderTop:"2px solid #2a3a18",background:"#0a1008",padding:14}
+      },
+        React.createElement("div",{style:{display:"flex",justifyContent:"space-between",marginBottom:10}},
+          React.createElement("div",{style:{color:"#84cc16",fontWeight:"bold",fontSize:"0.85rem"}},selectedHorse.name+" — Detail"),
+          React.createElement("button",{onClick:function(){setSelectedHorse(null);},
+            style:{background:"transparent",border:"none",color:"#4a6a18",cursor:"pointer",fontSize:"1.1rem"}},"×")
+        ),
+        React.createElement(HorseCard,{horse:selectedHorse,onRename:onRename,onSell:onSell})
+      )
+    ),
+
     showBreeding && React.createElement(HorseBreedingModal,{
       horses: horses,
       onClose: function(){ setShowBreeding(false); },
