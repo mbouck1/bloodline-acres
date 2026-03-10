@@ -843,7 +843,7 @@ var HORSE_PERF_QTL_INFO = {
 };
 
 function HorseDNAModal(props) {
-  var horse = props.horse, onClose = props.onClose;
+  var horse = props.horse, onClose = props.onClose, inline = props.inline || false;
   if (!horse || !horse.genome) return null;
   var g = horse.genome;
   var vin = buildHorseVIN(g);
@@ -898,15 +898,12 @@ function HorseDNAModal(props) {
     );
   }
 
-  return React.createElement("div",{
-    onClick:onClose,
-    style:{position:"fixed",inset:0,background:"rgba(0,0,0,0.92)",zIndex:1200,
-      display:"flex",alignItems:"center",justifyContent:"center",padding:16}
-  },
-    React.createElement("div",{
+  var innerContent = React.createElement("div",{
       onClick:function(e){e.stopPropagation();},
-      style:{background:"#0e1208",border:"1px solid #2a3a18",borderRadius:12,
-        width:"100%",maxWidth:740,maxHeight:"90vh",overflowY:"auto",padding:22}
+      style:inline
+        ? {background:"#0a1008",height:"100%",overflowY:"auto",padding:14}
+        : {background:"#0e1208",border:"1px solid #2a3a18",borderRadius:12,
+           width:"100%",maxWidth:740,maxHeight:"90vh",overflowY:"auto",padding:22}
     },
       // ── Header ──
       React.createElement("div",{style:{display:"flex",justifyContent:"space-between",alignItems:"flex-start",marginBottom:14}},
@@ -981,6 +978,13 @@ function HorseDNAModal(props) {
       )
     )
   );
+
+  if (inline) return innerContent;
+  return React.createElement("div",{
+    onClick:onClose,
+    style:{position:"fixed",inset:0,background:"rgba(0,0,0,0.92)",zIndex:1200,
+      display:"flex",alignItems:"center",justifyContent:"center",padding:16}
+  }, innerContent);
 }
 
 // ── HORSE VIEW COMPONENT ──────────────────────────────────────
@@ -1302,119 +1306,239 @@ function calcFoalValue(healthScore, perfScore) {
 function HorseBreedingModal(props) {
   var horses = props.horses || [];
   var onClose = props.onClose;
-  var onConfirm = props.onConfirm; // fn(sireId, damId)
+  var onConfirm = props.onConfirm;
 
-  var stallions = horses.filter(function(h){ return h.sex==="M" && !h.pregnantUntil; });
-  var mares = horses.filter(function(h){ return h.sex==="F" && !h.pregnantUntil; });
+  var allStallions = horses.filter(function(h){ return h.sex==="M" && !h.pregnantUntil; });
+  var allMares     = horses.filter(function(h){ return h.sex==="F" && !h.pregnantUntil; });
 
   var _ss = React.useState(null), selectedSire = _ss[0], setSelectedSire = _ss[1];
-  var _sd = React.useState(null), selectedDam = _sd[0], setSelectedDam = _sd[1];
+  var _sd = React.useState(null), selectedDam  = _sd[0], setSelectedDam  = _sd[1];
+  var _sf = React.useState(""),   sireFilter   = _sf[0], setSireFilter   = _sf[1];
+  var _df = React.useState(""),   damFilter    = _df[0], setDamFilter    = _df[1];
+  var _dna = React.useState(null), dnaHorse    = _dna[0], setDnaHorse   = _dna[1];
+  var _sortS = React.useState("perf"), sortS   = _sortS[0], setSortS    = _sortS[1];
+  var _sortD = React.useState("perf"), sortD   = _sortD[0], setSortD    = _sortD[1];
 
   var sire = selectedSire ? horses.find(function(h){ return h.id===selectedSire; }) : null;
   var dam  = selectedDam  ? horses.find(function(h){ return h.id===selectedDam;  }) : null;
 
-  function HorseOption(h, selected, onClick) {
-    var norm = h;
+  function filterAndSort(list, filter, sort) {
+    var f = filter.toLowerCase();
+    var filtered = f ? list.filter(function(h){
+      return (h.name||"").toLowerCase().includes(f) ||
+             (h.breed||"").toLowerCase().includes(f) ||
+             (h.coatColor||"").toLowerCase().includes(f) ||
+             (h.group||"").toLowerCase().includes(f);
+    }) : list;
+    return filtered.slice().sort(function(a,b){
+      if (sort==="perf")   return (b.perfScore||0)-(a.perfScore||0);
+      if (sort==="health") return (b.healthScore||0)-(a.healthScore||0);
+      if (sort==="name")   return (a.name||"").localeCompare(b.name||"");
+      return 0;
+    });
+  }
+
+  function countHealthWarnings(h) {
+    if (!h || !h.genome || !h.genome.health) return 0;
+    var n = 0;
+    Object.values(h.genome.health).forEach(function(al){
+      if (al && al[0]==="g" && al[1]==="g") n++;
+    });
+    return n;
+  }
+
+  function HorseOption(h, selected, onSelect, accentColor) {
+    var warn = countHealthWarnings(h);
+    var perf = h.genome && h.genome.perf;
+    var icons = {SPEED:"💨",STAMINA:"🫁",MUSCLE:"💪",TEMP:"🧠",AGILITY:"🌀"};
     return React.createElement("div", {
       key: h.id,
-      onClick: function(e){ e.stopPropagation(); onClick(); },
       style: {
         background: selected ? "#1a3a0a" : "#141008",
-        border: "1px solid " + (selected ? "#84cc16" : "#2a3a18"),
-        borderRadius: 8, padding: "10px 12px", cursor: "pointer",
-        marginBottom: 6, transition: "border-color 0.15s"
+        border: "1px solid " + (selected ? accentColor : (warn>0?"#4a2a08":"#2a3a18")),
+        borderRadius: 8, marginBottom: 6, overflow:"hidden"
       }
     },
-      React.createElement("div", { style: { display:"flex", justifyContent:"space-between", alignItems:"center" } },
-        React.createElement("div", {},
-          React.createElement("div", { style: { color:"#f0e6d3", fontWeight:"bold", fontSize:"0.88rem" } }, norm.name),
-          React.createElement("div", { style: { color:"#8a7055", fontSize:"0.7rem" } }, norm.breed + " · " + norm.coatColor)
+      // Main row — clickable
+      React.createElement("div", {
+        onClick: function(e){ e.stopPropagation(); onSelect(h.id); },
+        style: { padding:"9px 10px", cursor:"pointer" }
+      },
+        // Top line: name + scores
+        React.createElement("div", { style: { display:"flex", justifyContent:"space-between", alignItems:"flex-start", marginBottom:4 } },
+          React.createElement("div", { style:{ flex:1 } },
+            React.createElement("div", { style: { color:"#f0e6d3", fontWeight:"bold", fontSize:"0.85rem", display:"flex", alignItems:"center", gap:5 } },
+              h.name,
+              warn>0 && React.createElement("span", { style:{ background:"#481808", border:"1px solid #ef4444", color:"#fca5a5",
+                borderRadius:3, padding:"0px 4px", fontSize:"0.6rem", fontWeight:"bold" } }, "⚠️"+warn)
+            ),
+            React.createElement("div", { style: { color:"#6a5a38", fontSize:"0.67rem", marginTop:1 } },
+              h.breed + " · " + (h.coatColor||"") + (h.group?" · "+h.group:"")
+            )
+          ),
+          React.createElement("div", { style: { textAlign:"right", flexShrink:0, marginLeft:8 } },
+            React.createElement("div", { style: { fontSize:"0.68rem", color:"#22c55e", fontWeight:"bold" } }, "❤️ "+h.healthScore),
+            React.createElement("div", { style: { fontSize:"0.68rem", color:"#d4942a", fontWeight:"bold" } }, "⚡ "+h.perfScore)
+          )
         ),
-        React.createElement("div", { style: { textAlign:"right" } },
-          React.createElement("div", { style: { fontSize:"0.7rem", color:"#22c55e" } }, "❤️ " + norm.healthScore),
-          React.createElement("div", { style: { fontSize:"0.7rem", color:"#d4942a" } }, "⚡ " + norm.perfScore)
+        // QTL mini bars
+        perf && React.createElement("div", { style:{ display:"flex", gap:3, alignItems:"center" } },
+          HORSE_PERF_QTLS.map(function(q){
+            var v = perf[q]||[3,3];
+            var avg = (v[0]+v[1])/2;
+            var pct = Math.round((avg/5)*100);
+            var col = avg>=4?"#d4942a":avg>=3?"#22c55e":"#4a5568";
+            return React.createElement("div", { key:q, style:{ flex:1 } },
+              React.createElement("div", { style:{ fontSize:"0.52rem", color:col, textAlign:"center", marginBottom:1 } }, icons[q]),
+              React.createElement("div", { style:{ background:"#2a3a18", borderRadius:2, height:3, overflow:"hidden" } },
+                React.createElement("div", { style:{ background:col, width:pct+"%", height:"100%" } })
+              ),
+              React.createElement("div", { style:{ fontSize:"0.5rem", color:col, textAlign:"center", marginTop:1 } }, avg.toFixed(1))
+            );
+          })
         )
-      )
+      ),
+      // DNA peek button
+      React.createElement("div", {
+        onClick: function(e){ e.stopPropagation(); setDnaHorse(dnaHorse&&dnaHorse.id===h.id ? null : h); },
+        style: { borderTop:"1px solid #1a2a10", padding:"4px 10px", cursor:"pointer",
+          background: dnaHorse&&dnaHorse.id===h.id ? "#0a2008" : "transparent",
+          color: dnaHorse&&dnaHorse.id===h.id ? "#84cc16" : "#3a5a28",
+          fontSize:"0.62rem", textAlign:"center" }
+      }, dnaHorse&&dnaHorse.id===h.id ? "▲ Hide DNA" : "🧬 View DNA")
+    );
+  }
+
+  var filteredStallions = filterAndSort(allStallions, sireFilter, sortS);
+  var filteredMares     = filterAndSort(allMares,     damFilter,  sortD);
+
+  function SortBar(sort, setSort, color) {
+    var opts = [["perf","⚡ Perf"],["health","❤️ Health"],["name","A-Z"]];
+    return React.createElement("div", { style:{ display:"flex", gap:4, marginBottom:6 } },
+      opts.map(function(o){
+        return React.createElement("button", {
+          key:o[0],
+          onClick:function(e){ e.stopPropagation(); setSort(o[0]); },
+          style:{ flex:1, background:sort===o[0]?"#1a2a10":"transparent",
+            border:"1px solid "+(sort===o[0]?color:"#2a3a18"),
+            color:sort===o[0]?color:"#4a5a38", borderRadius:4,
+            padding:"2px 0", fontSize:"0.62rem", cursor:"pointer" }
+        }, o[1]);
+      })
     );
   }
 
   return React.createElement("div", {
     onClick: onClose,
     style: { position:"fixed", inset:0, background:"rgba(0,0,0,0.92)", zIndex:1300,
-      display:"flex", alignItems:"center", justifyContent:"center", padding:16 }
+      display:"flex", alignItems:"center", justifyContent:"center", padding:12 }
   },
     React.createElement("div", {
       onClick: function(e){ e.stopPropagation(); },
       style: { background:"#0e1208", border:"1px solid #2a3a18", borderRadius:12,
-        width:"100%", maxWidth:680, maxHeight:"88vh", overflowY:"auto", padding:22 }
+        width:"100%", maxWidth:860, maxHeight:"92vh", display:"flex", flexDirection:"column" }
     },
-      // Header
-      React.createElement("div", { style: { display:"flex", justifyContent:"space-between", alignItems:"center", marginBottom:18 } },
-        React.createElement("div", {},
-          React.createElement("div", { style: { color:"#d4942a", fontWeight:"bold", fontSize:"1.05rem" } }, "🤝 Breed Horses"),
-          React.createElement("div", { style: { color:"#6a5a38", fontSize:"0.72rem", marginTop:2 } }, "Gestation: 11 days · Foal arrives unnamed")
-        ),
-        React.createElement("button", { onClick:onClose,
-          style: { background:"none", border:"1px solid #2a3a18", color:"#4a6a28",
-            borderRadius:5, padding:"4px 12px", cursor:"pointer", fontSize:"0.85rem" } }, "✕ Close")
-      ),
-
-      // Two-column picker
-      React.createElement("div", { style: { display:"grid", gridTemplateColumns:"1fr 1fr", gap:16, marginBottom:18 } },
-
-        // Stallion column
-        React.createElement("div", {},
-          React.createElement("div", { style: { color:"#60a5fa", fontWeight:"bold", fontSize:"0.78rem",
-            textTransform:"uppercase", letterSpacing:"0.05em", marginBottom:8 } }, "♂ Select Stallion"),
-          stallions.length === 0
-            ? React.createElement("div", { style: { color:"#4a3a28", fontSize:"0.78rem", padding:"16px 0" } }, "No available stallions")
-            : stallions.map(function(h){ return HorseOption(h, selectedSire===h.id, function(){ setSelectedSire(h.id); }); })
-        ),
-
-        // Mare column
-        React.createElement("div", {},
-          React.createElement("div", { style: { color:"#f472b6", fontWeight:"bold", fontSize:"0.78rem",
-            textTransform:"uppercase", letterSpacing:"0.05em", marginBottom:8 } }, "♀ Select Mare"),
-          mares.length === 0
-            ? React.createElement("div", { style: { color:"#4a3a28", fontSize:"0.78rem", padding:"16px 0" } }, "No available mares")
-            : mares.map(function(h){ return HorseOption(h, selectedDam===h.id, function(){ setSelectedDam(h.id); }); })
+      // ── Header ──
+      React.createElement("div", { style:{ padding:"16px 20px 12px", borderBottom:"1px solid #1a2a10", flexShrink:0 } },
+        React.createElement("div", { style:{ display:"flex", justifyContent:"space-between", alignItems:"center" } },
+          React.createElement("div", {},
+            React.createElement("div", { style:{ color:"#d4942a", fontWeight:"bold", fontSize:"1.05rem" } }, "🤝 Breed Horses"),
+            React.createElement("div", { style:{ color:"#6a5a38", fontSize:"0.72rem", marginTop:2 } }, "Gestation: 11 days · Foal arrives unnamed · 3% chance of twins")
+          ),
+          React.createElement("button", { onClick:onClose,
+            style:{ background:"none", border:"1px solid #2a3a18", color:"#4a6a28",
+              borderRadius:5, padding:"4px 12px", cursor:"pointer", fontSize:"0.85rem" } }, "✕ Close")
         )
       ),
 
-      // Pairing preview
-      sire && dam && React.createElement("div", { style: { background:"#141008", border:"1px solid #2a4a18",
-        borderRadius:8, padding:"12px 16px", marginBottom:16 } },
-        React.createElement("div", { style: { color:"#84cc16", fontWeight:"bold", fontSize:"0.78rem", marginBottom:8 } }, "🧬 Pairing Preview"),
-        React.createElement("div", { style: { display:"flex", alignItems:"center", gap:12, flexWrap:"wrap" } },
-          React.createElement("div", { style: { flex:1, minWidth:160 } },
-            React.createElement("div", { style: { color:"#60a5fa", fontSize:"0.7rem", fontWeight:"bold" } }, "♂ " + sire.name),
-            React.createElement("div", { style: { color:"#8a7055", fontSize:"0.68rem" } }, sire.breed + " · " + sire.coatColor),
-            React.createElement("div", { style: { color:"#22c55e", fontSize:"0.68rem" } }, "❤️ " + sire.healthScore + "  ⚡ " + sire.perfScore)
+      // ── Main body: two columns + DNA panel ──
+      React.createElement("div", { style:{ display:"flex", flex:1, overflow:"hidden", gap:0 } },
+
+        // ── Stallion column ──
+        React.createElement("div", { style:{ flex:1, display:"flex", flexDirection:"column", borderRight:"1px solid #1a2a10", overflow:"hidden" } },
+          React.createElement("div", { style:{ padding:"10px 12px 6px", borderBottom:"1px solid #1a2a10", flexShrink:0 } },
+            React.createElement("div", { style:{ color:"#60a5fa", fontWeight:"bold", fontSize:"0.75rem", marginBottom:6 } },
+              "♂ STALLIONS ("+allStallions.length+")"),
+            React.createElement("input", {
+              value: sireFilter,
+              onChange: function(e){ e.stopPropagation(); setSireFilter(e.target.value); },
+              onClick: function(e){ e.stopPropagation(); },
+              placeholder: "Search name / breed / color...",
+              style:{ width:"100%", background:"#141008", border:"1px solid #2a3a18", color:"#f0e6d3",
+                borderRadius:5, padding:"4px 8px", fontSize:"0.7rem", marginBottom:6, boxSizing:"border-box" }
+            }),
+            SortBar(sortS, setSortS, "#60a5fa")
           ),
-          React.createElement("div", { style: { color:"#d4942a", fontSize:"1.2rem" } }, "×"),
-          React.createElement("div", { style: { flex:1, minWidth:160 } },
-            React.createElement("div", { style: { color:"#f472b6", fontSize:"0.7rem", fontWeight:"bold" } }, "♀ " + dam.name),
-            React.createElement("div", { style: { color:"#8a7055", fontSize:"0.68rem" } }, dam.breed + " · " + dam.coatColor),
-            React.createElement("div", { style: { color:"#22c55e", fontSize:"0.68rem" } }, "❤️ " + dam.healthScore + "  ⚡ " + dam.perfScore)
+          React.createElement("div", { style:{ flex:1, overflowY:"auto", padding:"8px 12px" } },
+            filteredStallions.length===0
+              ? React.createElement("div", { style:{ color:"#4a3a28", fontSize:"0.78rem", padding:"16px 0", textAlign:"center" } },
+                  allStallions.length===0 ? "No available stallions" : "No matches")
+              : filteredStallions.map(function(h){ return HorseOption(h, selectedSire===h.id, setSelectedSire, "#60a5fa"); })
           )
         ),
-        sire.breed !== dam.breed && React.createElement("div", { style: { color:"#fde68a", fontSize:"0.68rem", marginTop:8 } },
-          "⚠️ Different breeds — foal will be registered as Crossbred"
+
+        // ── Mare column ──
+        React.createElement("div", { style:{ flex:1, display:"flex", flexDirection:"column", borderRight: dnaHorse?"1px solid #1a2a10":"none", overflow:"hidden" } },
+          React.createElement("div", { style:{ padding:"10px 12px 6px", borderBottom:"1px solid #1a2a10", flexShrink:0 } },
+            React.createElement("div", { style:{ color:"#f472b6", fontWeight:"bold", fontSize:"0.75rem", marginBottom:6 } },
+              "♀ MARES ("+allMares.length+")"),
+            React.createElement("input", {
+              value: damFilter,
+              onChange: function(e){ e.stopPropagation(); setDamFilter(e.target.value); },
+              onClick: function(e){ e.stopPropagation(); },
+              placeholder: "Search name / breed / color...",
+              style:{ width:"100%", background:"#141008", border:"1px solid #2a3a18", color:"#f0e6d3",
+                borderRadius:5, padding:"4px 8px", fontSize:"0.7rem", marginBottom:6, boxSizing:"border-box" }
+            }),
+            SortBar(sortD, setSortD, "#f472b6")
+          ),
+          React.createElement("div", { style:{ flex:1, overflowY:"auto", padding:"8px 12px" } },
+            filteredMares.length===0
+              ? React.createElement("div", { style:{ color:"#4a3a28", fontSize:"0.78rem", padding:"16px 0", textAlign:"center" } },
+                  allMares.length===0 ? "No available mares" : "No matches")
+              : filteredMares.map(function(h){ return HorseOption(h, selectedDam===h.id, setSelectedDam, "#f472b6"); })
+          )
+        ),
+
+        // ── DNA peek panel (slides in) ──
+        dnaHorse && React.createElement("div", { style:{ width:280, flexShrink:0, overflowY:"auto", borderLeft:"none" } },
+          React.createElement(HorseDNAModal, { horse:dnaHorse, inline:true, onClose:function(){ setDnaHorse(null); } })
         )
       ),
 
-      // Confirm button
-      React.createElement("button", {
-        disabled: !sire || !dam,
-        onClick: function(e){ e.stopPropagation(); if(sire && dam) onConfirm(sire.id, dam.id); },
-        style: {
-          width:"100%", padding:"12px 0", borderRadius:8, cursor: sire&&dam ? "pointer" : "not-allowed",
-          background: sire&&dam ? "#1a3a0a" : "#0a1208",
-          border: "1px solid " + (sire&&dam ? "#84cc16" : "#2a3a18"),
-          color: sire&&dam ? "#84cc16" : "#2a4a18",
-          fontWeight:"bold", fontSize:"0.9rem"
-        }
-      }, sire && dam ? "🤝 Confirm Breeding — Foal due in 11 days" : "Select a stallion and mare to continue")
+      // ── Pairing preview + confirm ──
+      React.createElement("div", { style:{ padding:"12px 20px", borderTop:"1px solid #1a2a10", flexShrink:0 } },
+        sire && dam
+          ? React.createElement("div", { style:{ display:"flex", alignItems:"center", gap:12, marginBottom:10, flexWrap:"wrap" } },
+              React.createElement("div", { style:{ flex:1, minWidth:140, background:"#0a1a08", border:"1px solid #1a3a10", borderRadius:6, padding:"6px 10px" } },
+                React.createElement("div", { style:{ color:"#60a5fa", fontSize:"0.68rem", fontWeight:"bold" } }, "♂ "+sire.name),
+                React.createElement("div", { style:{ color:"#6a5a38", fontSize:"0.63rem" } }, sire.breed+" · "+sire.coatColor),
+                React.createElement("div", { style:{ color:"#84cc16", fontSize:"0.63rem" } }, "❤️ "+sire.healthScore+"  ⚡ "+sire.perfScore)
+              ),
+              React.createElement("div", { style:{ color:"#d4942a", fontSize:"1.1rem", fontWeight:"bold" } }, "×"),
+              React.createElement("div", { style:{ flex:1, minWidth:140, background:"#0a1a08", border:"1px solid #1a3a10", borderRadius:6, padding:"6px 10px" } },
+                React.createElement("div", { style:{ color:"#f472b6", fontSize:"0.68rem", fontWeight:"bold" } }, "♀ "+dam.name),
+                React.createElement("div", { style:{ color:"#6a5a38", fontSize:"0.63rem" } }, dam.breed+" · "+dam.coatColor),
+                React.createElement("div", { style:{ color:"#84cc16", fontSize:"0.63rem" } }, "❤️ "+dam.healthScore+"  ⚡ "+dam.perfScore)
+              ),
+              sire.breed!==dam.breed && React.createElement("div", { style:{ color:"#fde68a", fontSize:"0.65rem", background:"#2d1e00", border:"1px solid #ca8a04", borderRadius:4, padding:"3px 8px" } },
+                "⚠️ Crossbred foal")
+            )
+          : React.createElement("div", { style:{ color:"#4a5a38", fontSize:"0.75rem", textAlign:"center", marginBottom:10 } },
+              "Select a stallion and a mare to continue"),
+        React.createElement("button", {
+          disabled: !sire || !dam,
+          onClick: function(e){ e.stopPropagation(); if(sire && dam) onConfirm(sire.id, dam.id); },
+          style:{
+            width:"100%", padding:"11px 0", borderRadius:8,
+            cursor: sire&&dam?"pointer":"not-allowed",
+            background: sire&&dam?"#1a3a0a":"#0a1208",
+            border:"1px solid "+(sire&&dam?"#84cc16":"#2a3a18"),
+            color: sire&&dam?"#84cc16":"#2a4a18",
+            fontWeight:"bold", fontSize:"0.9rem"
+          }
+        }, sire&&dam ? "🤝 Confirm Breeding — Foal due in 11 days" : "No pairing selected")
+      )
     )
   );
 }
