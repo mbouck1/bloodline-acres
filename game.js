@@ -2681,6 +2681,183 @@ function fetchDogPhoto(breedName, onSuccess, onError) {
 }
 
 
+
+// ═══════════════════════════════════════════════════════════════
+// DOG SHOW SYSTEM
+// ═══════════════════════════════════════════════════════════════
+
+var SHOW_TITLES = [
+  { key:"CD",  label:"CD",            points:5,   prefix:"CD "  },
+  { key:"CDX", label:"CDX",           points:15,  prefix:"CDX " },
+  { key:"UD",  label:"UD",            points:35,  prefix:"UD "  },
+  { key:"CH",  label:"Champion",      points:75,  prefix:"Ch. " },
+  { key:"GCH", label:"Grand Champion",points:150, prefix:"GCh. "}
+];
+
+var SHOW_CLASSES = [
+  { key:"conformation", label:"Conformation",    emoji:"🎀", purebredOnly:true,  entryFee:{ local:25, regional:75, national:200 },  purse:{ local:[150,75,25], regional:[500,250,100], national:[2000,1000,400] } },
+  { key:"specialty",    label:"Breed Specialty", emoji:"🏆", purebredOnly:true,  entryFee:{ local:35, regional:100, national:300 }, purse:{ local:[200,100,50], regional:[750,375,150], national:[3000,1500,600] } },
+  { key:"working",      label:"Working/Sport",   emoji:"⚡", purebredOnly:false, entryFee:{ local:20, regional:60, national:150 },  purse:{ local:[125,60,20], regional:[400,200,80], national:[1500,750,300] } },
+  { key:"allbreed",     label:"All-Breed Open",  emoji:"🌟", purebredOnly:false, entryFee:{ local:15, regional:50, national:125 },  purse:{ local:[100,50,15], regional:[300,150,60], national:[1200,600,240] } }
+];
+
+var SHOW_LEVELS = [
+  { key:"local",    label:"Local",    freq:"daily",   fieldSize:8  },
+  { key:"regional", label:"Regional", freq:"weekly",  fieldSize:16 },
+  { key:"national", label:"National", freq:"monthly", fieldSize:24 }
+];
+
+// Which QTLs matter most per class
+var SHOW_QTL_WEIGHTS = {
+  conformation: { DRIVE:0.1, INTEL:0.2, NERVE:0.3, SPEED:0.1, MUSCLE:0.3 },
+  specialty:    { DRIVE:0.15,INTEL:0.2, NERVE:0.25,SPEED:0.1, MUSCLE:0.3 },
+  working:      { DRIVE:0.35,INTEL:0.25,NERVE:0.25,SPEED:0.1, MUSCLE:0.05},
+  allbreed:     { DRIVE:0.2, INTEL:0.2, NERVE:0.2, SPEED:0.2, MUSCLE:0.2 }
+};
+
+function calcShowScore(animal, classKey) {
+  if (!animal || !animal.genome) return 0;
+  var hs = animal.healthScore || 50;
+  var perf = animal.genome.perf || {};
+  var weights = SHOW_QTL_WEIGHTS[classKey] || SHOW_QTL_WEIGHTS.allbreed;
+
+  // QTL score (0-100)
+  var qtlScore = 0;
+  PERF_QTLS.forEach(function(q) {
+    var v = perf[q];
+    var avg = v ? (v[0]+v[1])/2 : 2.5;
+    qtlScore += (avg / 5) * 100 * (weights[q] || 0.2);
+  });
+
+  // Age modifier — peak at 24-60 months (2-5 years), puppies and seniors penalized
+  var age = animal.ageMonths || 0;
+  var ageMod = 1.0;
+  if (age < 12) ageMod = 0.5;
+  else if (age < 18) ageMod = 0.75;
+  else if (age < 24) ageMod = 0.9;
+  else if (age <= 72) ageMod = 1.0;
+  else if (age <= 96) ageMod = 0.9;
+  else ageMod = 0.75;
+
+  // Health weight varies by class
+  var healthWeight = (classKey === "conformation" || classKey === "specialty") ? 0.45 : 0.3;
+  var perfWeight = 1 - healthWeight;
+
+  // COI penalty on show score
+  var coi = animal.coi || 0;
+  var coiPenalty = coi > 12.5 ? Math.min(15, (coi - 12.5) * 0.6) : 0;
+
+  // Champion sire/dam bonus (2pts per titled parent)
+  var lineageBonus = 0;
+  if (animal.sireTitle) lineageBonus += 2;
+  if (animal.damTitle) lineageBonus += 2;
+
+  var raw = (hs * healthWeight + qtlScore * perfWeight) * ageMod - coiPenalty + lineageBonus;
+
+  // Add small random variance (judges are human!) — ±8%
+  var variance = (Math.random() - 0.5) * 0.16;
+  return Math.max(0, Math.min(100, raw * (1 + variance)));
+}
+
+function generateAICompetitor(breedName, level) {
+  // AI dogs get scores based on level — local is easier, national is stiff
+  var baseMean = { local:52, regional:63, national:74 }[level] || 55;
+  var spread = { local:18, regional:14, national:10 }[level] || 16;
+  var score = baseMean + (Math.random() - 0.5) * spread * 2;
+  var aiNames = ["Bella","Max","Luna","Duke","Daisy","Bear","Molly","Rocky","Lola","Buddy",
+                 "Cleo","Thor","Zoe","Rex","Nala","Diesel","Ruby","Zeus","Stella","Atlas"];
+  var aiSuffixes = ["von Hausen","of Ridgecrest","du Bois","of Irongate","von Schiller","of Blackwood"];
+  var name = aiNames[Math.floor(Math.random()*aiNames.length)] + " " + aiSuffixes[Math.floor(Math.random()*aiSuffixes.length)];
+  return { name: name, breed: breedName, isAI: true, score: Math.max(20, Math.min(98, score)) };
+}
+
+function runShow(animal, classKey, level, gameStartDate) {
+  var cls = SHOW_CLASSES.find(function(c){ return c.key === classKey; });
+  var lvl = SHOW_LEVELS.find(function(l){ return l.key === level; });
+  if (!cls || !lvl) return null;
+
+  // Eligibility checks
+  if (cls.purebredOnly && animal.isMixed) return { error: "This class is for purebred dogs only." };
+  if (animal.retired) return { error: "Retired dogs cannot compete." };
+  if ((animal.ageMonths || 0) < 12) return { error: "Dogs must be at least 12 months old to show." };
+
+  var playerScore = calcShowScore(animal, classKey);
+  var fieldSize = lvl.fieldSize - 1; // -1 for player's dog
+  var breedForAI = animal.isMixed ? "Mixed Breed" : animal.breed;
+  var competitors = [];
+  for (var i = 0; i < fieldSize; i++) {
+    competitors.push(generateAICompetitor(breedForAI, level));
+  }
+  competitors.push({ name: animal.name || animal.breed, breed: animal.breed, isAI: false, score: playerScore });
+
+  // Sort by score descending
+  competitors.sort(function(a,b){ return b.score - a.score; });
+
+  var placement = competitors.findIndex(function(c){ return !c.isAI; }) + 1;
+  var entryFee = cls.entryFee[level];
+  var prize = 0;
+  if (placement === 1) prize = cls.purse[level][0];
+  else if (placement === 2) prize = cls.purse[level][1];
+  else if (placement === 3) prize = cls.purse[level][2];
+
+  // Show points awarded
+  var pointsEarned = 0;
+  if (placement === 1) pointsEarned = { local:3, regional:6, national:12 }[level];
+  else if (placement === 2) pointsEarned = { local:2, regional:4, national:8 }[level];
+  else if (placement === 3) pointsEarned = { local:1, regional:2, national:4 }[level];
+
+  return {
+    placement: placement,
+    totalEntries: lvl.fieldSize,
+    prize: prize,
+    entryFee: entryFee,
+    net: prize - entryFee,
+    pointsEarned: pointsEarned,
+    playerScore: Math.round(playerScore * 10) / 10,
+    competitors: competitors,
+    classKey: classKey,
+    level: level,
+    date: new Date().toLocaleString()
+  };
+}
+
+function getAnimalTitle(showPoints) {
+  var pts = showPoints || 0;
+  var title = null;
+  SHOW_TITLES.forEach(function(t){ if (pts >= t.points) title = t; });
+  return title;
+}
+
+function getNextTitle(showPoints) {
+  var pts = showPoints || 0;
+  return SHOW_TITLES.find(function(t){ return pts < t.points; }) || null;
+}
+
+// Check if a show is available (cooldown enforcement)
+function isShowAvailable(lastShowDates, classKey, level, gameStartDate) {
+  var key = classKey + "_" + level;
+  var last = lastShowDates ? lastShowDates[key] : null;
+  if (!last) return true;
+  var now = Date.now();
+  var elapsed = now - last;
+  var required = { local:24*60*60*1000, regional:7*24*60*60*1000, national:30*24*60*60*1000 }[level];
+  return elapsed >= required;
+}
+
+function getShowCooldownText(lastShowDates, classKey, level) {
+  var key = classKey + "_" + level;
+  var last = lastShowDates ? lastShowDates[key] : null;
+  if (!last) return null;
+  var now = Date.now();
+  var required = { local:24*60*60*1000, regional:7*24*60*60*1000, national:30*24*60*60*1000 }[level];
+  var remaining = required - (now - last);
+  if (remaining <= 0) return null;
+  var hours = Math.floor(remaining / (60*60*1000));
+  var days = Math.floor(hours / 24);
+  if (days > 0) return days + "d " + (hours % 24) + "h";
+  return hours + "h " + Math.floor((remaining % (60*60*1000)) / 60000) + "m";
+}
+
 // ── COAT COLOR PAINTER ────────────────────────────────────────────────────
 function getCoatPalette(genome) {
   var c = genome.coat;
@@ -4273,6 +4450,257 @@ var FACILITIES = {
   }
 };
 
+
+// ═══════════════════════════════════════════════════════════════
+// SHOWS VIEW COMPONENT
+// ═══════════════════════════════════════════════════════════════
+function ShowsView(_ref_sv) {
+  var animals = _ref_sv.animals,
+      money = _ref_sv.money,
+      onMoneyChange = _ref_sv.onMoneyChange,
+      onAnimalUpdate = _ref_sv.onAnimalUpdate,
+      onLog = _ref_sv.onLog,
+      gameStartDate = _ref_sv.gameStartDate,
+      lastShowDates = _ref_sv.lastShowDates,
+      onShowDatesUpdate = _ref_sv.onShowDatesUpdate;
+
+  var _useState_sv1 = _slicedToArray(useState(null), 2), selectedDog = _useState_sv1[0], setSelectedDog = _useState_sv1[1];
+  var _useState_sv2 = _slicedToArray(useState("conformation"), 2), selectedClass = _useState_sv2[0], setSelectedClass = _useState_sv2[1];
+  var _useState_sv3 = _slicedToArray(useState("local"), 2), selectedLevel = _useState_sv3[0], setSelectedLevel = _useState_sv3[1];
+  var _useState_sv4 = _slicedToArray(useState(null), 2), lastResult = _useState_sv4[0], setLastResult = _useState_sv4[1];
+  var _useState_sv5 = _slicedToArray(useState(false), 2), showResults = _useState_sv5[0], setShowResults = _useState_sv5[1];
+
+  var eligibleDogs = animals.filter(function(a){ return !a.retired && (a.ageMonths||0) >= 12; });
+  var cls = SHOW_CLASSES.find(function(c){ return c.key === selectedClass; });
+  var lvl = SHOW_LEVELS.find(function(l){ return l.key === selectedLevel; });
+  var cooldownKey = selectedClass + "_" + (selectedDog ? selectedDog.id : "");
+
+  // Filter dogs by class eligibility
+  var classEligible = eligibleDogs.filter(function(a){
+    if (cls && cls.purebredOnly && a.isMixed) return false;
+    return true;
+  });
+
+  var entryFee = cls ? cls.entryFee[selectedLevel] : 0;
+  var canAfford = money >= entryFee;
+  var cooldown = selectedDog ? getShowCooldownText(lastShowDates && lastShowDates[selectedDog.id], selectedClass, selectedLevel) : null;
+  var available = selectedDog ? isShowAvailable(lastShowDates && lastShowDates[selectedDog.id], selectedClass, selectedLevel, gameStartDate) : false;
+
+  function handleEnter() {
+    if (!selectedDog || !canAfford || !available) return;
+    var result = runShow(selectedDog, selectedClass, selectedLevel, gameStartDate);
+    if (result && result.error) { alert(result.error); return; }
+    if (!result) return;
+
+    // Deduct entry fee, add prize
+    onMoneyChange(function(m){ return m - entryFee + result.prize; });
+
+    // Award show points to dog
+    var newPoints = (selectedDog.showPoints || 0) + result.pointsEarned;
+    var newTitle = getAnimalTitle(newPoints);
+    var updatedDog = Object.assign({}, selectedDog, {
+      showPoints: newPoints,
+      showTitle: newTitle ? newTitle.key : null,
+      showHistory: ([{ placement:result.placement, total:result.totalEntries, classKey:selectedClass,
+        level:selectedLevel, prize:result.prize, net:result.net, points:result.pointsEarned,
+        date:result.date }]).concat(selectedDog.showHistory||[]).slice(0,20)
+    });
+    onAnimalUpdate(updatedDog);
+
+    // Update cooldown
+    var newDates = Object.assign({}, lastShowDates || {});
+    var dogDates = Object.assign({}, newDates[selectedDog.id] || {});
+    dogDates[selectedClass + "_" + selectedLevel] = Date.now();
+    newDates[selectedDog.id] = dogDates;
+    onShowDatesUpdate(newDates);
+
+    // Journal entry
+    var placementSuffix = ["st","nd","rd"][result.placement-1] || "th";
+    var titleMsg = newTitle && (!selectedDog.showTitle || selectedDog.showTitle !== newTitle.key)
+      ? " 🏆 NEW TITLE: " + newTitle.label + "!" : "";
+    onLog({ id:Date.now()+Math.random(), type:"show",
+      name: "🎀 " + (selectedDog.name||selectedDog.breed) + " placed " + result.placement + placementSuffix +
+        " of " + result.totalEntries + " in " + cls.label + " (" + lvl.label + ")" +
+        (result.prize > 0 ? " — won $"+result.prize : "") + titleMsg,
+      date: result.date });
+
+    setLastResult(result);
+    setShowResults(true);
+    setSelectedDog(updatedDog);
+  }
+
+  var btnStyle = { background:"#1a1410", border:"1px solid #4a3a28", color:"#d4c4a8",
+    borderRadius:4, padding:"4px 12px", cursor:"pointer", fontSize:"0.78rem" };
+  var activeBtnStyle = Object.assign({}, btnStyle, { background:"#6a4a28", border:"1px solid #d4942a", color:"#f5d870", fontWeight:"bold" });
+
+  return /*#__PURE__*/React.createElement("div", { style:{ padding:12, maxWidth:900, margin:"0 auto" } },
+
+    // Header
+    React.createElement("div", { style:{ display:"flex", alignItems:"center", gap:12, marginBottom:16 } },
+      React.createElement("span", { style:{ fontSize:"1.4rem" } }, "🎀"),
+      React.createElement("h2", { style:{ margin:0, color:"#f5d870", fontSize:"1.1rem" } }, "Dog Shows"),
+      React.createElement("span", { style:{ marginLeft:"auto", color:"#b09070", fontSize:"0.8rem" } },
+        "Balance: ", React.createElement("strong", { style:{color:"#4ade80"} }, "$"+money.toLocaleString()))
+    ),
+
+    // Class selector
+    React.createElement("div", { style:{ marginBottom:12 } },
+      React.createElement("div", { style:{ color:"#b09070", fontSize:"0.75rem", marginBottom:6 } }, "SHOW CLASS"),
+      React.createElement("div", { style:{ display:"flex", gap:6, flexWrap:"wrap" } },
+        SHOW_CLASSES.map(function(c) {
+          return React.createElement("button", { key:c.key, style: selectedClass===c.key ? activeBtnStyle : btnStyle,
+            onClick:function(){ setSelectedClass(c.key); setShowResults(false); } },
+            c.emoji + " " + c.label + (c.purebredOnly ? " 🔒" : ""));
+        })
+      )
+    ),
+
+    // Level selector
+    React.createElement("div", { style:{ marginBottom:16 } },
+      React.createElement("div", { style:{ color:"#b09070", fontSize:"0.75rem", marginBottom:6 } }, "SHOW LEVEL"),
+      React.createElement("div", { style:{ display:"flex", gap:6 } },
+        SHOW_LEVELS.map(function(l) {
+          return React.createElement("button", { key:l.key, style: selectedLevel===l.key ? activeBtnStyle : btnStyle,
+            onClick:function(){ setSelectedLevel(l.key); setShowResults(false); } },
+            l.label + " · " + l.freq);
+        })
+      )
+    ),
+
+    // Info bar
+    cls && lvl && React.createElement("div", { style:{ background:"#1a1410", border:"1px solid #2a2018",
+      borderRadius:6, padding:"8px 12px", marginBottom:16, display:"flex", gap:20, flexWrap:"wrap", fontSize:"0.8rem", color:"#b09070" } },
+      React.createElement("span", null, "Entry fee: ", React.createElement("strong", {style:{color:"#f5d870"}}, "$"+cls.entryFee[selectedLevel])),
+      React.createElement("span", null, "1st: ", React.createElement("strong", {style:{color:"#fbbf24"}}, "$"+cls.purse[selectedLevel][0])),
+      React.createElement("span", null, "2nd: ", React.createElement("strong", {style:{color:"#94a3b8"}}, "$"+cls.purse[selectedLevel][1])),
+      React.createElement("span", null, "3rd: ", React.createElement("strong", {style:{color:"#b45309"}}, "$"+cls.purse[selectedLevel][2])),
+      React.createElement("span", null, "Field: ", React.createElement("strong", {style:{color:"#d4c4a8"}}, lvl.fieldSize + " dogs")),
+      cls.purebredOnly && React.createElement("span", { style:{color:"#fca5a5"} }, "🔒 Purebred only")
+    ),
+
+    // Dog selector
+    React.createElement("div", { style:{ marginBottom:16 } },
+      React.createElement("div", { style:{ color:"#b09070", fontSize:"0.75rem", marginBottom:6 } },
+        "SELECT DOG " + (cls && cls.purebredOnly ? "(purebreds only)" : "(all dogs eligible)")),
+      classEligible.length === 0
+        ? React.createElement("div", { style:{color:"#6b5a48", fontStyle:"italic", fontSize:"0.82rem"} },
+            cls && cls.purebredOnly ? "No eligible purebred dogs (must be 12+ months, not retired)" : "No eligible dogs (must be 12+ months, not retired)")
+        : React.createElement("div", { style:{ display:"flex", flexWrap:"wrap", gap:6 } },
+            classEligible.map(function(a) {
+              var pts = a.showPoints || 0;
+              var title = getAnimalTitle(pts);
+              var cd = getShowCooldownText(lastShowDates && lastShowDates[a.id], selectedClass, selectedLevel);
+              var isSelected = selectedDog && selectedDog.id === a.id;
+              return React.createElement("button", { key:a.id,
+                style: Object.assign({}, isSelected ? activeBtnStyle : btnStyle, { position:"relative",
+                  opacity: cd ? 0.6 : 1 }),
+                onClick:function(){ setSelectedDog(a); setShowResults(false); },
+                title: cd ? "Available in " + cd : "" },
+                (title ? title.prefix : "") + (a.name || a.breed),
+                " · ", React.createElement("span", {style:{color:"#94a3b8"}}, a.breed.split(" × ")[0]),
+                pts > 0 && React.createElement("span", {style:{color:"#fbbf24", marginLeft:4}}, pts+"pts"),
+                cd && React.createElement("span", {style:{color:"#ef4444", marginLeft:4, fontSize:"0.7rem"}}, "⏳"+cd)
+              );
+            })
+          )
+    ),
+
+    // Enter button
+    selectedDog && React.createElement("div", { style:{ marginBottom:20 } },
+      React.createElement("button", {
+        style:{ background: (!canAfford||!available) ? "#2a1a10" : "#6a3810",
+          border:"1px solid " + ((!canAfford||!available) ? "#4a3020" : "#d4942a"),
+          color: (!canAfford||!available) ? "#6b5a48" : "#f5d870",
+          borderRadius:6, padding:"8px 24px", cursor: (!canAfford||!available) ? "not-allowed" : "pointer",
+          fontSize:"0.9rem", fontWeight:"bold" },
+        onClick: handleEnter,
+        disabled: !canAfford || !available,
+        title: !canAfford ? "Not enough money" : cooldown ? "Available in "+cooldown : ""
+      },
+        !available && cooldown ? "⏳ Next show in " + cooldown :
+        !canAfford ? "⚠️ Insufficient funds ($"+entryFee+" needed)" :
+        "🎀 Enter " + (cls ? cls.label : "") + " — " + (lvl ? lvl.label : "") + " ($"+entryFee+")"
+      )
+    ),
+
+    // Results panel
+    showResults && lastResult && React.createElement("div", { style:{ background:"#1a1410",
+      border:"2px solid " + (lastResult.placement===1?"#fbbf24":lastResult.placement===2?"#94a3b8":lastResult.placement===3?"#b45309":"#2a2018"),
+      borderRadius:8, padding:16, marginBottom:20 } },
+      React.createElement("div", { style:{ display:"flex", alignItems:"center", gap:10, marginBottom:12 } },
+        React.createElement("span", { style:{fontSize:"1.6rem"} },
+          lastResult.placement===1?"🥇":lastResult.placement===2?"🥈":lastResult.placement===3?"🥉":"📋"),
+        React.createElement("div", null,
+          React.createElement("div", { style:{color:"#f5d870", fontWeight:"bold", fontSize:"1rem"} },
+            lastResult.placement + (["st","nd","rd"][lastResult.placement-1]||"th") + " Place of " + lastResult.totalEntries),
+          React.createElement("div", { style:{color:"#b09070", fontSize:"0.8rem"} },
+            (cls?cls.label:"") + " · " + (lvl?lvl.label:"") + " · Score: " + lastResult.playerScore)
+        ),
+        React.createElement("div", { style:{marginLeft:"auto", textAlign:"right"} },
+          lastResult.prize > 0 && React.createElement("div", {style:{color:"#4ade80", fontWeight:"bold"}}, "+$"+lastResult.prize),
+          React.createElement("div", {style:{color:"#ef4444", fontSize:"0.8rem"}}, "-$"+lastResult.entryFee+" entry"),
+          React.createElement("div", {style:{color: lastResult.net>=0?"#4ade80":"#ef4444", fontSize:"0.85rem", fontWeight:"bold"}},
+            "Net: " + (lastResult.net>=0?"+":"") + "$"+lastResult.net),
+          lastResult.pointsEarned > 0 && React.createElement("div", {style:{color:"#fbbf24", fontSize:"0.8rem"}},
+            "+"+lastResult.pointsEarned+" show pts")
+        )
+      ),
+
+      // Competitor list
+      React.createElement("div", { style:{fontSize:"0.75rem", color:"#b09070", marginBottom:6} }, "RESULTS"),
+      React.createElement("div", { style:{display:"flex", flexDirection:"column", gap:3} },
+        lastResult.competitors.slice(0,8).map(function(c, i) {
+          return React.createElement("div", { key:i,
+            style:{ display:"flex", gap:8, padding:"3px 6px", borderRadius:3,
+              background: !c.isAI ? "rgba(212,148,42,0.15)" : "transparent",
+              color: !c.isAI ? "#f5d870" : "#8a7060", fontSize:"0.78rem" } },
+            React.createElement("span", {style:{width:20, textAlign:"right", color:"#6b5a48"}}, (i+1)+"."),
+            React.createElement("span", {style:{flex:1}}, c.name),
+            React.createElement("span", {style:{color:"#6b5a48"}}, c.breed),
+            React.createElement("span", {style:{color:!c.isAI?"#f5d870":"#6b5a48", minWidth:40, textAlign:"right"}},
+              Math.round(c.score*10)/10)
+          );
+        })
+      )
+    ),
+
+    // Dog's show record
+    selectedDog && React.createElement("div", { style:{marginTop:16} },
+      React.createElement("div", { style:{color:"#b09070", fontSize:"0.75rem", marginBottom:8} },
+        (selectedDog.name||selectedDog.breed).toUpperCase() + " — SHOW RECORD"),
+      (function() {
+        var pts = selectedDog.showPoints || 0;
+        var title = getAnimalTitle(pts);
+        var next = getNextTitle(pts);
+        return React.createElement("div", { style:{display:"flex", gap:12, flexWrap:"wrap", marginBottom:10, fontSize:"0.82rem"} },
+          React.createElement("span", {style:{color:"#f5d870"}}, "Points: ", React.createElement("strong", null, pts)),
+          title && React.createElement("span", {style:{color:"#fbbf24"}}, "Title: ", React.createElement("strong", null, title.label)),
+          next && React.createElement("span", {style:{color:"#94a3b8"}}, "Next: ", next.label, " (", next.points - pts, " pts needed)")
+        );
+      })(),
+      (!selectedDog.showHistory || selectedDog.showHistory.length === 0)
+        ? React.createElement("div", {style:{color:"#4a3a28", fontStyle:"italic", fontSize:"0.8rem"}}, "No show history yet")
+        : React.createElement("div", {style:{display:"flex", flexDirection:"column", gap:3}},
+            (selectedDog.showHistory||[]).slice(0,10).map(function(h,i) {
+              return React.createElement("div", {key:i, style:{display:"flex", gap:8,
+                fontSize:"0.78rem", color:"#8a7060", padding:"2px 0", borderBottom:"1px solid #1a1410"}},
+                React.createElement("span", null,
+                  h.placement===1?"🥇":h.placement===2?"🥈":h.placement===3?"🥉":"📋",
+                  " "+h.placement+"/"+h.total),
+                React.createElement("span", {style:{flex:1}},
+                  SHOW_CLASSES.find(function(c){return c.key===h.classKey;})?
+                  SHOW_CLASSES.find(function(c){return c.key===h.classKey;}).label : h.classKey,
+                  " · ", h.level),
+                h.prize > 0 && React.createElement("span", {style:{color:"#4ade80"}}, "+$"+h.prize),
+                React.createElement("span", {style:{color:"#fbbf24"}}, "+"+h.points+"pts"),
+                React.createElement("span", {style:{color:"#4a3a28", fontSize:"0.72rem"}}, h.date)
+              );
+            })
+          )
+    )
+  );
+}
+
 // ── FARM VIEW ─────────────────────────────────────────────────────────────────
 function FarmView(_ref) {
   var facilitiesOwned = _ref.facilitiesOwned, kennels = _ref.kennels, animals = _ref.animals,
@@ -4670,6 +5098,10 @@ function App() {
     _useStateSHR2 = _slicedToArray(_useStateSHR, 2),
     sheepSheared = _useStateSHR2[0],
     setSheepSheared = _useStateSHR2[1];
+  var _useStateLSD = useState(_savedState ? _savedState.lastShowDates || {} : {}),
+    _useStateLSD2 = _slicedToArray(_useStateLSD, 2),
+    lastShowDates = _useStateLSD2[0],
+    setLastShowDates = _useStateLSD2[1];
   var _useStateCL = useState(false),
     _useStateCL2 = _slicedToArray(_useStateCL, 2),
     showCatLady = _useStateCL2[0],
@@ -4932,6 +5364,7 @@ function App() {
           ownedLivestock: ownedLivestock,
           commodities: commodities,
           sheepSheared: sheepSheared,
+          lastShowDates: lastShowDates,
           gameStartDate: gameStartDate,
           gameVersion: GAME_VERSION,
           savedAt: Date.now()
@@ -4942,7 +5375,7 @@ function App() {
     doSave();
     var interval = setInterval(doSave, 60000);
     return function() { clearInterval(interval); };
-  }, [animals, kennels, log, money, hasWhelpingKennel, whelpingLitters, holdingPups, facilitiesOwned, ownedLivestock, commodities, sheepSheared]);
+  }, [animals, kennels, log, money, hasWhelpingKennel, whelpingLitters, holdingPups, facilitiesOwned, ownedLivestock, commodities, sheepSheared, lastShowDates]);
   var loadFile = function loadFile(e) {
     var file = e.target.files[0];
     if (!file) return;
@@ -5555,7 +5988,11 @@ function App() {
   , /*#__PURE__*/React.createElement("button", {
       style: tabS("farm"),
       onClick: function(){ setTab("farm"); }
-    }, "\uD83C\uDFD8 Farm")
+    }, "\uD83C\uDFD8 Farm"),
+    /*#__PURE__*/React.createElement("button", {
+      style: tabS("shows"),
+      onClick: function(){ setTab("shows"); }
+    }, "\uD83C\uDF80 Shows")
   ), tab === "kennel" && /*#__PURE__*/React.createElement("div", {
     style: { display: "flex", flexDirection: "column", flex: 1, overflow: "hidden" }
   },
@@ -6480,6 +6917,20 @@ function App() {
     }
   }, "\uD83E\uDDEC 8 coat loci \xB7 8 health loci \xB7 5 perf QTLs \xB7 0.5% mutation rate \xB7 COI tracking"),
   /*#__PURE__*/React.createElement(Clock, { gameStartDate: gameStartDate }),
+  tab === "shows" && /*#__PURE__*/React.createElement("div", {
+    style: { flex:1, overflow:"auto", padding:12, background:"#1a140e" }
+  }, /*#__PURE__*/React.createElement(ShowsView, {
+    animals: animals.filter(function(a){ return !a.retired; }),
+    money: money,
+    onMoneyChange: setMoney,
+    onAnimalUpdate: function(updated) {
+      setAnimals(function(prev){ return prev.map(function(a){ return a.id===updated.id ? updated : a; }); });
+    },
+    onLog: function(entry){ setLog(function(lg){ return [entry].concat(_toConsumableArray(lg)); }); },
+    gameStartDate: gameStartDate,
+    lastShowDates: lastShowDates,
+    onShowDatesUpdate: setLastShowDates
+  })),
   tab === "farm" && /*#__PURE__*/React.createElement("div", {
     style: { position:"fixed", inset:0, background:"#141008", zIndex:50, overflow:"hidden", display:"flex", alignItems:"center", justifyContent:"center" }
   }, /*#__PURE__*/React.createElement(FarmView, {
