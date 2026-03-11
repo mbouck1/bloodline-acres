@@ -5186,12 +5186,14 @@ var TUTORIAL_CONTENT = {
 function TutorialModal(_ref_tut) {
   var tabKey = _ref_tut.tabKey;
   var onDismiss = _ref_tut.onDismiss;
-  var content = TUTORIAL_CONTENT[tabKey];
-  if (!content) return null;
 
+  // Hooks must always be called before any early return
   var _cbState = React.useState(false);
   var dontShow = _cbState[0];
   var setDontShow = _cbState[1];
+
+  var content = TUTORIAL_CONTENT[tabKey];
+  if (!content) return null;
 
   return React.createElement("div", {
     style: {
@@ -8072,7 +8074,7 @@ showShearing && /*#__PURE__*/React.createElement(ShearingModal, {
   })
   ,
   // Tutorial modal — fixed overlay, child of top-level div
-  activeTutorial && /*#__PURE__*/React.createElement(TutorialModal, {
+  activeTutorial ? /*#__PURE__*/React.createElement(TutorialModal, {
     tabKey: activeTutorial,
     onDismiss: function(dontShowAgain) {
       if (dontShowAgain) {
@@ -8084,7 +8086,7 @@ showShearing && /*#__PURE__*/React.createElement(ShearingModal, {
       }
       setActiveTutorial(null);
     }
-  })
+  }) : null
   ))); // close outer div children + outer div + AnimalsContext.Provider
 }
 
