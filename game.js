@@ -5115,7 +5115,7 @@ function App() {
     _useState12 = _slicedToArray(_useState11, 2),
     dam = _useState12[0],
     setDam = _useState12[1];
-  var _useState13 = useState([]),
+  var _useState13 = useState(_savedState && _savedState.litter ? _savedState.litter : []),
     _useState14 = _slicedToArray(_useState13, 2),
     litter = _useState14[0],
     setLitter = _useState14[1];
@@ -5123,7 +5123,7 @@ function App() {
     _useState16 = _slicedToArray(_useState15, 2),
     log = _useState16[0],
     setLog = _useState16[1];
-  var _useState17 = useState("kennel"),
+  var _useState17 = useState(_savedState && _savedState.tab ? _savedState.tab : "kennel"),
     _useState18 = _slicedToArray(_useState17, 2),
     tab = _useState18[0],
     setTab = _useState18[1];
@@ -5224,7 +5224,7 @@ function App() {
     _useStateTH2 = _slicedToArray(_useStateTH, 2),
     holdingPups = _useStateTH2[0],
     setHoldingPups = _useStateTH2[1];
-  var _useStateLS = useState([]),
+  var _useStateLS = useState(_savedState && _savedState.litterSelected ? _savedState.litterSelected : []),
     _useStateLS2 = _slicedToArray(_useStateLS, 2),
     litterSelected = _useStateLS2[0],
     setLitterSelected = _useStateLS2[1];
@@ -5624,6 +5624,9 @@ function App() {
           kennels: kennels,
           log: log.slice(0, 50),
           money: money,
+          litter: litter,
+          litterSelected: litterSelected,
+          tab: tab,
           hasWhelpingKennel: hasWhelpingKennel,
           whelpingLitters: whelpingLitters,
           holdingPups: holdingPups,
@@ -5645,7 +5648,7 @@ function App() {
     doSave();
     var interval = setInterval(doSave, 60000);
     return function() { clearInterval(interval); };
-  }, [animals, kennels, log, money, hasWhelpingKennel, whelpingLitters, holdingPups, facilitiesOwned, ownedLivestock, commodities, sheepSheared, lastShowDates, horseShowDates, pendingFoals, foalCount]);
+  }, [animals, kennels, log, money, litter, litterSelected, tab, hasWhelpingKennel, whelpingLitters, holdingPups, facilitiesOwned, ownedLivestock, commodities, sheepSheared, lastShowDates, horseShowDates, pendingFoals, foalCount]);
   var loadFile = function loadFile(e) {
     var file = e.target.files[0];
     if (!file) return;
