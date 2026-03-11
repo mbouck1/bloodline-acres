@@ -984,6 +984,44 @@ function getUniqueBreeds(animal, allAnimals, depth) {
     return true;
   });
 }
+// Returns breed percentages summing to 100, walking ancestry up to 4 generations
+function getBreedPercentages(animal, allAnimals, weight) {
+  if (!animal) return {};
+  if (weight === undefined) weight = 1.0;
+  if (weight < 0.005) return {}; // ignore contributions below 0.5%
+  var result = {};
+  var sire = animal.sireId && allAnimals ? allAnimals.find(function(a){ return a.id === animal.sireId; }) : null;
+  var dam  = animal.damId  && allAnimals ? allAnimals.find(function(a){ return a.id === animal.damId;  }) : null;
+  if (sire || dam) {
+    // Has known parents — split weight 50/50
+    var sireResult = sire ? getBreedPercentages(sire, allAnimals, weight * 0.5) : {};
+    var damResult  = dam  ? getBreedPercentages(dam,  allAnimals, weight * 0.5) : {};
+    // If one parent unknown, attribute their half to the breed string
+    if (!sire) { var sireBreedKey = (animal.sireBreed||animal.breed||"Unknown").trim(); sireResult[sireBreedKey] = (sireResult[sireBreedKey]||0) + weight * 0.5; }
+    if (!dam)  { var damBreedKey  = (animal.damBreed||animal.breed||"Unknown").trim(); damResult[damBreedKey]   = (damResult[damBreedKey]||0)   + weight * 0.5; }
+    [sireResult, damResult].forEach(function(r){
+      Object.keys(r).forEach(function(b){ result[b] = (result[b]||0) + r[b]; });
+    });
+  } else {
+    // No known parents — pure breed
+    var parts = (animal.breed||"").split(" \xD7 ").map(function(s){ return s.trim(); }).filter(Boolean);
+    var share = weight / (parts.length || 1);
+    parts.forEach(function(b){ result[b] = (result[b]||0) + share; });
+  }
+  return result;
+}
+// Returns sorted array of {breed, pct} summing to 100
+function getBreedPctList(animal, allAnimals) {
+  var raw = getBreedPercentages(animal, allAnimals);
+  var total = Object.keys(raw).reduce(function(s,k){ return s + raw[k]; }, 0);
+  if (total === 0) return [];
+  var list = Object.keys(raw).map(function(b){ return { breed: b, pct: Math.round(raw[b] / total * 1000) / 10 }; });
+  list.sort(function(a,b){ return b.pct - a.pct; });
+  // Fix rounding so it sums to exactly 100
+  var sum = list.reduce(function(s,x){ return s + x.pct; }, 0);
+  if (list.length > 0) list[0].pct = Math.round((list[0].pct + (100 - sum)) * 10) / 10;
+  return list;
+}
 function breedPair(sire, dam) {
   // Litter size based on breed S/M/L marker
   var LITTER_RANGES = {
@@ -3763,7 +3801,23 @@ function Card(_ref0) {
       color: "#b09070",
       fontSize: "0.85rem"
     }
-  }, animal.breed, " \xB7 ", animal.sex === "M" ? "♂ Male" : "♀ Female", " \xB7 Gen ", animal.generation)), /*#__PURE__*/React.createElement("div", {
+  }, animal.breed, " \xB7 ", animal.sex === "M" ? "♂ Male" : "♀ Female", " \xB7 Gen ", animal.generation)),
+  // Breed composition
+  animal.isMixed && /*#__PURE__*/React.createElement("div", {
+    style: { marginTop: 4, marginBottom: 2 }
+  },
+    (function(){
+      var pctList = getBreedPctList(animal, typeof animals !== "undefined" ? animals : []);
+      if (pctList.length === 0) return null;
+      return /*#__PURE__*/React.createElement("div", { style: { display: "flex", flexWrap: "wrap", gap: "2px 6px" } },
+        pctList.map(function(item){
+          return /*#__PURE__*/React.createElement("span", { key: item.breed,
+            style: { fontSize: "0.68rem", color: "#b09070", whiteSpace: "nowrap" }
+          }, item.breed + " " + item.pct + "%");
+        })
+      );
+    })()
+  ), /*#__PURE__*/React.createElement("div", {
     style: {
       display: "flex",
       gap: 5,
@@ -6550,9 +6604,12 @@ function App() {
                     /*#__PURE__*/React.createElement("td", { style: { padding:"5px 8px", color:"#f0c878", fontWeight:"bold" } },
                       (a.name||a.breed) + (isPreg?" \uD83E\uDD30":"")
                     ),
-                    /*#__PURE__*/React.createElement("td", { style: { padding:"5px 8px", color:"#e8d0a8", fontSize:"0.72rem", maxWidth: 180, overflow:"hidden", textOverflow:"ellipsis", whiteSpace:"nowrap" },
-                      title: getUniqueBreeds(a, animals).join(", ") },
-                      getUniqueBreeds(a, animals).join(", ")),
+                    /*#__PURE__*/React.createElement("td", { style: { padding:"5px 8px", color:"#e8d0a8", fontSize:"0.68rem", maxWidth: 200 },
+                      title: getBreedPctList(a, animals).map(function(x){ return x.breed+" "+x.pct+"%"; }).join(", ") },
+                      a.isMixed
+                        ? getBreedPctList(a, animals).map(function(x){ return x.breed+" "+x.pct+"%"; }).join(" · ")
+                        : a.breed
+                    ),
                     /*#__PURE__*/React.createElement("td", { style: { padding:"5px 8px", color: a.sex==="M"?"#60a5fa":"#f472b6", fontSize:"0.75rem" } }, a.sex==="M"?"\u2642":"\u2640"),
                     /*#__PURE__*/React.createElement("td", { style: { padding:"5px 8px" } },
                       /*#__PURE__*/React.createElement("div", { style: { display:"flex", alignItems:"center", gap:4 } },
@@ -6860,7 +6917,7 @@ function App() {
                   /*#__PURE__*/React.createElement("span", { style: { color: "#f0c878", fontWeight: "bold", fontSize: "0.8rem", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" } }, a.name||a.breed),
                   reason && /*#__PURE__*/React.createElement("span", { title: reason, style: { fontSize: "0.7rem" } }, "\u26A0\uFE0F")
                 ),
-                /*#__PURE__*/React.createElement("div", { style: { color: "#e8d0a8", fontSize: "0.68rem", overflow:"hidden", textOverflow:"ellipsis", whiteSpace:"nowrap" }, title: getUniqueBreeds(a, animals).join(", ") }, getUniqueBreeds(a, animals).join(", ") + " \u00B7 " + Math.round((a.ageMonths||0)/12*10)/10 + "y"),
+                /*#__PURE__*/React.createElement("div", { style: { color: "#e8d0a8", fontSize: "0.68rem", overflow:"hidden", textOverflow:"ellipsis", whiteSpace:"nowrap" }, title: a.isMixed ? getBreedPctList(a, animals).map(function(x){ return x.breed+" "+x.pct+"%"; }).join(", ") : a.breed }, (a.isMixed ? getBreedPctList(a, animals).map(function(x){ return x.breed+" "+x.pct+"%"; }).join(" · ") : a.breed) + " \u00B7 " + Math.round((a.ageMonths||0)/12*10)/10 + "y"),
                 /*#__PURE__*/React.createElement("div", { style: { display: "flex", gap: 4, marginTop: 3 } },
                   /*#__PURE__*/React.createElement("div", { style: { flex: 1 } },
                     /*#__PURE__*/React.createElement("div", { style: { fontSize: "0.6rem", color: "#60a5fa", marginBottom: 1 } }, "\u26A1 "+ps),
@@ -7106,7 +7163,7 @@ function App() {
                   reason && /*#__PURE__*/React.createElement("span", { title: reason, style: { fontSize: "0.7rem" } }, "\u26A0\uFE0F"),
                   isPreg && /*#__PURE__*/React.createElement("span", { title: "Pregnant", style: { fontSize: "0.7rem" } }, "\uD83E\uDD30")
                 ),
-                /*#__PURE__*/React.createElement("div", { style: { color: "#e8d0a8", fontSize: "0.68rem", overflow:"hidden", textOverflow:"ellipsis", whiteSpace:"nowrap" }, title: getUniqueBreeds(a, animals).join(", ") }, getUniqueBreeds(a, animals).join(", ") + " \u00B7 " + Math.round((a.ageMonths||0)/12*10)/10 + "y"),
+                /*#__PURE__*/React.createElement("div", { style: { color: "#e8d0a8", fontSize: "0.68rem", overflow:"hidden", textOverflow:"ellipsis", whiteSpace:"nowrap" }, title: a.isMixed ? getBreedPctList(a, animals).map(function(x){ return x.breed+" "+x.pct+"%"; }).join(", ") : a.breed }, (a.isMixed ? getBreedPctList(a, animals).map(function(x){ return x.breed+" "+x.pct+"%"; }).join(" · ") : a.breed) + " \u00B7 " + Math.round((a.ageMonths||0)/12*10)/10 + "y"),
                 /*#__PURE__*/React.createElement("div", { style: { display: "flex", gap: 4, marginTop: 3 } },
                   /*#__PURE__*/React.createElement("div", { style: { flex: 1 } },
                     /*#__PURE__*/React.createElement("div", { style: { fontSize: "0.6rem", color: "#60a5fa", marginBottom: 1 } }, "\u26A1 "+ps),
