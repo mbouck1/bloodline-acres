@@ -2229,18 +2229,20 @@ function getHeatCycleInterval(size) {
 // { status: "too_young" | "in_heat" | "waiting", daysUntilHeat: N }
 function getHeatStatus(animal, nowMs) {
   if (animal.sex !== "F") return null;
-  var ageMs = (animal.ageMonths || 0) * (30.44 * 24 * 60 * 60 * 1000);
+  // Game time: 1 game month = 1 real day = 86400000ms
+  var GAME_MONTH_MS = 24 * 60 * 60 * 1000;
+  var ageMs = (animal.ageMonths || 0) * GAME_MONTH_MS;
   var bornMs = nowMs - ageMs;
-  var maturityMs = 12 * 30.44 * 24 * 60 * 60 * 1000; // 12 real days
+  var maturityMs = 18 * GAME_MONTH_MS; // females mature at 18 game months = 18 real days
   if (ageMs < maturityMs) {
-    var daysToMature = Math.ceil((maturityMs - ageMs) / (24 * 60 * 60 * 1000));
+    var daysToMature = Math.ceil((maturityMs - ageMs) / GAME_MONTH_MS);
     return { status: "too_young", daysUntilHeat: daysToMature };
   }
   var interval = getHeatCycleInterval(animal.size || "M");
   var heatWindowDays = 2;
-  var intervalMs = interval * 24 * 60 * 60 * 1000;
-  var heatWindowMs = heatWindowDays * 24 * 60 * 60 * 1000;
-  // Use lastWhelped if set, otherwise use heatStarted, otherwise use maturity date
+  var intervalMs = interval * GAME_MONTH_MS; // interval is in game months, convert to real ms
+  var heatWindowMs = heatWindowDays * GAME_MONTH_MS;
+  // Use lastWhelped if set, otherwise heatCycleStart, otherwise maturity date
   var cycleStartMs = animal.lastWhelped || animal.heatCycleStart || (bornMs + maturityMs);
   var timeSinceCycleStart = nowMs - cycleStartMs;
   var positionInCycle = timeSinceCycleStart % intervalMs;
@@ -2249,7 +2251,7 @@ function getHeatStatus(animal, nowMs) {
     return { status: "in_heat", hoursLeft: hoursLeft };
   }
   var msUntilNextHeat = intervalMs - positionInCycle;
-  var daysUntil = Math.ceil(msUntilNextHeat / (24 * 60 * 60 * 1000));
+  var daysUntil = Math.ceil(msUntilNextHeat / GAME_MONTH_MS);
   return { status: "waiting", daysUntilHeat: daysUntil };
 }
 
@@ -5813,6 +5815,8 @@ function App() {
       var coiMsg = pupCOICheck >= 50 ? "Expect 2-3 fewer pups, severe health penalties." : pupCOICheck >= 25 ? "Expect 1-2 fewer pups, health penalties likely." : "May reduce litter size by 1.";
       if (!confirm("\u26A0\uFE0F Inbreeding Warning\n\nCOI is " + coiLabel + "\n" + coiMsg + "\n\nProceed with this breeding?")) return;
     }
+    // Generate the litter
+    var pups = breedPair(sire, dam);
     // Calculate COI for each pup now that we know sireId/damId
     var pupCOI = calcCOI(sire.id, dam.id, animals);
     pups = pups.map(function(p){ return Object.assign({}, p, { coi: pupCOI }); });
