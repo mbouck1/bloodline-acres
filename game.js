@@ -2647,6 +2647,205 @@ function DNAModal(_ref5) {
   ))));
 }
 
+function BreedPhotoModal(_ref_bpm) {
+  var photoUrl = _ref_bpm.photoUrl, breedName = _ref_bpm.breedName, onClose = _ref_bpm.onClose;
+  return /*#__PURE__*/React.createElement("div", {
+    onClick: onClose,
+    style: { position:"fixed", top:0, left:0, right:0, bottom:0, zIndex:9999,
+      background:"rgba(0,0,0,0.92)", display:"flex", flexDirection:"column",
+      alignItems:"center", justifyContent:"center" }
+  },
+    /*#__PURE__*/React.createElement("div", {
+      onClick: function(e){ e.stopPropagation(); },
+      style: { position:"relative", maxWidth:"90vw", maxHeight:"85vh" }
+    },
+      /*#__PURE__*/React.createElement("img", {
+        src: photoUrl, alt: breedName,
+        style: { maxWidth:"90vw", maxHeight:"80vh", objectFit:"contain",
+          borderRadius:12, display:"block", boxShadow:"0 0 60px rgba(0,0,0,0.8)" }
+      }),
+      /*#__PURE__*/React.createElement("div", {
+        style: { textAlign:"center", color:"#b09070", marginTop:10, fontSize:"0.9rem",
+          fontStyle:"italic" }
+      }, breedName)
+    ),
+    /*#__PURE__*/React.createElement("button", {
+      onClick: onClose,
+      style: { position:"fixed", top:16, right:16, background:"#443828",
+        border:"1px solid #4a3a28", color:"#f0e6d3", borderRadius:"50%",
+        width:36, height:36, fontSize:"1.1rem", cursor:"pointer",
+        display:"flex", alignItems:"center", justifyContent:"center" }
+    }, "✕")
+  );
+}
+
+// ── PUP NAME EDITOR ───────────────────────────────────────────
+// Inline name editor for litter pup rows. Shows a text input + 4 suggested names.
+function PupNameEditor(props) {
+  var pup = props.pup, onSave = props.onSave, onClose = props.onClose;
+  var _ns = _slicedToArray(useState(pup.name), 2), nameVal = _ns[0], setNameVal = _ns[1];
+  var _sg = _slicedToArray(useState(function(){ return generateDogNameSuggestions(pup.sex, 6); }), 2),
+    suggestions = _sg[0], setSuggestions = _sg[1];
+
+  function save() {
+    var n = nameVal.trim();
+    if (n) onSave(n);
+    onClose();
+  }
+
+  return React.createElement("div", {
+    style: { background:"#1e1408", border:"1px solid #6d28d9", borderRadius:8, padding:"10px 12px", marginTop:4 },
+    onClick: function(e){ e.stopPropagation(); }
+  },
+    React.createElement("div", { style:{ fontSize:"0.72rem", color:"#a78bfa", marginBottom:6, fontWeight:"bold" } }, "✏️ Name this pup"),
+    React.createElement("div", { style:{ display:"flex", gap:6, marginBottom:8 } },
+      React.createElement("input", {
+        value: nameVal,
+        onChange: function(e){ setNameVal(e.target.value); },
+        onKeyDown: function(e){ if (e.key==="Enter") save(); if (e.key==="Escape") onClose(); },
+        autoFocus: true,
+        placeholder: "Enter a name...",
+        style: { flex:1, background:"#2a1e14", border:"1px solid #4a3a28", color:"#f0e6d3",
+          borderRadius:5, padding:"4px 8px", fontSize:"0.82rem", outline:"none" }
+      }),
+      React.createElement("button", {
+        onClick: save,
+        style: { background:"#22c55e", border:"none", color:"#000", borderRadius:5, padding:"4px 10px",
+          cursor:"pointer", fontSize:"0.8rem", fontWeight:"bold" }
+      }, "Save")
+    ),
+    React.createElement("div", { style:{ fontSize:"0.68rem", color:"#6b5038", marginBottom:4 } }, "Suggestions:"),
+    React.createElement("div", { style:{ display:"flex", flexWrap:"wrap", gap:4, marginBottom:6 } },
+      suggestions.map(function(n){
+        return React.createElement("button", {
+          key: n,
+          onClick: function(){ setNameVal(n); },
+          style: { background:"#2a1e14", border:"1px solid #4a3a28", color:"#c4956a",
+            borderRadius:4, padding:"2px 8px", fontSize:"0.72rem", cursor:"pointer" }
+        }, n);
+      })
+    ),
+    React.createElement("button", {
+      onClick: function(){ setSuggestions(generateDogNameSuggestions(pup.sex, 6)); },
+      style: { background:"transparent", border:"none", color:"#4a3a28", fontSize:"0.68rem",
+        cursor:"pointer", padding:0, textDecoration:"underline" }
+    }, "↻ More names"),
+    React.createElement("button", {
+      onClick: onClose,
+      style: { background:"transparent", border:"none", color:"#4a3a28", fontSize:"0.68rem",
+        cursor:"pointer", padding:"0 0 0 12px", textDecoration:"underline" }
+    }, "Cancel")
+  );
+}
+
+function BreedPhoto(_ref_bp) {
+  var animal    = _ref_bp.animal;
+  var speciesKey = _ref_bp.species || "dog";
+  var _useState_bp  = _slicedToArray(useState(false), 2), imgErr     = _useState_bp[0],  setImgErr     = _useState_bp[1];
+  var _useState_bp2 = _slicedToArray(useState(false), 2), showModal  = _useState_bp2[0], setShowModal  = _useState_bp2[1];
+  var _useState_bp3 = _slicedToArray(useState(null),  2), fetchedUrl = _useState_bp3[0], setFetchedUrl = _useState_bp3[1];
+  var _useState_bp4 = _slicedToArray(useState(null),  2), supaUrl    = _useState_bp4[0], setSupaUrl    = _useState_bp4[1];
+  var _useState_bp5 = _slicedToArray(useState(false), 2), showUpload = _useState_bp5[0], setShowUpload = _useState_bp5[1];
+  var breedName  = animal.breed || "";
+  var staticUrl  = BREED_PHOTOS[breedName] || null;
+
+  // Check Supabase for approved community image
+  useEffect(function() {
+    if (typeof baGetApprovedImage === "function") {
+      // If images already loaded, check immediately
+      if (typeof BA_IMAGES_LOADED !== "undefined" && BA_IMAGES_LOADED) {
+        setSupaUrl(baGetApprovedImage(speciesKey, breedName));
+      }
+    }
+  }, [breedName, speciesKey]);
+
+  // For mixed breeds fallback
+  var photoBreed = breedName;
+  if (!staticUrl && !supaUrl && breedName.includes("×")) {
+    var parts = breedName.split(" × ").map(function(s){ return s.trim(); });
+    var freq = {};
+    parts.forEach(function(b){ freq[b] = (freq[b] || 0) + 1; });
+    var dominant = parts.reduce(function(a, b){ return (freq[a]||0) >= (freq[b]||0) ? a : b; });
+    if (dominant.includes("×")) dominant = dominant.split(" × ")[0].trim();
+    photoBreed = dominant;
+  }
+
+  useEffect(function() {
+    if (!staticUrl && !supaUrl) {
+      if (speciesKey === "dog") {
+        if (DOG_CEO_MAP[photoBreed]) {
+          fetchDogPhoto(photoBreed, function(url) { setFetchedUrl(url); }, function() {});
+        } else if (photoBreed !== breedName && DOG_CEO_MAP[breedName]) {
+          fetchDogPhoto(breedName, function(url) { setFetchedUrl(url); }, function() {});
+        }
+      }
+    }
+  }, [breedName, photoBreed, supaUrl]);
+
+  var photoUrl = supaUrl || staticUrl || fetchedUrl;
+  var isCommunityPhoto = !!supaUrl;
+
+  // Upload panel shown inline
+  if (showUpload) {
+    return /*#__PURE__*/React.createElement("div", { style:{ marginBottom:6 } },
+      typeof BaImageUploader !== "undefined"
+        ? /*#__PURE__*/React.createElement(BaImageUploader, {
+            species: speciesKey,
+            breed: breedName,
+            onCancel: function(){ setShowUpload(false); }
+          })
+        : /*#__PURE__*/React.createElement("div",{style:{color:"#ef4444",fontSize:"0.72rem"}},"Uploader not loaded.")
+    );
+  }
+
+  if (!photoUrl || imgErr) {
+    return /*#__PURE__*/React.createElement("div", {
+      style: { display:"flex", justifyContent:"flex-end", alignItems:"center", gap:6, marginBottom:6 }
+    },
+      /*#__PURE__*/React.createElement("button", {
+        onClick: function(e){ e.stopPropagation(); setShowUpload(true); },
+        title: "Submit a photo for " + breedName,
+        style: { background:"#071828", border:"1px solid #1e3a5f", borderRadius:6,
+          padding:"3px 8px", cursor:"pointer", color:"#38bdf8", fontSize:"0.72rem",
+          display:"flex", alignItems:"center", gap:3 }
+      }, "📸 Add Photo"),
+      /*#__PURE__*/React.createElement("span", { style:{ fontSize:"1.4rem", opacity:0.2 } }, speciesKey==="horse"?"🐴":"🐕")
+    );
+  }
+
+  return /*#__PURE__*/React.createElement(React.Fragment, null,
+    showModal && /*#__PURE__*/React.createElement(BreedPhotoModal, {
+      photoUrl: photoUrl, breedName: breedName,
+      onClose: function(){ setShowModal(false); }
+    }),
+    /*#__PURE__*/React.createElement("div", {
+      style: { display:"flex", justifyContent:"flex-end", alignItems:"center", gap:6, marginBottom:6 }
+    },
+      isCommunityPhoto && /*#__PURE__*/React.createElement("span", {
+        title:"Community submitted photo",
+        style:{ fontSize:"0.62rem", color:"#38bdf8", background:"#071828",
+          border:"1px solid #1e3a5f", borderRadius:3, padding:"1px 5px" }
+      }, "👥 Community"),
+      /*#__PURE__*/React.createElement("button", {
+        onClick: function(e){ e.stopPropagation(); setShowModal(true); },
+        title: "View " + breedName + " photo",
+        style: { background:"#1a1410", border:"1px solid #4a3a28",
+          borderRadius:6, padding:"3px 8px", cursor:"pointer",
+          color:"#b09070", fontSize:"0.75rem", display:"flex",
+          alignItems:"center", gap:4 }
+      }, "📷 Photo"),
+      !isCommunityPhoto && /*#__PURE__*/React.createElement("button", {
+        onClick: function(e){ e.stopPropagation(); setShowUpload(true); },
+        title: "Submit a better photo for " + breedName,
+        style: { background:"#071828", border:"1px solid #1e3a5f", borderRadius:6,
+          padding:"3px 8px", cursor:"pointer", color:"#38bdf8", fontSize:"0.72rem" }
+      }, "📸")
+    )
+  );
+}
+// ─────────────────────────────────────────────────────────────────────────────
+// ── ANIMAL CARD ───────────────────────────────────────────────
+// ── PEDIGREE MODAL ────────────────────────────────────────────
 function PedigreeModal(_ref_ped) {
   var animal = _ref_ped.animal, onClose = _ref_ped.onClose;
   var allAnimals = useContext(AnimalsContext);
@@ -2853,6 +3052,7 @@ function PedigreeModal(_ref_ped) {
     )
   );
 }
+
 
 function Card(_ref0) {
   var _animal$healthIssues, _animal$lethalWarning, _animal$mutations2;
