@@ -5234,7 +5234,12 @@ function App() {
     _useState8 = _slicedToArray(_useState7, 2),
     breeds = _useState8[0],
     setBreeds = _useState8[1];
-  var _useState9 = useState(_savedState ? _savedState.animals || [] : []),
+  var _useState9 = useState((function(){
+    var raw = _savedState ? _savedState.animals || [] : [];
+    // Dedup by id — strip any duplicates baked into saved state
+    var seen = new Set();
+    return raw.filter(function(a){ if (seen.has(a.id)) return false; seen.add(a.id); return true; });
+  })()),
     _useState0 = _slicedToArray(_useState9, 2),
     animals = _useState0[0],
     setAnimals = _useState0[1];
@@ -5671,9 +5676,11 @@ function App() {
           var destKennelId = lit.dam.kennelId || null;
           if (kept.length > 0) {
             setAnimals(function(prev) {
+              var existingIds = new Set(prev.map(function(a){ return a.id; }));
+              var newPups = kept.filter(function(p){ return !existingIds.has(p.id); });
               return prev
                 .map(function(animal){ return animal.id===lit.dam.id ? Object.assign({},animal,{inWhelping:false}) : animal; })
-                .concat(kept.map(function(p){ return Object.assign({}, p, { kennelId: destKennelId }); }));
+                .concat(newPups.map(function(p){ return Object.assign({}, p, { kennelId: destKennelId }); }));
             });
           } else {
             setAnimals(function(prev){ return prev.map(function(animal){ return animal.id===lit.dam.id ? Object.assign({},animal,{inWhelping:false}) : animal; }); });
@@ -6061,7 +6068,9 @@ function App() {
       if (kept.length > 0) {
         var kennelId = activeKennel ? activeKennel.id : (lit.dam.kennelId || null);
         setAnimals(function(prev) {
-          return prev.concat(kept.map(function(p){
+          var existingIds = new Set(prev.map(function(a){ return a.id; }));
+          var newPups = kept.filter(function(p){ return !existingIds.has(p.id); });
+          return prev.concat(newPups.map(function(p){
             return Object.assign({}, p, { kennelId: kennelId, heldSince: null });
           }));
         });
@@ -6081,7 +6090,9 @@ function App() {
     if (kept.length > 0) {
       var kennelId = activeKennel ? activeKennel.id : null;
       setAnimals(function(prev) {
-        return prev.concat(kept.map(function(p){ return Object.assign({}, p, { kennelId: kennelId }); }));
+        var existingIds = new Set(prev.map(function(a){ return a.id; }));
+        var newPups = kept.filter(function(p){ return !existingIds.has(p.id); });
+        return prev.concat(newPups.map(function(p){ return Object.assign({}, p, { kennelId: kennelId }); }));
       });
       setLog(function(lg) { return [{ id: now, type: "pups_kept", count: kept.length, date: new Date().toLocaleString() }].concat(_toConsumableArray(lg)); });
     }
@@ -7776,7 +7787,10 @@ function App() {
       /*#__PURE__*/React.createElement("div", { style:{ display:"flex", gap:10, marginTop:4 } },
         /*#__PURE__*/React.createElement("button", {
           onClick: function(){
-            setAnimals(function(p){ return [].concat(_toConsumableArray(p), [pendingBoughtDog]); });
+            setAnimals(function(p){ 
+  if (p.some(function(a){ return a.id===pendingBoughtDog.id; })) return p;
+  return [].concat(_toConsumableArray(p), [pendingBoughtDog]); 
+});
             setPendingBoughtDog(null);
             setShowBuyDogs(false);
           },
