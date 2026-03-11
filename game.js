@@ -2647,6 +2647,1321 @@ function DNAModal(_ref5) {
   ))));
 }
 
+function PedigreeModal(_ref_ped) {
+  var animal = _ref_ped.animal, onClose = _ref_ped.onClose;
+  var allAnimals = useContext(AnimalsContext);
+
+  // Build a lookup map by id
+  var lookup = {};
+  allAnimals.forEach(function(a){ lookup[a.id] = a; });
+
+  // Walk up to 3 generations: returns { self, sire, dam, ss, sd, ds, dd, sss, ssd, sds, sdd, dss, dsd, dds, ddd }
+  function getAnc(id, depth) {
+    if (!id || depth > 3) return null;
+    var a = lookup[id];
+    if (!a) return { id: id, name: "Unknown", breed: "–", sex: "M", unknown: true };
+    return a;
+  }
+
+  var self = animal;
+  var sire = getAnc(self.sireId, 1);
+  var dam  = getAnc(self.damId,  1);
+  var ss   = sire && !sire.unknown ? getAnc(sire.sireId, 2) : null;
+  var sd   = sire && !sire.unknown ? getAnc(sire.damId,  2) : null;
+  var ds   = dam  && !dam.unknown  ? getAnc(dam.sireId,  2) : null;
+  var dd   = dam  && !dam.unknown  ? getAnc(dam.damId,   2) : null;
+  var sss  = ss   && !ss.unknown   ? getAnc(ss.sireId,   3) : null;
+  var ssd  = ss   && !ss.unknown   ? getAnc(ss.damId,    3) : null;
+  var sds  = sd   && !sd.unknown   ? getAnc(sd.sireId,   3) : null;
+  var sdd  = sd   && !sd.unknown   ? getAnc(sd.damId,    3) : null;
+  var dss  = ds   && !ds.unknown   ? getAnc(ds.sireId,   3) : null;
+  var dsd  = ds   && !ds.unknown   ? getAnc(ds.damId,    3) : null;
+  var dds  = dd   && !dd.unknown   ? getAnc(dd.sireId,   3) : null;
+  var ddd  = dd   && !dd.unknown   ? getAnc(dd.damId,    3) : null;
+
+  var hasAnyLineage = sire || dam;
+
+  // Mini ancestor card — compact but shows key stats
+  function AncCard(props) {
+    var a = props.a, gen = props.gen;
+    var emptyStyle = { background:"#1a1208", border:"1px dashed #2e2218", borderRadius:8,
+      padding:"8px 10px", minHeight:72, display:"flex", alignItems:"center",
+      justifyContent:"center", flexDirection:"column", gap:4 };
+
+    if (!a) return React.createElement("div", { style: emptyStyle },
+      React.createElement("span", { style:{ color:"#2e2218", fontSize:"1rem" } }, "🐾"),
+      React.createElement("span", { style:{ color:"#3a2810", fontSize:"0.65rem" } }, "No record")
+    );
+
+    if (a.unknown) return React.createElement("div", { style: emptyStyle },
+      React.createElement("span", { style:{ color:"#3a2810", fontSize:"1rem" } }, "🐾"),
+      React.createElement("span", { style:{ color:"#4a3a28", fontSize:"0.7rem", fontWeight:"bold" } }, "Purchased"),
+      React.createElement("span", { style:{ color:"#3a2810", fontSize:"0.62rem" } }, "No lineage on file")
+    );
+
+    var sexColor = a.sex === "M" ? "#60a5fa" : "#f472b6";
+    var sexIcon  = a.sex === "M" ? "♂" : "♀";
+    var effH = applyCoiPenalty(a.healthScore || 0, a.coi || 0);
+    var sz = getCurrentSize(a);
+
+    return React.createElement("div", {
+      style: { background:"#2a1e14", border:"1px solid #4a3a28", borderRadius:8,
+        padding:"8px 10px", fontSize:"0.75rem" }
+    },
+      // Name + sex
+      React.createElement("div", { style:{ display:"flex", justifyContent:"space-between", alignItems:"center", marginBottom:4 } },
+        React.createElement("span", { style:{ color:"#f1f5f9", fontWeight:"bold", fontSize:"0.8rem",
+          overflow:"hidden", textOverflow:"ellipsis", whiteSpace:"nowrap", maxWidth:"80%" } }, a.name),
+        React.createElement("span", { style:{ color:sexColor, fontSize:"0.8rem", flexShrink:0 } }, sexIcon)
+      ),
+      // Breed
+      React.createElement("div", { style:{ color:"#b09070", fontSize:"0.7rem", marginBottom:4,
+        overflow:"hidden", textOverflow:"ellipsis", whiteSpace:"nowrap" } }, a.breed),
+      // Stats row
+      React.createElement("div", { style:{ display:"flex", gap:6, flexWrap:"wrap", marginBottom:3 } },
+        React.createElement("span", { style:{ color: healthColor(effH), fontSize:"0.7rem", fontWeight:"bold" } }, "❤️ " + effH),
+        React.createElement("span", { style:{ color:"#c4956a", fontSize:"0.7rem", fontWeight:"bold" } }, "⚡ " + (a.perfScore || 0)),
+        React.createElement("span", { style:{ color: coiColor(a.coi || 0), fontSize:"0.7rem", fontWeight:"bold" } }, "COI " + (a.coi || 0) + "%")
+      ),
+      // Weight + height
+      React.createElement("div", { style:{ display:"flex", gap:8, marginBottom:3 } },
+        React.createElement("span", { style:{ color:"#c4956a", fontSize:"0.68rem" } }, "⚖️ " + sz.currentW + " lbs"),
+        React.createElement("span", { style:{ color:"#c4956a", fontSize:"0.68rem" } }, "📏 " + sz.currentH + "\"")
+      ),
+      // Coat color
+      a.coatColor && React.createElement("div", { style:{ color:"#8a7055", fontSize:"0.65rem", marginBottom:2,
+        overflow:"hidden", textOverflow:"ellipsis", whiteSpace:"nowrap" } }, a.coatColor),
+      // Age
+      React.createElement("div", { style:{ color:"#6b5038", fontSize:"0.65rem" } },
+        a.ageMonths ? (Math.round(a.ageMonths / 12 * 10) / 10) + " yrs" : "–"
+      )
+    );
+  }
+
+  // Generation label header
+  function GenLabel(props) {
+    return React.createElement("div", {
+      style:{ color:"#8a7055", fontSize:"0.72rem", textTransform:"uppercase",
+        letterSpacing:"0.08em", marginBottom:6, paddingBottom:4, borderBottom:"1px solid #2e2218" }
+    }, props.label);
+  }
+
+  var _dragP = useDrag(), dragHandlePropsP = _dragP.dragHandleProps, panelStyleP = _dragP.panelStyle;
+
+  return React.createElement("div", {
+    style:{ position:"fixed", top:0, left:0, right:0, bottom:0, background:"rgba(0,0,0,0.88)",
+      zIndex:500, display:"flex", alignItems:"center", justifyContent:"center" },
+    onClick: onClose
+  },
+    React.createElement("div", {
+      style: Object.assign({ background:"#1a1208", border:"1px solid #6a5238", borderRadius:14,
+        width:"min(700px,96vw)", height:"90vh", display:"flex", flexDirection:"column",
+        overflow:"hidden", boxShadow:"0 8px 40px rgba(0,0,0,0.7)" }, panelStyleP),
+      onClick: function(e){ e.stopPropagation(); }
+    },
+      // Header — drag handle
+      React.createElement("div", Object.assign({}, dragHandlePropsP, {
+        style: Object.assign({ display:"flex", alignItems:"center", padding:"12px 16px",
+          borderBottom:"1px solid #2e2218", background:"#241810", flexShrink:0,
+          userSelect:"none" }, dragHandlePropsP.style)
+      }),
+        React.createElement("span", { style:{ fontSize:"1rem" } }, "🐾"),
+        React.createElement("div", { style:{ flex:1, marginLeft:10 } },
+          React.createElement("div", { style:{ color:"#f1f5f9", fontWeight:"bold", fontSize:"0.95rem" } },
+            animal.name + " — Pedigree"),
+          React.createElement("div", { style:{ color:"#8a7055", fontSize:"0.75rem" } },
+            animal.breed + " · " + (animal.sex==="M"?"♂ Male":"♀ Female") +
+            (animal.coi ? " · COI " + animal.coi + "%" : ""))
+        ),
+        React.createElement("button", {
+          onClick: onClose,
+          onMouseDown: function(e){ e.stopPropagation(); },
+          style:{ background:"transparent", border:"1px solid #4a3a28", color:"#b09070",
+            borderRadius:6, padding:"4px 10px", cursor:"pointer", fontSize:"0.8rem" }
+        }, "✕ Close")
+      ),
+
+      // Scrollable body
+      React.createElement("div", {
+        style:{ flex:1, overflowY:"auto", padding:"14px 16px" }
+      },
+        !hasAnyLineage
+          ? React.createElement("div", {
+              style:{ textAlign:"center", color:"#4a3a28", padding:"60px 0", fontSize:"0.85rem" }
+            }, "No lineage on record — this dog was purchased, not bred here.\nBreed your own dogs to build a pedigree.")
+
+          : React.createElement(React.Fragment, null,
+
+            // Generation 1 — Parents
+            React.createElement("div", { style:{ marginBottom:18 } },
+              React.createElement(GenLabel, { label:"Generation 1 — Parents" }),
+              React.createElement("div", { style:{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:10 } },
+                React.createElement("div", null,
+                  React.createElement("div", { style:{ color:"#60a5fa", fontSize:"0.7rem", marginBottom:4, fontWeight:"bold" } }, "♂ Sire"),
+                  React.createElement(AncCard, { a: sire, gen:1 })
+                ),
+                React.createElement("div", null,
+                  React.createElement("div", { style:{ color:"#f472b6", fontSize:"0.7rem", marginBottom:4, fontWeight:"bold" } }, "♀ Dam"),
+                  React.createElement(AncCard, { a: dam, gen:1 })
+                )
+              )
+            ),
+
+            // Generation 2 — Grandparents
+            (ss||sd||ds||dd) && React.createElement("div", { style:{ marginBottom:18 } },
+              React.createElement(GenLabel, { label:"Generation 2 — Grandparents" }),
+              React.createElement("div", { style:{ display:"flex", gap:8, overflowX:"auto", paddingBottom:6 } },
+                React.createElement("div", { style:{ minWidth:160, flex:"0 0 160px" } },
+                  React.createElement("div", { style:{ color:"#60a5fa", fontSize:"0.65rem", marginBottom:4 } }, "♂ Sire's Sire"),
+                  React.createElement(AncCard, { a: ss, gen:2 })
+                ),
+                React.createElement("div", { style:{ minWidth:160, flex:"0 0 160px" } },
+                  React.createElement("div", { style:{ color:"#f472b6", fontSize:"0.65rem", marginBottom:4 } }, "♀ Sire's Dam"),
+                  React.createElement(AncCard, { a: sd, gen:2 })
+                ),
+                React.createElement("div", { style:{ minWidth:160, flex:"0 0 160px" } },
+                  React.createElement("div", { style:{ color:"#60a5fa", fontSize:"0.65rem", marginBottom:4 } }, "♂ Dam's Sire"),
+                  React.createElement(AncCard, { a: ds, gen:2 })
+                ),
+                React.createElement("div", { style:{ minWidth:160, flex:"0 0 160px" } },
+                  React.createElement("div", { style:{ color:"#f472b6", fontSize:"0.65rem", marginBottom:4 } }, "♀ Dam's Dam"),
+                  React.createElement(AncCard, { a: dd, gen:2 })
+                )
+              )
+            ),
+
+            // Generation 3 — Great-Grandparents
+            (sss||ssd||sds||sdd||dss||dsd||dds||ddd) && React.createElement("div", { style:{ marginBottom:18 } },
+              React.createElement(GenLabel, { label:"Generation 3 — Great-Grandparents" }),
+              React.createElement("div", { style:{ display:"flex", gap:8, overflowX:"auto", paddingBottom:6 } },
+                [
+                  { a:sss, label:"♂ SS·Sire" }, { a:ssd, label:"♀ SS·Dam" },
+                  { a:sds, label:"♂ SD·Sire" }, { a:sdd, label:"♀ SD·Dam" },
+                  { a:dss, label:"♂ DS·Sire" }, { a:dsd, label:"♀ DS·Dam" },
+                  { a:dds, label:"♂ DD·Sire" }, { a:ddd, label:"♀ DD·Dam" }
+                ].map(function(item, i){
+                  var col = (i % 2 === 0) ? "#60a5fa" : "#f472b6";
+                  return React.createElement("div", { key:i, style:{ minWidth:150, flex:"0 0 150px" } },
+                    React.createElement("div", { style:{ color:col, fontSize:"0.62rem", marginBottom:3 } }, item.label),
+                    React.createElement(AncCard, { a: item.a, gen:3 })
+                  );
+                })
+              )
+            )
+          )
+      )
+    )
+  );
+}
+
+function Card(_ref0) {
+  var _animal$healthIssues, _animal$lethalWarning, _animal$mutations2;
+  var animal = _ref0.animal,
+    onSelect = _ref0.onSelect,
+    isSelected = _ref0.isSelected,
+    onRemove = _ref0.onRemove,
+    onRename = _ref0.onRename,
+    ineligibleReason = _ref0.ineligibleReason,
+    fullHeight = _ref0.fullHeight,
+    onStud = _ref0.onStud,
+    onSell = _ref0.onSell,
+    onRetire = _ref0.onRetire;
+  var _useState = useState(false),
+    _useState2 = _slicedToArray(_useState, 2),
+    showDNA = _useState2[0],
+    setShowDNA = _useState2[1];
+  var _useState_ped = useState(false),
+    _useState_ped2 = _slicedToArray(_useState_ped, 2),
+    showPedigree = _useState_ped2[0],
+    setShowPedigree = _useState_ped2[1];
+  var _useState3 = useState(false),
+    _useState4 = _slicedToArray(_useState3, 2),
+    editing = _useState4[0],
+    setEditing = _useState4[1];
+  var _useState5 = useState(animal.name),
+    _useState6 = _slicedToArray(_useState5, 2),
+    nameVal = _useState6[0],
+    setNameVal = _useState6[1];
+  var submitRename = function submitRename(e) {
+    e.stopPropagation();
+    if (nameVal.trim()) onRename && onRename(animal.id, nameVal.trim());
+    setEditing(false);
+  };
+  return /*#__PURE__*/React.createElement(React.Fragment, null,
+    showDNA && /*#__PURE__*/React.createElement(DNAModal, {
+      animal: animal,
+      onClose: function onClose() { return setShowDNA(false); }
+    }),
+    showPedigree && /*#__PURE__*/React.createElement(PedigreeModal, {
+      animal: animal,
+      onClose: function(){ setShowPedigree(false); }
+    }), /*#__PURE__*/React.createElement("div", {
+    onClick: function onClick() {
+      return onSelect && onSelect(animal);
+    },
+    style: {
+      background: isSelected ? "#6a4a28" : "#4a3820",
+      border: "1px solid " + (isSelected ? "#d4942a" : ineligibleReason && onSelect ? "#4a3a28" : "#6a5238"),
+      borderRadius: 10,
+      padding: 16,
+      cursor: onSelect ? (ineligibleReason ? "not-allowed" : "pointer") : "default",
+      transition: "border-color 0.15s, background 0.15s",
+      opacity: ineligibleReason && onSelect ? 0.65 : 1,
+      display: "flex",
+      flexDirection: "column",
+      height: fullHeight ? "100%" : "auto",
+      boxSizing: "border-box",
+      overflow: "auto",
+      boxShadow: isSelected ? "0 0 14px rgba(212,148,42,0.25)" : "0 2px 6px rgba(0,0,0,0.4)",
+      resize: "both",
+      minWidth: 220,
+      minHeight: 120
+    }
+  },
+  /*#__PURE__*/React.createElement("div", {
+    style: { display:"flex", justifyContent:"space-between", alignItems:"flex-start", marginBottom:8 }
+  },
+    /*#__PURE__*/React.createElement("div", { style: { display:"flex", alignItems:"center", gap:8 } },
+      /*#__PURE__*/React.createElement("div", {
+        style: { fontSize:"2rem", lineHeight:1 }
+      }, animal.sex === "M" ? "🐕" : "🐩"),
+      /*#__PURE__*/React.createElement(BreedPhoto, { animal: animal })
+    ),
+    onSelect && /*#__PURE__*/React.createElement("button", {
+      onClick: function(e){ e.stopPropagation(); onSelect && onSelect(animal); },
+      style: {
+        background: isSelected ? "#d4942a" : "#2e1e08",
+        border: "2px solid " + (isSelected ? "#d4942a" : "#6a5238"),
+        color: isSelected ? "#100d08" : "#8a7055",
+        borderRadius: 6, padding: "4px 12px", cursor: "pointer",
+        fontSize: "0.78rem", fontWeight: "bold"
+      }
+    }, isSelected ? "✓ Selected" : "Select")
+  )),
+  !animal.retired && (onStud || onSell || onRetire) && /*#__PURE__*/React.createElement("div", {
+    style: { display:"flex", gap:4, marginBottom:8 },
+    onClick: function(e){ e.stopPropagation(); }
+  },
+    animal.sex === "M" && onStud && /*#__PURE__*/React.createElement("button", {
+      onClick: function(e){ e.stopPropagation(); onStud(animal); },
+      style: { flex:1, background: animal.isStud?"#2a1e14":"#141008", border:"1px solid "+(animal.isStud?"#22c55e":"#4a3a28"),
+        color: animal.isStud?"#22c55e":"#8a7055", borderRadius:5, padding:"5px 0", cursor:"pointer", fontSize:"0.8rem", fontWeight:"bold" }
+    }, animal.isStud ? "\uD83D\uDC3E Stud \u2713" : "\uD83D\uDC3E Stud"),
+    onSell && /*#__PURE__*/React.createElement("button", {
+      onClick: function(e){ e.stopPropagation(); onSell(animal); },
+      style: { flex:1, background: animal.forSale?"#2a1e14":"#141008", border:"1px solid "+(animal.forSale?"#d4860a":"#4a3a28"),
+        color: animal.forSale?"#d4860a":"#8a7055", borderRadius:5, padding:"5px 0", cursor:"pointer", fontSize:"0.8rem", fontWeight:"bold" }
+    }, animal.forSale ? "\uD83D\uDCB0 Listed" : "\uD83D\uDCB0 Sell"),
+    onRetire && /*#__PURE__*/React.createElement("button", {
+      onClick: function(e){ e.stopPropagation(); onRetire(animal); },
+      style: { flex:1, background:"#141008", border:"1px solid #4a3a28", color:"#8a7055",
+        borderRadius:5, padding:"3px 0", cursor:"pointer", fontSize:"0.68rem", fontWeight:"bold" }
+    }, "\uD83C\uDFE1 Retire")
+  ),
+  /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: "flex",
+      justifyContent: "space-between",
+      marginBottom: 8
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      flex: 1,
+      minWidth: 0
+    }
+  }, editing ? /*#__PURE__*/React.createElement("div", {
+    onClick: function onClick(e) {
+      return e.stopPropagation();
+    },
+    style: {
+      display: "flex",
+      gap: 4,
+      marginBottom: 2
+    }
+  }, /*#__PURE__*/React.createElement("input", {
+    value: nameVal,
+    onChange: function onChange(e) {
+      return setNameVal(e.target.value);
+    },
+    onKeyDown: function onKeyDown(e) {
+      if (e.key === "Enter") submitRename(e);
+      if (e.key === "Escape") {
+        setEditing(false);
+        setNameVal(animal.name);
+      }
+    },
+    autoFocus: true,
+    style: {
+      background: "#1a1410",
+      border: "1px solid #d4942a",
+      color: "#f1f5f9",
+      borderRadius: 4,
+      padding: "2px 6px",
+      fontSize: "0.95rem",
+      flex: 1,
+      minWidth: 0
+    }
+  }), /*#__PURE__*/React.createElement("button", {
+    onClick: submitRename,
+    style: {
+      background: "#3a2810",
+      border: "1px solid #d4942a",
+      color: "#d4942a",
+      borderRadius: 4,
+      padding: "2px 6px",
+      cursor: "pointer",
+      fontSize: "0.72rem"
+    }
+  }, "\u2713")) : /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: "flex",
+      alignItems: "center",
+      gap: 4
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      color: "#f1f5f9",
+      fontWeight: "bold",
+      fontSize: "1.1rem"
+    }
+  }, animal.name), onRename && /*#__PURE__*/React.createElement("button", {
+    onClick: function onClick(e) {
+      e.stopPropagation();
+      setEditing(true);
+      setNameVal(animal.name);
+    },
+    style: {
+      background: "none",
+      border: "none",
+      color: "#6b5038",
+      cursor: "pointer",
+      fontSize: "0.78rem",
+      padding: "1px 3px",
+      lineHeight: 1
+    },
+    title: "Rename"
+  }, "\u270F\uFE0F")), /*#__PURE__*/React.createElement("div", {
+    style: {
+      color: "#b09070",
+      fontSize: "0.85rem"
+    }
+  }, animal.breed, " \xB7 ", animal.sex === "M" ? "♂ Male" : "♀ Female", " \xB7 Gen ", animal.generation)), /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: "flex",
+      gap: 5,
+      alignItems: "flex-start"
+    }
+  }, isSelected && /*#__PURE__*/React.createElement("span", {
+    style: {
+      color: "#d4942a",
+      fontSize: "0.72rem",
+      fontWeight: "bold"
+    }
+  }, "\u2713 SEL"), onRemove && /*#__PURE__*/React.createElement("button", {
+    onClick: function onClick(e) {
+      e.stopPropagation();
+      if (window.confirm("Remove " + animal.name + " from your kennel? This cannot be undone.")) {
+        onRemove(animal.id);
+      }
+    },
+    style: {
+      background: "none",
+      border: "1px solid #6b5038",
+      color: "#8a7055",
+      borderRadius: 4,
+      width: 20,
+      height: 20,
+      cursor: "pointer",
+      fontSize: "0.78rem",
+      padding: 0,
+      lineHeight: 1
+    },
+    title: "Remove dog"
+  }, "\u2715"))), /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: "inline-block",
+      background: "#1a1410",
+      border: "1px solid #3a2810",
+      borderRadius: 4,
+      padding: "2px 8px",
+      fontSize: "0.72rem",
+      color: "#b09070",
+      marginBottom: 8
+    }
+  },
+    /*#__PURE__*/React.createElement("span", {
+      style: { display:"inline-block", background:"#1a1410", border:"1px solid #3a2810",
+        borderRadius:4, padding:"3px 10px", fontSize:"0.82rem", color:"#b09070", marginRight:4 }
+    }, animal.coatColor ? animal.coatColor.split(" \xB7 ").join(" \u00B7 ") : "Unknown")
+  ),
+  // Coat structure trait pills (Long Coat, Wire, Curly, Wavy, Pale Pigment)
+  (function() {
+    if (!animal.genome) return null;
+    var traits = getCoatTraits(animal.genome);
+    if (!traits.length) return null;
+    return React.createElement("div", { style: { display:"flex", flexWrap:"wrap", gap:4, marginBottom:6 } },
+      traits.map(function(t, i) {
+        return React.createElement("span", {
+          key: i,
+          style: { display:"inline-block", background:"#1a1e2a", border:"1px solid #3a4a6a",
+            borderRadius:3, padding:"2px 7px", fontSize:"0.65rem", color:"#93c5fd",
+            fontWeight:"bold" }
+        }, t.icon + " " + t.label);
+      })
+    );
+  })(),
+  (function() {
+    var stage = getAgeStage(animal.ageMonths || 0);
+    var lifespanYrs = animal.lifespan ? Math.round(animal.lifespan / 12 * 10) / 10 : "?";
+    var ageYrs = animal.ageMonths ? Math.round(animal.ageMonths / 12 * 10) / 10 : 0;
+    return /*#__PURE__*/React.createElement("div", {
+      style: { display: "flex", gap: 6, alignItems: "center", marginBottom: 8, flexWrap: "wrap" }
+    },
+      /*#__PURE__*/React.createElement("span", {
+        style: {
+          display: "inline-block", background: "#1a1410", border: "1px solid " + stage.color,
+          borderRadius: 4, padding: "3px 10px", fontSize: "0.82rem", color: stage.color, fontWeight: "bold"
+        }
+      }, stage.label),
+      /*#__PURE__*/React.createElement("span", {
+        style: { color: "#b09070", fontSize: "0.82rem" }
+      }, ageYrs + " / " + lifespanYrs + " yrs"),
+      animal.retired && /*#__PURE__*/React.createElement("span", {
+        style: {
+          display: "inline-block", background: "#481808", border: "1px solid #ef4444",
+          borderRadius: 4, padding: "3px 10px", fontSize: "0.8rem", color: "#fca5a5"
+        }
+      }, "\uD83C\uDFF4 Retired"),
+      animal.sick && /*#__PURE__*/React.createElement("span", {
+        style: {
+          display: "inline-block", background: "#2d1a00", border: "1px solid #d4860a",
+          borderRadius: 4, padding: "3px 10px", fontSize: "0.8rem", color: "#f0c040"
+        }
+      }, "\uD83E\uDD22 Sick"),
+      animal.injured && /*#__PURE__*/React.createElement("span", {
+        style: {
+          display: "inline-block", background: "#2d1a00", border: "1px solid #f97316",
+          borderRadius: 4, padding: "3px 10px", fontSize: "0.8rem", color: "#fdba74"
+        }
+      }, "\uD83E\uDE79 Injured")
+    );
+  })(), /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: "flex",
+      gap: 6,
+      marginBottom: 8
+    }
+},
+  // Condensed stats row
+  /*#__PURE__*/React.createElement("div", {
+    style: { display: "flex", alignItems: "center", gap: 10, marginBottom: 6,
+      background: "#1a1410", borderRadius: 5, padding: "5px 8px" }
+  },
+    (function(){ var effH = applyCoiPenalty(animal.healthScore, animal.coi); var penalized = effH < animal.healthScore; return /*#__PURE__*/React.createElement(React.Fragment, null,
+      /*#__PURE__*/React.createElement("span", { style: { color: healthColor(effH), fontWeight: "bold", fontSize: "0.95rem" }, title: penalized ? "Base: " + animal.healthScore + " − COI penalty: " + (animal.healthScore - effH) : "" }, "\u2764\uFE0F ", effH, penalized ? /*#__PURE__*/React.createElement("span", { style: { color:"#f97316", fontSize:"0.7rem", marginLeft:2 } }, "\u2193") : null),
+      /*#__PURE__*/React.createElement("span", { style: { color: "#4a3a28" } }, "|"),
+      /*#__PURE__*/React.createElement("span", { style: { color: "#c4956a", fontWeight: "bold", fontSize: "0.95rem" } }, "\u26A1 ", animal.perfScore),
+      /*#__PURE__*/React.createElement("span", { style: { color: "#4a3a28" } }, "|"),
+      /*#__PURE__*/React.createElement("span", { style: { color: coiColor(animal.coi), fontWeight: "bold", fontSize: "0.95rem" } }, "COI ", animal.coi, "%")
+    ); })()
+  ),
+  (function() {
+    var sz = getCurrentSize(animal);
+    var variant = animal.sizeVariant ? getSizeVariantInfo(animal.sizeVariant) : null;
+    return /*#__PURE__*/React.createElement("div", {
+      style: { display: "flex", alignItems: "center", gap: 8, marginBottom: 6,
+        background: "#1a1410", borderRadius: 5, padding: "5px 8px", flexWrap: "wrap" }
+    },
+      /*#__PURE__*/React.createElement("span", { style: { fontSize: "0.82rem" } }, "\u2696\uFE0F"),
+      sz.mature
+        ? /*#__PURE__*/React.createElement("span", { style: { color: "#c4956a", fontSize: "0.82rem", fontWeight: "bold" } }, sz.currentW, " lbs")
+        : /*#__PURE__*/React.createElement("span", { style: { color: "#8a7055", fontSize: "0.78rem" } },
+            /*#__PURE__*/React.createElement("span", { style: { color: "#c4956a", fontWeight: "bold" } }, sz.currentW, " lbs"),
+            " \u2192 ~", sz.adultW, " lbs"
+          ),
+      /*#__PURE__*/React.createElement("span", { style: { color: "#4a3a28" } }, "|"),
+      /*#__PURE__*/React.createElement("span", { style: { fontSize: "0.82rem" } }, "\uD83D\uDCCF"),
+      sz.mature
+        ? /*#__PURE__*/React.createElement("span", { style: { color: "#c4956a", fontSize: "0.82rem", fontWeight: "bold" } }, sz.currentH, "\u2033")
+        : /*#__PURE__*/React.createElement("span", { style: { color: "#8a7055", fontSize: "0.78rem" } },
+            /*#__PURE__*/React.createElement("span", { style: { color: "#c4956a", fontWeight: "bold" } }, sz.currentH, "\u2033"),
+            " \u2192 ~", sz.adultH, "\u2033"
+          ),
+      variant && /*#__PURE__*/React.createElement("span", {
+        style: { color: variant.color, fontSize: "0.72rem", fontWeight: "bold",
+          marginLeft: 4, border: "1px solid "+variant.color, borderRadius: 3, padding: "1px 5px" },
+        title: variant.health
+      }, variant.label)
+    );
+  })(),
+  /*#__PURE__*/React.createElement("div", {
+    style: { display:"flex", gap:4, marginBottom:4, alignItems:"stretch" }
+  },
+    React.createElement("div", {
+      onClick: function(e){ e.stopPropagation(); setShowDNA(true); },
+      title: "VIN: E=Extension K=Dominant R=Red/Recessive | Br=Brindle A=Agouti: Fy=Fawn Wf=Wolf Tp=TanPts Bk=RecBlack | B=Brown D=Dilute M=Merle\nClick to open full DNA panel",
+      style: { flex:1, fontFamily:"monospace", fontSize:"0.78rem", color:"#d4942a",
+        background:"#1a1410", borderRadius:4, padding:"5px 10px", overflow:"hidden",
+        textOverflow:"ellipsis", whiteSpace:"nowrap", fontWeight:"bold",
+        letterSpacing:"0.04em", border:"1px solid #3a2810", cursor:"pointer" }
+    }, "\uD83E\uDDEC ", animal.vinStr),
+    React.createElement("button", {
+      onClick: function(e){
+        e.stopPropagation();
+        navigator.clipboard && navigator.clipboard.writeText(animal.vinStr || "");
+      },
+      title: "Copy VIN to clipboard",
+      style: { background:"#1a1410", border:"1px solid #3a2810", color:"#6b5038",
+        borderRadius:4, padding:"0 8px", cursor:"pointer", fontSize:"0.75rem",
+        flexShrink:0 }
+    }, "\uD83D\uDCCB")
+  ),
+  /*#__PURE__*/React.createElement("button", {
+    onClick: function(e){ e.stopPropagation(); setShowPedigree(true); },
+    style: { width:"100%", background:"#1a1208", border:"1px solid #4a3820", color:"#b09070",
+      borderRadius:4, padding:"5px 0", marginBottom:7, cursor:"pointer",
+      fontSize:"0.78rem", fontWeight:"bold", letterSpacing:"0.03em" }
+  }, "\uD83D\uDC3E Pedigree"),
+  // QTL mini bars on card
+  (function() {
+    if (!animal.genome || !animal.genome.perf) return null;
+    var QTL_META = [
+      { key:"DRIVE",  icon:"\uD83C\uDFAF", label:"Drive"  },
+      { key:"INTEL",  icon:"\uD83E\uDDE0", label:"Intel"  },
+      { key:"NERVE",  icon:"\u26A1",        label:"Nerve"  },
+      { key:"SPEED",  icon:"\uD83D\uDCA8", label:"Speed"  },
+      { key:"MUSCLE", icon:"\uD83D\uDCAA", label:"Muscle" }
+    ];
+    var perf = animal.genome.perf;
+    return React.createElement("div", {
+      style: { background:"#1a1410", border:"1px solid #2e2218", borderRadius:5,
+        padding:"6px 8px", marginBottom:6 }
+    },
+      React.createElement("div", { style:{ display:"flex", justifyContent:"space-between",
+        alignItems:"center", marginBottom:4 } },
+        React.createElement("span", { style:{ color:"#6b5038", fontSize:"0.62rem",
+          textTransform:"uppercase", letterSpacing:"0.06em" } }, "Performance"),
+        React.createElement("span", { style:{ color:"#c4956a", fontSize:"0.68rem", fontWeight:"bold" } },
+          "\u26A1 " + (animal.perfScore || 0))
+      ),
+      React.createElement("div", { style:{ display:"flex", flexDirection:"column", gap:3 } },
+        QTL_META.map(function(q) {
+          var v = perf[q.key] || [3,3];
+          var avg = (v[0]+v[1])/2;
+          var pct = Math.round((avg/5)*100);
+          var col = avg >= 4.0 ? "#d4942a" : avg >= 3.0 ? "#6b9a5e" : "#4a5568";
+          var isTop = avg >= 4.5;
+          return React.createElement("div", { key:q.key,
+            style:{ display:"flex", alignItems:"center", gap:5 } },
+            React.createElement("span", { style:{ fontSize:"0.6rem", width:38,
+              color: col, fontWeight: isTop ? "bold" : "normal", flexShrink:0 } },
+              q.icon + " " + q.label),
+            React.createElement("div", { style:{ flex:1, background:"#2e2218",
+              borderRadius:2, height:4, overflow:"hidden" } },
+              React.createElement("div", { style:{ background:col,
+                width: pct + "%", height:"100%", borderRadius:2 } })
+            ),
+            React.createElement("span", { style:{ fontSize:"0.6rem", color:col,
+              fontWeight:"bold", width:18, textAlign:"right", flexShrink:0 } },
+              avg.toFixed(1))
+          );
+        })
+      ),
+      // Standout badges
+      (function(){
+        var tops = QTL_META.filter(function(q){
+          var v = perf[q.key]; return v && (v[0]+v[1])/2 >= 4.5;
+        });
+        if (!tops.length) return null;
+        return React.createElement("div", { style:{ display:"flex", flexWrap:"wrap",
+          gap:3, marginTop:5 } },
+          tops.map(function(q){
+            return React.createElement("span", { key:q.key,
+              style:{ background:"#2a1e08", border:"1px solid #d4942a",
+                color:"#d4942a", borderRadius:3, padding:"1px 5px",
+                fontSize:"0.6rem", fontWeight:"bold" } },
+              q.icon + " High " + q.label);
+          })
+        );
+      })()
+    );
+  })(),
+  (function() {
+    if (animal.sex !== "F" || animal.retired) return null;
+    var hs = getHeatStatus(animal, Date.now());
+    if (!hs) return null;
+    if (hs.status === "in_heat") {
+      return /*#__PURE__*/React.createElement("div", {
+        style: { display: "inline-block", background: "#3a2008", border: "1px solid #f97316",
+          borderRadius: 4, padding: "3px 10px", fontSize: "0.82rem", color: "#fb923c",
+          fontWeight: "bold", marginBottom: 6 }
+      }, "\uD83D\uDD25 In Heat \u2014 ", hs.hoursLeft, "h remaining");
+    }
+    if (hs.status === "too_young") {
+      var monthsOld = Math.floor(animal.ageMonths || 0);
+      return /*#__PURE__*/React.createElement("div", {
+        style: { display: "inline-block", background: "#1a1410", border: "1px solid #4a3a28",
+          borderRadius: 4, padding: "3px 10px", fontSize: "0.82rem", color: "#6b5038", marginBottom: 6 }
+      }, "\uD83D\uDCC5 Matures at 18 months", monthsOld > 0 ? " (" + monthsOld + " now)" : "");
+    }
+    return /*#__PURE__*/React.createElement("div", {
+      style: { display: "inline-block", background: "#1a1410", border: "1px solid #3a2810",
+        borderRadius: 4, padding: "3px 10px", fontSize: "0.82rem", color: "#8a7055", marginBottom: 6 }
+    }, "\uD83D\uDCC5 Next heat in ", hs.daysUntilHeat, hs.daysUntilHeat === 1 ? " day" : " days");
+  })()),
+  (_animal$healthIssues = animal.healthIssues) === null || _animal$healthIssues === void 0 ? void 0 : _animal$healthIssues.filter(function (i) {
+    return i.sev === "high";
+  }).map(function (iss, i) {
+    return /*#__PURE__*/React.createElement("span", {
+      key: i,
+      style: {
+        display: "inline-block",
+        background: "#481808",
+        color: "#fca5a5",
+        fontSize: "0.62rem",
+        borderRadius: 3,
+        padding: "1px 5px",
+        marginRight: 3,
+        marginBottom: 3
+      }
+    }, "\u26A0\uFE0F ", iss.name);
+  }), (_animal$lethalWarning = animal.lethalWarnings) === null || _animal$lethalWarning === void 0 ? void 0 : _animal$lethalWarning.map(function (w, i) {
+    var wMsg = typeof w === "string" ? w : w.msg;
+    var wSev = typeof w === "string" ? "high" : (w.sev || "high");
+    var wCol = wSev === "critical" ? "#ff6b6b" : wSev === "warn" ? "#fde68a" : "#fca5a5";
+    var wBg  = wSev === "warn" ? "#2d1e00" : "#481808";
+    return /*#__PURE__*/React.createElement("span", {
+      key: i,
+      style: {
+        display: "inline-block",
+        background: wBg,
+        color: wCol,
+        fontSize: "0.62rem",
+        borderRadius: 3,
+        padding: "1px 5px",
+        marginRight: 3,
+        marginBottom: 3
+      }
+    }, wSev === "critical" ? "\u2620\uFE0F " : wSev === "warn" ? "\u26A0\uFE0F " : "\u2620\uFE0F ", wMsg);
+  }), ((_animal$mutations2 = animal.mutations) === null || _animal$mutations2 === void 0 ? void 0 : _animal$mutations2.length) > 0 && animal.mutations.map(function (m, i) {
+    return /*#__PURE__*/React.createElement("span", {
+      key: i,
+      style: {
+        display: "inline-block",
+        background: "#2d1e0f",
+        color: "#fb923c",
+        fontSize: "0.62rem",
+        borderRadius: 3,
+        padding: "1px 5px",
+        marginBottom: 3,
+        marginRight: 3
+      }
+    }, "\u26A1 ", m.desc || m.loc, " (from ", m.src, ")");
+  }),
+
+  (function() {
+    if (!animal.genome || !animal.genome.health) return null;
+    var h = animal.genome.health;
+
+    // Build status for each locus
+    function recStatus(loc) {
+      var al = h[loc]; if (!al) return null;
+      if (al[0]==="n" && al[1]==="n") return "affected";
+      if (al[0]==="n" || al[1]==="n") return "carrier";
+      return "clear";
+    }
+    function qualStatus(loc) {
+      var al = h[loc]; if (!al) return null;
+      if (al[0]==="g" && al[1]==="g") return "poor";
+      if (al[0]==="g" || al[1]==="g") return "good";
+      return "excellent";
+    }
+
+    var REC_LOCI = ["MDR1","PRA","DM","vWD"];
+    var QUAL_LOCI = ["HipQ","EyeQ","HeartQ","JointQ"];
+    var QUAL_LABELS = { HipQ:"Hips", EyeQ:"Eyes", HeartQ:"Heart", JointQ:"Joints" };
+
+    var STATUS_STYLE = {
+      affected: { bg:"#481808", border:"#ef4444", color:"#fca5a5", label:"Affected" },
+      carrier:  { bg:"#2d1e00", border:"#ca8a04", color:"#fde68a", label:"Carrier"  },
+      clear:    { bg:"#0f2010", border:"#166534", color:"#86efac", label:"Clear"    },
+      excellent:{ bg:"#0f2010", border:"#166534", color:"#86efac", label:"Excellent"},
+      good:     { bg:"#1a1e0a", border:"#65a30d", color:"#d9f99d", label:"Good"     },
+      poor:     { bg:"#481808", border:"#ef4444", color:"#fca5a5", label:"Poor"     }
+    };
+
+    var recBadges = REC_LOCI.map(function(loc) {
+      var st = recStatus(loc); if (!st) return null;
+      var s = STATUS_STYLE[st];
+      return React.createElement("span", {
+        key: loc,
+        title: loc + ": " + s.label,
+        style: { display:"inline-block", background:s.bg, border:"1px solid "+s.border,
+          color:s.color, borderRadius:3, padding:"1px 5px", fontSize:"0.62rem",
+          fontWeight:"bold", marginRight:3, marginBottom:3, cursor:"help" }
+      }, loc + " · " + s.label);
+    }).filter(Boolean);
+
+    var qualBadges = QUAL_LOCI.map(function(loc) {
+      var st = qualStatus(loc); if (!st) return null;
+      if (st === "excellent") return null; // only show if not perfect
+      var s = STATUS_STYLE[st];
+      return React.createElement("span", {
+        key: loc,
+        title: QUAL_LABELS[loc] + ": " + s.label,
+        style: { display:"inline-block", background:s.bg, border:"1px solid "+s.border,
+          color:s.color, borderRadius:3, padding:"1px 5px", fontSize:"0.62rem",
+          fontWeight:"bold", marginRight:3, marginBottom:3, cursor:"help" }
+      }, QUAL_LABELS[loc] + " · " + s.label);
+    }).filter(Boolean);
+
+    // Carrier warning strip — only show if any carriers or affected
+    var carriers = REC_LOCI.filter(function(loc){ return recStatus(loc)==="carrier"; });
+    var affected = REC_LOCI.filter(function(loc){ return recStatus(loc)==="affected"; });
+
+    var hasIssues = recBadges.some(function(b){ return b; }) || qualBadges.length > 0;
+    if (!hasIssues && carriers.length === 0 && affected.length === 0) return null;
+
+    return React.createElement(React.Fragment, null,
+      // Health genetics badge row
+      (recBadges.length > 0 || qualBadges.length > 0) && React.createElement("div", {
+        style: { display:"flex", flexWrap:"wrap", marginBottom:3 }
+      }, recBadges, qualBadges),
+
+      // Carrier/Affected strip at bottom of card
+      (carriers.length > 0 || affected.length > 0) && React.createElement("div", {
+        style: {
+          background: affected.length > 0 ? "#481808" : "#2d1e00",
+          border: "1px solid " + (affected.length > 0 ? "#ef4444" : "#ca8a04"),
+          borderRadius: 4, padding: "3px 8px", marginBottom: 4,
+          fontSize: "0.65rem", color: affected.length > 0 ? "#fca5a5" : "#fde68a"
+        }
+      },
+        affected.length > 0
+          ? "🔴 Affected: " + affected.join(", ") + (carriers.length > 0 ? " · 🟡 Carrier: " + carriers.join(", ") : "")
+          : "🟡 Carrier: " + carriers.join(", ")
+      )
+    );
+  })(),
+
+  animal.aptitudes && animal.aptitudes.length > 0 && /*#__PURE__*/React.createElement("div", { style: { marginBottom: 10 } },
+    /*#__PURE__*/React.createElement("div", { style: { color: "#8a7055", fontSize: "0.78rem", textTransform: "uppercase", letterSpacing: "0.05em", marginBottom: 5 } }, "Aptitudes"),
+    /*#__PURE__*/React.createElement("div", { style: { display: "flex", flexWrap: "wrap", gap: 4 } },
+      animal.aptitudes.map(function(apt, i) {
+        var APT_COLORS = {
+          "LGD":["#7c3aed","#4c1d95"],"Schutzhund":["#cc2a1a","#7a2010"],"IPO":["#cc2a1a","#7a2010"],
+          "PoliceWork":["#1d4ed8","#1e3a8a"],"Military":["#1d4ed8","#1e3a8a"],"Search&Rescue":["#c07010","#78350f"],
+          "Herding":["#1a9a40","#1a3a1a"],"Tracking":["#0891b2","#164e63"],"FieldTrials":["#ca8a04","#713f12"],
+          "Agility":["#7c3aed","#3b0764"],"Obedience":["#0284c7","#0c4a6e"],"Rally-O":["#0284c7","#0c4a6e"],
+          "Flyball":["#ea580c","#7c2d12"],"DockDiving":["#0891b2","#164e63"],"LureCoursing":["#a83060","#500724"],
+          "Racing":["#a83060","#500724"],"Draft":["#78716c","#443828"],"SledRacing":["#6b7280","#443828"],
+          "Earthdog":["#92400e","#451a03"],"Therapy":["#a83060","#500724"],"Conformation":["#6b5038","#443828"]
+        };
+        var APT_LABELS = {
+          "LGD":"\uD83D\uDC11 LGD","Schutzhund":"\uD83D\uDEE1\uFE0F Schutzhund","IPO":"\uD83D\uDEE1\uFE0F IPO",
+          "PoliceWork":"\uD83D\uDC6E Police","Military":"\u2694\uFE0F Military","Search&Rescue":"\uD83D\uDD0D SAR",
+          "Herding":"\uD83D\uDC04 Herding","Tracking":"\uD83D\uDC43 Tracking","FieldTrials":"\uD83E\uDD86 Field",
+          "Agility":"\u26A1 Agility","Obedience":"\uD83C\uDF93 Obedience","Rally-O":"\uD83C\uDF93 Rally-O",
+          "Flyball":"\uD83C\uDFBE Flyball","DockDiving":"\uD83D\uDCA7 Dock","LureCoursing":"\uD83D\uDC07 Lure",
+          "Racing":"\uD83C\uDFC1 Racing","Draft":"\uD83D\uDC02 Draft","SledRacing":"\uD83D\uDEF7 Sled",
+          "Earthdog":"\uD83D\uDD73\uFE0F Earthdog","Therapy":"\u2764\uFE0F Therapy","Conformation":"\uD83C\uDFC6 Show"
+        };
+        var cols = APT_COLORS[apt] || ["#6b5038","#443828"];
+        return /*#__PURE__*/React.createElement("span", {
+          key: i,
+          style: { background: cols[1], border: "1px solid " + cols[0], color: cols[0], borderRadius: 4, padding: "2px 7px", fontSize: "0.78rem", fontWeight: "bold", whiteSpace: "nowrap" }
+        }, APT_LABELS[apt] || apt);
+      })
+    )
+  ),
+
+  animal.traits && /*#__PURE__*/React.createElement("div", { style: { marginBottom: 10 } },
+    /*#__PURE__*/React.createElement("div", { style: { color: "#8a7055", fontSize: "0.78rem", textTransform: "uppercase", letterSpacing: "0.05em", marginBottom: 5 } }, "Breed Traits"),
+    /*#__PURE__*/React.createElement("div", { style: { display: "grid", gridTemplateColumns: "1fr 1fr", gap: "3px 14px" } },
+      [["intelligence","\uD83E\uDDE0 Intelligence","#d4942a"],["trainability","\uD83C\uDF93 Trainability","#34d399"],
+       ["energy","\u26A1 Energy","#e8a020"],["loyalty","\u2764\uFE0F Loyalty","#e870a0"],
+       ["sociability","\uD83E\uDD1D Sociability","#34d399"],["preyDrive","\uD83C\uDFAF Prey Drive","#f97316"],
+       ["aggression","\u26A0\uFE0F Aggression","#ef4444"],["barkTendency","\uD83D\uDD0A Barking","#e8a020"],
+       ["adaptability","\uD83D\uDD04 Adaptability","#d4942a"],["playfulness","\uD83E\uDDF8 Playfulness","#c4956a"]
+      ].map(function(row) {
+        var key = row[0], label = row[1], color = row[2];
+        var val = animal.traits[key];
+        if (val === undefined || val === null) return null;
+        return /*#__PURE__*/React.createElement("div", { key: key, title: label + ": " + val + "/10" },
+          /*#__PURE__*/React.createElement("div", { style: { display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 1 } },
+            /*#__PURE__*/React.createElement("span", { style: { fontSize: "0.75rem", color: "#b09070" } }, label),
+            /*#__PURE__*/React.createElement("span", { style: { fontSize: "0.75rem", color: color, fontWeight: "bold" } }, val, "/10")
+          ),
+          /*#__PURE__*/React.createElement("div", { style: { background: "#1a1410", borderRadius: 2, height: 3 } },
+            /*#__PURE__*/React.createElement("div", { style: { background: color, width: (val/10*100) + "%", height: "100%", borderRadius: 2 } })
+          )
+        );
+      })
+    )
+  ),
+
+);
+}
+
+// ── MAIN APP ──────────────────────────────────────────────────
+
+// ── CLOCK COMPONENT ──────────────────────────────────────────
+// Shearing window: open for 3 real days starting March 1 and Sept 1 (game months)
+// 1 real day = 1 game month, game starts in March (monthIndex 2)
+// ── SHEARING MODAL ───────────────────────────────────────────
+function ShearingModal(_ref) {
+  var onClose=_ref.onClose, ownedLivestock=_ref.ownedLivestock||[],
+      sheepSheared=_ref.sheepSheared||{}, onShear=_ref.onShear,
+      onShearAll=_ref.onShearAll, gameStartDate=_ref.gameStartDate,
+      hasShed=_ref.hasShed;
+
+  var _dragS = useDrag(), dragHandlePropsS = _dragS.dragHandleProps, panelStyleS = _dragS.panelStyle;
+  var win = getShearingWindow(gameStartDate);
+  var sheep = ownedLivestock.filter(function(a){ return a.species==="sheep" && a.sex==="F" && !a.retiredLivestock; });
+
+  function isSheared(a) {
+    return win.seasonKey && sheepSheared[a.id] === win.seasonKey;
+  }
+
+  var unshearedCount = sheep.filter(function(a){ return !isSheared(a); }).length;
+
+  return React.createElement("div", {
+    style:{position:"fixed",top:0,left:0,right:0,bottom:0,background:"rgba(0,0,0,0.85)",
+      zIndex:1000,display:"flex",alignItems:"center",justifyContent:"center"}},
+    React.createElement("div", {
+      style: Object.assign({background:"#0a0f1e",border:"1px solid #4a3a28",borderRadius:14,
+        width:"min(600px,95vw)",maxHeight:"85vh",display:"flex",flexDirection:"column",
+        overflow:"hidden",boxShadow:"0 20px 60px rgba(0,0,0,0.8)"}, panelStyleS)},
+
+      // Header — drag handle
+      React.createElement("div", Object.assign({}, dragHandlePropsS, {style:Object.assign({display:"flex",alignItems:"center",padding:"14px 18px",
+        borderBottom:"1px solid #2e2218",gap:12,userSelect:"none"}, dragHandlePropsS.style)}),
+        React.createElement("div",{style:{fontSize:"1.1rem",fontWeight:"bold",color:"#f0e6d3",flex:1}},
+          "\uD83D\uDC11 Shearing Shed"),
+        React.createElement("button",{onClick:onClose, onMouseDown:function(e){e.stopPropagation();},
+          style:{background:"transparent",border:"1px solid #4a3a28",color:"#b09070",
+            borderRadius:6,padding:"4px 10px",cursor:"pointer",fontSize:"0.8rem"}},"\u2715 Close")
+      ),
+
+      // Status bar
+      React.createElement("div",{style:{padding:"10px 18px",borderBottom:"1px solid #2e2218",
+        background: win.isOpen ? "#0a1f0a" : "#381808"}},
+        win.isOpen
+          ? React.createElement("div",{style:{color:"#5aaa30",fontSize:"0.82rem",fontWeight:"bold"}},
+              "\uD83D\uDFE2 Shearing window OPEN \u2014 " + win.season + " \u2014 " + win.daysLeft + " day" + (win.daysLeft!==1?"s":"") + " remaining")
+          : React.createElement("div",{style:{color:"#f87171",fontSize:"0.82rem",fontWeight:"bold"}},
+              "\uD83D\uDD34 Shearing window CLOSED \u2014 Opens in Spring (March) and Fall (September)")
+      ),
+
+      // Shear All button
+      win.isOpen && unshearedCount > 0 && React.createElement("div",{
+        style:{padding:"10px 18px",borderBottom:"1px solid #2e2218",display:"flex",
+          alignItems:"center",justifyContent:"space-between"}},
+        React.createElement("span",{style:{color:"#b09070",fontSize:"0.78rem"}},
+          unshearedCount + " sheep ready to shear"),
+        React.createElement("button",{
+          onClick:function(){ onShearAll && onShearAll(sheep.filter(function(a){return !isSheared(a);}), win.seasonKey); },
+          style:{background:"#1e2a12",border:"1px solid #5aaa30",color:"#5aaa30",
+            borderRadius:6,padding:"6px 16px",cursor:"pointer",fontSize:"0.82rem",fontWeight:"bold"}},
+          "\u2702\uFE0F Shear All (" + unshearedCount + ")")
+      ),
+
+      // Sheep list
+      React.createElement("div",{style:{overflowY:"auto",flex:1,padding:"12px 18px"}},
+        sheep.length === 0
+          ? React.createElement("div",{style:{textAlign:"center",color:"#6b5038",padding:"40px 0"}},
+              "No female sheep owned.")
+          : sheep.map(function(a) {
+              var sheared = isSheared(a);
+              var yieldLbs = a.shearYield || (Math.floor(Math.random()*4)+7);
+              return React.createElement("div",{key:a.id,
+                style:{display:"flex",alignItems:"center",gap:10,padding:"8px 10px",
+                  background: sheared ? "#0a1a0a" : "#1a1410",
+                  borderRadius:6,border:"1px solid "+(sheared?"#1a7a2a":"#443828"),marginBottom:5}},
+                React.createElement("div",{style:{flex:1,fontSize:"0.8rem",color: sheared?"#5aaa30":"#f0e6d3"}},
+                  (a.breed||"Sheep") + " \u2014 \u2640 Female"),
+                React.createElement("div",{style:{fontSize:"0.72rem",color:"#8a7055",minWidth:80,textAlign:"right"}},
+                  sheared ? "\u2714 Sheared this season" : yieldLbs + " lbs est."),
+                win.isOpen && !sheared && React.createElement("button",{
+                  onClick:function(){ onShear && onShear(a, win.seasonKey); },
+                  style:{background:"#0a1a0a",border:"1px solid #22c55e",color:"#5aaa30",
+                    borderRadius:6,padding:"4px 10px",cursor:"pointer",fontSize:"0.72rem"}},
+                  "Shear")
+              );
+            })
+      )
+    )
+  );
+}
+
+function getShearingWindow(gameStartDate) {
+  var now = Date.now();
+  var msPerDay = 24 * 60 * 60 * 1000;
+  var daysPassed = Math.floor((now - gameStartDate) / msPerDay);
+  var monthIndex = (2 + daysPassed) % 12; // 0=Jan...11=Dec
+  // Spring window: months 2,3,4 (March/April/May)
+  // Fall window: months 8,9,10 (Sept/Oct/Nov)
+  var inSpring = monthIndex >= 2 && monthIndex <= 4;
+  var inFall   = monthIndex >= 8 && monthIndex <= 10;
+  // Which 3-month window are we in?
+  var windowStart = null;
+  if (inSpring) windowStart = gameStartDate + (daysPassed - (monthIndex - 2)) * msPerDay;
+  if (inFall)   windowStart = gameStartDate + (daysPassed - (monthIndex - 8)) * msPerDay;
+  // Window is open for 3 real days from window start
+  var isOpen = windowStart && (now - windowStart) < 3 * msPerDay;
+  var season = inSpring ? "Spring" : inFall ? "Fall" : null;
+  // Days remaining in window
+  var daysLeft = windowStart ? Math.max(0, 3 - Math.floor((now - windowStart) / msPerDay)) : 0;
+  // Season key for tracking sheared sheep (spring_YYYY or fall_YYYY — we use cycle count)
+  var cycle = Math.floor(daysPassed / 6); // new cycle every 6 months
+  var seasonKey = season ? season.toLowerCase() + "_" + cycle : null;
+  return { isOpen: !!isOpen, season: season, daysLeft: daysLeft, seasonKey: seasonKey };
+}
+
+function getGameDate(gameStartDate) {
+  var now = Date.now();
+  var msPerDay = 24 * 60 * 60 * 1000;
+  var daysPassed = Math.floor((now - gameStartDate) / msPerDay);
+  var monthIndex = (2 + daysPassed) % 12; // start in March
+  var MONTHS = ["January","February","March","April","May","June","July","August","September","October","November","December"];
+  var SEASONS = [
+    { name:"Winter", emoji:"\u2744\uFE0F", months:[0,1,11] },
+    { name:"Spring", emoji:"\uD83C\uDF31", months:[2,3,4] },
+    { name:"Summer", emoji:"\u2600\uFE0F",  months:[5,6,7] },
+    { name:"Fall",   emoji:"\uD83C\uDF42", months:[8,9,10] }
+  ];
+  var season = SEASONS.find(function(s){ return s.months.indexOf(monthIndex) > -1; });
+  return { month: MONTHS[monthIndex], season: season, monthIndex: monthIndex };
+}
+
+function Clock(_ref) {
+  var gameStartDate = _ref ? _ref.gameStartDate : null;
+  var _n = _slicedToArray(useState(new Date()), 2), now = _n[0], setNow = _n[1];
+
+  useEffect(function() {
+    var interval = setInterval(function() { setNow(new Date()); }, 1000);
+    return function() { clearInterval(interval); };
+  }, []);
+
+  function getNextReset() {
+    var n = new Date(now);
+    var reset = new Date(now);
+    reset.setUTCHours(10, 0, 0, 0);
+    if (n >= reset) reset.setUTCDate(reset.getUTCDate() + 1);
+    return reset;
+  }
+
+  var next = getNextReset();
+  var diff = next - now;
+  var hh = Math.floor(diff / 3600000);
+  var mm = Math.floor((diff % 3600000) / 60000);
+  var ss = Math.floor((diff % 60000) / 1000);
+  var pad = function(n) { return String(n).padStart(2,'0'); };
+
+  var estTime = now.toLocaleTimeString('en-US', {
+    timeZone: 'America/New_York',
+    hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true
+  });
+
+  var gd = getGameDate(gameStartDate || Date.now());
+  var seasonColors = { Spring:"#5aaa30", Summer:"#e8a020", Fall:"#f97316", Winter:"#93c5fd" };
+  var seasonColor = seasonColors[gd.season.name] || "#f0e6d3";
+
+  return React.createElement('div', {
+    style: {
+      display: 'flex', alignItems: 'center', gap: 10,
+      background: '#2a1e14', border: '1px solid #4a3a28',
+      borderRadius: 6, padding: '4px 12px', fontSize: '0.72rem',
+      boxShadow: 'inset 0 1px 3px rgba(0,0,0,0.3)'
+    }
+  },
+    React.createElement('span', {style: {color: seasonColor, fontWeight:'bold'}},
+      gd.season.emoji + ' ' + gd.season.name + ' \u2014 ' + gd.month),
+    React.createElement('span', {style: {color: '#4a3a28'}},'|'),
+    React.createElement('span', {style: {color: '#d4942a'}}, '\uD83D\uDD50 ' + estTime + ' EST'),
+    React.createElement('span', {style: {color: '#4a3a28'}},'|'),
+    React.createElement('span', {style: {color: '#d4960a'}}, '\u23F1 Reset: ' + pad(hh) + ':' + pad(mm) + ':' + pad(ss))
+  );
+}
+
+// ── GLOBAL CONSTANTS ──────────────────────────────────────────────────────────
+var KENNEL_TYPES = {
+  basic:      { label: "Basic Kennel",      capacity: 10,  color: "#8a7055", icon: "🏚️", cost: 500 },
+  standard:   { label: "Standard Kennel",   capacity: 25,  color: "#d4942a", icon: "🏠", cost: 1200 },
+  commercial: { label: "Commercial Kennel", capacity: 50,  color: "#c4956a", icon: "🏢", cost: 3000 },
+  elite:      { label: "Elite Kennel",      capacity: 100, color: "#e8a020", icon: "🏆", cost: 8000 }
+};
+
+// ── FACILITIES ────────────────────────────────────────────────
+
+var FACILITIES = {
+  barn: {
+    label:"Basic Barn", icon:"\uD83C\uDFE0", desc:"General housing for beef cattle.",
+    tiers:[
+      { name:"Small",      capacity:10,  cost:1500,  upkeep:50  },
+      { name:"Standard",   capacity:25,  cost:3500,  upkeep:100 },
+      { name:"Large",      capacity:50,  cost:7000,  upkeep:200 },
+      { name:"Commercial", capacity:100, cost:15000, upkeep:350 }
+    ]
+  },
+  milking_barn: {
+    label:"Milking Barn", icon:"\uD83E\uDD5B", desc:"Required for dairy cow milk production.",
+    tiers:[
+      { name:"Small",      capacity:8,   cost:3000,  upkeep:80  },
+      { name:"Standard",   capacity:20,  cost:7000,  upkeep:160 },
+      { name:"Large",      capacity:40,  cost:14000, upkeep:300 },
+      { name:"Commercial", capacity:80,  cost:28000, upkeep:550 }
+    ]
+  },
+  stable: {
+    label:"Stable", icon:"\uD83D\uDC0E", desc:"1 stall per horse. Horses do not need grazing land.",
+    tiers:[
+      { name:"4 Stalls",  capacity:4,  cost:5000,  upkeep:120 },
+      { name:"8 Stalls",  capacity:8,  cost:9000,  upkeep:220 },
+      { name:"16 Stalls", capacity:16, cost:16000, upkeep:400 },
+      { name:"32 Stalls", capacity:32, cost:28000, upkeep:700 }
+    ]
+  },
+  chicken_coop: {
+    label:"Chicken Coop", icon:"\uD83D\uDC14", desc:"Required for chickens.",
+    tiers:[
+      { name:"Small",  capacity:20,  cost:500,  upkeep:15 },
+      { name:"Medium", capacity:50,  cost:1200, upkeep:30 },
+      { name:"Large",  capacity:100, cost:2500, upkeep:55 }
+    ]
+  },
+  pig_pen: {
+    label:"Pig Pen", icon:"\uD83D\uDC16", desc:"Required for pigs.",
+    tiers:[
+      { name:"Small",  capacity:10, cost:800,  upkeep:25 },
+      { name:"Medium", capacity:25, cost:2000, upkeep:55 },
+      { name:"Large",  capacity:50, cost:4000, upkeep:100 }
+    ]
+  },
+  pond: {
+    label:"Pond", icon:"\uD83E\uDD86", desc:"Required for ducks. Caps at Medium.",
+    tiers:[
+      { name:"Small",  capacity:20, cost:600,  upkeep:15 },
+      { name:"Medium", capacity:50, cost:1500, upkeep:35 }
+    ]
+  },
+  shearing_shed: {
+    label:"Shearing Shed", icon:"\uD83D\uDC11", desc:"Unlocks wool production. Sheep live on Grazing Land.",
+    tiers:[
+      { name:"Small",      capacity:15,  cost:1200, upkeep:30  },
+      { name:"Standard",   capacity:35,  cost:2800, upkeep:65  },
+      { name:"Large",      capacity:70,  cost:5500, upkeep:120 },
+      { name:"Commercial", capacity:150, cost:11000,upkeep:220 }
+    ]
+  },
+  grazing_land: {
+    label:"Grazing Land", icon:"\uD83C\uDF3E", desc:"Cows (1 acre/2), horses, sheep & goats.",
+    tiers:[
+      { name:"5 Acres",   capacity:5,   cost:2500,  upkeep:40  },
+      { name:"10 Acres",  capacity:10,  cost:4500,  upkeep:75  },
+      { name:"25 Acres",  capacity:25,  cost:10000, upkeep:160 },
+      { name:"50 Acres",  capacity:50,  cost:18000, upkeep:280 }
+    ]
+  },
+  slaughterhouse: {
+    label:"Slaughterhouse", icon:"\uD83E\uDE78", desc:"Unlocks meat processing. Sell pork, beef, lamb and more at market price rather than selling live animals.",
+    tiers:[
+      { name:"Small",      capacity:10,  cost:4000,  upkeep:120 },
+      { name:"Standard",   capacity:25,  cost:9000,  upkeep:250 },
+      { name:"Commercial", capacity:50,  cost:18000, upkeep:450 }
+    ]
+  },
+  apiary: {
+    label:"Apiary", icon:"\uD83D\uDC1D", desc:"Produces honey for sale. More hives means more honey.",
+    tiers:[
+      { name:"Small",  capacity:3,  cost:1200, upkeep:30 },
+      { name:"Medium", capacity:8,  cost:3000, upkeep:65 },
+      { name:"Large",  capacity:16, cost:6000, upkeep:120 }
+    ]
+  },
+  goat_pen: {
+    label:"Goat Pen", icon:"\uD83D\uDC10", desc:"Housing for dairy, meat, and dual-purpose goats. Grazing Land determines total herd size.",
+    tiers:[
+      { name:"Small",      capacity:15,  cost:800,   upkeep:25  },
+      { name:"Medium",     capacity:35,  cost:2000,  upkeep:55  },
+      { name:"Large",      capacity:75,  cost:4500,  upkeep:110 },
+      { name:"Commercial", capacity:150, cost:10000, upkeep:220 }
+    ]
+  },
+  storage_barn: {
+    label:"Storage Barn", icon:"\uD83D\uDDC4", desc:"Stores commodities and equipment. Higher tiers hold more.",
+    tiers:[
+      { name:"Small",      capacity:20,  cost:2000,  upkeep:40  },
+      { name:"Standard",   capacity:50,  cost:5000,  upkeep:90  },
+      { name:"Large",      capacity:100, cost:10000, upkeep:175 },
+      { name:"Commercial", capacity:200, cost:20000, upkeep:320 }
+    ]
+  },
+  whelping_kennel: {
+    label:"Whelping Kennel", icon:"\uD83C\uDFE5", desc:"Unlocks the Whelping tab. Keep up to 2 litters at once and select up to 2 pups per litter.",
+    tiers:[
+      { name:"Standard", capacity:2, cost:1500, upkeep:30 }
+    ]
+  }
+};
+
+
+
+// ═══════════════════════════════════════════════════════════════
+// RETIRED / LEGACY VIEW
+// ═══════════════════════════════════════════════════════════════
+function RetiredView(_ref_rv) {
+  if (!_ref_rv) return null;
+  var animals = _ref_rv.animals || [],
+      onClose = _ref_rv.onClose || function(){};
+
+  var _useState_rv1 = _slicedToArray(useState(null), 2),
+    selectedDog = _useState_rv1[0], setSelectedDog = _useState_rv1[1];
+  var _useState_rv2 = _slicedToArray(useState(""), 2),
+    search = _useState_rv2[0], setSearch = _useState_rv2[1];
+
+  // Sort: titled dogs first, then by retire date desc
+  var sorted = animals.slice().sort(function(a, b) {
+    var aTitle = a.showPoints || 0;
+    var bTitle = b.showPoints || 0;
+    if (bTitle !== aTitle) return bTitle - aTitle;
+    return (b.retiredAt || 0) - (a.retiredAt || 0);
+  });
+
+  var filtered2 = search
+    ? sorted.filter(function(a){ return (a.name||"").toLowerCase().includes(search.toLowerCase()) || a.breed.toLowerCase().includes(search.toLowerCase()); })
+    : sorted;
+
+  var retireReasonColor = { "End of natural life":"#4ade80", "Injury":"#fbbf24", "Illness":"#f97316" };
+
+  return React.createElement("div", { style:{ display:"flex", flexDirection:"column", height:"100vh" } },
+
+    // Header bar
+    React.createElement("div", { style:{ display:"flex", alignItems:"center", gap:12, padding:"10px 16px",
+      background:"#1a1008", borderBottom:"1px solid #3a2810", flexShrink:0 } },
+      React.createElement("span", { style:{ fontSize:"1.3rem" } }, "🏛️"),
+      React.createElement("h2", { style:{ margin:0, color:"#f5d870", fontSize:"1.05rem" } }, "Legacy — Retired Dogs"),
+      React.createElement("span", { style:{ color:"#6b5038", fontSize:"0.8rem", marginLeft:4 } },
+        animals.length + " dog" + (animals.length !== 1 ? "s" : "")),
+      React.createElement("input", {
+        placeholder: "Search name or breed...",
+        value: search,
+        onChange: function(e){ setSearch(e.target.value); },
+        style:{ marginLeft:"auto", background:"#241a10", border:"1px solid #3a2810",
+          color:"#d4c4a8", borderRadius:6, padding:"4px 10px", fontSize:"0.8rem", width:180 }
+      }),
+      React.createElement("button", {
+        onClick: onClose,
+        style:{ background:"#2a1a10", border:"1px solid #4a3a28", color:"#b09070",
+          borderRadius:6, padding:"4px 12px", cursor:"pointer", fontSize:"0.85rem", marginLeft:8 }
+      }, "✕ Close")
+    ),
+
+    // Body — split list + card
+    React.createElement("div", { style:{ display:"flex", flex:1, overflow:"hidden" } },
+
+      // Left — dog list
+      React.createElement("div", { style:{ width:280, flexShrink:0, borderRight:"1px solid #2a1e10",
+        overflow:"auto", background:"#141008" } },
+        filtered2.length === 0
+          ? React.createElement("div", { style:{ padding:20, color:"#4a3a28", fontStyle:"italic", fontSize:"0.82rem" } },
+              animals.length === 0 ? "No retired dogs yet." : "No matches.")
+          : filtered2.map(function(a) {
+              var title = getAnimalTitle(a.showPoints);
+              var isSelected = selectedDog && selectedDog.id === a.id;
+              var ageYrs = ((a.ageMonths || 0) / 12).toFixed(1);
+              return React.createElement("div", { key: a.id,
+                onClick: function(){ setSelectedDog(a); },
+                style:{ padding:"8px 12px", cursor:"pointer",
+                  background: isSelected ? "#2a1e14" : "transparent",
+                  borderBottom:"1px solid #1e1408",
+                  borderLeft: isSelected ? "3px solid #d4942a" : "3px solid transparent" }
+              },
+                // Name + title
+                React.createElement("div", { style:{ display:"flex", alignItems:"center", gap:6, marginBottom:2 } },
+                  title && React.createElement("span", { style:{ color:"#fbbf24", fontSize:"0.72rem",
+                    background:"#2a1e08", border:"1px solid #6a4a10", borderRadius:3, padding:"0 4px" } },
+                    title.prefix.trim()),
+                  React.createElement("span", { style:{ color: isSelected?"#f5d870":"#c4956a",
+                    fontWeight:"bold", fontSize:"0.85rem" } }, a.name || a.breed)
+                ),
+                // Breed
+                React.createElement("div", { style:{ color:"#8a6a48", fontSize:"0.72rem",
+                  whiteSpace:"nowrap", overflow:"hidden", textOverflow:"ellipsis", maxWidth:240 } },
+                  a.breed),
+                // Stats row
+                React.createElement("div", { style:{ display:"flex", gap:8, marginTop:3, fontSize:"0.7rem" } },
+                  React.createElement("span", { style:{ color:"#6b8a6b" } }, ageYrs + " yrs"),
+                  React.createElement("span", { style:{ color:"#6b7a8a" } },
+                    a.sex === "M" ? "♂" : "♀"),
+                  a.showPoints > 0 && React.createElement("span", { style:{ color:"#fbbf24" } },
+                    "🎀 " + a.showPoints + "pts"),
+                  React.createElement("span", { style:{ color: retireReasonColor[a.retireReason] || "#6b5038",
+                    fontSize:"0.68rem" } }, a.retireReason || "Retired")
+                )
+              );
+            })
+      ),
+
+      // Right — dog card or empty state
+      React.createElement("div", { style:{ flex:1, overflow:"auto", padding:16, background:"#1a1208" } },
+        !selectedDog
+          ? React.createElement("div", { style:{ display:"flex", flexDirection:"column", alignItems:"center",
+              justifyContent:"center", height:"100%", color:"#4a3a28", gap:8 } },
+              React.createElement("span", { style:{ fontSize:"2.5rem", opacity:0.3 } }, "🏛️"),
+              React.createElement("span", { style:{ fontSize:"0.85rem", fontStyle:"italic" } },
+                "Select a dog to view their record")
+            )
+          : React.createElement("div", { style:{ maxWidth:700 } },
+              // Retired banner
+              React.createElement("div", { style:{ background:"#1a1008", border:"1px solid #3a2810",
+                borderRadius:6, padding:"6px 12px", marginBottom:12, display:"flex",
+                alignItems:"center", gap:8, fontSize:"0.8rem" } },
+                React.createElement("span", { style:{ color:"#6b5038" } }, "🏛️ RETIRED"),
+                React.createElement("span", { style:{ color: retireReasonColor[selectedDog.retireReason] || "#6b5038" } },
+                  selectedDog.retireReason || "Retired"),
+                selectedDog.showPoints > 0 && React.createElement("span", { style:{ marginLeft:"auto",
+                  color:"#fbbf24", fontWeight:"bold" } },
+                  "🎀 " + selectedDog.showPoints + " career show points")
+              ),
+              // Show the card — read only (no onStud/onSell/onRetire)
+              React.createElement(Card, {
+                animal: selectedDog,
+                isSelected: false,
+                fullHeight: false
+              }),
+              // Show history
+              selectedDog.showHistory && selectedDog.showHistory.length > 0 &&
+                React.createElement("div", { style:{ marginTop:12, background:"#141008",
+                  border:"1px solid #2a1e10", borderRadius:6, padding:"10px 12px" } },
+                  React.createElement("div", { style:{ color:"#b09070", fontSize:"0.75rem",
+                    marginBottom:8, fontWeight:"bold" } }, "🎀 SHOW RECORD"),
+                  selectedDog.showHistory.map(function(h, i) {
+                    var cls = SHOW_CLASSES.find(function(c){ return c.key === h.classKey; });
+                    return React.createElement("div", { key:i,
+                      style:{ display:"flex", gap:8, fontSize:"0.78rem", color:"#8a7060",
+                        padding:"3px 0", borderBottom:"1px solid #1a1410" } },
+                      React.createElement("span", null,
+                        h.placement===1?"🥇":h.placement===2?"🥈":h.placement===3?"🥉":"📋",
+                        " "+h.placement+"/"+h.total),
+                      React.createElement("span", { style:{flex:1} }, cls ? cls.label : h.classKey,
+                        " · ", h.level),
+                      h.prize > 0 && React.createElement("span", { style:{color:"#4ade80"} }, "+$"+h.prize),
+                      React.createElement("span", { style:{color:"#fbbf24"} }, "+"+h.points+"pts"),
+                      React.createElement("span", { style:{color:"#4a3a28", fontSize:"0.7rem"} }, h.date)
+                    );
+                  })
+                )
+            )
+      )
+    )
+  );
+}
+
+// ═══════════════════════════════════════════════════════════════
+// SHOWS VIEW COMPONENT
+// ═══════════════════════════════════════════════════════════════
+
 // ── DOG CEO PHOTO API ────────────────────────────────────────
 // Static breed photo overrides — add URLs here as we source them.
 // Falls back to Dog CEO API for anything not listed.
