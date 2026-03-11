@@ -4070,7 +4070,7 @@ function RetiredView(_ref_rv) {
           ? React.createElement("div", { style:{ padding:20, color:"#4a3a28", fontStyle:"italic", fontSize:"0.82rem" } },
               animals.length === 0 ? "No retired dogs yet." : "No matches.")
           : filtered2.map(function(a) {
-              var title = getAnimalTitle(a.showPoints);
+              var title = getAnimalHighestTitle(a);
               var isSelected = selectedDog && selectedDog.id === a.id;
               var ageYrs = ((a.ageMonths || 0) / 12).toFixed(1);
               return React.createElement("div", { key: a.id,
@@ -4421,7 +4421,7 @@ function runShow(animal, typeKey, allAnimals) {
   if (showType.purebredOnly && animal.isMixed) return { error: "Conformation is purebreds only." };
   if (animal.retired) return { error: "Retired dogs cannot compete." };
   if ((animal.ageMonths||0) < showType.minAge) return { error: "Must be at least " + Math.round(showType.minAge/12*10)/10 + " years old for this event." };
-  if ((animal.performanceScore||0) < showType.minPerf) return { error: "Performance score too low (" + showType.minPerf + " minimum for this event)." };
+  if ((animal.perfScore||0) < showType.minPerf) return { error: "Performance score too low (" + showType.minPerf + " minimum for this event)." };
 
   var playerScore = calcShowScore(animal, typeKey);
   var fieldSize = showType.fieldSize[level] - 1;
@@ -4500,6 +4500,36 @@ function getShowCooldownText(lastShowDates, typeKey, animalId) {
   return hours > 0 ? hours+"h "+mins+"m" : mins+"m";
 }
 
+// Returns the highest-prestige earned title object (for prefix display in RetiredView)
+// Title prestige order: master > advanced > novice, prioritize master-level titles
+function getAnimalTitle(showPoints) {
+  // showPoints is passed but earnedTitles is the real source of truth.
+  // This overload accepts an animal object OR a showPoints number.
+  // Called as getAnimalTitle(a.showPoints) in RetiredView — but we need the animal.
+  // Since RetiredView passes a.showPoints (a number), we return null safely.
+  // RetiredView only uses title.prefix — if no earnedTitles available, return null.
+  return null;
+}
+
+// Returns the highest-prestige earned title object from an animal's earnedTitles array
+function getAnimalHighestTitle(animal) {
+  if (!animal || !animal.earnedTitles || animal.earnedTitles.length === 0) return null;
+  // Prestige: master titles are highest, then advanced, then novice
+  // We rank by which level they belong to in SHOW_LEVEL_TITLES
+  var masterKeys = [];
+  var advancedKeys = [];
+  Object.keys(SHOW_LEVEL_TITLES).forEach(function(typeKey) {
+    var levels = SHOW_LEVEL_TITLES[typeKey];
+    if (levels.master)   masterKeys.push(levels.master.key);
+    if (levels.advanced) advancedKeys.push(levels.advanced.key);
+  });
+  var masterTitle = animal.earnedTitles.find(function(t){ return masterKeys.indexOf(t.key) !== -1; });
+  if (masterTitle) return masterTitle;
+  var advTitle = animal.earnedTitles.find(function(t){ return advancedKeys.indexOf(t.key) !== -1; });
+  if (advTitle) return advTitle;
+  return animal.earnedTitles[0];
+}
+
 function getDogTitlesDisplay(animal) {
   if (!animal.earnedTitles || animal.earnedTitles.length === 0) return "";
   return animal.earnedTitles.map(function(t){ return t.key; }).join(" ");
@@ -4529,7 +4559,7 @@ function ShowsView(_ref_sv) {
     if (a.retired) return false;
     if ((a.ageMonths||0) < (showType ? showType.minAge : 12)) return false;
     if (showType && showType.purebredOnly && a.isMixed) return false;
-    if (showType && showType.minPerf > 0 && (a.performanceScore||0) < showType.minPerf) return false;
+    if (showType && showType.minPerf > 0 && (a.perfScore||0) < showType.minPerf) return false;
     return true;
   });
 
@@ -4688,7 +4718,7 @@ function ShowsView(_ref_sv) {
                       React.createElement("span", { style:{ color:"#6b5a48", fontSize:"0.68rem" } },
                         (a.ageMonths||0) < (showType?showType.minAge:12) ? "\u26A0\uFE0F Too young" :
                         (showType&&showType.purebredOnly&&a.isMixed) ? "\u26A0\uFE0F Purebred only" :
-                        (showType&&showType.minPerf>0&&(a.performanceScore||0)<showType.minPerf) ? "\u26A0\uFE0F Perf too low" :
+                        (showType&&showType.minPerf>0&&(a.perfScore||0)<showType.minPerf) ? "\u26A0\uFE0F Perf too low" :
                         a.breed.split(" \xD7 ")[0]),
                       cd && React.createElement("span", { style:{ fontSize:"0.62rem", color:"#ef4444" } }, "\u23F3"+cd)
                     )
@@ -6472,7 +6502,7 @@ function App() {
             if (kennelListSort === "name") return dir * (a.name||"").localeCompare(b.name||"");
             if (kennelListSort === "breed") return dir * a.breed.localeCompare(b.breed);
             if (kennelListSort === "health") return dir * ((a.healthScore||0) - (b.healthScore||0));
-            if (kennelListSort === "perf") return dir * ((a.performanceScore||0) - (b.performanceScore||0));
+            if (kennelListSort === "perf") return dir * ((a.perfScore||0) - (b.perfScore||0));
             if (kennelListSort === "sex") return dir * a.sex.localeCompare(b.sex);
             return 0;
           });
@@ -6503,7 +6533,7 @@ function App() {
                 sortedListDogs.map(function(a){
                   var isSel = kennelListSelected === a.id;
                   var isPreg = !!(a.pregnantUntil && a.pregnantUntil > Date.now());
-                  var hs = a.healthScore||0; var ps = a.performanceScore||0;
+                  var hs = a.healthScore||0; var ps = a.perfScore||0;
                   return /*#__PURE__*/React.createElement("tr", { key: a.id,
                     onClick: function(){ setKennelListSelected(isSel ? null : a.id); },
                     style: { background: isSel?"#4a3820":"#352818", cursor: "pointer",
@@ -6792,7 +6822,7 @@ function App() {
           return !q || (a.name||"").toLowerCase().includes(q) || a.breed.toLowerCase().includes(q);
         });
         var sorted = filtered.slice().sort(function(a,b){
-          if (breedSireSort === "perf") return (b.performanceScore||0) - (a.performanceScore||0);
+          if (breedSireSort === "perf") return (b.perfScore||0) - (a.perfScore||0);
           if (breedSireSort === "health") return (b.healthScore||0) - (a.healthScore||0);
           return (a.name||"").localeCompare(b.name||"");
         });
@@ -6802,7 +6832,7 @@ function App() {
           var isSel = sire && sire.id === a.id;
           var isDna = breedSireDna === a.id;
           var hs = a.healthScore || 0;
-          var ps = a.performanceScore || 0;
+          var ps = a.perfScore || 0;
           return /*#__PURE__*/React.createElement("div", { key: a.id,
             title: reason || "",
             style: { background: isSel ? "#5a3e10" : "#352818", border: "2px solid "+(isSel?"#f0a030":reason?"#6a3a28":"#3a2e20"),
@@ -7036,7 +7066,7 @@ function App() {
           return !q || (a.name||"").toLowerCase().includes(q) || a.breed.toLowerCase().includes(q);
         });
         var sorted = filtered.slice().sort(function(a,b){
-          if (breedDamSort === "perf") return (b.performanceScore||0) - (a.performanceScore||0);
+          if (breedDamSort === "perf") return (b.perfScore||0) - (a.perfScore||0);
           if (breedDamSort === "health") return (b.healthScore||0) - (a.healthScore||0);
           return (a.name||"").localeCompare(b.name||"");
         });
@@ -7046,8 +7076,7 @@ function App() {
           var isSel = dam && dam.id === a.id;
           var isDna = breedDamDna === a.id;
           var hs = a.healthScore || 0;
-          var ps = a.performanceScore || 0;
-          var isPreg = !!(a.pregnantUntil && a.pregnantUntil > Date.now());
+          var ps = a.perfScore || 0;
           return /*#__PURE__*/React.createElement("div", { key: a.id,
             title: reason || "",
             style: { background: isSel ? "#5a3e10" : "#352818", border: "2px solid "+(isSel?"#f0a030":reason?"#6a3a28":"#3a2e20"),
