@@ -1010,6 +1010,8 @@ function HorseCard(props) {
   var isSelected = props.isSelected;
   var onSell = props.onSell;
   var onRename = props.onRename;
+  var onToggleStud = props.onToggleStud;
+  var onUpdateStudFee = props.onUpdateStudFee;
   if (!horse) return null;
 
   var _en = React.useState(false), editing = _en[0], setEditing = _en[1];
@@ -1127,6 +1129,44 @@ function HorseCard(props) {
           borderRadius:6,padding:"5px 0",cursor:"pointer",fontSize:"0.78rem"}
       },"💰 Sell")
     ),
+    // Stud fee row (stallions only)
+    horse.sex==="M" && React.createElement("div",{style:{marginTop:5}},
+      horse.isStud
+        ? React.createElement("div",{style:{background:"#0a1f0a",border:"1px solid #22c55e",borderRadius:6,padding:"5px 8px"}},
+            React.createElement("div",{style:{display:"flex",justifyContent:"space-between",alignItems:"center"}},
+              React.createElement("span",{style:{color:"#22c55e",fontSize:"0.75rem",fontWeight:"bold"}},
+                "\uD83D\uDC0E At Stud \u2014 $"+(horse.studFee||0).toLocaleString()+"/day"),
+              React.createElement("div",{style:{display:"flex",gap:4}},
+                onUpdateStudFee && React.createElement("button",{
+                  onClick:function(e){
+                    e.stopPropagation();
+                    var fee=prompt("Update stud fee for \""+horse.name+"\":",horse.studFee||500);
+                    if(fee!==null&&!isNaN(Number(fee))&&Number(fee)>=0) onUpdateStudFee(horse,Number(fee));
+                  },
+                  style:{background:"#1a3a18",border:"1px solid #4a8a38",color:"#84cc16",borderRadius:4,
+                    padding:"2px 7px",cursor:"pointer",fontSize:"0.65rem"}
+                },"Edit Fee"),
+                onToggleStud && React.createElement("button",{
+                  onClick:function(e){e.stopPropagation();onToggleStud(horse);},
+                  style:{background:"#481808",border:"1px solid #ef4444",color:"#fca5a5",borderRadius:4,
+                    padding:"2px 7px",cursor:"pointer",fontSize:"0.65rem"}
+                },"Remove")
+              )
+            )
+          )
+        : onToggleStud && React.createElement("button",{
+            onClick:function(e){
+              e.stopPropagation();
+              var fee=prompt("Set stud fee for \""+horse.name+"\" ($/day):",500);
+              if(fee!==null&&!isNaN(Number(fee))&&Number(fee)>=0){
+                onUpdateStudFee && onUpdateStudFee(horse,Number(fee));
+                onToggleStud(horse,true);
+              }
+            },
+            style:{width:"100%",background:"#0a1f0a",border:"1px solid #22c55e",color:"#22c55e",
+              borderRadius:6,padding:"5px 0",cursor:"pointer",fontSize:"0.75rem",fontWeight:"bold"}
+          },"\uD83D\uDC0E List as Stud")
+    ),
     showDNA && React.createElement(HorseDNAModal,{horse:horse, onClose:function(){setShowDNA(false);}})
   );
 }
@@ -1140,6 +1180,8 @@ function HorsesView(props) {
   var onBreed = props.onBreed;
   var onClose = props.onClose;
   var lastShowDates = props.lastShowDates || {};
+  var onToggleStud = props.onToggleStud;
+  var onUpdateStudFee = props.onUpdateStudFee;
 
   var _s0 = React.useState(null), selectedHorseId = _s0[0], setSelectedHorseId = _s0[1];
   var selectedHorse = selectedHorseId ? horses.find(function(h){ return h.id===selectedHorseId; }) : null;
@@ -1311,7 +1353,9 @@ function HorsesView(props) {
                 isSelected:selectedHorse&&selectedHorse.id===h.id,
                 onSelect:function(h){ setSelectedHorseId(h.id); },
                 onRename:onRename,
-                onSell:onSell
+                onSell:onSell,
+                onToggleStud:onToggleStud,
+                onUpdateStudFee:onUpdateStudFee
               });
             })
       ),
@@ -1323,7 +1367,7 @@ function HorsesView(props) {
           React.createElement("button",{onClick:function(){setSelectedHorseId(null);},
             style:{background:"transparent",border:"none",color:"#4a6a18",cursor:"pointer",fontSize:"1.1rem"}},"×")
         ),
-        React.createElement(HorseCard,{horse:selectedHorse,onRename:onRename,onSell:onSell})
+        React.createElement(HorseCard,{horse:selectedHorse,onRename:onRename,onSell:onSell,onToggleStud:onToggleStud,onUpdateStudFee:onUpdateStudFee})
       )
     ),
 
@@ -1361,7 +1405,7 @@ function HorsesView(props) {
           React.createElement("button",{onClick:function(){setSelectedHorseId(null);},
             style:{background:"transparent",border:"none",color:"#4a6a18",cursor:"pointer",fontSize:"1.1rem"}},"×")
         ),
-        React.createElement(HorseCard,{horse:selectedHorse,onRename:onRename,onSell:onSell})
+        React.createElement(HorseCard,{horse:selectedHorse,onRename:onRename,onSell:onSell,onToggleStud:onToggleStud,onUpdateStudFee:onUpdateStudFee})
       )
     ),
 

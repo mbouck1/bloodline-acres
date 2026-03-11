@@ -5716,6 +5716,27 @@ function App() {
           return cur;
         });
       }
+      // ── STUD FEE INCOME ──────────────────────────────────────
+      // Each listed stud earns their fee once per day (simulates AI clients)
+      (function(){
+        var studs = animals.filter(function(a){ return !a.retired && a.isStud && a.sex==="M" && a.studFee > 0; });
+        if (studs.length === 0) return;
+        var income = studs.reduce(function(s,a){ return s + (a.studFee||0) * daysPassed; }, 0);
+        setMoney(function(m){ return m + income; });
+        setLog(function(lg){ return [{ id: now+Math.random(), type:"financial",
+          name: "Stud fees \u2014 " + studs.length + " male" + (studs.length!==1?"s":"") + " listed",
+          amount: income, date: new Date().toLocaleString() }].concat(lg); });
+      })();
+      // ── HORSE STUD FEE INCOME ────────────────────────────────
+      (function(){
+        var horseStuds = (ownedLivestock||[]).filter(function(a){ return a.species==="horse" && a.sex==="M" && a.isStud && a.studFee > 0; });
+        if (horseStuds.length === 0) return;
+        var income = horseStuds.reduce(function(s,a){ return s + (a.studFee||0) * daysPassed; }, 0);
+        setMoney(function(m){ return m + income; });
+        setLog(function(lg){ return [{ id: now+Math.random(), type:"financial",
+          name: "\uD83D\uDC0E Horse stud fees \u2014 " + horseStuds.length + " stallion" + (horseStuds.length!==1?"s":"") + " listed",
+          amount: income, date: new Date().toLocaleString() }].concat(lg); });
+      })();
     }
     tickDay();
     var interval = setInterval(tickDay, 60000);
@@ -5917,7 +5938,13 @@ function App() {
   };
   var doBreed = function doBreed() {
     if (!sire || !dam) return;
-    var pups = breedPair(sire, dam);
+    // COI warning confirm
+    var pupCOICheck = calcCOI(sire.id, dam.id, animals);
+    if (pupCOICheck >= 12.5) {
+      var coiLabel = pupCOICheck >= 50 ? "EXTREME (" + pupCOICheck.toFixed(1) + "%)" : pupCOICheck >= 25 ? "HIGH (" + pupCOICheck.toFixed(1) + "%)" : "ELEVATED (" + pupCOICheck.toFixed(1) + "%)";
+      var coiMsg = pupCOICheck >= 50 ? "Expect 2-3 fewer pups, severe health penalties." : pupCOICheck >= 25 ? "Expect 1-2 fewer pups, health penalties likely." : "May reduce litter size by 1.";
+      if (!confirm("\u26A0\uFE0F Inbreeding Warning\n\nCOI is " + coiLabel + "\n" + coiMsg + "\n\nProceed with this breeding?")) return;
+    }
     // Calculate COI for each pup now that we know sireId/damId
     var pupCOI = calcCOI(sire.id, dam.id, animals);
     pups = pups.map(function(p){ return Object.assign({}, p, { coi: pupCOI }); });
@@ -7235,7 +7262,7 @@ function App() {
                   style: { display:"flex", alignItems:"center", gap:8, padding:"5px 8px",
                     background: sel ? "#0a2a15" : "#241a10", borderRadius:6,
                     border: "1px solid " + (sel ? "#22c55e" : "#2e2218"), cursor:"pointer" },
-                  onClick: function(){ setLitterViewPup(pup); }
+                  onClick: function(){ toggleLitterSelect(pup.id); }
                 },
                   /*#__PURE__*/React.createElement("span", { style:{ color: sel?"#22c55e":"#c4956a", fontWeight:"bold", fontSize:"0.8rem", minWidth:100 } }, pup.name),
                   /*#__PURE__*/React.createElement("span", { style:{ color:"#8a7055", fontSize:"0.72rem" } }, pup.breed),
@@ -7245,9 +7272,13 @@ function App() {
                     style:{ background:"transparent", border:"none", color:"#6b5038", fontSize:"0.7rem",
                       cursor:"pointer", padding:"0 4px", marginLeft:"auto" }
                   }, "\u270F\uFE0F"),
+                  /*#__PURE__*/React.createElement("button", {
+                    onClick: function(e){ e.stopPropagation(); setLitterViewPup(pup); },
+                    style:{ background:"transparent", border:"1px solid #4a3a28", color:"#8a7055", borderRadius:3,
+                      fontSize:"0.62rem", cursor:"pointer", padding:"1px 5px" }
+                  }, "Card"),
                   /*#__PURE__*/React.createElement("div", {
-                    style: { background: sel?"#22c55e":"#4a3a28", color: sel?"#000":"#8a7055", borderRadius:4, padding:"2px 8px", fontSize:"0.7rem", fontWeight:"bold" },
-                    onClick: function(e){ e.stopPropagation(); toggleLitterSelect(pup.id); }
+                    style: { background: sel?"#22c55e":"#4a3a28", color: sel?"#000":"#8a7055", borderRadius:4, padding:"2px 8px", fontSize:"0.7rem", fontWeight:"bold", flexShrink:0 }
                   }, sel ? "\u2713 Keep" : "Select")
                 ),
                 isEditing && /*#__PURE__*/React.createElement(PupNameEditor, {
@@ -7318,7 +7349,7 @@ function App() {
                       style: { display:"flex", alignItems:"center", gap:8, padding:"5px 8px",
                         background: sel ? "#1a0a2e" : "#241a10", borderRadius:6,
                         border: "1px solid " + (sel ? "#7c3aed" : "#2e2218"), cursor:"pointer" },
-                      onClick: function(){ setLitterViewPup(pup); }
+                      onClick: function(){ toggleWhelpSelect(lit.litterId, pup.id); }
                     },
                       /*#__PURE__*/React.createElement("span", { style:{ color: sel?"#a78bfa":"#c4956a", fontWeight:"bold", fontSize:"0.8rem", minWidth:100 } }, pup.name),
                       /*#__PURE__*/React.createElement("span", { style:{ color:"#8a7055", fontSize:"0.72rem" } }, pup.breed),
@@ -7328,9 +7359,13 @@ function App() {
                         style:{ background:"transparent", border:"none", color:"#6b5038", fontSize:"0.7rem",
                           cursor:"pointer", padding:"0 4px", marginLeft:"auto" }
                       }, "\u270F\uFE0F"),
+                      /*#__PURE__*/React.createElement("button", {
+                        onClick: function(e){ e.stopPropagation(); setLitterViewPup(pup); },
+                        style:{ background:"transparent", border:"1px solid #4a3a28", color:"#8a7055", borderRadius:3,
+                          fontSize:"0.62rem", cursor:"pointer", padding:"1px 5px" }
+                      }, "Card"),
                       /*#__PURE__*/React.createElement("div", {
-                        style: { background: sel?"#7c3aed":"#4a3a28", color: sel?"#fff":"#8a7055", borderRadius:4, padding:"2px 8px", fontSize:"0.7rem", fontWeight:"bold" },
-                        onClick: function(e){ e.stopPropagation(); toggleWhelpSelect(lit.litterId, pup.id); }
+                        style: { background: sel?"#7c3aed":"#4a3a28", color: sel?"#fff":"#8a7055", borderRadius:4, padding:"2px 8px", fontSize:"0.7rem", fontWeight:"bold", flexShrink:0 }
                       }, sel ? "\u2713 Keep" : "Select")
                     ),
                     isEditingWH && /*#__PURE__*/React.createElement(PupNameEditor, {
@@ -7640,7 +7675,19 @@ function App() {
         name:"🤝 Bred "+sire.name+" × "+dam.name+" — foal due in 11 days",
         date: new Date().toLocaleString() }].concat(_toConsumableArray(lg)); });
     },
-    onClose: function(){ setTab("kennel"); }
+    onClose: function(){ setTab("kennel"); },
+    onToggleStud: function(horse, forceOn) {
+      setOwnedLivestock(function(prev){ return prev.map(function(a){
+        if (a.id !== horse.id) return a;
+        var nowStud = forceOn !== undefined ? forceOn : !a.isStud;
+        return Object.assign({}, a, { isStud: nowStud, studFee: nowStud ? (a.studFee||500) : null });
+      }); });
+    },
+    onUpdateStudFee: function(horse, fee) {
+      setOwnedLivestock(function(prev){ return prev.map(function(a){
+        return a.id === horse.id ? Object.assign({}, a, { studFee: fee }) : a;
+      }); });
+    } 
   }),
   tab === "horseShows" && /*#__PURE__*/React.createElement("div", {
     style:{ position:"fixed", inset:0, background:"#0a1008", zIndex:50, overflow:"auto", padding:14 }
