@@ -2746,6 +2746,16 @@ function fetchDogPhoto(breedName, onSuccess, onError) {
 
 
 // ═══════════════════════════════════════════════════════════════
+// KENNEL TYPES
+// ═══════════════════════════════════════════════════════════════
+var KENNEL_TYPES = {
+  basic:      { label: "Basic Kennel",      capacity: 10,  color: "#8a7055", icon: "🏚️", cost: 500 },
+  standard:   { label: "Standard Kennel",   capacity: 25,  color: "#d4942a", icon: "🏠", cost: 1200 },
+  commercial: { label: "Commercial Kennel", capacity: 50,  color: "#c4956a", icon: "🏢", cost: 3000 },
+  elite:      { label: "Elite Kennel",      capacity: 100, color: "#e8a020", icon: "🏆", cost: 8000 }
+};
+
+// ═══════════════════════════════════════════════════════════════
 // DOG SHOW SYSTEM
 // ═══════════════════════════════════════════════════════════════
 
