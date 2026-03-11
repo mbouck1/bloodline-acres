@@ -5109,6 +5109,159 @@ function FarmView(_ref) {
   );
 }
 
+// ── Tutorial System ────────────────────────────────────────────────────────────
+var TUTORIAL_CONTENT = {
+  kennel: {
+    title: "🏠 Your Kennel",
+    bullets: [
+      "This is where all your dogs live. Click any dog card to see their full stats.",
+      "Each dog has a Health Score and Performance Score — higher is better for breeding and shows.",
+      "Female dogs go into heat on a cycle. Watch the heat timer — you can only breed during heat.",
+      "Dogs age in real time. One real-world day equals one game month. They retire around age 10.",
+      "Buy more kennels from the Market to house more dogs."
+    ]
+  },
+  breed: {
+    title: "🐾 Breeding",
+    bullets: [
+      "Pick a Sire (male) and a Dam (female) — both must be healthy and the female must be in heat.",
+      "The female needs a Whelping Kennel before you can breed. Buy one from the Market first.",
+      "Litter size depends on breed, health, and a little luck. Some litters may have stillborns.",
+      "Pups stay in the litter tab until you name them and move them to a kennel.",
+      "Breeding too closely related dogs raises the COI (inbreeding coefficient) and lowers pup quality."
+    ]
+  },
+  shows: {
+    title: "🏆 Dog Shows",
+    bullets: [
+      "Enter your dogs in 7 event types: Conformation, Obedience, Schutzhund, Herding, Protection, Agility, and Scent Work.",
+      "Dogs start at Novice level. Place in the top 3 and they advance to Advanced, then Master.",
+      "Win 1st place at any level to earn a title prefix (like Ch., UD, or MX) on your dog's name.",
+      "Each show type has a cooldown — you can't enter the same event every single day.",
+      "Some events require a minimum Performance Score. Check your dog's stats before entering."
+    ]
+  },
+  farm: {
+    title: "🌾 The Farm",
+    bullets: [
+      "Buy livestock from the Market to earn daily income: chickens, ducks, goats, sheep, pigs, cattle, and horses.",
+      "Seasons change every real-world day (one game month). Production slows in Winter.",
+      "Sheep must be sheared manually each Spring — click the Shear button when it appears.",
+      "Build a Storage Barn to increase how much commodity you can hold and earn bonus income.",
+      "Commodities (eggs, milk, wool, etc.) accumulate daily and are sold automatically."
+    ]
+  },
+  horses: {
+    title: "🐴 Horses",
+    bullets: [
+      "Horses are high-value animals that produce income and can compete in horse shows.",
+      "Mares can be bred to produce foals — foals take time to mature before they're useful.",
+      "Horse shows work similarly to dog shows — enter, place, earn titles and prize money.",
+      "Horses have their own health and performance stats separate from your dogs.",
+      "Stabling capacity is limited — upgrade your facilities from the Market."
+    ]
+  },
+  retired: {
+    title: "🎖️ Retired Dogs",
+    bullets: [
+      "Dogs retire automatically when they reach old age, or you can retire them manually from their card.",
+      "Retired dogs keep all their earned titles and show points on record.",
+      "A retired dog's titles can pass lineage bonuses to their offspring if used for breeding before retirement.",
+      "You can't enter retired dogs in shows, but their legacy lives on through their pups.",
+      "Use the Retired tab to review your kennel's history and bloodline achievements."
+    ]
+  },
+  log: {
+    title: "📋 Activity Log",
+    bullets: [
+      "The log records everything that happens in your kennel — births, sales, income, show results.",
+      "Farm income entries appear here daily so you always know what your animals earned.",
+      "Show results are logged with placement, score, and any titles earned.",
+      "The log keeps your 50 most recent entries so it stays manageable.",
+      "Check here if something seems off — it's the paper trail for your whole operation."
+    ]
+  }
+};
+
+function TutorialModal(_ref_tut) {
+  var tabKey = _ref_tut.tabKey;
+  var onDismiss = _ref_tut.onDismiss;
+  var content = TUTORIAL_CONTENT[tabKey];
+  if (!content) return null;
+
+  var _cbState = React.useState(false);
+  var dontShow = _cbState[0];
+  var setDontShow = _cbState[1];
+
+  return React.createElement("div", {
+    style: {
+      position: "fixed", top: 0, left: 0, right: 0, bottom: 0,
+      background: "rgba(0,0,0,0.65)", zIndex: 9000,
+      display: "flex", alignItems: "center", justifyContent: "center"
+    },
+    onClick: function(e){ if (e.target === e.currentTarget) onDismiss(dontShow); }
+  },
+    React.createElement("div", {
+      style: {
+        background: "#f5e6c8",
+        border: "4px solid #3a1e08",
+        borderRadius: 10,
+        padding: "28px 32px",
+        maxWidth: 520,
+        width: "90%",
+        boxShadow: "0 8px 32px rgba(0,0,0,0.7)"
+      }
+    },
+      // Title
+      React.createElement("div", {
+        style: { fontSize: "1.3rem", fontWeight: "bold", color: "#1a0a00",
+          marginBottom: 16, borderBottom: "2px solid #3a1e08", paddingBottom: 10 }
+      }, content.title),
+
+      // Bullets
+      React.createElement("ul", {
+        style: { margin: "0 0 20px 0", paddingLeft: 22 }
+      },
+        content.bullets.map(function(b, i) {
+          return React.createElement("li", {
+            key: i,
+            style: { color: "#1a0a00", fontSize: "1rem", marginBottom: 8, lineHeight: 1.5 }
+          }, b);
+        })
+      ),
+
+      // Footer row
+      React.createElement("div", {
+        style: { display: "flex", alignItems: "center", justifyContent: "space-between",
+          borderTop: "2px solid #3a1e08", paddingTop: 14 }
+      },
+        // Checkbox
+        React.createElement("label", {
+          style: { display: "flex", alignItems: "center", gap: 8,
+            color: "#1a0a00", fontSize: "0.95rem", cursor: "pointer", userSelect: "none" }
+        },
+          React.createElement("input", {
+            type: "checkbox",
+            checked: dontShow,
+            onChange: function(e){ setDontShow(e.target.checked); },
+            style: { width: 17, height: 17, cursor: "pointer", accentColor: "#3a1e08" }
+          }),
+          "Don't show this again"
+        ),
+        // Got it button
+        React.createElement("button", {
+          onClick: function(){ onDismiss(dontShow); },
+          style: {
+            background: "#3a1e08", color: "#f5e6c8", border: "none",
+            borderRadius: 6, padding: "8px 22px", fontSize: "1rem",
+            fontWeight: "bold", cursor: "pointer"
+          }
+        }, "Got it!")
+      )
+    )
+  );
+}
+
 function App() {
   var _sire$genome$coat$M, _sire$genome$coat$M2, _dam$genome$coat$M, _dam$genome$coat$M2, _litter$, _litter$2;
   // Load saved game state
@@ -5305,6 +5458,14 @@ function App() {
     _useStateFC2 = _slicedToArray(_useStateFC, 2),
     foalCount = _useStateFC2[0],
     setFoalCount = _useStateFC2[1];
+  var _useStateTD = useState(_savedState ? _savedState.tutorialDismissed || {} : {}),
+    _useStateTD2 = _slicedToArray(_useStateTD, 2),
+    tutorialDismissed = _useStateTD2[0],
+    setTutorialDismissed = _useStateTD2[1];
+  var _useStateTA = useState(null),
+    _useStateTA2 = _slicedToArray(_useStateTA, 2),
+    activeTutorial = _useStateTA2[0],
+    setActiveTutorial = _useStateTA2[1];
   var _useStateCL = useState(false),
     _useStateCL2 = _slicedToArray(_useStateCL, 2),
     showCatLady = _useStateCL2[0],
@@ -5669,6 +5830,7 @@ function App() {
           pendingFoals: pendingFoals,
           foalCount: foalCount,
           gameStartDate: gameStartDate,
+          tutorialDismissed: tutorialDismissed,
           gameVersion: GAME_VERSION,
           savedAt: Date.now()
         };
@@ -5678,7 +5840,7 @@ function App() {
     doSave();
     var interval = setInterval(doSave, 60000);
     return function() { clearInterval(interval); };
-  }, [animals, kennels, log, money, litter, litterSelected, tab, hasWhelpingKennel, whelpingLitters, holdingPups, facilitiesOwned, ownedLivestock, commodities, sheepSheared, lastShowDates, horseShowDates, pendingFoals, foalCount]);
+  }, [animals, kennels, log, money, litter, litterSelected, tab, hasWhelpingKennel, whelpingLitters, holdingPups, facilitiesOwned, ownedLivestock, commodities, sheepSheared, lastShowDates, horseShowDates, pendingFoals, foalCount, tutorialDismissed]);
   var loadFile = function loadFile(e) {
     var file = e.target.files[0];
     if (!file) return;
@@ -6118,6 +6280,13 @@ function App() {
       transition: "all 0.15s"
     };
   };
+  // Tutorial trigger — call instead of setTab for tabs that have tutorials
+  var handleTabChange = function handleTabChange(newTab) {
+    setTab(newTab);
+    if (TUTORIAL_CONTENT[newTab] && !tutorialDismissed[newTab]) {
+      setActiveTutorial(newTab);
+    }
+  };
   var actionModalAnimal = animals.find(function(a){ return a.id === actionModalId; });
   return /*#__PURE__*/React.createElement(AnimalsContext.Provider, { value: animals },
   /*#__PURE__*/React.createElement("div", {
@@ -6275,12 +6444,12 @@ function App() {
       fontWeight: tab === "kennel" && kennelOpen ? "bold" : "normal" },
     onClick: function onClick() {
       if (tab === "kennel") { setKennelOpen(function(v){ return !v; }); }
-      else { setTab("kennel"); setKennelOpen(true); }
+      else { handleTabChange("kennel"); setKennelOpen(true); }
     }
   }, "\uD83C\uDFE0 " + (activeKennel ? activeKennel.name : "Kennel") + " (" + (activeKennel ? getKennelCount(activeKennel.id) + "/" + getKennelCapacity(activeKennel) : "0") + ")"), /*#__PURE__*/React.createElement("button", {
     style: tabS("breed"),
     onClick: function onClick() {
-      return setTab("breed");
+      return handleTabChange("breed");
     }
   }, "\u26A1 Breed"), /*#__PURE__*/React.createElement("button", {
     style: tabS("openlitter"),
@@ -6298,7 +6467,7 @@ function App() {
   /*#__PURE__*/React.createElement("button", {
     style: tabS("log"),
     onClick: function onClick() {
-      return setTab("log");
+      return handleTabChange("log");
     }
   }, "\uD83D\uDCD3 Journal (", log.length, ")"),
     holdingPups.length > 0 && /*#__PURE__*/React.createElement("button", {
@@ -6308,19 +6477,19 @@ function App() {
     }, "\uD83D\uDC3E Holding (", holdingPups.length, ")")
   , /*#__PURE__*/React.createElement("button", {
       style: tabS("farm"),
-      onClick: function(){ setTab("farm"); }
+      onClick: function(){ handleTabChange("farm"); }
     }, "\uD83C\uDFD8 Farm"),
     /*#__PURE__*/React.createElement("button", {
       style: tabS("horses"),
-      onClick: function(e){ e.stopPropagation(); setTab("horses"); }
+      onClick: function(e){ e.stopPropagation(); handleTabChange("horses"); }
     }, "\uD83D\uDC0E Horses ("+(ownedLivestock||[]).filter(function(a){return a.species==="horse";}).length+")"),
     /*#__PURE__*/React.createElement("button", {
       style: tabS("shows"),
-      onClick: function(){ setTab("shows"); }
+      onClick: function(){ handleTabChange("shows"); }
     }, "\uD83C\uDF80 Shows"),
     /*#__PURE__*/React.createElement("button", {
       style: tabS("retired"),
-      onClick: function(){ setTab("retired"); }
+      onClick: function(){ handleTabChange("retired"); }
     }, "\uD83C\uDFDB\uFE0F Legacy (", animals.filter(function(a){ return a.retired; }).length, ")")
   ), tab === "kennel" && /*#__PURE__*/React.createElement("div", {
     style: { display: "flex", flexDirection: "column", flex: 1, overflow: "hidden" }
@@ -8025,7 +8194,21 @@ function Facilities(_ref) {
           })
         )
       )
-    )
+    ),
+    // Tutorial modal — renders on top of everything
+    activeTutorial && /*#__PURE__*/React.createElement(TutorialModal, {
+      tabKey: activeTutorial,
+      onDismiss: function(dontShowAgain) {
+        if (dontShowAgain) {
+          setTutorialDismissed(function(prev) {
+            var updated = Object.assign({}, prev);
+            updated[activeTutorial] = true;
+            return updated;
+          });
+        }
+        setActiveTutorial(null);
+      }
+    })
   );
 }
 
