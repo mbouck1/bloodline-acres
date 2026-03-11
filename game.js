@@ -1050,7 +1050,7 @@ function breedPair(sire, dam) {
   var hadStillborn = false;
   if (stillbornRisk && Math.random() < 0.35 && n > 1) { n = n - 1; hadStillborn = true; }
 
-  return Array.from({
+  var pupArray = Array.from({
     length: n
   }, function (_, i) {
     var sex = Math.random() < 0.5 ? "M" : "F";
@@ -1099,6 +1099,7 @@ function breedPair(sire, dam) {
       sizeVariant: _szPotential.sizeVariant
     };
   });
+  return { pups: pupArray, hadStillborn: hadStillborn };
 }
 
 
@@ -5816,7 +5817,9 @@ function App() {
       if (!confirm("\u26A0\uFE0F Inbreeding Warning\n\nCOI is " + coiLabel + "\n" + coiMsg + "\n\nProceed with this breeding?")) return;
     }
     // Generate the litter
-    var pups = breedPair(sire, dam);
+    var breedResult = breedPair(sire, dam);
+    var pups = breedResult.pups;
+    var hadStillborn = breedResult.hadStillborn;
     // Calculate COI for each pup now that we know sireId/damId
     var pupCOI = calcCOI(sire.id, dam.id, animals);
     pups = pups.map(function(p){ return Object.assign({}, p, { coi: pupCOI }); });
