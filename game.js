@@ -8070,7 +8070,22 @@ showShearing && /*#__PURE__*/React.createElement(ShearingModal, {
         amount: total, date:new Date().toLocaleString() }].concat(lg); });
     }
   })
-  ))); // close LivestockMarket children + outer div + AnimalsContext.Provider
+  ,
+  // Tutorial modal — fixed overlay, child of top-level div
+  activeTutorial && /*#__PURE__*/React.createElement(TutorialModal, {
+    tabKey: activeTutorial,
+    onDismiss: function(dontShowAgain) {
+      if (dontShowAgain) {
+        setTutorialDismissed(function(prev) {
+          var updated = Object.assign({}, prev);
+          updated[activeTutorial] = true;
+          return updated;
+        });
+      }
+      setActiveTutorial(null);
+    }
+  })
+  ))); // close outer div children + outer div + AnimalsContext.Provider
 }
 
 // ── LIVESTOCK MARKET ─────────────────────────────────────────
@@ -8194,23 +8209,7 @@ function Facilities(_ref) {
           })
         )
       )
-    ),
-    // Tutorial modal — renders on top of everything
-    activeTutorial && /*#__PURE__*/React.createElement(TutorialModal, {
-      tabKey: activeTutorial,
-      onDismiss: function(dontShowAgain) {
-        if (dontShowAgain) {
-          setTutorialDismissed(function(prev) {
-            var updated = Object.assign({}, prev);
-            updated[activeTutorial] = true;
-            return updated;
-          });
-        }
-        setActiveTutorial(null);
-      }
-    })
+    )
   );
 }
-
-ReactDOM.createRoot(document.getElementById("root")).render(/*#__PURE__*/React.createElement(App, null));
 
