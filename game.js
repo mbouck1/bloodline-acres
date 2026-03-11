@@ -6496,8 +6496,7 @@ function App() {
                   colHdr("sex","Sex"),
                   colHdr("health","\u2764\uFE0F Hlth"),
                   colHdr("perf","\u26A1 Perf"),
-                  /*#__PURE__*/React.createElement("th", { style: { padding:"4px 8px", color:"#b09060", fontSize:"0.72rem", borderBottom:"1px solid #4a3a28", background:"#3a2e20" } }, "Age"),
-                  /*#__PURE__*/React.createElement("th", { style: { padding:"4px 8px", color:"#b09060", fontSize:"0.72rem", borderBottom:"1px solid #4a3a28", background:"#3a2e20" } }, "")
+                  /*#__PURE__*/React.createElement("th", { style: { padding:"4px 8px", color:"#b09060", fontSize:"0.72rem", borderBottom:"1px solid #4a3a28", background:"#3a2e20" } }, "Age")
                 )
               ),
               /*#__PURE__*/React.createElement("tbody", null,
@@ -6536,14 +6535,7 @@ function App() {
                         /*#__PURE__*/React.createElement("span", { style: { color:"#60a5fa", fontSize:"0.68rem" } }, ps)
                       )
                     ),
-                    /*#__PURE__*/React.createElement("td", { style: { padding:"5px 8px", color:"#b09060", fontSize:"0.72rem" } }, Math.round((a.ageMonths||0)/12*10)/10+"y"),
-                    /*#__PURE__*/React.createElement("td", { style: { padding:"5px 8px" } },
-                      /*#__PURE__*/React.createElement("button", {
-                        onClick: function(e){ e.stopPropagation(); handleSellListing(a.id); },
-                        style: { background:"transparent", border:"1px solid #4a3a28", color:"#e8d0a8", borderRadius:4,
-                          padding:"1px 6px", cursor:"pointer", fontSize:"0.68rem" }
-                      }, "Sell")
-                    )
+                    /*#__PURE__*/React.createElement("td", { style: { padding:"5px 8px", color:"#b09060", fontSize:"0.72rem" } }, Math.round((a.ageMonths||0)/12*10)/10+"y")
                   );
                 })
               )
