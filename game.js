@@ -2989,6 +2989,12 @@ function getDogTitlesDisplay(animal) {
 }
 
 function ShowsView(_ref_sv) {
+  // ALL hooks must come before any conditional return (React Rules of Hooks)
+  var _s1 = _slicedToArray(useState(null), 2),   selectedDog = _s1[0],   setSelectedDog = _s1[1];
+  var _s2 = _slicedToArray(useState("obedience"),2), selectedType = _s2[0], setSelectedType = _s2[1];
+  var _s3 = _slicedToArray(useState(null), 2),   lastResult = _s3[0],   setLastResult = _s3[1];
+  var _s4 = _slicedToArray(useState(""), 2),     dogSearch = _s4[0],    setDogSearch = _s4[1];
+
   if (!_ref_sv) return null;
   var animals = _ref_sv.animals || [],
       money = _ref_sv.money || 0,
@@ -2999,11 +3005,6 @@ function ShowsView(_ref_sv) {
       lastShowDates = _ref_sv.lastShowDates || {},
       onShowDatesUpdate = _ref_sv.onShowDatesUpdate || function(){},
       onClose = _ref_sv.onClose || function(){};
-
-  var _s1 = _slicedToArray(useState(null), 2),   selectedDog = _s1[0],   setSelectedDog = _s1[1];
-  var _s2 = _slicedToArray(useState("obedience"),2), selectedType = _s2[0], setSelectedType = _s2[1];
-  var _s3 = _slicedToArray(useState(null), 2),   lastResult = _s3[0],   setLastResult = _s3[1];
-  var _s4 = _slicedToArray(useState(""), 2),     dogSearch = _s4[0],    setDogSearch = _s4[1];
 
   var showType = SHOW_TYPES.find(function(t){ return t.key === selectedType; });
 
