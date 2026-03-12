@@ -1,3 +1,4 @@
+
 // game.js — Bloodline Acres core game logic
 
 
@@ -8190,5 +8191,23 @@ function Facilities(_ref) {
   );
 }
 
-ReactDOM.createRoot(document.getElementById("root")).render(/*#__PURE__*/React.createElement(App, null));
+function AuthGate() {
+  var _useState = React.useState(null), user = _useState[0], setUser = _useState[1];
+  var _useState2 = React.useState(true), checking = _useState2[0], setChecking = _useState2[1];
+  React.useEffect(function() {
+    window.sb.auth.getSession().then(function(_ref) {
+      var session = _ref.data.session;
+      if (session) setUser(session.user);
+      setChecking(false);
+    });
+    var _ref2 = window.sb.auth.onAuthStateChange(function(event, session) {
+      setUser(session ? session.user : null);
+    });
+    return function() { _ref2.data.subscription.unsubscribe(); };
+  }, []);
+  if (checking) return React.createElement('div', {style:{display:'flex',alignItems:'center',justifyContent:'center',height:'100vh',color:'#f5e6c8',fontSize:'1.2rem'}}, 'Loading...');
+  if (!user) return React.createElement(AuthModal, {onLogin: setUser});
+  return React.createElement(App, {user: user, onLogout: function() { window.sb.auth.signOut(); setUser(null); }});
+}
+ReactDOM.createRoot(document.getElementById('root')).render(React.createElement(AuthGate, null));
 
