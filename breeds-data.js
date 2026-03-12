@@ -8010,7 +8010,7 @@ var DEMO_BREEDS = [{
     "joints": 80
   },
   "aptitudes": ["Conformation", "Tracking"]
-}}];
+}];
 
 // ── COLOR HELPERS ─────────────────────────────────────────────
 var coiColor = function coiColor(c) {
