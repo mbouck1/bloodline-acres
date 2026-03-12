@@ -5109,7 +5109,7 @@ function FarmView(_ref) {
   );
 }
 
-// ── Tutorial System ────────────────────────────────────────────────────────────
+// ── Tutorial System ──────────────────────────────────────────────────────────
 var TUTORIAL_CONTENT = {
   kennel: {
     title: "🏠 Your Kennel",
@@ -5186,78 +5186,54 @@ var TUTORIAL_CONTENT = {
 function TutorialModal(_ref_tut) {
   var tabKey = _ref_tut.tabKey;
   var onDismiss = _ref_tut.onDismiss;
-
-  // Hooks must always be called before any early return
-  var _cbState = React.useState(false);
+  // useState MUST come before any early return (Rules of Hooks)
+  var _cbState = _slicedToArray(React.useState(false), 2);
   var dontShow = _cbState[0];
   var setDontShow = _cbState[1];
-
   var content = TUTORIAL_CONTENT[tabKey];
   if (!content) return null;
-
   return React.createElement("div", {
-    style: {
-      position: "fixed", top: 0, left: 0, right: 0, bottom: 0,
-      background: "rgba(0,0,0,0.65)", zIndex: 9000,
-      display: "flex", alignItems: "center", justifyContent: "center"
-    },
+    style: { position:"fixed", top:0, left:0, right:0, bottom:0,
+      background:"rgba(0,0,0,0.65)", zIndex:9000,
+      display:"flex", alignItems:"center", justifyContent:"center" },
     onClick: function(e){ if (e.target === e.currentTarget) onDismiss(dontShow); }
   },
     React.createElement("div", {
-      style: {
-        background: "#f5e6c8",
-        border: "4px solid #3a1e08",
-        borderRadius: 10,
-        padding: "28px 32px",
-        maxWidth: 520,
-        width: "90%",
-        boxShadow: "0 8px 32px rgba(0,0,0,0.7)"
-      }
+      style: { background:"#f5e6c8", border:"4px solid #3a1e08", borderRadius:10,
+        padding:"28px 32px", maxWidth:520, width:"90%", boxShadow:"0 8px 32px rgba(0,0,0,0.7)" }
     },
-      // Title
       React.createElement("div", {
-        style: { fontSize: "1.3rem", fontWeight: "bold", color: "#1a0a00",
-          marginBottom: 16, borderBottom: "2px solid #3a1e08", paddingBottom: 10 }
+        style: { fontSize:"1.3rem", fontWeight:"bold", color:"#1a0a00",
+          marginBottom:16, borderBottom:"2px solid #3a1e08", paddingBottom:10 }
       }, content.title),
-
-      // Bullets
-      React.createElement("ul", {
-        style: { margin: "0 0 20px 0", paddingLeft: 22 }
-      },
+      React.createElement("ul", { style:{ margin:"0 0 20px 0", paddingLeft:22 } },
         content.bullets.map(function(b, i) {
           return React.createElement("li", {
             key: i,
-            style: { color: "#1a0a00", fontSize: "1rem", marginBottom: 8, lineHeight: 1.5 }
+            style: { color:"#1a0a00", fontSize:"1rem", marginBottom:8, lineHeight:1.5 }
           }, b);
         })
       ),
-
-      // Footer row
       React.createElement("div", {
-        style: { display: "flex", alignItems: "center", justifyContent: "space-between",
-          borderTop: "2px solid #3a1e08", paddingTop: 14 }
+        style: { display:"flex", alignItems:"center", justifyContent:"space-between",
+          borderTop:"2px solid #3a1e08", paddingTop:14 }
       },
-        // Checkbox
         React.createElement("label", {
-          style: { display: "flex", alignItems: "center", gap: 8,
-            color: "#1a0a00", fontSize: "0.95rem", cursor: "pointer", userSelect: "none" }
+          style: { display:"flex", alignItems:"center", gap:8,
+            color:"#1a0a00", fontSize:"0.95rem", cursor:"pointer", userSelect:"none" }
         },
           React.createElement("input", {
-            type: "checkbox",
-            checked: dontShow,
+            type:"checkbox", checked:dontShow,
             onChange: function(e){ setDontShow(e.target.checked); },
-            style: { width: 17, height: 17, cursor: "pointer", accentColor: "#3a1e08" }
+            style:{ width:17, height:17, cursor:"pointer", accentColor:"#3a1e08" }
           }),
           "Don't show this again"
         ),
-        // Got it button
         React.createElement("button", {
           onClick: function(){ onDismiss(dontShow); },
-          style: {
-            background: "#3a1e08", color: "#f5e6c8", border: "none",
-            borderRadius: 6, padding: "8px 22px", fontSize: "1rem",
-            fontWeight: "bold", cursor: "pointer"
-          }
+          style: { background:"#3a1e08", color:"#f5e6c8", border:"none",
+            borderRadius:6, padding:"8px 22px", fontSize:"1rem",
+            fontWeight:"bold", cursor:"pointer" }
         }, "Got it!")
       )
     )
@@ -6282,14 +6258,13 @@ function App() {
       transition: "all 0.15s"
     };
   };
-  // Tutorial trigger — call instead of setTab for tabs that have tutorials
-  var handleTabChange = function handleTabChange(newTab) {
+  var actionModalAnimal = animals.find(function(a){ return a.id === actionModalId; });
+  var handleTabChange = function(newTab) {
     setTab(newTab);
     if (TUTORIAL_CONTENT[newTab] && !tutorialDismissed[newTab]) {
       setActiveTutorial(newTab);
     }
   };
-  var actionModalAnimal = animals.find(function(a){ return a.id === actionModalId; });
   return /*#__PURE__*/React.createElement(AnimalsContext.Provider, { value: animals },
   /*#__PURE__*/React.createElement("div", {
     style: {
@@ -8071,9 +8046,8 @@ showShearing && /*#__PURE__*/React.createElement(ShearingModal, {
         name:"\uD83D\uDCB0 Sold " + qty + " " + info.unit + " " + info.label + " \u2014 +$" + total.toLocaleString(),
         amount: total, date:new Date().toLocaleString() }].concat(lg); });
     }
-  })
-  ,
-  // Tutorial modal — fixed overlay, child of top-level div
+  }),
+  // Tutorial modal — fixed overlay, renders on top of everything
   activeTutorial ? /*#__PURE__*/React.createElement(TutorialModal, {
     tabKey: activeTutorial,
     onDismiss: function(dontShowAgain) {
@@ -8214,4 +8188,6 @@ function Facilities(_ref) {
     )
   );
 }
+
+ReactDOM.createRoot(document.getElementById("root")).render(/*#__PURE__*/React.createElement(App, null));
 
