@@ -7223,6 +7223,7 @@ function App() {
           var isDna = breedDamDna === a.id;
           var hs = a.healthScore || 0;
           var ps = a.perfScore || 0;
+          var isPreg = !!(a.pregnantUntil && a.pregnantUntil > Date.now());
           return /*#__PURE__*/React.createElement("div", { key: a.id,
             title: reason || "",
             style: { background: isSel ? "#5a3e10" : "#352818", border: "2px solid "+(isSel?"#f0a030":reason?"#6a3a28":"#3a2e20"),
