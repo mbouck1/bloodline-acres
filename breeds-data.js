@@ -238,7 +238,7 @@ function mixedLifespanBonus(sire, dam) {
 }
 
 // ── DEMO BREEDS ───────────────────────────────────────────────
-var DEMO_BREEDS = [{{
+var DEMO_BREEDS = [{
   "name": "Border Collie",
   "group": "Herding",
   "size": "M",
