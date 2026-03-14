@@ -5579,7 +5579,7 @@ function App() {
     _useStateSHED2 = _slicedToArray(_useStateSHED, 2),
     showShearing = _useStateSHED2[0],
     setShowShearing = _useStateSHED2[1];
-  var _useStateOL = useState(_savedState ? _savedState.ownedLivestock || [] : []),
+  var _useStateOL = useState(_savedState ? (_savedState.ownedLivestock || []).filter(function(a){ return a.species !== "dog"; }) : []),
     _useStateOL2 = _slicedToArray(_useStateOL, 2),
     ownedLivestock = _useStateOL2[0],
     setOwnedLivestock = _useStateOL2[1];
@@ -6012,7 +6012,7 @@ function App() {
       if (money < dogCost) { alert("Not enough funds!\nThis dog costs " + formatMoney(dogCost) + ", you have " + formatMoney(money) + "."); return; }
       setMoney(function(m){ return m - dogCost; });
       setLog(function(lg){ return [{ id:Date.now(), type:"financial", name:"Purchased dog: " + b.name, amount: -dogCost, date: new Date().toLocaleString() }].concat(_toConsumableArray(lg)); });
-      var newAnimal = makeAnimal(b, b.name + " " + (Math.floor(Math.random()*900)+100), sex);
+      var newAnimal = makeAnimal(b, "", sex);
       newAnimal.ageMonths = arrivalAge || 12;
       newAnimal.kennelId = activeKennel.id;
       setPendingBoughtDog(newAnimal);
@@ -7203,8 +7203,14 @@ function App() {
       return /*#__PURE__*/React.createElement("div", { style: { background:"#2a1008",border:"1px solid #f97316",borderRadius:6,padding:"5px 8px",fontSize:"0.7rem",color:"#fdba74",textAlign:"center" } }, msg);
     })(),
     // DEV force breed
-    sire&&dam&&sire.sex!==dam.sex&&sire.id!==dam.id && /*#__PURE__*/React.createElement("button", {
-      onClick: doBreed, title: "DEV MODE: Bypasses heat cycle",
+    /*#__PURE__*/React.createElement("button", {
+      onClick: function(){
+        if (!sire || !dam) { alert("Select a Sire and Dam first."); return; }
+        if (sire.sex === dam.sex) { alert("Sire and Dam must be different sexes."); return; }
+        if (sire.id === dam.id) { alert("Cannot breed an animal with itself."); return; }
+        doBreed();
+      },
+      title: "DEV MODE: Bypasses heat cycle and stud limits",
       style: { width:"100%", background:"#1a0a2e", border:"2px dashed #7c3aed", color:"#a78bfa",
         borderRadius:8, padding:"6px", cursor:"pointer", fontSize:"0.68rem", fontWeight:"bold" }
     }, "\uD83E\uDDEA DEV\nForce Breed"),
