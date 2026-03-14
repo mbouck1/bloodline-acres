@@ -5333,7 +5333,10 @@ function App() {
     breeds = _useState8[0],
     setBreeds = _useState8[1];
   var _useState9 = useState((function(){
-    var raw = _savedState ? _savedState.animals || [] : [];
+    var raw = _savedState ? (_savedState.animals || []).map(function(a){
+      if (a.name && /\s\d{3}$/.test(a.name)) { a = Object.assign({}, a, { name: a.name.replace(/\s\d{3}$/, "") }); }
+      return a;
+    }) : [];
     // Dedup by id — strip any duplicates baked into saved state
     var seen = new Set();
     return raw.filter(function(a){ if (seen.has(a.id)) return false; seen.add(a.id); return true; });
@@ -7205,7 +7208,16 @@ function App() {
     // DEV force breed
     /*#__PURE__*/React.createElement("button", {
       onClick: function(){
-        if (!sire || !dam) { alert("Select a Sire and Dam first."); return; }
+        if (!sire && !dam) { alert("Select a Sire and Dam first.\n\nTIP: For DEV breeding, click a male to set Sire, then click a female card directly \u2014 the DEV button bypasses heat restrictions."); return; }
+        if (!sire) { alert("Select a Sire (male) first."); return; }
+        if (!dam) {
+          var females = animals.filter(function(a){ return !a.retired && a.sex === "F"; });
+          if (females.length === 0) { alert("No females available."); return; }
+          var f = females[0];
+          setDam(f);
+          alert("Auto-selected dam: " + (f.name||f.breed) + "\nClick DEV Force Breed again to proceed.");
+          return;
+        }
         if (sire.sex === dam.sex) { alert("Sire and Dam must be different sexes."); return; }
         if (sire.id === dam.id) { alert("Cannot breed an animal with itself."); return; }
         doBreed();
@@ -8090,7 +8102,12 @@ showShearing && /*#__PURE__*/React.createElement(ShearingModal, {
       if (!total) return;
       setMoney(function(m){ return m+total; });
       if (itemId && itemSpecies) {
-        setOwnedLivestock(function(prev){ return prev.filter(function(a){ return a.id!==itemId; }); });
+        if (itemSpecies === "dog") {
+          setAnimals(function(prev){ return prev.filter(function(a){ return a.id!==itemId; }); });
+          setLog(function(lg){ return [{ id:Date.now(), type:"financial", name:"\uD83D\uDC15 Sold dog to market \u2014 +$"+total.toLocaleString(), amount:total, date:new Date().toLocaleString() }].concat(lg); });
+        } else {
+          setOwnedLivestock(function(prev){ return prev.filter(function(a){ return a.id!==itemId; }); });
+        }
       }
       // sale logged in grouped session summary on market close
     },
