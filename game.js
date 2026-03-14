@@ -5561,6 +5561,10 @@ function App() {
     _useStateBTDDNA2 = _slicedToArray(_useStateBTDDNA, 2),
     breedDamDna = _useStateBTDDNA2[0],
     setBreedDamDna = _useStateBTDDNA2[1];
+  var _useStateDSM = useState(false),
+    _useStateDSM2 = _slicedToArray(_useStateDSM, 2),
+    devSelectMode = _useStateDSM2[0],
+    setDevSelectMode = _useStateDSM2[1];
   // ── Kennel list/grid view ──────────────────────────────────────────────
   var _useStateKLV = useState("grid"),
     _useStateKLV2 = _slicedToArray(_useStateKLV, 2),
@@ -7057,9 +7061,11 @@ function App() {
           var ps = a.perfScore || 0;
           return /*#__PURE__*/React.createElement("div", { key: a.id,
             title: reason || "",
-            style: { background: isSel ? "#5a3e10" : "#352818", border: "2px solid "+(isSel?"#f0a030":reason?"#6a3a28":"#3a2e20"),
-              borderRadius: 6, padding: "6px 8px", marginBottom: 4, cursor: reason?"not-allowed":"pointer",
-              opacity: reason ? 0.55 : 1, boxShadow: isSel?"0 0 8px rgba(240,160,48,0.4)":"none" }
+            style: { background: isSel ? "#5a3e10" : devSelectMode ? "#1a0a2e" : "#352818",
+              border: "2px solid "+(isSel?"#f0a030":devSelectMode?"#7c3aed":reason?"#6a3a28":"#3a2e20"),
+              borderRadius: 6, padding: "6px 8px", marginBottom: 4, cursor: devSelectMode?"pointer":reason?"not-allowed":"pointer",
+              opacity: devSelectMode ? 1 : reason ? 0.55 : 1,
+              boxShadow: isSel?"0 0 8px rgba(240,160,48,0.4)":devSelectMode?"0 0 6px rgba(124,58,237,0.5)":"none" }
           },
             /*#__PURE__*/React.createElement("div", { style: { display: "flex", alignItems: "center", gap: 6 },
               onClick: function(e){ e.stopPropagation(); selectAnimal(a); setBreedSireDna(null); }
@@ -7208,18 +7214,13 @@ function App() {
     // DEV force breed
     /*#__PURE__*/React.createElement("button", {
       onClick: function(){
-        if (!sire && !dam) { alert("Select a Sire and Dam first.\n\nTIP: For DEV breeding, click a male to set Sire, then click a female card directly \u2014 the DEV button bypasses heat restrictions."); return; }
-        if (!sire) { alert("Select a Sire (male) first."); return; }
+        if (!sire) { alert("Select a Sire (male) first from the left column."); return; }
         if (!dam) {
-          var females = animals.filter(function(a){ return !a.retired && a.sex === "F"; });
-          if (females.length === 0) { alert("No females available."); return; }
-          var f = females[0];
-          setDam(f);
-          alert("Auto-selected dam: " + (f.name||f.breed) + "\nClick DEV Force Breed again to proceed.");
+          setDevSelectMode(true);
           return;
         }
-        if (sire.sex === dam.sex) { alert("Sire and Dam must be different sexes."); return; }
         if (sire.id === dam.id) { alert("Cannot breed an animal with itself."); return; }
+        setDevSelectMode(false);
         doBreed();
       },
       title: "DEV MODE: Bypasses heat cycle and stud limits",
@@ -7271,7 +7272,7 @@ function App() {
       style: { background: "#2e2418", borderBottom: "1px solid #4a3a28", padding: "8px 10px", display: "flex", flexDirection: "column", gap: 6, flexShrink: 0 }
     },
       /*#__PURE__*/React.createElement("div", { style: { display: "flex", alignItems: "center", justifyContent: "space-between" } },
-        /*#__PURE__*/React.createElement("span", { style: { color: "#f0c878", fontWeight: "bold", fontSize: "0.82rem" } }, "\u2640 Dam"),
+        /*#__PURE__*/React.createElement("span", { style: { color: devSelectMode?"#a78bfa":"#f0c878", fontWeight: "bold", fontSize: "0.82rem" } }, devSelectMode ? "\u26A1 Pick any Dam \u2014 heat ignored" : "\u2640 Dam"),
         dam && /*#__PURE__*/React.createElement("button", {
           onClick: function(e){ e.stopPropagation(); setDam(null); setBreedDamDna(null); },
           style: { background: "transparent", border: "none", color: "#e8d0a8", cursor: "pointer", fontSize: "0.75rem" }
@@ -7317,12 +7318,14 @@ function App() {
           var isPreg = !!(a.pregnantUntil && a.pregnantUntil > Date.now());
           return /*#__PURE__*/React.createElement("div", { key: a.id,
             title: reason || "",
-            style: { background: isSel ? "#5a3e10" : "#352818", border: "2px solid "+(isSel?"#f0a030":reason?"#6a3a28":"#3a2e20"),
-              borderRadius: 6, padding: "6px 8px", marginBottom: 4, cursor: reason?"not-allowed":"pointer",
-              opacity: reason ? 0.55 : 1, boxShadow: isSel?"0 0 8px rgba(240,160,48,0.4)":"none" }
+            style: { background: isSel ? "#5a3e10" : devSelectMode ? "#1a0a2e" : "#352818",
+              border: "2px solid "+(isSel?"#f0a030":devSelectMode?"#7c3aed":reason?"#6a3a28":"#3a2e20"),
+              borderRadius: 6, padding: "6px 8px", marginBottom: 4, cursor: devSelectMode?"pointer":reason?"not-allowed":"pointer",
+              opacity: devSelectMode ? 1 : reason ? 0.55 : 1,
+              boxShadow: isSel?"0 0 8px rgba(240,160,48,0.4)":devSelectMode?"0 0 6px rgba(124,58,237,0.5)":"none" }
           },
             /*#__PURE__*/React.createElement("div", { style: { display: "flex", alignItems: "center", gap: 6 },
-              onClick: function(e){ e.stopPropagation(); selectAnimal(a); setBreedDamDna(null); }
+              onClick: function(e){ e.stopPropagation(); if (devSelectMode) { setDam(a); setBreedDamDna(null); setDevSelectMode(false); } else { selectAnimal(a); setBreedDamDna(null); } }
             },
               /*#__PURE__*/React.createElement("span", { style: { fontSize: "1.1rem" } }, "\uD83D\uDC29"),
               /*#__PURE__*/React.createElement("div", { style: { flex: 1, minWidth: 0 } },
