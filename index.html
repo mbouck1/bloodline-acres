@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+  <head>
+  <link rel="icon" href="./assets/favicon-BSptmKSJ.ico" type="image/x-icon">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+    <meta name="theme-color" content="#1a1410" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="Bloodline Acres" />
+    <link rel="manifest" href="manifest.json" />
+    <link rel="apple-touch-icon" href="icon-192.png" />
+    <title>Bloodline Acres</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js"></script>
+    <style>
+      *{box-sizing:border-box;margin:0;padding:0}
+      body{background:#0a0f1e;color:#e2e8f0;font-family:system-ui,sans-serif}
+      ::-webkit-scrollbar{width:6px}
+      ::-webkit-scrollbar-track{background:#1e293b}
+      ::-webkit-scrollbar-thumb{background:#334155;border-radius:3px}
+      select,button{font-family:inherit}
+    </style>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script src="supabase.min.js?v=28"></script>
+    <script src="supabase-client.js?v=28"></script>
+    <script src="supabase-sync.js?v=28"></script>
+    <script src="image-uploader.js?v=28"></script>
+    <script src="cattle-data.js?v=28"></script>
+    <script src="goat-data.js?v=28"></script>
+    <script src="sheep-data.js?v=28"></script>
+    <script src="pig-data.js?v=28"></script>
+    <script src="duck-data.js?v=28"></script>
+    <script src="chicken-data.js?v=28"></script>
+    <script src="game-data.js?v=28"></script>
+    <script src="breeds-data.js?v=28"></script>
+    <script src="photos-data.js?v=28"></script>
+    <script src="horses-data.js?v=28"></script>
+    <script src="game.js?v=28"></script>
+    <script>
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('sw.js');
+}
+    </script>
+  </body>
+</html>

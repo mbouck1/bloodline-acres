@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bloodline Acres — Image Admin</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background: #060a0e; color: #e2e8f0; font-family: monospace; min-height: 100vh; }
+    #login-screen { display:flex; align-items:center; justify-content:center; min-height:100vh; }
+    .login-box { background:#0a0f14; border:1px solid #1e3a5f; border-radius:12px; padding:32px; width:320px; text-align:center; }
+    .login-box h1 { color:#38bdf8; margin-bottom:8px; font-size:1.2rem; }
+    .login-box p { color:#475569; font-size:0.78rem; margin-bottom:20px; }
+    input[type=password] { width:100%; background:#060a0e; border:1px solid #1e3a5f; color:#e2e8f0; border-radius:6px; padding:8px 12px; font-size:0.9rem; margin-bottom:12px; }
+    .btn { display:inline-block; border-radius:6px; padding:8px 20px; cursor:pointer; font-size:0.85rem; font-weight:bold; border:none; }
+    .btn-blue { background:#0c2a4a; border:1px solid #38bdf8; color:#38bdf8; }
+    .btn-green { background:#0f2d1e; border:1px solid #22c55e; color:#22c55e; }
+    .btn-red { background:#2d0f0f; border:1px solid #ef4444; color:#ef4444; }
+    .btn-gray { background:#1a1a2a; border:1px solid #334155; color:#64748b; }
+    button:hover { opacity:0.85; }
+    #admin-screen { display:none; padding:24px; max-width:1200px; margin:0 auto; }
+    .header { display:flex; justify-content:space-between; align-items:center; margin-bottom:24px; border-bottom:1px solid #1e293b; padding-bottom:16px; }
+    .header h1 { color:#38bdf8; font-size:1.3rem; }
+    .tabs { display:flex; gap:8px; margin-bottom:20px; }
+    .tab { padding:6px 18px; border-radius:6px; cursor:pointer; font-size:0.82rem; border:1px solid #1e293b; background:#0a0f14; color:#475569; }
+    .tab.active { background:#0c2a4a; border-color:#38bdf8; color:#38bdf8; }
+    .stats { display:flex; gap:12px; margin-bottom:20px; flex-wrap:wrap; }
+    .stat { background:#0a0f14; border:1px solid #1e293b; border-radius:8px; padding:10px 16px; text-align:center; }
+    .stat .num { font-size:1.6rem; font-weight:bold; }
+    .stat .lbl { font-size:0.68rem; color:#64748b; }
+    .grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(280px,1fr)); gap:14px; }
+    .card { background:#0a0f14; border:1px solid #1e293b; border-radius:8px; overflow:hidden; }
+    .card img { width:100%; height:180px; object-fit:cover; display:block; }
+    .card .img-placeholder { width:100%; height:180px; background:#0f172a; display:flex; align-items:center; justify-content:center; color:#334155; font-size:2rem; }
+    .card .info { padding:12px; }
+    .card .breed { font-weight:bold; color:#e2e8f0; font-size:0.88rem; margin-bottom:2px; }
+    .card .species { color:#64748b; font-size:0.72rem; margin-bottom:4px; }
+    .card .submitter { color:#475569; font-size:0.68rem; margin-bottom:8px; }
+    .card .date { color:#334155; font-size:0.65rem; margin-bottom:10px; }
+    .card .actions { display:flex; gap:6px; }
+    .card .actions button { flex:1; padding:6px 0; font-size:0.75rem; }
+    .status-badge { display:inline-block; border-radius:4px; padding:2px 8px; font-size:0.65rem; font-weight:bold; margin-bottom:6px; }
+    .status-pending  { background:#2d1e00; border:1px solid #ca8a04; color:#fde68a; }
+    .status-approved { background:#0f2010; border:1px solid #22c55e; color:#86efac; }
+    .status-rejected { background:#2d0f0f; border:1px solid #ef4444; color:#fca5a5; }
+    .empty { text-align:center; color:#334155; padding:48px; font-size:1rem; }
+    .toast { position:fixed; bottom:20px; right:20px; background:#0f2d1e; border:1px solid #22c55e; color:#22c55e; border-radius:8px; padding:10px 18px; font-size:0.82rem; font-weight:bold; display:none; z-index:999; }
+  </style>
+</head>
+<body>
+
+<!-- Login -->
+<div id="login-screen">
+  <div class="login-box">
+    <h1>🐾 BA Image Admin</h1>
+    <p>Bloodline Acres — Mod Panel</p>
+    <input type="password" id="pw-input" placeholder="Admin password" onkeydown="if(event.key==='Enter')doLogin()">
+    <button class="btn btn-blue" style="width:100%" onclick="doLogin()">Login</button>
+    <div id="login-err" style="color:#ef4444;font-size:0.72rem;margin-top:8px;display:none">Wrong password.</div>
+  </div>
+</div>
+
+<!-- Admin panel -->
+<div id="admin-screen">
+  <div class="header">
+    <h1>🐾 Bloodline Acres — Image Review</h1>
+    <button class="btn btn-gray" onclick="doLogout()">Logout</button>
+  </div>
+
+  <div class="stats">
+    <div class="stat"><div class="num" id="count-pending" style="color:#fde68a">–</div><div class="lbl">Pending</div></div>
+    <div class="stat"><div class="num" id="count-approved" style="color:#86efac">–</div><div class="lbl">Approved</div></div>
+    <div class="stat"><div class="num" id="count-rejected" style="color:#fca5a5">–</div><div class="lbl">Rejected</div></div>
+  </div>
+
+  <div class="tabs">
+    <div class="tab active" onclick="switchTab('pending')"  id="tab-pending">⏳ Pending</div>
+    <div class="tab"        onclick="switchTab('approved')" id="tab-approved">✅ Approved</div>
+    <div class="tab"        onclick="switchTab('rejected')" id="tab-rejected">❌ Rejected</div>
+  </div>
+
+  <div id="cards-container" class="grid"></div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+  var SUPABASE_URL  = "https://shlamfwaasjqtjjdnxma.supabase.co";
+  var SERVICE_KEY   = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNobGFtZndhYXNqcXRqamRueG1hIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc3MzEzODg5NSwiZXhwIjoyMDg4NzE0ODk1fQ.b8Nya2dD3eGrdFShswqOBsxida_zzOUTtegljdGF8z4";
+  var ADMIN_PASS    = "BA_MOD_2026";  // ← change this to whatever you want
+  var currentTab    = "pending";
+  var allRows       = [];
+
+  function doLogin() {
+    var pw = document.getElementById("pw-input").value;
+    if (pw === ADMIN_PASS) {
+      document.getElementById("login-screen").style.display = "none";
+      document.getElementById("admin-screen").style.display = "block";
+      loadAll();
+    } else {
+      document.getElementById("login-err").style.display = "block";
+    }
+  }
+
+  function doLogout() {
+    document.getElementById("login-screen").style.display = "flex";
+    document.getElementById("admin-screen").style.display = "none";
+    document.getElementById("pw-input").value = "";
+  }
+
+  function showToast(msg) {
+    var t = document.getElementById("toast");
+    t.textContent = msg;
+    t.style.display = "block";
+    setTimeout(function(){ t.style.display = "none"; }, 2500);
+  }
+
+  function loadAll() {
+    fetch(SUPABASE_URL + "/rest/v1/animal_images?select=*&order=submitted_at.desc", {
+      headers: { "apikey": SERVICE_KEY, "Authorization": "Bearer " + SERVICE_KEY }
+    })
+    .then(function(r){ return r.json(); })
+    .then(function(rows){
+      allRows = Array.isArray(rows) ? rows : [];
+      updateStats();
+      renderTab(currentTab);
+    })
+    .catch(function(e){ console.error(e); });
+  }
+
+  function updateStats() {
+    document.getElementById("count-pending").textContent  = allRows.filter(function(r){ return r.status==="pending";  }).length;
+    document.getElementById("count-approved").textContent = allRows.filter(function(r){ return r.status==="approved"; }).length;
+    document.getElementById("count-rejected").textContent = allRows.filter(function(r){ return r.status==="rejected"; }).length;
+  }
+
+  function switchTab(tab) {
+    currentTab = tab;
+    ["pending","approved","rejected"].forEach(function(t){
+      document.getElementById("tab-"+t).classList.toggle("active", t===tab);
+    });
+    renderTab(tab);
+  }
+
+  function renderTab(tab) {
+    var rows = allRows.filter(function(r){ return r.status === tab; });
+    var c = document.getElementById("cards-container");
+    if (rows.length === 0) {
+      c.innerHTML = '<div class="empty">No ' + tab + ' images.</div>';
+      return;
+    }
+    c.innerHTML = rows.map(function(row){
+      var dt = row.submitted_at ? new Date(row.submitted_at).toLocaleString() : "";
+      var reviewedDt = row.reviewed_at ? new Date(row.reviewed_at).toLocaleString() : "";
+      var actions = "";
+      if (tab === "pending") {
+        actions = '<button class="btn btn-green" onclick="reviewImage(\''+row.id+'\',\'approved\')">✅ Approve</button>' +
+                  '<button class="btn btn-red"   onclick="reviewImage(\''+row.id+'\',\'rejected\')">❌ Reject</button>';
+      } else if (tab === "approved") {
+        actions = '<button class="btn btn-red"  onclick="reviewImage(\''+row.id+'\',\'rejected\')">❌ Reject</button>' +
+                  '<button class="btn btn-gray" onclick="copyUrl(\''+row.image_url+'\')">📋 Copy URL</button>';
+      } else {
+        actions = '<button class="btn btn-green" onclick="reviewImage(\''+row.id+'\',\'approved\')">✅ Re-approve</button>';
+      }
+      return '<div class="card">' +
+        '<img src="' + row.image_url + '" alt="' + row.breed + '" onerror="this.style.display=\'none\';this.nextElementSibling.style.display=\'flex\'">' +
+        '<div class="img-placeholder" style="display:none">🖼️</div>' +
+        '<div class="info">' +
+          '<div class="status-badge status-' + row.status + '">' + row.status.toUpperCase() + '</div>' +
+          '<div class="breed">' + row.breed + '</div>' +
+          '<div class="species">Species: ' + row.species + '</div>' +
+          '<div class="submitter">By: ' + (row.submitter_name || "Anonymous") + '</div>' +
+          '<div class="date">Submitted: ' + dt + (reviewedDt ? ' · Reviewed: '+reviewedDt : '') + '</div>' +
+          '<div class="actions">' + actions + '</div>' +
+        '</div></div>';
+    }).join("");
+  }
+
+  function reviewImage(id, newStatus) {
+    fetch(SUPABASE_URL + "/rest/v1/animal_images?id=eq." + id, {
+      method: "PATCH",
+      headers: {
+        "apikey": SERVICE_KEY,
+        "Authorization": "Bearer " + SERVICE_KEY,
+        "Content-Type": "application/json",
+        "Prefer": "return=minimal"
+      },
+      body: JSON.stringify({ status: newStatus, reviewed_at: new Date().toISOString() })
+    })
+    .then(function(r){
+      if (r.ok) {
+        showToast(newStatus === "approved" ? "✅ Approved!" : "❌ Rejected");
+        loadAll();
+      }
+    });
+  }
+
+  function copyUrl(url) {
+    navigator.clipboard && navigator.clipboard.writeText(url);
+    showToast("📋 URL copied!");
+  }
+</script>
+</body>
+</html>
